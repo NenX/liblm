@@ -19,7 +19,7 @@ const extraObj = {
 interface IProps {
   value?: object;
   options?: optionProps[];
-  uniqueKey?: '家族史';
+  optionKey?: '家族史';
   [propName: string]: any;
 }
 
@@ -59,16 +59,16 @@ export default function CheckboxGroupObject(props: IProps) {
   const {
     value,
     onChange,
-    uniqueKey,
+    optionKey,
     options: _options = [],
     type: _type = 'withoutInput',
 
     ...restProps
   } = props
 
-  const options = optionKeyMap[uniqueKey!]?.options ?? _options
+  const options = optionKeyMap[optionKey!]?.options ?? _options
 
-  const type = optionKeyMap[uniqueKey!]?.type ?? _type
+  const type = optionKeyMap[optionKey!]?.type ?? _type
   // dataSource value值本地变量
   const [dataSource, setDataSource] = useState<any>(null);
 

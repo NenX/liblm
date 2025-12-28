@@ -2,14 +2,14 @@ import { FormSectionForm } from '@lm_fe/components_m';
 import { mchcUtils } from '@lm_fe/env';
 import { BF_Wrap2 } from '@lm_fe/pages';
 import { SMchc_Doctor } from '@lm_fe/service';
-import  React from 'react';
+import * as React from 'react';
 import { useEffect } from 'react';
 import { IInitial_Tab_props } from '../../types';
 // import getConfig from './config';
 
 export default function JWS(props: IInitial_Tab_props) {
-  const { form, active, disabled_save } = props
-  const id = mchcUtils.single_id()
+  const { form, active } = props
+  const id = mchcUtils.getDoctorEndId()
 
   const { Wrap, config } = BF_Wrap2({ default_conf: { title: '门诊-既往史', tableColumns: () => import('./config') } })
   useEffect(() => {
@@ -27,8 +27,6 @@ export default function JWS(props: IInitial_Tab_props) {
 
   return <Wrap>
     <FormSectionForm
-      disableAll={disabled_save}
-
       onValuesChange={(changedValues) => {
 
       }}

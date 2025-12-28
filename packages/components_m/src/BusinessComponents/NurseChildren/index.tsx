@@ -1,8 +1,8 @@
-import { MyIcon } from '@lm_fe/components';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { safe_json_parse } from '@lm_fe/utils';
 import { Col, Row } from 'antd';
 import { get, isEmpty, map, set } from 'lodash';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import BaseFormComponent from '../../BaseFormComponent';
 import styles from './index.less';
 export default class NurseChildren extends Component {
@@ -506,7 +506,7 @@ export default class NurseChildren extends Component {
       <div key={index}>
         <div style={{ paddingLeft: 30 }}>
           <span>胎儿{index + 1}：</span>
-          <MyIcon value='PlusCircleOutlined' onClick={this.handleAdd} />
+          <PlusCircleOutlined onClick={this.handleAdd} />
         </div>
         <Row>
           <Col span={8}>

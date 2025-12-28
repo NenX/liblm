@@ -1,18 +1,19 @@
-import { IGlobalModalProps, MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { IGlobalModalProps } from '@lm_fe/components';
 import { IMchc_TemplateTree_Item, SLocal_State } from '@lm_fe/service';
 import { request, safe_json_parse } from '@lm_fe/utils';
-import { Button, Modal, Popconfirm, Row } from 'antd';
+import { Button, Col, Modal, Popconfirm, Row, message } from 'antd';
 import { compact, concat, get, indexOf, isEmpty, isNil, keyBy, keys, map, set, size } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
-import { LazyAntd } from '@lm_fe/components';
-import { getResources } from '@lm_fe/components_m';
-import { mchcEnv, MODAL_TEMPLATE_TYPES } from '@lm_fe/env';
 import EditModal from './EditModal';
 import { baseType, } from './common';
 import styles from './index.module.less';
 import { transferTemplates } from './methods';
 import { ITemplateType, MyDataNode } from './types';
+import { mchcEnv, mchcLogger, MODAL_TEMPLATE_TYPES } from '@lm_fe/env';
+import { getResources } from '@lm_fe/components_m';
+import { LazyAntd } from '@lm_fe/components';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
@@ -195,7 +196,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
     set_editModalVisible(false)
     set_activeTemplate({})
 
-    mchcEnv.success('提交模板成功');
+    message.success('提交模板成功');
     getTemplateList();
   };
 
@@ -213,7 +214,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
     if (!t) return
     e.stopPropagation();
     await t.delItem?.({ item: template });
-    mchcEnv.success('删除模板成功');
+    message.success('删除模板成功');
     getTemplateList();
   };
 
@@ -304,13 +305,12 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
                 {canOperate && (
                   <div className={styles["template-list-item__actions"]}>
                     {/* <PlusCircleOutlined className={styles["template-list-item__actions-icon"]} onClick={handleAddTemplate} /> */}
-                    <MyIcon
-                      value='EditOutlined'
+                    <EditOutlined
                       className={styles["template-list-item__actions-icon"]}
                       onClick={handleEditTemplate(template)}
                     />
                     <Popconfirm title="确定要删除这个模板吗？" onConfirm={handleConfirmDelete(template)}>
-                      <MyIcon value='DeleteOutlined' className={styles["template-list-item__actions-icon"]} />
+                      <DeleteOutlined className={styles["template-list-item__actions-icon"]} />
                     </Popconfirm>
                   </div>
                 )}
@@ -330,13 +330,12 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
               {canOperate && (
                 <div className={styles["template-list-item__actions"]}>
                   {/* <PlusCircleOutlined className={styles["template-list-item__actions-icon"]} onClick={handleAddTemplate} /> */}
-                  <MyIcon
-                    value='EditOutlined'
+                  <EditOutlined
                     className={styles["template-list-item__actions-icon"]}
                     onClick={handleEditTemplate(template)}
                   />
                   <Popconfirm title="确定要删除这个模板吗？" onConfirm={handleConfirmDelete(template)}>
-                    <MyIcon value='DeleteOutlined' className={styles["template-list-item__actions-icon"]} />
+                    <DeleteOutlined className={styles["template-list-item__actions-icon"]} />
                   </Popconfirm>
                 </div>
               )}
@@ -411,7 +410,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
   return (
     <Modal
       {...others}
-      bodyStyle={{ height: '80vh', overflowY: 'auto' }}
+      bodyStyle={{ height: '80vh', overflowY: 'scroll' }}
       className={styles["textarea-with-template__modal"]}
       title="模板导入"
       width={1100}

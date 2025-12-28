@@ -1,6 +1,6 @@
 import { cloneDeep, forEach, get, orderBy, set, size, without } from 'lodash';
 import { useEffect, useState } from 'react';
-import { IGlobalModalProps, LazyAntd, Modal_L } from '@lm_fe/components';
+import { IGlobalModalProps, LazyAntd } from '@lm_fe/components';
 import { IMchc_Doctor_OutpatientHeaderInfo, IMchc_FormDescriptions_Field, IMchc_SyphilisManage, SMchc_SyphilisManage, } from '@lm_fe/service';
 import styles from './index.module.less';
 import { getSearchParamsValue } from '@lm_fe/utils';
@@ -293,7 +293,7 @@ export default function SyphilisManagement(props: IGlobalModalProps<IProos>) {
 
 
   return (
-    <Modal_L
+    <Modal
       {...others}
       title="梅毒专案管理"
       className={styles["syphilis-modal"]}
@@ -307,7 +307,7 @@ export default function SyphilisManagement(props: IGlobalModalProps<IProos>) {
         getFormHandler={setFormHandler}
         submitChange={false}
       />
-    </Modal_L>
+    </Modal>
   );
 }
 

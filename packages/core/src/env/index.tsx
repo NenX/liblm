@@ -1,30 +1,19 @@
-import { legacyLogicalPropertiesTransformer, StyleProvider } from '@ant-design/cssinjs';
 import {
-    // configCustomIcon,
+    configCustomIcon,
     MyLazyComponent,
     MountMchcModal as OldMountMchcModal
 } from '@lm_fe/components_m';
-import { mchcBoot, mchcDriver, mchcMacro, MchcRouterContainer, mchcRouterContainer__, MchcTypes } from "@lm_fe/env";
+import { mchcBoot, mchcDriver, MchcRouterContainer, mchcRouterContainer__, MchcTypes } from "@lm_fe/env";
 import { MountMchcModal } from '@lm_fe/pages';
 import { fubaoRoutes } from '@lm_fe/pages-fubao';
 import { mchcRoutes } from '@lm_fe/pages-mchc';
 import { IMchc_User, SMchc_Common, SMchc_User } from "@lm_fe/service";
 import { AnyObject, appEnv, makeEventStore } from "@lm_fe/utils";
-import React, { FC, ReactNode } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-
-import { THEME } from '@lm_fe/provoke';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale/zh_CN';
+import { FC, FunctionComponentElement } from 'react';
+import ReactDOM from 'react-dom';
 import { Store } from 'redux';
 import { ReloadButton } from './ReloadButton';
-import { use_task } from "./tasks";
-
-import './init';
-import { MessageHolder } from './message';
-import { theme_config } from './theme_config';
-
+import { runTask } from "./tasks";
 export interface IGlobalStoreData {
     loggedIn: boolean
     user?: IMchc_User
@@ -41,50 +30,36 @@ export async function logout() {
 }
 export async function boot(config: {
     store?: Store
-    app?: ReactNode,
+    app?: FunctionComponentElement<any> | FunctionComponentElement<any>[],
     App?: FC<{ routerContainer?: MchcRouterContainer }>,
+    scriptUrl?: any,
     name?: MchcTypes,
     taskDisabled?: boolean,
     routesData?: AnyObject
 }) {
-
-    const { name, app, App, routesData = {}, taskDisabled, store } = config
+    const { scriptUrl, name, app, App, routesData = {}, taskDisabled, store } = config
+    configCustomIcon(scriptUrl)
     await mchcBoot({ name, store })
     mchcDriver.connect()
+    if (!taskDisabled)
+        runTask()
 
     mchcRouterContainer__.init(routesData, mchcRoutes, fubaoRoutes)
 
     const r_node = App ? <App routerContainer={mchcRouterContainer__} /> : null
     const _app = app ?? r_node
 
-    ReactDOM
-        .createRoot(document.getElementById('root')!)
-        .render(<BrowserRouter basename={mchcMacro.PUBLIC_PATH}><Shell node={_app} taskDisabled={taskDisabled} /></BrowserRouter>);
-
-
-}
-
-function Shell(props: { node: ReactNode, taskDisabled?: boolean }) {
-    const { node, taskDisabled } = props
-    const { sys_theme } = use_task(taskDisabled)
-
-
-    return <StyleProvider
-        hashPriority="high"
-        transformers={[legacyLogicalPropertiesTransformer]}
-    >
-        <ConfigProvider locale={zhCN} theme={theme_config(sys_theme)}>
+    ReactDOM.render(
+        <>
             <ReloadButton />
-
-            {node}
-
+            {_app}
             <MyLazyComponent fallback=''>
                 <MountMchcModal />
                 <OldMountMchcModal />
-                <MessageHolder />
             </MyLazyComponent>
-        </ConfigProvider>
-    </StyleProvider>
+        </>,
+        document.getElementById('root')
+    );
 
 
 }

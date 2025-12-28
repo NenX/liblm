@@ -105,7 +105,7 @@ export default function WorkFlow() {
               background: '#fff',
               position: 'relative',
               // height: 'calc(((100vh - 48px) - 36px) - 24px)',
-              // overflowY: 'auto'
+              // overflowY: 'scroll'
             }}
           >
             <Right

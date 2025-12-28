@@ -1,32 +1,19 @@
-import React from 'react'
 import { IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable, SMchc_FormDescriptions } from "@lm_fe/service";
-import { IMyBaseList_ColumnType, MyBaseListProps, TableProps, RcTableProps } from "./types";
+import { IMyBaseList_ColumnType, MyBaseListProps } from "./types";
 import { get, isFunction, isNil, isObject, isString } from "lodash";
-import { AnyObject, expect_array, flat, safe_async_call, safe_json_parse, safe_json_parse_arr, safeGetFromFuncOrData } from "@lm_fe/utils";
+import { AnyObject, expect_array, safe_async_call, safe_json_parse, safe_json_parse_arr } from "@lm_fe/utils";
 import { ICommonOption } from "@lm_fe/env";
 import { useEffect, useState } from "react";
-export { TableProps }
-export function formatProps(props: any) {
-  const _props: MyBaseListProps = { ...props }
-  _props.handleBeforePopup = _props.handleBeforePopup ?? _props.bf_conf?.handleBeforePopup ?? (values => values)
-  _props.beforeSubmit = _props.beforeSubmit ?? _props.bf_conf?.beforeSubmit ?? (values => values)
-  _props.name = _props.name ?? _props.bf_conf?.name
-  _props.searchParams = safeGetFromFuncOrData(_props.searchParams ?? _props.bf_conf?.searchParams)
-  _props.initialSearchValue = safeGetFromFuncOrData(_props.initialSearchValue ?? _props.bf_conf?.initialSearchValue)
-  _props.searchConfig = safeGetFromFuncOrData(_props.searchConfig ?? _props.bf_conf?.searchConfig)
-  _props.tableColumns = _props.tableColumns ?? _props.bf_conf?.tableColumns
-  _props.showAction = _props.showAction ?? _props.bf_conf?.showAction ?? true
-  _props.showAdd = _props.showAdd ?? _props.bf_conf?.showAdd ?? true
-  _props.genColumns = _props.genColumns ?? _props.bf_conf?.genColumns ?? undefined
-
+export function formatProps(props: MyBaseListProps) {
+  const _props = { ...props }
 
   return _props
 }
 
 export function tranformQueryData(values: AnyObject, searchConfig: IMchc_FormDescriptions_Field_Nullable[] = [], isFuck = false) {
   const newValues = { ...values }
-  const straws = flat(searchConfig.filter(_ => _?.inputType === 'straw')?.map(_ => _?.children ?? [])).map(_ => ({ ..._, straw_children: true }))
-  const kvArr = [...searchConfig, ...straws]
+
+  const kvArr = searchConfig
     .filter(_ => _)
     .map(conf => {
       // const k = _?.name!
@@ -37,7 +24,7 @@ export function tranformQueryData(values: AnyObject, searchConfig: IMchc_FormDes
   return kvArr.reduce((sum, [k, v, conf]) => {
 
     if (isFuck) return { ...sum, [k]: v }
-    const res = (conf && !get(conf, 'straw_children')) ? calcKeyByType(k, v, conf) : { [k]: v }
+    const res = conf ? calcKeyByType(k, v, conf) : { [k]: v }
     return { ...sum, ...res }
   }, {})
 
@@ -58,15 +45,15 @@ function calcKeyByType(k: string, v: any, config: IMchc_FormDescriptions_Field) 
   const input_type = config.inputType! ?? 'input'
   const filterType = config.filterType?.split?.(',') ?? []
 
-  const type = config.inputProps?.type || config.inputProps?.mode
+  const type = config.inputProps?.type
   const is_multiple = type === 'multiple' || type === 'tags'
 
   const f1 = filterType[0]
   const f2 = filterType[1]
-  if (['input', 'Input', 'MyInput', 'address', 'MyAddress', 'MA'].includes(input_type)) {
+  if (['input', 'Input', 'MyInput', 'address', 'MyAddress'].includes(input_type)) {
     return { [`${k}.${f1 || 'contains'}`]: v }
   }
-  if (['input_number', 'InputNumber', 'DatePicker', 'MSW', 'MySwitch', 'switch'].includes(input_type)) {
+  if (['input_number', 'InputNumber', 'DatePicker'].includes(input_type)) {
     return { [`${k}.${f1 || 'equals'}`]: v }
   }
   if (['select', 'Select', 'MySelect', 'MS'].includes(input_type)) {
@@ -93,7 +80,7 @@ function calcKeyByType(k: string, v: any, config: IMchc_FormDescriptions_Field) 
 
     }
   }
-  if (['RangePicker', 'rangeDate', 'MyRangeDate', 'rangeDateTime', 'MyRangeDateTime', 'ArrayInput'].includes(input_type)) {
+  if (['RangePicker', 'rangeDate', 'MyRangeDate', 'rangeDateTime', 'MyRangeDateTime','ArrayInput'].includes(input_type)) {
     const value = safe_json_parse_arr(v)
     return {
       [`${k}.${f1 || 'greaterOrEqualThan'}`]: value[0],

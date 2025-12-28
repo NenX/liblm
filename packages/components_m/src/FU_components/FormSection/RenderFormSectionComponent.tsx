@@ -1,18 +1,20 @@
-import { AutoComplete, ButtonProps, Col, Divider, Form, FormInstance, Input, Radio, Row, Space } from 'antd';
-import { get, isNil, keyBy, set } from 'lodash';
+import { AutoComplete, ButtonProps, Divider, FormInstance, Input, Radio } from 'antd';
+import { get, keyBy } from 'lodash';
 import React, { lazy } from 'react';
 import DataSelectWithOptionsOrInput from '../../selects/DataSelectWithOptionsOrInput';
+import PatientAutoComplete from '../../selects/PatientAutoComplete';
 
 // import RowoftireRecordBaby from '../../others/baby-form';
 const BirthCertificateChildren = lazy(() => import('../../BusinessComponents/BirthCertificateChildren'))
 const Deathclassification1 = lazy(() => import('../../BusinessComponents/TemplateTexDeathclassification1'))
 const Deathclassification2 = lazy(() => import('../../BusinessComponents/TemplateTexDeathclassification2'))
 const TemplateTextareav3 = lazy(() => import('../../BusinessComponents/TemplateTextareav3'))
-// const TemplateTextrootcauseDeath = lazy(() => import('../../BusinessComponents/TemplateTextrootcauseDeath'))
+const TemplateTextrootcauseDeath = lazy(() => import('../../BusinessComponents/TemplateTextrootcauseDeath'))
+const RevertEditInTable = lazy(() => import('../../ConfigComponents/RevertEditInTable'))
 const BorderTitle = lazy(() => import('../../GeneralComponents/border-title/border-title'))
 const NativePlace = lazy(() => import('../../selects/NativePlace/NativePlace'))
-// const CureState = lazy(() => import('../../special-components/cure-state/cure-state'))
-// const SyphilisTested = lazy(() => import('../../special-components/syphilis-tested/syphilis-tested'))
+const CureState = lazy(() => import('../../special-components/cure-state/cure-state'))
+const SyphilisTested = lazy(() => import('../../special-components/syphilis-tested/syphilis-tested'))
 const DataSelect = lazy(() => import('../../DataSelect'))
 const DataSelectWithAutoInput = lazy(() => import('../../DataSelectWithAutoInput'))
 const PressureInputV2 = lazy(() => import('../../BusinessComponents/PressureInput/index-v2'))
@@ -25,20 +27,20 @@ const BloodAndThalassemia = lazy(() => import('../../BusinessComponents/BloodAnd
 const BloodPressure = lazy(() => import('../../BusinessComponents/BloodPressure'))
 const BregmaGroup = lazy(() => import('../../BusinessComponents/BregmaGroup'))
 const CaesareanChildren = lazy(() => import('../../BusinessComponents/CaesareanChildren'))
-// const CalculateScoreTable = lazy(() => import('../../BusinessComponents/CalculateScoreTable'))
+const CalculateScoreTable = lazy(() => import('../../BusinessComponents/CalculateScoreTable'))
 const Diagnosis = lazy(() => import('../../BusinessComponents/Diagnosis'))
 const DiagnosisList = lazy(() => import('../../BusinessComponents/DiagnosisList'))
 const DiagnosisListInduced = lazy(() => import('../../BusinessComponents/DiagnosisListInduced'))
 const DiagnosisListv2 = lazy(() => import('../../BusinessComponents/DiagnosisListv2'))
-// const FamilyTumorHistory = lazy(() => import('../../BusinessComponents/FamilyTumorHistory'))
+const FamilyTumorHistory = lazy(() => import('../../BusinessComponents/FamilyTumorHistory'))
 const FetalNTCheck = lazy(() => import('../../BusinessComponents/FetalNTCheck'))
-// const FetalUltrasound = lazy(() => import('../../BusinessComponents/FetalUltrasound'))
-// const FoetalAppendage = lazy(() => import('../../BusinessComponents/FoetalAppendage'))
+const FetalUltrasound = lazy(() => import('../../BusinessComponents/FetalUltrasound'))
+const FoetalAppendage = lazy(() => import('../../BusinessComponents/FoetalAppendage'))
 const GynaecologyOperationTemplateTextarea = lazy(() => import('../../BusinessComponents/GynaecologyOperationTemplateTextarea'))
 const GynaecologyTemplateTextarea = lazy(() => import('../../BusinessComponents/GynaecologyTemplateTextarea'))
 const HighriskSign = lazy(() => import('../../BusinessComponents/HighriskSign'))
 const InducedFetus = lazy(() => import('../../BusinessComponents/InducedFetus'))
-// const InspectionResultTextarea = lazy(() => import('../../BusinessComponents/InspectionResultTextarea'))
+const InspectionResultTextarea = lazy(() => import('../../BusinessComponents/InspectionResultTextarea'))
 const KnowledgeBase = lazy(() => import('../../BusinessComponents/KnowledgeBase'))
 const LaborProcess = lazy(() => import('../../BusinessComponents/LaborProcess'))
 // const LaborProcess2 = lazy(() => import('../../BusinessComponents/LaborProcess2'))
@@ -51,41 +53,46 @@ const NursingFetus = lazy(() => import('../../BusinessComponents/NursingFetus'))
 const NursingFetusv2 = lazy(() => import('../../BusinessComponents/NursingFetusv2'))
 const NursingFetusv3 = lazy(() => import('../../BusinessComponents/NursingFetusv3'))
 // const NursingFetusv4 = lazy(() => import('../../BusinessComponents/NursingFetusv4'))
-// const OxytocinTable = lazy(() => import('../../BusinessComponents/OxytocinTable'))
+const OxytocinTable = lazy(() => import('../../BusinessComponents/OxytocinTable'))
 const PostpartumFetal = lazy(() => import('../../BusinessComponents/PostpartumFetal'))
 const PregnancyHistoryV2 = lazy(() => import('../../BusinessComponents/PregnancyHistoryV2'))
 const PressureInput = lazy(() => import('../../BusinessComponents/PressureInput'))
 const ProcedureCystocentesis = lazy(() => import('../../BusinessComponents/ProcedureCystocentesis'))
+const ProcedureIntrauterine = lazy(() => import('../../BusinessComponents/ProcedureIntrauterine'))
 const RecordState = lazy(() => import('../../BusinessComponents/RecordState'))
 const ReferralRegister = lazy(() => import('../../BusinessComponents/ReferralRegister'))
 const ReferralToRegister = lazy(() => import('../../BusinessComponents/ReferralToRegister'))
+const ResultTextarea = lazy(() => import('../../BusinessComponents/ResultTextarea'))
 const ShiftPatients = lazy(() => import('../../BusinessComponents/ShiftPatients'))
+const SurgicalInspectionReport = lazy(() => import('../../BusinessComponents/SurgicalInspectionReport'))
 const TemplateTextarea = lazy(() => import('../../BusinessComponents/TemplateTextarea'))
 const TemplateTextareav2 = lazy(() => import('../../BusinessComponents/TemplateTextareav2'))
-// const UltrosoundResultTextarea = lazy(() => import('../../BusinessComponents/UltrosoundResultTextarea'))
-// const BloodSugarNursingTable = lazy(() => import('../../ConfigComponents/BloodSugarNursingTable'))
+const UltrosoundResultTextarea = lazy(() => import('../../BusinessComponents/UltrosoundResultTextarea'))
+const BloodSugarNursingTable = lazy(() => import('../../ConfigComponents/BloodSugarNursingTable'))
 const CheckboxGroup = lazy(() => import('../../ConfigComponents/CheckboxGroup'))
 const CheckboxWithInput = lazy(() => import('../../ConfigComponents/CheckboxWithInput'))
 const CheckboxWithInputv2 = lazy(() => import('../../ConfigComponents/CheckboxWithInputv2'))
 const CheckboxWithSingleInput = lazy(() => import('../../ConfigComponents/CheckboxWithSingleInput'))
 const CustomEditInTable = lazy(() => import('../../ConfigComponents/CustomEditInTable'))
-
 const InputWithLabel = lazy(() => import('../../ConfigComponents/InputWithLabel'))
 const InputWithRange = lazy(() => import('../../ConfigComponents/InputWithRange'))
 const InputWithRangTip = lazy(() => import('../../ConfigComponents/InputWithRangTip'))
 const MultipleInputWithLabel = lazy(() => import('../../ConfigComponents/MultipleInputWithLabel'))
 // const NeonatalCareRecordTable = lazy(() => import('../../ConfigComponents/NeonatalCareRecordTable'))
 const NormalCheckboxWithInput = lazy(() => import('../../ConfigComponents/NormalCheckboxWithInput'))
-// const NormalNursingTable = lazy(() => import('../../ConfigComponents/NormalNursingTable'))
-// const PastDeliveryNursingTable = lazy(() => import('../../ConfigComponents/PastDeliveryNursingTable'))
+const NormalNursingTable = lazy(() => import('../../ConfigComponents/NormalNursingTable'))
+const OxytocinNursingTable = lazy(() => import('../../ConfigComponents/OxytocinNursingTable'))
+const PastDeliveryNursingTable = lazy(() => import('../../ConfigComponents/PastDeliveryNursingTable'))
 // const PreDeliverNursingTable = lazy(() => import('../../ConfigComponents/PreDeliverNursingTable'))
 const ProcedureRecords = lazy(() => import('../../ConfigComponents/ProcedureRecords'))
 const PureCheckbox = lazy(() => import('../../ConfigComponents/PureCheckbox'))
-// const SpecialNursingTable = lazy(() => import('../../ConfigComponents/SpecialNursingTable'))
-// const TemperatureNursingTable = lazy(() => import('../../ConfigComponents/TemperatureNursingTable'))
+const SpecialNursingTable = lazy(() => import('../../ConfigComponents/SpecialNursingTable'))
+const TemperatureNursingTable = lazy(() => import('../../ConfigComponents/TemperatureNursingTable'))
 const MySearchSelect = lazy(() => import('../../FU_components/MySearchSelect'))
 const AsyncAutoComplete = lazy(() => import('../../GeneralComponents/AsyncAutoComplete'))
-// const CheckboxGroupObject = lazy(() => import('../../GeneralComponents/CheckboxGroupObject'))
+const Button = lazy(() => import('../../GeneralComponents/Button'))
+const CheckAndCancelButton = lazy(() => import('../../GeneralComponents/CheckAndCancelButton'))
+const CheckboxGroupObject = lazy(() => import('../../GeneralComponents/CheckboxGroupObject'))
 const CustomTreeSelect = lazy(() => import('../../GeneralComponents/CustomTreeSelect'))
 const InputWithTitle = lazy(() => import('../../GeneralComponents/FormSectionInput'))
 const InputNumber = lazy(() => import('../../GeneralComponents/InputNumber'))
@@ -99,7 +106,7 @@ const AgeSelect = lazy(() => import('../../selects/AgeSelect'))
 const ApgarScoreInput = lazy(() => import('../../selects/ApgarScoreInput'))
 const AutoCompleteWithRed = lazy(() => import('../../selects/AutoCompleteWithRed'))
 const CountrySelect = lazy(() => import('../../selects/CountrySelect'))
-// const CronSelect = lazy(() => import('../../selects/CronSelect'))
+const CronSelect = lazy(() => import('../../selects/CronSelect'))
 const DeviceStatusSelect = lazy(() => import('../../selects/DeviceStatusSelect'))
 const NormalSelect = lazy(() => import('../../selects/NormalSelect'))
 const ParentPermissionSelect = lazy(() => import('../../selects/ParentPermissionSelect'))
@@ -109,7 +116,9 @@ const RadioWithInputNumber = lazy(() => import('../../selects/RadioWithInputNumb
 const ReferralOrganizationSelect = lazy(() => import('../../selects/ReferralOrganizationSelect'))
 const SelectTagWithOptions = lazy(() => import('../../selects/SelectTagWithOptions'))
 const SelectWithNoneOption = lazy(() => import('../../selects/SelectWithNoneOption'))
-// const SelectWithOptions = lazy(() => import('../../selects/SelectWithOptions'))
+const SelectWithOptions = lazy(() => import('../../selects/SelectWithOptions'))
+const SurgicalBeforeNurseSelect = lazy(() => import('../../selects/SurgicalBeforeNurseSelect'))
+const SurgicalBeforeOperatorSelect = lazy(() => import('../../selects/SurgicalBeforeOperatorSelect'))
 const TriggerTypeSelect = lazy(() => import('../../selects/TriggerTypeSelect'))
 const DataPickWithCheck = lazy(() => import('../../GeneralComponents/datapick_with_check/datapick_with_check'))
 const CusDataTimePicker = lazy(() => import('../../GeneralComponents/DataTimePick'))
@@ -119,14 +128,14 @@ const HepatitsNewBabyCom = lazy(() => import('../../newly-component/hepatitis-ne
 // const ObserMagnesiumsulphateTable = lazy(() => import('../../ConfigComponents/ObserMagnesiumsulphateTable2'))
 // const PostUrinaryretentionTable = lazy(() => import('../../ConfigComponents/PostUrinaryretentionTable2'))
 // const NeonatalScaleExamination = lazy(() => import('../../ConfigComponents/NeonatalScaleExamination'))
-// import VaginaStrumentsRecordForm from '../../ConfigComponents/VaginaStrumentsRecordForm';
+import VaginaStrumentsRecordForm from '../../ConfigComponents/VaginaStrumentsRecordForm';
 import CascaderAddress from '../../selects/CascaderAddress';
 import SelectWithOptionsOrInput from '../../selects/SelectWithOptionsOrInput';
 
 // import TreatmentProgramTable from '../../BusinessComponents/TreatmentProgram/TreatmentProgramTable'
 // import TextareaTemplate from '../../GeneralComponents/TextareaTemplate'
 // import ImageEditor from '../../GeneralComponents/ImageEditor'
-
+// import PermissionSelect from '../../selects/PermissionSelect'
 // import UploadImg from '../../GeneralComponents/UploadImg'
 // import CustomEditor from '../../GeneralComponents/CustomEditor'
 import MobileEditor from '../../GeneralComponents/MobileEditor';
@@ -135,80 +144,38 @@ import { safe_json_parse } from '@lm_fe/utils';
 import ImageUploadPreview from '../../GeneralComponents/ImageUploadPreview';
 import ImageUploadPreviewIntranet from '../../GeneralComponents/ImageUploadPreviewIntranet';
 // import { safe_json_parse } from '@lm_fe/utils';
-import { IMchc_FormDescriptions_Field_Nullable, MyImageEditor } from '@lm_fe/components';
+import { MyImageEditor } from '@lm_fe/components';
 import { mchcEvent } from '@lm_fe/env';
 import { IMchc_FormDescriptions_Field } from '@lm_fe/service';
 import { IMchc_FormDescriptions_FormItemLayout } from '@lm_fe/service/dist/mchc/service/FormDescriptions/types/FormItemLayout';
 import { InterceptComponent } from 'src/utils/InterceptComponent';
-import { MyRangePicker, OkButton, RolesPicker } from '../../FU_components';
-
+import { MyRangePicker, RolesPicker } from '../../FU_components';
+import MyButton from '../../FU_components/MyButton';
 import { getFormSectionComponent } from './FormSectionComponent';
 
-import { form_control } from './form_control';
-import { formatFormConfig, render_form_label } from './utils';
-import my_styles from './RenderFormSectionComponent.module.less'
+import DatePickerCus from '../../GeneralComponents/DatePicker';
 interface IProps {
-    formDescription: IMchc_FormDescriptions_Field_Nullable,
-    renderEditItem: (key: IMchc_FormDescriptions_Field_Nullable, ReactNode: React.ReactNode, others?: any) => any,
+    formDescription: IMchc_FormDescriptions_Field,
+    id: String | Number | undefined,
+    renderEditItem: (key: string, ReactNode: React.ReactNode, others?: any) => any,
     disableAll: boolean,
     form?: FormInstance,
+    registrationEvents: any,
     events: any,
+    products: any,
     data: any,
     extraData: any
     formName?: string
+    targetLabelCol: number
 }
 function RenderFormSectionComponent(props: IProps) {
 
-    const { formDescription, renderEditItem, disableAll, form, formName, events, data, extraData } = props
-    const _config = formDescription
-    if (!_config) return null
-    const dependency = _config.inputProps?.dependency
-
-    const { showDeps, error_deps, requiredDeps, warning_deps, disabledDeps } = _config
-
-
-    if (![showDeps, error_deps, requiredDeps, warning_deps, disabledDeps].every(isNil) || dependency) {
-        return (
-            <Form.Item noStyle shouldUpdate key={_config.key}>
-                {f => {
-                    const { isShow, isDisabled, isRequired, is_error, is_warning } = form_control(f, _config)
-
-
-                    let newDescription = { ..._config }
-
-                    let _props = get(newDescription, 'inputProps', {})
-
-                    if (!isShow) {
-                        return null
-                    }
-                    if (isDisabled) {
-
-                        newDescription.inputProps = { ..._props, disabled: true }
-                    }
-                    if (isRequired) {
-                        set(newDescription, 'required', true)
-                    }
-
-
-                    if (is_warning) {
-                        newDescription.inputProps = { ..._props, status: 'warning' }
-
-                    }
-                    if (is_error) {
-                        newDescription.inputProps = { ..._props, status: 'error' }
-
-                    }
-                    return (
-                        renderC(newDescription)
-                    )
-                }}
-            </Form.Item>
-        )
-    }
+    const { formDescription, id, renderEditItem, disableAll, form, registrationEvents, formName, events, products, data, extraData } = props
 
 
     function renderC(config: IMchc_FormDescriptions_Field) {
         const {
+            label,
             formItemLayout = {} as IMchc_FormDescriptions_FormItemLayout,
             styles,
             key,
@@ -216,42 +183,27 @@ function RenderFormSectionComponent(props: IProps) {
             special_config,
             specialConfig,
         } = config
-        const form_config = config as any
+        const formDescriptionKey = config.key as any
         const formDescriptionPath = get(config, 'path') as any
         const inputType = get(config, 'inputType') as any
         const formDescriptionSpecialConfig = safe_json_parse(specialConfig,) ?? safe_json_parse(special_config, {})
         const formItemOthers = { disabled: disableAll, }
-        const label = config.label || config.title
         switch (inputType) {
-            case 'straw':
-                const straw_conf = formatFormConfig(config)
-                const labelCol: any = straw_conf.formItemLayout?.labelCol ?? {}
-                const wrapperCol: any = straw_conf.formItemLayout?.wrapperCol ?? {}
-                const straw_props = straw_conf.inputProps ?? {}
-                return <Row>
-                    <Col style={{ display: 'flex', justifyContent: 'flex-end', }} span={labelCol.span}>
-                        <span style={{ marginBottom: 4, display: 'flex', alignItems: 'center', }}>{render_form_label(straw_conf)}{straw_conf.label ? <span style={{ margin: '0 8px 0 2px' }}>:</span> : ''}</span>
-                    </Col>
-                    <Col span={wrapperCol.span}>
-                        <Space.Compact rootClassName={my_styles.compact} style={{ width: '100%', }}
-                            {...straw_props}
-                        // size={_config.inputProps?.size ?? 'small'}
-                        >
-                            {
-                                straw_conf.children?.map(c => {
-                                    if (!c) return null
-                                    // c.styles = { width: c.inputProps?.width ?? '100%' } // 必须设置 100%，否则一些输入框长度有问题
-                                    // c.styles = { width: c.inputProps?.width ?? 'auto' } // 必须设置 100%，否则一些输入框长度有问题
-                                    return <RenderFormSectionComponent
-                                        // style={{ margin: 0 }}
-                                        disableAll={disableAll}
-                                        renderEditItem={renderEditItem} formDescription={c} />
-                                })
-                            }
-                        </Space.Compact>
-                    </Col>
-                </Row>
-
+            case 'id':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <InputNumber min={0} {...formItemOthers} {...inputProps} config={config} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                        hidden: true
+                    }
+                );
+            case 'null':
+                return renderEditItem(
+                    formDescriptionKey,
+                    null,
+                );
             case 'title':
                 // 显示小标题
                 return (
@@ -259,11 +211,26 @@ function RenderFormSectionComponent(props: IProps) {
                         {inputProps.title || label}
                     </div>
                 );
-
-
+            case 'subdevice_id':
+                return (
+                    id &&
+                    renderEditItem(formDescriptionKey, <InputWithTitle {...formItemOthers} {...inputProps} />)
+                );
+            case 'radio':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <Radio.Group {...formItemOthers}>
+                        <Radio value={1}>是</Radio>
+                        <Radio value={0}>否</Radio>
+                    </Radio.Group>,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'radio_group':
                 return renderEditItem(
-                    config,
+                    get(config, 'key'),
                     <Radio.Group {...formItemOthers} {...get(config, 'inputProps')} />,
                     {
                         ...formItemLayout,
@@ -272,12 +239,12 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'normal_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NormalSelect
                         type={get(formDescriptionSpecialConfig, 'type')}
                         showSearch={get(formDescriptionSpecialConfig, 'showSearch')}
                         autoWrite={get(formDescriptionSpecialConfig, 'autoWrite')}
-                        popupMatchSelectWidth={get(formDescriptionSpecialConfig, 'popupMatchSelectWidth')}
+                        dropdownMatchSelectWidth={get(formDescriptionSpecialConfig, 'dropdownMatchSelectWidth')}
                         {...formItemOthers}
                         {...inputProps} />,
                     {
@@ -292,7 +259,7 @@ function RenderFormSectionComponent(props: IProps) {
             //     });
             case 'country_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CountrySelect {...formItemOthers} language="zh-CN" placeholder="请选择国籍" />,
                     {
                         ...formItemLayout,
@@ -301,7 +268,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'dysmenorrhea_radio':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Radio.Group {...formItemOthers}>
                         <Radio value={true}>是</Radio>
                         <Radio value={false}>否</Radio>
@@ -313,7 +280,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'true_or_false_radio':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Radio.Group {...formItemOthers}>
                         <Radio value={true}>是</Radio>
                         <Radio value={false}>否</Radio>
@@ -325,7 +292,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'pregnant_radio':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Radio.Group {...formItemOthers}>
                         <Radio value={false}>否</Radio>
                         <Radio value={true}>是</Radio>
@@ -337,13 +304,13 @@ function RenderFormSectionComponent(props: IProps) {
                 );
 
             case 'radio_with_input':
-                return renderEditItem(form_config, <RadioWithInput {...formItemOthers} config={config} />, {
+                return renderEditItem(formDescriptionKey, <RadioWithInput {...formItemOthers} config={config} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'radio_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <RadioInput name={config.name} {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -351,13 +318,13 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'checkbox_with_input':
-                return renderEditItem(form_config, <CheckboxWithInput {...formItemOthers} config={config} formSection />, {
+                return renderEditItem(formDescriptionKey, <CheckboxWithInput {...formItemOthers} config={config} formSection />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'checkbox_with_inputv2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CheckboxWithInputv2 {...formItemOthers} config={config} />,
                     {
                         ...formItemLayout,
@@ -371,38 +338,38 @@ function RenderFormSectionComponent(props: IProps) {
 
             case 'checkbox_with_single_input':
                 return renderEditItem(
-                    config,
+                    get(config, 'key'),
                     <CheckboxWithSingleInput {...formItemOthers} config={config} />,
                     formItemLayout
                 );
             case 'pure_checkbox':
                 return renderEditItem(
-                    config,
+                    get(config, 'key'),
                     <PureCheckbox {...formItemOthers} config={config} />,
                     formItemLayout
                 );
             case 'checkbox_group':
-                return renderEditItem(form_config, <CheckboxGroup {...formItemOthers} config={config} />, {
+                return renderEditItem(formDescriptionKey, <CheckboxGroup {...formItemOthers} config={config} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'select_with_none_option':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <SelectWithNoneOption {...formItemOthers} config={config} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-            // case 'select_with_options':
-            //     return renderEditItem(form_config, <SelectWithOptions {...formItemOthers} config={config} />, {
-            //         ...formItemLayout,
-            //         styles,
-            //     });
+            case 'select_with_options':
+                return renderEditItem(formDescriptionKey, <SelectWithOptions {...formItemOthers} config={config} />, {
+                    ...formItemLayout,
+                    styles,
+                });
             case 'radio_with_input_number':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <RadioWithInputNumber {...formItemOthers} config={config} />,
                     {
                         ...formItemLayout,
@@ -420,7 +387,7 @@ function RenderFormSectionComponent(props: IProps) {
             //   );
             case 'pregnancy_history_v2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <PregnancyHistoryV2 {...formItemOthers} {...inputProps} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -429,7 +396,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'highrisk_sign':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <HighriskSign {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -438,7 +405,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'referral_register':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ReferralRegister {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -447,7 +414,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'referral_to_register':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ReferralToRegister {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -456,7 +423,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'record_state':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <RecordState {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -465,7 +432,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'pressure':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <PressureInput {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -474,34 +441,36 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'pressure-v2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <PressureInputV2 name={config.name} {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
+            case 'divider':
+                return <Divider {...inputProps} />;
+            case 'blank_part':
+                return <div style={styles}>{get(config, 'label')}</div>;
 
- 
 
 
-
-            // case 'fetus_appendages':
-            //     return renderEditItem(
-            //         form_config,
-            //         <FoetalAppendage
-            //             {...formItemOthers}
-            //             {...inputProps}
-            //             renderEditItem={renderEditItem}
-            //             form={form} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'fetus_appendages':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <FoetalAppendage
+                        {...formItemOthers}
+                        {...inputProps}
+                        renderEditItem={renderEditItem}
+                        form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'noenate_record':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NoenateRecord
                         {...formItemOthers}
                         {...inputProps}
@@ -514,7 +483,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'multiple_input_with_label':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MultipleInputWithLabel {...formItemOthers} config={config} />,
                     {
                         ...formItemLayout,
@@ -522,23 +491,23 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'input_with_label':
-                return renderEditItem(form_config, <InputWithLabel {...formItemOthers} config={config} />, {
+                return renderEditItem(formDescriptionKey, <InputWithLabel {...formItemOthers} config={config} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'input_with_range':
-                return renderEditItem(form_config, <InputWithRange {...formItemOthers} config={config} />, {
+                return renderEditItem(formDescriptionKey, <InputWithRange {...formItemOthers} config={config} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'input_with_range_tip':
-                return renderEditItem(form_config, <InputWithRangTip {...formItemOthers} config={config} />, {
+                return renderEditItem(formDescriptionKey, <InputWithRangTip {...formItemOthers} config={config} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'id_number_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <InputWithTitle
                         {...formItemOthers}
                         {...inputProps}
@@ -548,14 +517,14 @@ function RenderFormSectionComponent(props: IProps) {
                         styles,
                     }
                 );
-            // case 'cron':
-            //     return renderEditItem(form_config, <CronSelect {...formItemOthers} {...inputProps} />, {
-            //         ...formItemLayout,
-            //         styles,
-            //     });
+            case 'cron':
+                return renderEditItem(formDescriptionKey, <CronSelect {...formItemOthers} {...inputProps} />, {
+                    ...formItemLayout,
+                    styles,
+                });
             case 'trigger_type_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <TriggerTypeSelect {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -565,17 +534,21 @@ function RenderFormSectionComponent(props: IProps) {
             case 'text_area':
             case 'TextArea':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Input.TextArea {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-
+            // case 'tree_select':
+            //   return renderEditItem(formDescriptionKey, <PermissionSelect {...inputProps} />, {
+            //     ...formItemLayout,
+            //     styles,
+            //   });
             case 'parent_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ParentPermissionSelect {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -585,7 +558,7 @@ function RenderFormSectionComponent(props: IProps) {
 
             case 'password':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Input.Password {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -593,20 +566,28 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'auto_complete':
-                return renderEditItem(form_config, <AutoComplete {...formItemOthers} {...inputProps} />, {
+                return renderEditItem(formDescriptionKey, <AutoComplete {...formItemOthers} {...inputProps} />, {
                     ...formItemLayout,
                     styles,
                 });
-
+            case 'auto_complete_with_red':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <AutoCompleteWithRed {...formItemOthers} {...inputProps} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'async_autoComplete':
                 // console.log('-------测试-------', formItemOthers, inputProps);
-                return renderEditItem(form_config, <AsyncAutoComplete {...inputProps} />, {
+                return renderEditItem(formDescriptionKey, <AsyncAutoComplete {...inputProps} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'validdate':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DataSelect
                         {...formItemOthers}
                         dataSource={[
@@ -627,28 +608,28 @@ function RenderFormSectionComponent(props: IProps) {
             //     ...formItemLayout,
             //     styles,
             //   });
-            // case 'product':
-            //     return get(config, 'viewOnly')
-            //         ? renderEditItem(
-            //             form_config,
-            //             <span>{get(keyBy(products, 'id'), `${get(data, formDescriptionPath)}.name`)}</span>
-            //         )
-            //         : renderEditItem(
-            //             form_config,
-            //             <DataSelect
-            //                 {...formItemOthers}
-            //                 url="/products"
-            //                 valueKey="id"
-            //                 labelKey="name"
-            //                 {...inputProps} />,
-            //             {
-            //                 ...formItemLayout,
-            //                 styles,
-            //             }
-            //         );
+            case 'product':
+                return get(config, 'viewOnly')
+                    ? renderEditItem(
+                        formDescriptionKey,
+                        <span>{get(keyBy(products, 'id'), `${get(data, formDescriptionPath)}.name`)}</span>
+                    )
+                    : renderEditItem(
+                        formDescriptionKey,
+                        <DataSelect
+                            {...formItemOthers}
+                            url="/products"
+                            valueKey="id"
+                            labelKey="name"
+                            {...inputProps} />,
+                        {
+                            ...formItemLayout,
+                            styles,
+                        }
+                    );
             case 'roles':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     // <DataSelect
                     //     {...formItemOthers}
                     //     url="/groups"
@@ -664,7 +645,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'common_labels_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DataSelect
                         {...formItemOthers}
                         url="/common-labels?page=0&size=50"
@@ -679,7 +660,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'tube_bed_doctor_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DataSelectWithAutoInput {...formItemOthers} {...inputProps} form={form} />,
                     {
                         ...formItemLayout,
@@ -688,7 +669,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'device_status':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DeviceStatusSelect {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -697,14 +678,14 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'address':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CascaderAddress
 
                         needStreet={get(formDescriptionSpecialConfig, 'needStreet')}
                         onExtra={get(events, 'handleIDNumberChange')}
                         {...formItemOthers}
                         {...inputProps}
-                        name={form_config}
+                        name={formDescriptionKey}
                     />,
 
                     {
@@ -714,7 +695,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'permission_type':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <PermissionTypeSelect {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -726,18 +707,18 @@ function RenderFormSectionComponent(props: IProps) {
             //     ...formItemLayout,
             //     styles,
             //   });TimePicker
-            // case 'single_date_picker':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <DatePickerCus {...formItemOthers} {...inputProps} config={config} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'single_date_picker':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <DatePickerCus {...formItemOthers} {...inputProps} config={config} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'data_picker_checkbox':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DataPickWithCheck {...formItemOthers} {...inputProps} config={config} />,
                     {
                         ...formItemLayout,
@@ -745,23 +726,23 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'range_date_picker':
-                return renderEditItem(form_config, <RangePicker {...formItemOthers} {...inputProps} />, {
+                return renderEditItem(formDescriptionKey, <RangePicker {...formItemOthers} {...inputProps} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'RangePicker':
-                return renderEditItem(form_config, <MyRangePicker {...formItemOthers} {...inputProps} />, {
+                return renderEditItem(formDescriptionKey, <MyRangePicker {...formItemOthers} {...inputProps} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'single_time_picker':
-                return renderEditItem(form_config, <TimePicker {...formItemOthers} {...inputProps} />, {
+                return renderEditItem(formDescriptionKey, <TimePicker {...formItemOthers} {...inputProps} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'date_time_picker':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CusDataTimePicker {...formItemOthers} {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -770,7 +751,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'apgar_score_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ApgarScoreInput {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -779,7 +760,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'mobile_editor':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MobileEditor {...formItemOthers} config={formDescription} form={form} />,
                     {
                         ...formItemLayout,
@@ -788,7 +769,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'image_upload_preview':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ImageUploadPreview {...formItemOthers} />,
                     {
                         ...formItemLayout,
@@ -797,10 +778,12 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'image_upload_preview_Intranet':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ImageUploadPreviewIntranet
                         {...formItemOthers}
                         form={form}
+                        outputParamType={get(formDescription, 'input_props.outputParamType')}
+                        actionApi={get(formDescription, 'input_props.actionApi')}
                         {...inputProps}
                     />,
                     {
@@ -810,7 +793,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'upload_file':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <UploadFile {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -819,7 +802,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'upload_file_url_edit':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <UploadFileUrlEdit {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -828,7 +811,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'blood_and_thalassemia':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <BloodAndThalassemia {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -837,7 +820,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'template_textarea':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <TemplateTextarea
                         {...formItemOthers}
                         config={config}
@@ -852,7 +835,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'template_textareav2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <TemplateTextareav2
                         {...formItemOthers}
                         config={config}
@@ -867,7 +850,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'template_textareav3':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <TemplateTextareav3
                         {...formItemOthers}
                         config={config}
@@ -881,25 +864,25 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
 
-            // case 'template_textrootcauseDeath':
-            //     return renderEditItem(
-            //         form_config,
-            //         <TemplateTextrootcauseDeath
-            //             {...formItemOthers}
-            //             config={config}
-            //             form={form}
-            //             patientId={get(extraData, 'patient.id')}
-            //             admissionId={get(data, 'id')}
-            //             pregnancyId={get(data, 'pregnancy.id')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'template_textrootcauseDeath':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <TemplateTextrootcauseDeath
+                        {...formItemOthers}
+                        config={config}
+                        form={form}
+                        patientId={get(extraData, 'patient.id')}
+                        admissionId={get(data, 'id')}
+                        pregnancyId={get(data, 'pregnancy.id')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
 
             case 'template_textDeath1':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     // Deathclassification
                     <Deathclassification1
                         {...formItemOthers}
@@ -915,7 +898,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'template_textDeath2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     // Deathclassification
                     <Deathclassification2
                         {...formItemOthers}
@@ -931,7 +914,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'gynaecology_template_textarea':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <GynaecologyTemplateTextarea
                         {...formItemOthers}
                         config={config}
@@ -946,7 +929,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'operation_template_textarea':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <GynaecologyOperationTemplateTextarea
                         {...formItemOthers}
                         config={config}
@@ -959,42 +942,50 @@ function RenderFormSectionComponent(props: IProps) {
                         styles,
                     }
                 );
-
-            // case 'inspection_result_textarea':
-            //     // 产时保健-入院登记-B超(超声检查)
-            //     return renderEditItem(
-            //         form_config,
-            //         <InspectionResultTextarea
-            //             {...formItemOthers}
-            //             {...inputProps}
-            //             form={form}
-            //             patientId={get(extraData, 'patient.id')}
-            //             pregnancyId={get(data, 'pregnancy.id')}
-            //             admissionId={get(data, 'id')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-            // case 'ultrosound_result_textarea':
-            //     // 产时保健-入院登记-检验(检验检查)
-            //     return renderEditItem(
-            //         form_config,
-            //         <UltrosoundResultTextarea
-            //             {...formItemOthers}
-            //             {...inputProps}
-            //             form={form}
-            //             patientId={get(extraData, 'patient.id')}
-            //             pregnancyId={get(data, 'pregnancy.id')}
-            //             admissionId={get(data, 'id')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'result_textarea':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <ResultTextarea {...formItemOthers} {...inputProps} form={form} patientId={data?.id} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'inspection_result_textarea':
+                // 产时保健-入院登记-B超(超声检查)
+                return renderEditItem(
+                    formDescriptionKey,
+                    <InspectionResultTextarea
+                        {...formItemOthers}
+                        {...inputProps}
+                        form={form}
+                        patientId={get(extraData, 'patient.id')}
+                        pregnancyId={get(data, 'pregnancy.id')}
+                        admissionId={get(data, 'id')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'ultrosound_result_textarea':
+                // 产时保健-入院登记-检验(检验检查)
+                return renderEditItem(
+                    formDescriptionKey,
+                    <UltrosoundResultTextarea
+                        {...formItemOthers}
+                        {...inputProps}
+                        form={form}
+                        patientId={get(extraData, 'patient.id')}
+                        pregnancyId={get(data, 'pregnancy.id')}
+                        admissionId={get(data, 'id')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'middle_ultsounds':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MiddleUltsounds {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1003,7 +994,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'post_partumFetal':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <PostpartumFetal {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1039,25 +1030,25 @@ function RenderFormSectionComponent(props: IProps) {
             //     );
             case 'middle_ultsounds_single':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MiddleUltsoundsSingle {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-            // case 'calculate-score-table':
-            //     return renderEditItem(
-            //         form_config,
-            //         <CalculateScoreTable {...formDescriptionSpecialConfig} config={config} form={form} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'calculate-score-table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <CalculateScoreTable {...formDescriptionSpecialConfig} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'fetal_nt_check':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <FetalNTCheck {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1066,7 +1057,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'blood_pressure':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <BloodPressure {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1075,29 +1066,37 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'edit_in_table':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CustomEditInTable {...formItemOthers} {...inputProps} config={config} form={form} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-
-
-            // case 'normal_nursing_table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <NormalNursingTable
-            //             {...formItemOthers}
-            //             config={config}
-            //             data={props.data}
-            //             form={form}
-            //             onRef={get(events, 'onRef')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'revert_edit_in_table':
+                // todo: 未完成 竖向编辑的表格
+                return renderEditItem(
+                    formDescriptionKey,
+                    <RevertEditInTable {...formItemOthers} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'normal_nursing_table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <NormalNursingTable
+                        {...formItemOthers}
+                        config={config}
+                        data={props.data}
+                        form={form}
+                        onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             // case 'pre_deliver_nursing_Table':
             //     return renderEditItem(
             //         formDescriptionKey,
@@ -1111,29 +1110,41 @@ function RenderFormSectionComponent(props: IProps) {
             //             styles,
             //         }
             //     );
-            // case 'past_delivery_nursing_table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <PastDeliveryNursingTable
-            //             {...formItemOthers}
-            //             config={config}
-            //             form={form}
-            //             onRef={get(events, 'onRef')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-            // case 'special_nursing_table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <SpecialNursingTable {...formItemOthers} config={config} form={form} onRef={get(events, 'onRef')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-
+            case 'past_delivery_nursing_table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <PastDeliveryNursingTable
+                        {...formItemOthers}
+                        config={config}
+                        form={form}
+                        onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'special_nursing_table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <SpecialNursingTable {...formItemOthers} config={config} form={form} onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'oxytocin_nursing_table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <OxytocinNursingTable
+                        {...formItemOthers}
+                        config={config}
+                        form={form}
+                        onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             // case 'neonatal_care_table':
             //     return renderEditItem(
             //         formDescriptionKey,
@@ -1147,35 +1158,35 @@ function RenderFormSectionComponent(props: IProps) {
             //             styles,
             //         }
             //     );
-            // case 'blood_sugar_nursing_Table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <BloodSugarNursingTable
-            //             {...formItemOthers}
-            //             config={config}
-            //             form={form}
-            //             onRef={get(events, 'onRef')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-            // case 'temperature_nursing_Table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <TemperatureNursingTable
-            //             {...formItemOthers}
-            //             config={config}
-            //             form={form}
-            //             onRef={get(events, 'onRef')} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'blood_sugar_nursing_Table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <BloodSugarNursingTable
+                        {...formItemOthers}
+                        config={config}
+                        form={form}
+                        onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'temperature_nursing_Table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <TemperatureNursingTable
+                        {...formItemOthers}
+                        config={config}
+                        form={form}
+                        onRef={get(events, 'onRef')} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'procedure_records':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ProcedureRecords {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1184,17 +1195,25 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'procedure_cystocentesis_records':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ProcedureCystocentesis {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-
+            case 'procedure_intrauterine_records':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <ProcedureIntrauterine {...formItemOthers} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'select_tag_with_options':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <SelectTagWithOptions {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1203,7 +1222,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'select_with_options_or_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <SelectWithOptionsOrInput {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1212,10 +1231,10 @@ function RenderFormSectionComponent(props: IProps) {
                 );
 
 
-
+  
             case 'referral_organization_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ReferralOrganizationSelect {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1224,7 +1243,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'age_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <AgeSelect {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1233,7 +1252,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'tree_select_v2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CustomTreeSelect {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1242,7 +1261,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'diagnosis':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Diagnosis {...formItemOthers} {...formDescriptionSpecialConfig} patientId={get(extraData, 'patient.id')} />,
                     {
                         ...formItemLayout,
@@ -1260,7 +1279,7 @@ function RenderFormSectionComponent(props: IProps) {
             //   );
             case 'gynaecology_image_editor':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MyImageEditor {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1269,17 +1288,25 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'MyImageEditor':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MyImageEditor {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
                         styles,
                     },
                 );
-
+            case 'inspection_report':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <SurgicalInspectionReport {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'appgar':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <Appgar {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1289,7 +1316,7 @@ function RenderFormSectionComponent(props: IProps) {
 
             case 'nurse_children':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NurseChildren {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1298,7 +1325,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'nurse_children2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NurseChildren2 {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1307,7 +1334,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'caesarean_children':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <CaesareanChildren {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1316,7 +1343,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'birth_certificate_children':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <BirthCertificateChildren {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1324,8 +1351,9 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'shift_patients':
+                console.log(props, '222233344');
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <ShiftPatients
                         {...formItemOthers}
                         {...formDescriptionSpecialConfig}
@@ -1352,36 +1380,36 @@ function RenderFormSectionComponent(props: IProps) {
             //             styles,
             //         },
             //     );
-            // case 'vagina_struments_record_form':
-            //     return <VaginaStrumentsRecordForm {...formItemOthers} config={config} form={form} />;
-            // case 'family_tumor_history':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <FamilyTumorHistory {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'vagina_struments_record_form':
+                return <VaginaStrumentsRecordForm {...formItemOthers} config={config} form={form} />;
+            case 'family_tumor_history':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <FamilyTumorHistory {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             // 催产素的表格
-            // case 'oxytocin_table':
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <OxytocinTable {...formItemOthers} config={config} form={form} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-            // case 'fetal_ultrasound':
-            //     return renderEditItem(
-            //         form_config,
-            //         <FetalUltrasound {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'oxytocin_table':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <OxytocinTable {...formItemOthers} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'fetal_ultrasound':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <FetalUltrasound {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             // case 'checkbox_group_object':
             //     return renderEditItem(
             //         formDescriptionKey,
@@ -1393,7 +1421,7 @@ function RenderFormSectionComponent(props: IProps) {
             //     );
             case 'labor_process':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <LaborProcess {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1411,7 +1439,7 @@ function RenderFormSectionComponent(props: IProps) {
             //     );
             case 'nursing_fetus':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NursingFetus {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1420,7 +1448,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'nursing_fetusv2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NursingFetusv2
                         {...formItemOthers}
                         {...formDescriptionSpecialConfig}
@@ -1434,7 +1462,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'nursing_fetusv3':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NursingFetusv3
                         {...formItemOthers}
                         {...formDescriptionSpecialConfig}
@@ -1460,7 +1488,7 @@ function RenderFormSectionComponent(props: IProps) {
             //     );
             case 'knowledge_base':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <KnowledgeBase {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1469,13 +1497,13 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'optimize_edit_in_table':
                 const input_props = { input_props: formDescriptionSpecialConfig };
-                return renderEditItem(form_config, <OptimizeEditInTable {...formItemOthers} {...input_props} />, {
+                return renderEditItem(formDescriptionKey, <OptimizeEditInTable {...formItemOthers} {...input_props} />, {
                     ...formItemLayout,
                     styles,
                 });
             case 'induced_fetus':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <InducedFetus {...formItemOthers} {...formDescriptionSpecialConfig} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1484,7 +1512,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'diagnosis_list':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DiagnosisList {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1493,7 +1521,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'diagnosis_list_v2':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DiagnosisListv2 {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1502,7 +1530,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'diagnosis_list_induced':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DiagnosisListInduced {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1511,7 +1539,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'bregma_group':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <BregmaGroup {...config} {...formDescriptionSpecialConfig} form={form} />,
                     {
                         ...formItemLayout,
@@ -1521,7 +1549,7 @@ function RenderFormSectionComponent(props: IProps) {
             case 'multiple_input_group':
                 // 多字段多表单聚集
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MultipleInputGroup {...config} {...formItemOthers} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1530,7 +1558,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'single_selector':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <SingleSelector {...config} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1539,7 +1567,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'multi_selector':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MultiSelector {...config} {...formDescriptionSpecialConfig} />,
                     {
                         ...formItemLayout,
@@ -1547,41 +1575,69 @@ function RenderFormSectionComponent(props: IProps) {
                     }
                 );
             case 'button':
-
-            case 'MyButton':
                 return renderEditItem(
-                    config,
-                    <OkButton disabled={disableAll} primary btn_text={inputProps.btn_text || label} name={key} key={key} form={form} {...(inputProps as any)} />
+                    '',
+                    <Button {...config} {...formDescriptionSpecialConfig} {...inputProps} onClick={get(events, 'handleButton')} />
+                );
+            case 'MyButton':
+                const btnProps = inputProps as ButtonProps
+                return renderEditItem(
+                    '',
+                    <MyButton onClick={() => mchcEvent.emit('my_form', {
+                        type: 'onClick',
+                        btnName: formDescriptionKey,
+                        values: form?.getFieldsValue(),
+                        setValue(k: string, v: any) { form?.setFieldsValue({ [k]: v }) }
+                    }
+                    )} {...btnProps} {...formItemOthers} btnText={label ?? btnProps.btnText} />
                 );
 
             case 'node':
                 return inputProps.standalone ? (inputProps?.node ?? null) : renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     inputProps?.node ?? null
                 );
             case 'component':
                 const C1 = inputProps?.component
                 return inputProps.standalone ? (C1 ? <C1 {...inputProps} /> : null) : renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     C1 ? <C1 {...inputProps} form={form} /> : null
                 );
-            // case 'check_invert_button':
+            case 'check_invert_button':
 
-            //     return renderEditItem(
-            //         formDescriptionKey,
-            //         <CheckAndCancelButton
-            //             form={form}
-            //             {...config}
-            //             {...inputProps}
-            //             onClick={get(events, 'handleButton')} />
-            //     );
+                return renderEditItem(
+                    formDescriptionKey,
+                    <CheckAndCancelButton
+                        form={form}
+                        {...config}
+                        {...inputProps}
+                        onClick={get(events, 'handleButton')} />
+                );
             case 'view_only':
-                return renderEditItem(form_config, <span>{get(data, formDescriptionPath)}</span>);
-
-
+                return renderEditItem(formDescriptionKey, <span>{get(data, formDescriptionPath)}</span>);
+            // 产前诊断-术前记录
+            case 'surgical_before_operator_select':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <SurgicalBeforeOperatorSelect {...formItemOthers} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            // 产前诊断-术前记录
+            case 'surgical_before_nurse_select':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <SurgicalBeforeNurseSelect {...formItemOthers} config={config} form={form} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'treatment_program':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <TreatmentProgramBaisc {...formItemOthers} config={config} form={form} />,
                     {
                         ...formItemLayout,
@@ -1605,7 +1661,7 @@ function RenderFormSectionComponent(props: IProps) {
             //   );
             case 'hepatitis-new-baby':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <HepatitsNewBabyCom
                         {...formItemOthers}
                         {...formDescriptionSpecialConfig}
@@ -1618,38 +1674,38 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'border_title':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <BorderTitle {...formItemOthers} {...formDescriptionSpecialConfig} config={config} {...extraData} />,
                     {
                         ...formItemLayout,
                         styles,
                     }
                 );
-            // case 'cure-state':
-            //     return renderEditItem(
-            //         form_config,
-            //         <CureState {...formItemOthers} {...formDescriptionSpecialConfig} config={config} {...extraData} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
-            // case 'syphilis-tested':
-            //     return renderEditItem(
-            //         form_config,
-            //         <SyphilisTested
-            //             {...formItemOthers}
-            //             {...formDescriptionSpecialConfig}
-            //             config={config}
-            //             {...extraData} />,
-            //         {
-            //             ...formItemLayout,
-            //             styles,
-            //         }
-            //     );
+            case 'cure-state':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <CureState {...formItemOthers} {...formDescriptionSpecialConfig} config={config} {...extraData} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
+            case 'syphilis-tested':
+                return renderEditItem(
+                    formDescriptionKey,
+                    <SyphilisTested
+                        {...formItemOthers}
+                        {...formDescriptionSpecialConfig}
+                        config={config}
+                        {...extraData} />,
+                    {
+                        ...formItemLayout,
+                        styles,
+                    }
+                );
             case 'native-place':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NativePlace {...formItemOthers} {...formDescriptionSpecialConfig} config={config} {...extraData} />,
                     {
                         ...formItemLayout,
@@ -1659,7 +1715,7 @@ function RenderFormSectionComponent(props: IProps) {
 
             case 'normal_checkbox_with_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NormalCheckboxWithInput
                         config={config}
 
@@ -1670,7 +1726,7 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'c':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <NormalCheckboxWithInput {...formItemOthers} config={config} />,
                     {
                         ...formItemLayout,
@@ -1679,7 +1735,7 @@ function RenderFormSectionComponent(props: IProps) {
 
             case 'data_select_with_options_or_input':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <DataSelectWithOptionsOrInput
                         {...formItemOthers}
                         {...inputProps}
@@ -1693,9 +1749,9 @@ function RenderFormSectionComponent(props: IProps) {
                 );
             case 'search_select':
                 return renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     <MySearchSelect
-                        name={form_config}
+                        name={formDescriptionKey}
                         {...inputProps} />,
                     {
                         ...formItemLayout,
@@ -1727,7 +1783,7 @@ function RenderFormSectionComponent(props: IProps) {
                     form={form}
                 />
                 return config?.plainForm ? node : renderEditItem(
-                    form_config,
+                    formDescriptionKey,
                     node,
                     {
                         ...formItemLayout,

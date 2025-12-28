@@ -1,2 +1,3 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
+
 export const Mchc_Login = lazy(() => import('./Inner'))

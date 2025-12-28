@@ -4,10 +4,10 @@ import { Form, message, Space } from 'antd';
 import { get } from 'lodash';
 import React, { useEffect } from 'react';
 
-import { mchcEnv, mchcEvent, mchcUtils } from '@lm_fe/env';
+import { mchcEvent, mchcUtils } from '@lm_fe/env';
 import { BF_Wrap2, IdNOButton, MyBaseList, useReadIdNO } from '@lm_fe/pages';
 import { ModelService } from '@lm_fe/service';
-import { Follow_up_btn_两癌 } from './.两癌随访';
+import { Follow_up_btn } from './.两癌随访';
 import { load_form_config } from './edit/form_config/Form';
 
 const s = new ModelService({
@@ -50,10 +50,10 @@ export default function Pathological_follow_up(props: any) {
     mchcEvent.on_rm('my_form', e => {
       if (e.type !== 'onClick') return
       const idNO = e.values?.idNO
-      if (!idNO) return mchcEnv.warning('请输入证件号码')
+      if (!idNO) return message.warning('请输入证件号码')
       request
         .get<{ uploadMsg: string }>('/api/two/cancer/screening/reportVerification', { params: { 'idNO.equals': idNO }, unboxing: true })
-        .then(({ data }) => { mchcEnv.info(data.uploadMsg) })
+        .then(({ data }) => { message.info(data.uploadMsg) })
     })
   }, [])
 
@@ -68,7 +68,7 @@ export default function Pathological_follow_up(props: any) {
     const { id } = rowData;
 
 
-    // mchcEnv.info('暂未开放此功能，敬请期待；');
+    // message.info('暂未开放此功能，敬请期待；');
   };
 
   const handleEdit = (rowData: any) => () => {
@@ -108,7 +108,7 @@ export default function Pathological_follow_up(props: any) {
       // needChecked
       ActionAddonBefore={({ handleSearch, rowData }) => {
         return <Space>
-          <Follow_up_btn_两癌 handleSearch={handleSearch} rowData={rowData} />
+          <Follow_up_btn handleSearch={handleSearch} rowData={rowData} />
           <OkButton size='small'
             onClick={() => {
               fubaoHistoryPush(`/gynecological-diseases/two-cancers/exam?id=${rowData.id}`, props);
@@ -142,7 +142,7 @@ export default function Pathological_follow_up(props: any) {
         const idNO = v.idNO
         const check_res = mchcUtils.checkIdNo_new(idNO)
         if (!check_res?.status) {
-          mchcEnv.info('证件号码填写错误')
+          message.info('证件号码填写错误')
           return null
         }
         return v

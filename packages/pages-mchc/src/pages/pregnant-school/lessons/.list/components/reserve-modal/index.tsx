@@ -20,7 +20,7 @@ export default function ReserveModal({ selectCourse, onCancle, visible, ...props
       title={'已预约列表'}
       className="reserve-modal-container"
       width={800}
-      open={visible}
+      visible={visible}
       footer={null}
       onCancel={handleCancle}
     >

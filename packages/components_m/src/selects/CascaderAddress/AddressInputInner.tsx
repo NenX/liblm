@@ -52,8 +52,7 @@ export default function AddressInput({
 
   useEffect(() => {
     get_old_address_options(needStreet).then(opt => {
-      setOptions((opt[0] || opt) as any[])
-
+      setOptions(opt)
     })
   }, []);
 

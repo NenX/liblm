@@ -193,7 +193,7 @@ export const tableColumns = [
         editable: true,
         align: 'center',
         inputType: 'MyAutoComplete',
-        inputProps: { uniqueKey: '出量s' },
+        inputProps: { optionKey: '出量s' },
         // inputType: 'input_number',
         // inputProps: { min: 0 },
         width: APP_CONFIG.CELL_WIDTH_SMALL,

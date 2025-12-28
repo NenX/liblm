@@ -3,7 +3,6 @@ mkdir -p $pack_dir
 rm -rf $pack_dir/all.tar.gz
 target_field=@lm_fe
 node_modules_field=node_modules/$target_field
-
 mkdir -p $pack_dir/$target_field
 compress_packages()
 {
@@ -29,15 +28,15 @@ compress_all()
 
 compress_all_tow_step()
 {
-    
-    
+
+
     # if [ ! -d $pack_dir/$target_field/static ]; then
     #     cp ../static/packages/static/ $pack_dir/$target_field/ -r
     # fi
 
     for pack_name in $(ls $node_modules_field)
     do
-   
+
         target_package=$pack_dir/$target_field/$pack_name
 
         mkdir -p $target_package
@@ -48,13 +47,13 @@ compress_all_tow_step()
         asserts=$node_modules_field/$pack_name/asserts
 
         if [ -d $dist ]; then
-        
+
             cp -rfu $dist $target_package
             cp $conf $target_package
 
             if [ $pack_name = "static" ]; then
                 cp -rfu $asserts $target_package
-            fi  
+            fi
 
         fi
     done

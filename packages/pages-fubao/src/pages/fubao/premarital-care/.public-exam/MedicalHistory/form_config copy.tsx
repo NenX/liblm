@@ -10,7 +10,7 @@ export default defineFormConfig(
             "label": "初潮(岁)",
 
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '初潮(岁)是必填项' }],
             "inputProps": { 'placeholder': '请输入初潮' },
             layout: '1/3',
         }, {
@@ -19,7 +19,7 @@ export default defineFormConfig(
             "label": "月经周期(天)",
 
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '月经周期(天)是必填项' }],
             "inputProps": { 'placeholder': '请输入月经周期' },
             layout: '1/3',
         }, {
@@ -28,7 +28,7 @@ export default defineFormConfig(
             "label": "月经持续天数",
 
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '月经持续天数是必填项' }],
             "inputProps": { 'placeholder': '请输入月经持续天数' },
             layout: '1/3',
         }, {
@@ -37,7 +37,7 @@ export default defineFormConfig(
             "label": "经量",
 
             "inputType": "checkbox_group",
-            required: true,
+            "rules": [{ 'required': true, 'message': '经量是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': '多', 'label': '多', 'withInput': false, 'span': 6 }, { 'value': '中', 'label': '中', 'withInput': false, 'span': 6 }, { 'value': '少', 'label': '少', 'withInput': false, 'span': 6 }] },
             "inputProps": { 'placeholder': '请输入经量' },
             layout: '1/3',
@@ -47,7 +47,7 @@ export default defineFormConfig(
             "label": "痛经",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '痛经是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入痛经' },
             layout: '1/3',
@@ -57,7 +57,7 @@ export default defineFormConfig(
             "label": "孕次",
 
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '孕次是必填项' }],
             "inputProps": { 'placeholder': '请输入孕次' },
             layout: '1/3',
         }, {
@@ -66,7 +66,7 @@ export default defineFormConfig(
             "label": "产次",
 
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '产次是必填项' }],
             "inputProps": { 'placeholder': '请输入产次' },
             layout: '1/3',
         },
@@ -134,6 +134,7 @@ export default defineFormConfig(
             "inputType": "checkbox_with_single_input",
 
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
+            "inputProps": "",
             layout: '1/3',
         }, {
 
@@ -141,7 +142,7 @@ export default defineFormConfig(
             "label": "既往史",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '既往史是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入既往史' },
             layout: '1/3',
@@ -151,7 +152,7 @@ export default defineFormConfig(
             "label": "手术史",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '手术史是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入手术史' },
             layout: '1/3',
@@ -161,7 +162,7 @@ export default defineFormConfig(
             "label": "现病史",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '现病史是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入现病史' },
             layout: '1/3',
@@ -171,7 +172,7 @@ export default defineFormConfig(
             "label": "近亲结婚",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '近亲结婚是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '否', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '是', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入近亲结婚' },
             layout: '1/3',
@@ -181,7 +182,7 @@ export default defineFormConfig(
             "label": "接触有害物质",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '接触有害物质是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入接触有害物质' },
             layout: '1/3',
@@ -191,7 +192,7 @@ export default defineFormConfig(
             "label": "接触放射线",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '接触放射线是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             layout: '1/3',
         }, {
@@ -214,7 +215,7 @@ export default defineFormConfig(
             "label": "遗传疾病",
 
             "inputType": "checkbox_with_single_input",
-            required: true,
+            "rules": [{ 'required': true, 'message': '遗传疾病是必填项' }],
             "specialConfig": { 'type': 'single', 'options': [{ 'value': 1, 'label': '无', 'span': 6, 'withInput': false }, { 'value': 2, 'label': '有', 'withInput': true, 'isIssue': true, 'span': 6, 'inputSpan': 12 }] },
             "inputProps": { 'placeholder': '请输入遗传疾病' },
             layout: '1/3',

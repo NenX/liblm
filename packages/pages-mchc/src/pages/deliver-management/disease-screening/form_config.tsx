@@ -97,7 +97,7 @@ export default function () {
                 layout: '1/2',
                 dataIndex: 'gender',
                 inputType: 'MySelect',
-                inputProps: { uniqueKey: '性别3', marshal: 0 },
+                inputProps: { optionKey: '性别3', marshal: 0 },
                 width: 68,
 
 

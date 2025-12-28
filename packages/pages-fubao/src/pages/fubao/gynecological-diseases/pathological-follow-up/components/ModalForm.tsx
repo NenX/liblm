@@ -132,7 +132,7 @@ export class ModalForm extends Component {
         onOk={() => {
           this.handleSubmit(0);
         }}
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         footer={[
           <Popconfirm

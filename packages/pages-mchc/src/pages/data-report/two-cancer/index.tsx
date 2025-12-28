@@ -20,7 +20,7 @@ export default function BreastCancerDataReport(prop: any) {
            { label: '登记日期', name: 'registerDate', inputType: 'rangeDate' },
            { label: '就诊卡号', name: 'outpatientNO', inputType: 'Input' },
            { label: '姓名', name: 'name', inputType: 'Input' },
-           { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { uniqueKey: '上报状态' } },
+           { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { optionKey: '上报状态' } },
         ]}
 
         showAction={false}
@@ -33,12 +33,12 @@ export default function BreastCancerDataReport(prop: any) {
             }}>上报</Button>
         }}
         tableColumns={[
-            { title: '就诊卡号', dataIndex: 'outpatientNO' },
+            { title: '就诊卡号.', dataIndex: 'outpatientNO' },
             { title: '姓名', dataIndex: 'name' },
             { title: '电话', dataIndex: 'telephone' },
             { title: '登记日期', dataIndex: 'registerDate' },
             { title: '上报时间', dataIndex: 'uploadDate', },
-            { title: '上报状态', dataIndex: 'uploadState', inputType: 'MS', inputProps: { uniqueKey: '上报状态', marshal: 0 } },
+            { title: '上报状态', dataIndex: 'uploadState', inputType: 'MS', inputProps: { optionKey: '上报状态', marshal: 0 } },
             { title: '上报说明', dataIndex: 'uploadMsg', },
 
 

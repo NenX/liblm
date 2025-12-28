@@ -7,7 +7,6 @@ export interface IMchc_Doctor_BuildExamTimeAxis {
     arrived: boolean
     inCurrentGestationalWeek: boolean
     lackReports: string[]
-    message: string
     groups: {
         groupDate: string
         reports: {
@@ -15,13 +14,7 @@ export interface IMchc_Doctor_BuildExamTimeAxis {
             reportTitle: string
             itemInfos: {
                 abnormal: any
-                description: string
-
-                "code": string,
-                "name": string,
-                "value": string,
-                "unit": null,
-                "isNormal": "true" | "false" | null
+                description:string
             }[]
         }[]
     }[]

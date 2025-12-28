@@ -25,7 +25,6 @@ import { DatePicker_L, DynamicForm, LazyAntd } from '@lm_fe/components_m';
 import { formatDate } from '@lm_fe/utils';
 import { getReservationPanelByDate } from '../../surgery-scheduling/apis/api';
 import './appointModel.less';
-import { mchcEnv } from '@lm_fe/env';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const { TabPane } = Tabs;
@@ -191,16 +190,16 @@ export default class Index extends DynamicForm<any> {
       const res = (await request.post('/api/family/planning/updateAppointmentSurgery', submitData)).data;
       if (get(res, 'code') === 1) {
         if (get(selectData, 'appointmentMorningOrAfternoon')) {
-          mchcEnv.success('已修改成功，信息将同步推送给患者。');
+          message.success('已修改成功，信息将同步推送给患者。');
         } else {
-          mchcEnv.success('已预约成功，信息将同步推送给患者。');
+          message.success('已预约成功，信息将同步推送给患者。');
         }
         onCancel && onCancel();
       } else {
 
       }
     } catch (errorInfo) {
-      mchcEnv.error(get(errorInfo, 'errorFields.0.errors.0'));
+      message.error(get(errorInfo, 'errorFields.0.errors.0'));
     }
   };
 
@@ -494,7 +493,7 @@ export default class Index extends DynamicForm<any> {
         centered
         wrapClassName="modal-phone apponit-modal"
         title={'手术预约'}
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         onOk={this.handleSubmit}
         width={580}

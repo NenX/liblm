@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { BaseEditPanelForm } from '@lm_fe/components_m';
-import { mchcEnv, mchcUtils } from '@lm_fe/env';
+import { mchcUtils } from '@lm_fe/env';
 import { Button, Space, message } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { get, size } from 'lodash';
@@ -36,7 +36,7 @@ export default class Form extends BaseEditPanelForm {
             filesData,
             'womanPremaritalCheckArchivesDetailVM.premaritalCheckArchivesBasicInformation.permanentResidenceAddress',
           );
-          !value && mchcEnv.info('女方居住地址信息尚未填写！');
+          !value && message.info('女方居住地址信息尚未填写！');
           value && this.form?.setFieldsValue({ permanentResidenceAddress: value });
         }
         if (id === 'residenceAddress') {
@@ -44,14 +44,14 @@ export default class Form extends BaseEditPanelForm {
             filesData,
             'womanPremaritalCheckArchivesDetailVM.premaritalCheckArchivesBasicInformation.residenceAddress',
           );
-          !value && mchcEnv.info('女方户口地址信息尚未填写！');
+          !value && message.info('女方户口地址信息尚未填写！');
           value && this.form?.setFieldsValue({ residenceAddress: value });
         }
       } else {
         //女方
         if (id === 'residenceAddress') {
           const value = this.form?.getFieldValue('permanentResidenceAddress');
-          !value && mchcEnv.info('请先填写完整的户口地址信息！');
+          !value && message.info('请先填写完整的户口地址信息！');
           value && this.form?.setFieldsValue({ residenceAddress: value });
         }
       }

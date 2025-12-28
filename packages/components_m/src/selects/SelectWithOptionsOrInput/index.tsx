@@ -11,7 +11,7 @@ import { MyAutoComplete } from 'src/FU_components/MyAutoComplete';
 //     <AutoComplete
 //       {...rest}
 //       getPopupContainer={getPopupContainer}
-//       popupMatchSelectWidth={inputProps?.popupMatchSelectWidth || 120}
+//       dropdownMatchSelectWidth={inputProps?.dropdownMatchSelectWidth || 120}
 //       options={inputProps?.options || props?.options || []}
 //       onChange={handleChange}
 //       value={value}

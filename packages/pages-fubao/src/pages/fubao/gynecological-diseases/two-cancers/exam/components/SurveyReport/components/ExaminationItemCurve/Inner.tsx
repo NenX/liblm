@@ -1,6 +1,7 @@
-import { get_echarat, RangePicker_L } from '@lm_fe/components';
+import { RangePicker_L } from '@lm_fe/components';
 import { formatDate as formatTimeToDate } from '@lm_fe/utils';
 import { Button, Checkbox, Modal, Radio } from 'antd';
+import * as echarts from 'echarts';
 import { get, map, set } from 'lodash';
 import dayjs from 'dayjs';
 import React, { Component } from 'react';
@@ -60,7 +61,6 @@ export default class Index extends Component {
   };
 
   getItemData = async (startDate: string, endDate: string) => {
-    const ee = await get_echarat()
     const { itemName } = this.props;
     const itemData = await getLisItemsGroupByItemname(itemName, startDate, endDate);
     await this.setState({
@@ -84,7 +84,7 @@ export default class Index extends Component {
     set(this.option, 'series.0.data', valueArr);
 
     const itemCurveRef = this.itemCurveRef;
-    this.itemCurve = ee.init(itemCurveRef);
+    this.itemCurve = echarts.init(itemCurveRef);
     this.itemCurve.setOption(this.option);
   };
 

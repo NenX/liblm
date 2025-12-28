@@ -8,7 +8,6 @@ import Form from './components/Form';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
 import { getSearchParamsValue } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 export default class BasicInfo extends BaseEditPanel<any> {
   static defaultProps = {
     baseUrl: '/api/progestation/check/saveProgestationCheckArchivesInspectionCheck', request,
@@ -23,7 +22,7 @@ export default class BasicInfo extends BaseEditPanel<any> {
 
   extraEvents = {
     handleClickReport: (name: any) => {
-      mchcEnv.info('暂未开放此功能，敬请期待；');
+      message.info('暂未开放此功能，敬请期待；');
     },
     reportStyleInit: () => {
       return {

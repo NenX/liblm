@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import { Input, InputRef, message } from 'antd';
+import React from 'react';
+import { Input, message } from 'antd';
 import { forwardRef, useState, useEffect } from 'react';
 import { IMyInputProps } from './types';
 import { mchcEvent, mchcLogger } from '@lm_fe/env';
-import { getInputStyle } from '@noah-libjs/components';
+import { getInputStyle, } from 'src/utils';
 export * from './types';
-export const MyInput = forwardRef<InputRef, IMyInputProps>((props, myRef) => {
+export const MyInput = forwardRef<Input, IMyInputProps>((props, myRef) => {
     const { width, style = {}, placeholder, name, warn = false, form, onBlur, onFocus, value, onChange, ...others } = props
     const [_value, set_value] = useState(value)
 
@@ -22,7 +22,7 @@ export const MyInput = forwardRef<InputRef, IMyInputProps>((props, myRef) => {
             set_value(v)
             onChange?.(v)
         }}
-
+ 
         onBlur={e => {
             onBlur?.(e)
             mchcEvent.emit('my_form', {

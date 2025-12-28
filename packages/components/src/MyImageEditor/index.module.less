@@ -1,226 +1,226 @@
 .custom-image-editor {
+  width: 100%;
+  overflow: hidden;
+  margin-top: -460px;
+  position: relative;
+  border: 1px solid #eee;
+
+  .react-img-editor-container,
+  .konvajs-content,
+  .react-img-editor {
+    width: 100% !important;
+  }
+
+  .react-img-editor-palette {
+    background: #fff;
+  }
+
+  &-save {
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+  }
+
+  .custom-image-editor-null {
     width: 100%;
-    overflow: hidden;
-    margin-top: -460px;
-    position: relative;
-    border: 1px solid #eee;
+    height: 460px;
+  }
 
-    .react-img-editor-container,
-    .konvajs-content,
-    .react-img-editor {
-        width: 100% !important;
-    }
+  .react-img-editor-toolbar {
+    margin-left: -200px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: auto;
+    width: 36px !important;
+    display: block;
+  }
 
-    .react-img-editor-palette {
-        background: #fff;
-    }
-
-    &-save {
-        position: absolute;
-        right: 20px;
-        bottom: 30px;
-    }
-
-    .custom-image-editor-null {
-        width: 100%;
-        height: 460px;
-    }
-
-    .react-img-editor-toolbar {
-        margin-left: -200px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: auto;
-        width: 36px !important;
-        display: block;
-    }
-
-    .react-img-editor-toolbar-separator {
-        display: none;
-    }
+  .react-img-editor-toolbar-separator {
+    display: none;
+  }
 }
 
 .gy-image-editor {
-    margin: 4px;
-    background-color: #fff;
+  margin: 4px;
+  background-color: #fff;
 
-    .box-img {
-        width: 90px;
-        height: 90px;
-        border: 1px solid #d7dce7;
-        position: relative;
-        margin-top: 8px;
-        margin-left: 7px;
-        cursor: move;
+  .box-img {
+    width: 90px;
+    height: 90px;
+    border: 1px solid #d7dce7;
+    position: relative;
+    margin-top: 8px;
+    margin-left: 7px;
+    cursor: move;
 
-        img {
-            width: auto;
-            max-width: 100%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
+    img {
+      width: auto;
+      max-width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
+  }
 
-    .box-text {
-        font-size: 12px;
-        font-weight: 400;
-        color: #828c99;
-        line-height: 17px;
-        text-align: center;
+  .box-text {
+    font-size: 12px;
+    font-weight: 400;
+    color: #828c99;
+    line-height: 17px;
+    text-align: center;
+  }
+
+  :global(.ant-layout-sider) {
+    background: #fff;
+  }
+
+  :global(.ant-layout) {
+    background: #fff;
+  }
+
+  #images {
+    overflow: hidden;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #canvas-container {
+    position: relative;
+
+    .tool-bar {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: auto;
+
+      :global(.ant-btn) {
+        width: 20px;
+        height: 20px;
+        padding: 6px 0;
+        border: none;
+      }
     }
+  }
 
-    :global(.ant-layout-sider) {
-        background: #fff;
-    }
+  .button-icon {
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 
-    :global(.ant-layout) {
-        background: #fff;
-    }
+  .back {
+    background-image: url(/lm_imgs/mie/back.svg);
+  }
 
-    #images {
-        overflow: hidden;
-        clear: both;
-        display: flex;
-        flex-wrap: wrap;
-    }
+  .forward {
+    background-image: url(/lm_imgs/mie/forward.svg);
+  }
 
-    #canvas-container {
-        position: relative;
+  .pen {
+    background-image: url(/lm_imgs/mie/pen.svg);
+  }
 
-        .tool-bar {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 32px;
-            height: auto;
+  .text {
+    background-image: url(/lm_imgs/mie/text.svg);
+  }
 
-            :global(.ant-btn) {
-                width: 24px;
-                height: 24px;
-                padding: 14px 0;
-                border: none;
-            }
-        }
-    }
+  .rect {
+    background-image: url(/lm_imgs/mie/rect.svg);
+  }
 
-    .button-icon {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
+  .circle-icon2 {
+    background-image: url(/lm_imgs/mie/circle.svg);
+    background-color: none;
+  }
 
-    .back {
-        background-image: url(/lm_imgs/mie/back.svg);
-    }
+  .triangle {
+    background-image: url(/lm_imgs/mie/triangle.svg);
+  }
 
-    .forward {
-        background-image: url(/lm_imgs/mie/forward.svg);
-    }
+  .line {
+    background-image: url(/lm_imgs/mie/line.svg);
+  }
 
-    .pen {
-        background-image: url(/lm_imgs/mie/pen.svg);
-    }
+  .clear {
+    background-image: url(/lm_imgs/mie/clear.svg);
+  }
 
-    .text {
-        background-image: url(/lm_imgs/mie/text.svg);
-    }
+  .export {
+    background-image: url(/lm_imgs/mie/export.svg);
+  }
 
-    .rect {
-        background-image: url(/lm_imgs/mie/rect.svg);
-    }
+  .selected {
+    background-image: url(/lm_imgs/mie/selected.svg);
+  }
 
-    .circle-icon2 {
-        background-image: url(/lm_imgs/mie/circle.svg);
-        background-color: none;
-    }
+  .noselected {
+    background-image: url(/lm_imgs/mie/no.svg);
+  }
 
-    .triangle {
-        background-image: url(/lm_imgs/mie/triangle.svg);
-    }
-
-    .line {
-        background-image: url(/lm_imgs/mie/line.svg);
-    }
-
-    .clear {
-        background-image: url(/lm_imgs/mie/clear.svg);
-    }
-
-    .export {
-        background-image: url(/lm_imgs/mie/export.svg);
-    }
-
-    .selected {
-        background-image: url(/lm_imgs/mie/selected.svg);
-    }
-
-    .noselected {
-        background-image: url(/lm_imgs/mie/no.svg);
-    }
-
-    .save {
-        background-image: url(/lm_imgs/mie/save.svg);
-    }
+  .save {
+    background-image: url(/lm_imgs/mie/save.svg);
+  }
 }
 
-:global(.ant-btn:hover, .ant-btn:focus) {
-    .back {
-        background-image: url(/lm_imgs/mie/back-hover.svg);
-    }
+:global(.ant-btn:hover,
+  .ant-btn:focus) {
+  .back {
+    background-image: url(/lm_imgs/mie/back-hover.svg);
+  }
 
-    .forward {
-        background-image: url(/lm_imgs/mie/forward-hover.svg);
-    }
+  .forward {
+    background-image: url(/lm_imgs/mie/forward-hover.svg);
+  }
 
-    .pen {
-        background-image: url(/lm_imgs/mie/pen-hover.svg);
-    }
+  .pen {
+    background-image: url(/lm_imgs/mie/pen-hover.svg);
+  }
 
-    .text {
-        background-image: url(/lm_imgs/mie/text-hover.svg);
-    }
+  .text {
+    background-image: url(/lm_imgs/mie/text-hover.svg);
+  }
 
-    .rect {
-        background-image: url(/lm_imgs/mie/rect-hover.svg);
-    }
+  .rect {
+    background-image: url(/lm_imgs/mie/rect-hover.svg);
+  }
 
-    .circle-icon2 {
-        background-image: url(/lm_imgs/mie/circle-hover.svg);
-    }
+  .circle-icon2 {
+    background-image: url(/lm_imgs/mie/circle-hover.svg);
+  }
 
-    .triangle {
-        background-image: url(/lm_imgs/mie/triangle-hover.svg);
-    }
+  .triangle {
+    background-image: url(/lm_imgs/mie/triangle-hover.svg);
+  }
 
-    .line {
-        background-image: url(/lm_imgs/mie/line-hover.svg);
-    }
+  .line {
+    background-image: url(/lm_imgs/mie/line-hover.svg);
+  }
 
-    .clear {
-        background-image: url(/lm_imgs/mie/clear-hover.svg);
-    }
+  .clear {
+    background-image: url(/lm_imgs/mie/clear-hover.svg);
+  }
 
-    .export {
-        background-image: url(/lm_imgs/mie/export-hover.svg);
-    }
+  .export {
+    background-image: url(/lm_imgs/mie/export-hover.svg);
+  }
 
-    .selected {
-        background-image: url(/lm_imgs/mie/selected-hover.svg);
-    }
+  .selected {
+    background-image: url(/lm_imgs/mie/selected-hover.svg);
+  }
 
-    .noselected {
-        background-image: url(/lm_imgs/mie/no-hover.svg);
-    }
+  .noselected {
+    background-image: url(/lm_imgs/mie/no-hover.svg);
+  }
 
-    .save {
-        background-image: url(/lm_imgs/mie/save-hover.svg);
-    }
+  .save {
+    background-image: url(/lm_imgs/mie/save-hover.svg);
+  }
 }

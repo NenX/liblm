@@ -12,7 +12,6 @@ import FormItem from './formItem'
 const defaultGutterConfig = {
   gutter: [0, 0], // px
   justify: 'start',
-  style: { marginBottom: 8 }
 };
 export default class MyForm extends Component<MyFormProp, MyFormState> {
   constructor(props: MyFormProp) {
@@ -85,6 +84,7 @@ export default class MyForm extends Component<MyFormProp, MyFormState> {
   renderForm = () => {
     const config = this.state.myConfig ?? [] as Array<FormConfig>;
     const formHandler = this.state.formHandler as any;
+    const gridConfig: any = defaultGutterConfig;
     let count = 0; // 计算占比
     let row = 0;
     const formDom = [];
@@ -135,7 +135,7 @@ export default class MyForm extends Component<MyFormProp, MyFormState> {
       }
       if (count > 24 || resetIsNewRow) {
         formDom.push(
-          <Row key={`row-${row}`} {...defaultGutterConfig}>
+          <Row key={`row-${row}`} {...gridConfig}>
             {spanArr}
           </Row>,
         );
@@ -183,7 +183,7 @@ export default class MyForm extends Component<MyFormProp, MyFormState> {
     }
     if (spanArr) {
       formDom.push(
-        <Row key={`row-${row}`} {...defaultGutterConfig}>
+        <Row key={`row-${row}`} {...gridConfig}>
           {spanArr}
         </Row>,
       );

@@ -38,6 +38,7 @@ export default (commandLineArgs) => {
 
                 return `a_chunks/${id ? id : 'bad/[name]'}.js`
             },
+            sourcemap: true, // 👈 开启 source map
         },
     }
 }

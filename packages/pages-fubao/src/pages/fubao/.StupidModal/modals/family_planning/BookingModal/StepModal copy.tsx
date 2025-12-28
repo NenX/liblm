@@ -36,7 +36,7 @@ const StepFrom = function <T extends Lengthwise, FORM_T = any>(props: IProps<T, 
     }
   }, [initData]);
   return (
-    <Modal title={title} open={visible} width="80%" footer={null} onOk={onOk} onCancel={onCancel}>
+    <Modal title={title} visible={visible} width="80%" footer={null} onOk={onOk} onCancel={onCancel}>
       <div>
         <Steps current={currentStep} style={{ marginBottom: 24 }}>
           {data.map(({ title, subTitle, description }, idx) => {

@@ -9,12 +9,9 @@ export interface ICommonFormTabsProps<T = any> {
     onTabChange(data: T[]): void
     title?: string,
     renderTabNode?(data: T, index: number): ReactNode
-    onIdxChange?(v: number, arr: any[]): void
-    onChange?(data: T[],): void
-    on_row_value_change?(data: T[], index: number, changed?: any, form?: FormInstance): void
+    onIdxChange?(v: number): void
+    onChange(data: T[], index: number, changedValues: any): void
     disabled?: boolean
-    form?: FormInstance
-
 }
 
 export interface IFormTabsProps<T = any> extends ICommonFormTabsProps<T> {

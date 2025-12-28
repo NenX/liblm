@@ -1,11 +1,12 @@
 
-import { BaseListOld, formatTimeToUTC, MyIcon } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { BaseListOld, formatTimeToUTC } from '@lm_fe/components_m';
 import { request } from '@lm_fe/utils';
-import { Button, Divider, Popconfirm } from 'antd';
+import { Button, Divider, message, Popconfirm } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import { isMoment } from 'dayjs()';
 import { get, isFunction, map, set } from 'lodash';
+import { isMoment } from 'dayjs()';
+import React from 'react';
 import Query from './components/Query';
 import Table from './components/Table';
 import { tableColumns } from './config/table';
@@ -59,18 +60,18 @@ export default class List extends BaseListOld {
           <>
             {get(rowData, 'status') != '1' ? (
               <Button type="link" size="small" onClick={this.handleSign(rowData)}>
-                <MyIcon value='EditOutlined' className="global-table-action-icon global-table-action-view" />
+                <EditOutlined className="global-table-action-icon global-table-action-view" />
                 签到
               </Button>
             ) : (
               <Button type="link" size="small" onClick={this.handleCancelSign(rowData)}>
-                <MyIcon value='EditOutlined' className="global-table-action-icon global-table-action-view" />
+                <EditOutlined className="global-table-action-icon global-table-action-view" />
                 取消签到
               </Button>
             )}
             <Divider type="vertical" />
             <Button type="link" size="small" onClick={this.handleEdit(rowData)}>
-              <MyIcon value='EditOutlined'
+              <EditOutlined
                 className="global-table-action-icon global-table-action-view"
                 style={{ color: rowData.status == 1 ? '#ccc' : rowData.status == 2 ? '#ccc' : '#0e318d' }}
               />
@@ -90,7 +91,7 @@ export default class List extends BaseListOld {
                 size="small"
                 disabled={rowData.status == 1 ? true : rowData.status == 2 ? true : false}
               >
-                <MyIcon value='DeleteOutlined'
+                <DeleteOutlined
                   className="global-table-action-icon"
                   style={{ color: rowData.status == 1 ? '#ccc' : rowData.status == 2 ? '#ccc' : '#0e318d' }}
                 />
@@ -108,7 +109,7 @@ export default class List extends BaseListOld {
     await request.get(`/api/courses/cancel-reservation`, {
       params: { pregnancyId: get(rowData, 'pregnancy.id'), courseId: get(rowData, 'course.id') },
     });
-    mchcEnv.success(`取消${baseTitle}成功`);
+    message.success(`取消${baseTitle}成功`);
     this.handleSearch();
   };
 
@@ -148,7 +149,7 @@ export default class List extends BaseListOld {
       id: undefined,
       editKey: undefined,
     });
-    mchcEnv.success(title);
+    message.success(title);
     await this.handleSearch();
   };
   handleSign = (rowData: any) => async () => {
@@ -157,7 +158,7 @@ export default class List extends BaseListOld {
       ...rowData,
       status: 1,
     });
-    mchcEnv.success(title);
+    message.success(title);
     await this.handleSearch();
   };
   handleCancelSign = (rowData: any) => async () => {
@@ -166,7 +167,7 @@ export default class List extends BaseListOld {
       ...rowData,
       status: 2,
     });
-    mchcEnv.success(title);
+    message.success(title);
     await this.handleSearch();
   };
 }

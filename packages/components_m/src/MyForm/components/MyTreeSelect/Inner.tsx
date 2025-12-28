@@ -128,11 +128,11 @@ export default class MyTreeSelect extends Component<MyTreeSelectProps, MyTreeSel
     if (!value) {
       value = radio ? [] : null;
     }
-    const popupMatchSelectWidth = this.props.popupMatchSelectWidth ?? this.props.input_props.popupMatchSelectWidth ??  250
+    const dropdownMatchSelectWidth = this.props.dropdownMatchSelectWidth ?? this.props.input_props.dropdownMatchSelectWidth ??  250
     return (
       <TreeSelect
         {...this.props}
-        popupMatchSelectWidth={popupMatchSelectWidth}
+        dropdownMatchSelectWidth={dropdownMatchSelectWidth}
         style={{ width: '100%' }}
         treeData={options}
         multiple={!radio}

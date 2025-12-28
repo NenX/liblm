@@ -60,39 +60,42 @@ export default function () {
             layout: '1/1',
         },
 
-
         {
+            "key": "advice.appointmentType",
             "label": "下次复诊",
-            "layout": "2/3",
-            "inputType": "straw",
-            "children": [
-                {
-                    "key": "advice.appointmentType",
-                    "inputType": "MS",
-                    "isActive": !mchcEnv.is('广州市八'),
-                    'required': true,
-                    "inputProps": { 'uniqueKey': 'PrenatalVisit.appointmentType', marshal: 0 },
-                },
-                {
-                    "key": "advice.appointmentCycle",
-
-                    "inputType": "MS",
-                    "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentCycleOptions'), marshal: 0 },
-                },
-                {
-                    "key": "advice.appointmentDate",
-                    "inputType": "date",
-                },
-                {
-                    "key": "advice.appointmentPeriod",
-                    "inputType": "MS",
-                    "isActive": !mchcEnv.is('广州市八'),
-                    "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentPeriodOptions'), marshal: 0 },
-                },
-            ]
+            "inputType": 'node',
+            "inputProps": { node: null },
+            "span": 2,
+            labelCol: 23,
+            wrapperCol: 0
         },
+        {
+            "key": "advice.appointmentType",
+            "inputType": "MS",
+            "isActive": !mchcEnv.is('广州市八'),
+            'required': true,
+            "inputProps": { 'uniqueKey': 'PrenatalVisit.appointmentType', marshal: 0 },
+            "span": 3,
+        },
+        {
+            "key": "advice.appointmentCycle",
 
-
+            "inputType": "MS",
+            "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentCycleOptions'), marshal: 0 },
+            "span": 3,
+        },
+        {
+            "key": "advice.appointmentDate",
+            "inputType": "date",
+            "span": 3,
+        },
+        {
+            "key": "advice.appointmentPeriod",
+            "inputType": "MS",
+            "isActive": !mchcEnv.is('广州市八'),
+            "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentPeriodOptions'), marshal: 0 },
+            "span": 3,
+        },
         {
             "key": "advice.visitDate",
             "label": "初诊日期",

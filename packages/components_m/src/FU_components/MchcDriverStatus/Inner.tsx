@@ -1,8 +1,10 @@
-import { MyIcon, useMchcDriverStatus } from '@lm_fe/components';
+import { ExclamationCircleOutlined, NodeIndexOutlined } from '@ant-design/icons';
+import { useMchcDriverStatus } from '@lm_fe/components';
 import { mchcDriver } from '@lm_fe/env';
 import { getChromeVersion, protocolCheck } from '@lm_fe/utils';
 import { Badge, Button, ButtonProps, Modal, Tooltip, message } from 'antd';
 import React, { useEffect } from 'react';
+import { mchcModal } from 'src/modals';
 
 
 const programName = 'OBIS外设驱动'
@@ -11,7 +13,7 @@ const downloadTip = `检测到您的电脑${programName}未安装或未打开，
 function download() {
   mchcDriver.download()
 }
-export default function MchcDriverStatus_Inner(props: ButtonProps & { btn_text?: string }) {
+export default function MchcDriverStatus_Inner(props: ButtonProps & { btnText?: string }) {
   const { isOpen } = useMchcDriverStatus()
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function MchcDriverStatus_Inner(props: ButtonProps & { btn_text?:
   function tip() {
     Modal.confirm({
       title: '未安装插件',
-      icon: <MyIcon value='ExclamationCircleOutlined' />,
+      icon: <ExclamationCircleOutlined />,
       content: downloadTip,
       onOk() {
         console.log('下载');
@@ -60,7 +62,7 @@ export default function MchcDriverStatus_Inner(props: ButtonProps & { btn_text?:
     } else {
       message.warning('当前浏览器内核版本较低！')
 
-      window.mchc_modal.open('test', {
+      mchcModal.open('test', {
         modal_data: {
           content: <div>
             <h1> {downloadTip}</h1>
@@ -89,7 +91,7 @@ export default function MchcDriverStatus_Inner(props: ButtonProps & { btn_text?:
         }
       >
         <Badge dot status={isOpen ? 'success' : 'error'}>
-          <MyIcon value='NodeIndexOutlined' style={{ color: '#fff', fontWeight: 'bold', fontSize: 20 }} />
+          <NodeIndexOutlined style={{ color: '#fff', fontWeight: 'bold', fontSize: 20 }} />
         </Badge>
       </Tooltip>
     </div>

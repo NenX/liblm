@@ -14,7 +14,7 @@ export default function BreastCancerDataReport(prop: any) {
                 { label: '登记日期', name: 'registerDate', inputType: 'rangeDate' },
                 { label: '就诊卡号', name: 'outpatientNO', inputType: 'Input' },
                 { label: '姓名', name: 'name', inputType: 'Input' },
-                { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { uniqueKey: '上报状态' } },
+                { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { optionKey: '上报状态' } },
             ]
         }
     })

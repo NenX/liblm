@@ -137,7 +137,7 @@ export default defineFormConfig(
           inputType: 'MC',
           inputProps: {
             options: mchcEnv.is('郫都') ? '顺产,剖宫产,胎吸,钳产,臀助产,臀牵引,阴道助产,人工引产,人工流产,药物流产,自然流产' : '',
-            uniqueKey: mchcEnv.is('郫都') ? '' as any : '分娩方式',
+            optionKey: mchcEnv.is('郫都') ? '' as any : '分娩方式',
             marshal: 0,
           },
           layout: '1',

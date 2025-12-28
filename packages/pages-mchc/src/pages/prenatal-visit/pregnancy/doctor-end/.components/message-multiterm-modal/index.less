@@ -1,0 +1,75 @@
+.highrisk-multiterm-modal {
+  .content {
+    // max-height: 500px;
+    position: relative;
+    padding-bottom: 50px;
+  }
+  .tree-title {
+    width: 100%;
+  }
+  .tree-title > .ant-tree-switcher,
+  .tree-title > .ant-tree-checkbox {
+    display: none;
+  }
+  .tree-title > .ant-tree-node-content-wrapper {
+    width: 100%;
+    margin-left: 45px;
+    font-size: 16px;
+  }
+
+  .reminder-msg {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .reminder-diag {
+    font-size: 16px;
+    color: red;
+  }
+  .foot {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  .col-content {
+    overflow: auto;
+  }
+  .tab-content {
+    height: 400px;
+    overflow: auto;
+    display: flex;
+
+    .left-content {
+      // width: 20px;
+      height: 100%;
+      overflow: auto;
+    }
+    .right-content {
+      flex: 1;
+      padding-left: 20px;
+      height: 100%;
+      overflow: auto;
+      position: relative;
+    }
+    .disposition {
+      position: absolute;
+      width: 108px;
+      height: 108px;
+      color: rgba(255, 0, 0, 0.5);
+      font-weight: 700;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 0, 0, 0.5);
+      transform: rotate(-18deg);
+      z-index: 999;
+      text-align: center;
+      top: 0px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .button-noremind {
+    margin-right: 20px;
+  }
+}

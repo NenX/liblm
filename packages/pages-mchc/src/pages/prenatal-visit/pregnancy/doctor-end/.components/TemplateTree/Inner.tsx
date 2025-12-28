@@ -1,9 +1,14 @@
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusCircleOutlined
+} from '@ant-design/icons';
 import { request } from '@lm_fe/utils';
 import { Button, Col, Input, Modal, Row, Tooltip } from 'antd';
 import { concat, forEach, get, includes, isEmpty, isUndefined, map } from 'lodash';
 import React, { Component } from 'react';
 import './index.less';
+import { LazyAntd } from '@lm_fe/components';
 const operationMapping = {
   new: '新增模板',
   add: '新增子模板',
@@ -280,18 +285,18 @@ export default class Index extends Component<IndexProps, IndexState> {
         {pid === 0 ? (
           <div className="handle-icon" onClick={() => this.handleTreeItem('add')}>
             <Tooltip placement="bottom" title="添加子模板">
-              <MyIcon value='PlusCircleOutlined' />
+              <PlusCircleOutlined />
             </Tooltip>
           </div>
         ) : null}
         <div className="handle-icon" onClick={() => this.handleTreeItem('edit')}>
           <Tooltip placement="bottom" title="修改">
-            <MyIcon value='EditOutlined' />
+            <EditOutlined />
           </Tooltip>
         </div>
         <div className="handle-icon" onClick={() => this.handleTreeItem('delete')}>
           <Tooltip placement="bottom" title="删除">
-            <MyIcon value='DeleteOutlined' />
+            <DeleteOutlined />
           </Tooltip>
         </div>
         {/* <div className="handle-icon" onClick={() => this.handleTreeSort('DOWN')}>

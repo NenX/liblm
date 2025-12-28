@@ -1,6 +1,6 @@
 import { CloseOutlined, SaveOutlined } from '@ant-design/icons';
 import { BaseEditPanelForm } from '@lm_fe/components_m';
-import { mchcEnv, mchcUtils } from '@lm_fe/env';
+import { mchcUtils } from '@lm_fe/env';
 import { SLocal_History } from '@lm_fe/service';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import { Button, Space, message } from 'antd';
@@ -44,7 +44,7 @@ export default class AdmissionForm extends BaseEditPanelForm {
     handleIDNumberChange: (id: string) => {
       if (id === 'residenceAddress') {
         const value = this.form?.getFieldValue('permanentResidenceAddress');
-        !value && mchcEnv.info('请先填写完整的户口地址信息！');
+        !value && message.info('请先填写完整的户口地址信息！');
         value && this.form?.setFieldsValue({ residenceAddress: value });
       }
     },

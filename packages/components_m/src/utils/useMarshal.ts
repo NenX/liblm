@@ -1,18 +1,17 @@
-import { isArray, safe_json_parse, safe_json_parse_arr } from "@lm_fe/utils";
+import { safe_json_parse } from "@lm_fe/utils";
 import { useEffect, useState } from "react";
 
 
-export function useMarshal<T = any>(marshal?: 0 | 1, _value?: any, _onChange?: (v: any) => void, ...args: any) {
-    const [safe_value, set_safe_value] = useState<T[]>([])
+export function useMarshal<T = any>(flag?: boolean, _value?: any, _onChange?: (v: any) => void, ...args: any) {
+    const [safe_value, set_safe_value] = useState<T>()
     useEffect(() => {
-        const d = marshal ? safe_json_parse_arr(_value, []) : _value
-        const arr = isArray(d) ? d : []
-        set_safe_value([...arr])
+        const d = flag ? safe_json_parse(_value) : _value
+        set_safe_value(d)
 
-    }, [_value, marshal])
+    }, [_value, flag])
 
     function onChangeSafeValue(_v: any) {
-        const v = marshal ? JSON.stringify(_v) : _v
+        const v = flag ? JSON.stringify(_v) : _v
 
         _onChange?.(v)
     }

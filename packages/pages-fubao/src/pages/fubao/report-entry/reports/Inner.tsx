@@ -1,5 +1,5 @@
 import { BF_Wrap2, mchcModal__, MyBaseList } from '@lm_fe/pages'
-import { AnyObject, formatDate, getMomentRange, getSearchParamsValue, request } from "@lm_fe/utils"
+import { formatDate, getMomentRange, getSearchParamsValue, request } from "@lm_fe/utils"
 import { Button, Divider, Form, Space, Tag } from "antd"
 import React, { useEffect, useState } from "react"
 import { Template } from './Template'
@@ -40,29 +40,25 @@ export default function ReportEntryInner(props: IProps) {
         mchcModal__.pop()
     }
     if (!patient) return <LoadingPlaceholder tip={`正在加载 ${idNO} 的报告...`} />
-
+    const patient_info = <div style={{ padding: 4 }}>
+        <span>姓名:{patient.name}</span>
+        <Divider type='vertical' />
+        <span>证件号:{idNO}</span>
+        <Divider type='vertical' />
+        <span>性别:{mchcEnv.get_option_label('性别2', patient.gender)}</span>
+        <Divider type='vertical' />
+        <span>年龄:{patient.age}</span>
+    </div>
     function check_row_disabled(rowData?: IReportType) {
         const 已审核 = rowData?.state === 2
         return injected || 已审核
     }
     async function review(rows: IReportType[], cb: () => Promise<void>) {
-        // if (confirm(`请确认审核 ${rows.map(_ => `${_.suitName}_${_.examinationDate}`).join('、')}`)) {
-        //     await request.put('/api/reports/batch-review', { ids: rows.map(_ => _.id), }, { ignore_usr: true });
-        //     cb()
-        // }
-        await request.put('/api/reports/batch-review', { ids: rows.map(_ => _.id), }, { ignore_usr: true });
-        cb()
-    }
-    async function recycle(rows: IReportType[], cb: () => Promise<void>) {
-        // if (confirm(`请确认回收 ${rows.map(_ => `${_.suitName}_${_.examinationDate}`).join('、')}`)) {
-        //     await request.put('/api/reports/batch-recycle', { ids: rows.map(_ => _.id), }, { ignore_usr: true });
-        //     cb()
-        // }
-        await request.put('/api/reports/batch-recycle', { ids: rows.map(_ => _.id), }, { ignore_usr: true });
-        cb()
-    }
-    async function print(params: AnyObject) {
-        mchcModal__.open('print_modal', { modal_data: { requestData: { url: '/api/printReport', ...patient, ...params } } })
+        const _rows = rows.filter(_ => _.state !== 2)
+        if (confirm(`请确认审核 ${_rows.map(_ => `${_.suitName}_${_.examinationDate}`).join('、')}`)) {
+            await request.put('/api/reports/batch-review', { ids: _rows.map(_ => _.id), }, { ignore_usr: true });
+            cb()
+        }
     }
     const node = <Wrap>
 
@@ -82,24 +78,20 @@ export default function ReportEntryInner(props: IProps) {
             initialSearchValue={{
                 validateDate: getMomentRange().近一周.map(formatDate)
             }}
-            searchConfig={config?.searchConfig}
+            searchConfig={idNO ? undefined : config?.searchConfig}
 
             showAdd={!injected}
             RenderBtns={(ctx) => {
                 const selectRows: any[] = ctx.getCheckRows()
+                return <Button.Group>
 
-                return <Space.Compact>
-
-                    <Button hidden={injected} disabled={!selectRows.length} onClick={() => recycle(selectRows, ctx.handleSearch)}>
-                        回收
-                    </Button>
                     <Button hidden={injected} disabled={!selectRows.length} onClick={() => review(selectRows, ctx.handleSearch)}>
                         审核
                     </Button>
-                    <Button onClick={() => print(ctx.getSearchParams())}>打印</Button>
+                    <Button onClick={() => { mchcModal__.open('print_modal', { modal_data: { requestData: { url: '/api/printReport', ...patient } } }) }}>打印</Button>
 
 
-                </Space.Compact>
+                </Button.Group>
             }}
             tableColumns={__DEV__ ? conf_fn : config?.tableColumns}
             RenderAction={ctx => {

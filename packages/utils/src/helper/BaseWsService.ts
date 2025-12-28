@@ -1,4 +1,5 @@
-import { EventEmitter, isString, MyLog } from "@noah-libjs/utils";
+import { EventEmitter, MyLog } from "@noah-libjs/utils";
+import { isString } from "lodash";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { WebSocketEventListenerMap } from "reconnecting-websocket/dist/events";
 import { appEnv } from "./AppEnv";

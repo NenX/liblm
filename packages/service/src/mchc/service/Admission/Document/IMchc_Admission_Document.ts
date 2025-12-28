@@ -16,6 +16,7 @@ import { IMchc_Admission_productionTimeDocument } from "./IMchc_Admission_produc
 import { IMchc_Admission_tireDischargeRecord } from "./IMchc_Admission_tireDischargeRecord"
 import { IMchc_Admission_tocolysisDocument } from "./IMchc_Admission_tocolysisDocument"
 import { IMchc_Admission_urinaryRetentionDocument } from "./IMchc_Admission_urinaryRetentionDocument"
+
 export type IMchc_Admission_Document<T extends MchcTypes = MchcTypes> =
 
     {
@@ -59,30 +60,7 @@ export type IMchc_Admission_Document<T extends MchcTypes = MchcTypes> =
         "neonateCareDocument": IMchc_Admission_neonateCareDocument[],
         "cesareanDocument": null,
         "cesareanFetusDocument": null,
-        "labourStageDocument"?: {
-            "id": number,
-            "recordTime": string,
-            "fetalcount": number,
-            "gravidity": number,
-            "parity": number,
-            "gestationWeek": string,
-            "parturientTime": "2025-05-08 15:03",
-            "deliverytime1": string,
-            "deliverytime2": string,
-            "deliverytime3": string,
-            "deliverytime4": string,
-            "deliverytime5": string,
-            "deliverytime6": string,
-            "deliveryType1": string,
-            "deliveryType2": string,
-            "deliveryType3": string,
-            "deliveryType4": string,
-            "deliveryType5": string,
-            "deliveryType6": string,
-            "processNuringImage": string,
-            "partogramBase64": string
-            "partogramAddress": string
-        },
+        "labourStageDocument": null,
         "labourStageRecordDocument": IMchc_Admission_labourStageRecordDocument[],
         "labourDocument": IMchc_Admission_LabourDocument,
         birthCertificate: {
@@ -184,7 +162,6 @@ export type IMchc_Admission_Document<T extends MchcTypes = MchcTypes> =
             note: string
             sign: string
             transferOutTime: string
-            __apgar: any
         }[],
         "transvaginalDeviceList": null,
         "inpatientEmrBaseInfo": IMchc_Admission_InpatientEmrBaseInfo

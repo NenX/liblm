@@ -13,15 +13,11 @@ export default defineFormConfig(
             inputType: 'PatientAutoComplete',
             layout: '1/3',
             disabledDeps(f) {
-                return !!f.getFieldValue('id')
+                return !!f.getFieldValue('pregnancyId')
             },
             inputProps: {
                 onPatientAutoComplete(v, form) {
-                    if (form) {
-                        v.pregnancyId = v.id
-                        v.id = undefined
-                        form.setFieldsValue(v)
-                    }
+                    form?.setFieldsValue(Object.assign(v, { id: undefined }))
                 },
             },
             // hidden: true,

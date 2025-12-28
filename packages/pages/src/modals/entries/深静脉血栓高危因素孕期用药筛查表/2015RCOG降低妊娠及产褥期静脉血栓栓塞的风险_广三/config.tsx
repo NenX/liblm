@@ -4,7 +4,7 @@ import { IMchc_Doctor_PreRiskAssessmentInfo } from "@lm_fe/service";
 import { ColumnType } from "antd/lib/table";
 import styles from './index.module.less';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
-import React from "react";
+
 
 export const multipleOptions = [
     {

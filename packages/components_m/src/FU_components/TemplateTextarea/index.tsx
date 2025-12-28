@@ -9,12 +9,11 @@ interface ITemplateTextareaProps extends TextAreaProps {
     style?: React.CSSProperties
     rows?: number
     canOperate?: boolean
-    defaultExpandAll?: boolean
     TemplateTextarea_type?: ITemplateConfig[]
 }
 const SPLIT_KEY = ' / '
 export function TemplateTextarea(props: ITemplateTextareaProps) {
-    const { value = '', onChange, style, type, TemplateTextarea_type, rows = 3, disabled, defaultExpandAll, canOperate, ...others } = props
+    const { value = '', onChange, style, type, TemplateTextarea_type, rows = 3, disabled, canOperate, ...others } = props
     const [_value, set_value] = useState(value)
     useEffect(() => {
         set_value(value)
@@ -27,7 +26,6 @@ export function TemplateTextarea(props: ITemplateTextareaProps) {
             set_value(v)
         }} style={{ ...style, zIndex: 1 }} {...others} />
         <Button
-            type="text"
             disabled={disabled}
             onClick={() => {
                 window.mchc_modal?.open('template_modal3', {
@@ -35,10 +33,10 @@ export function TemplateTextarea(props: ITemplateTextareaProps) {
 
                     modal_data: {
                         canOperate,
-                        defaultExpandAll,
                         simpleTypes: TemplateTextarea_type ?? type,
-                        on_tpl_check({ content }) {
-                            onChange?.(`${_value ?? ''}${_value ? SPLIT_KEY : ''}${content}`)
+                        onValueCheck({ result }) {
+                            const v = result.map(_ => _.val).join(SPLIT_KEY)
+                            onChange?.(`${_value ?? ''}${_value ? SPLIT_KEY : ''}${v}`)
                         },
                     }
                 })

@@ -6,7 +6,6 @@ import React from "react"
 import { defineFormConfig } from '@lm_fe/service'
 import { Follow_up_btn } from "./.随访"
 import { BASE_URL } from './const'
-import { Follow_up_btn_孕前 } from 'src/pages/fubao/statistic/progestation-checkup/.孕检随访'
 export default function BreastCancerDataReport(prop: any) {
 
     const { config, Wrap } = BF_Wrap2({
@@ -52,9 +51,7 @@ export default function BreastCancerDataReport(prop: any) {
                 validateDate: getMomentRange().近一周.map(formatDate)
             }}
 
-            ActionAddonBefore={(ctx) => {
-                return <Follow_up_btn_孕前 rowData={ctx.rowData} handleSearch={ctx.handleSearch} />
-            }}
+
             searchConfig={config?.searchConfig}
 
             // showAction={false}

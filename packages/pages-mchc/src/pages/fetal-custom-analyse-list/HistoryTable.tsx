@@ -1,12 +1,12 @@
 
-import { LazyAntd } from '@lm_fe/components'
+// import { LazyAntd } from '@lm_fe/components'
 import { mchcModal__ } from '@lm_fe/pages'
 import { IZsy_CtgRecord, SZsy_CtgRecord } from '@lm_fe/service'
-import { Button, TablePaginationConfig, Tag } from 'antd'
+import { Button, TablePaginationConfig, Tag, Table } from 'antd'
 import { SizeType } from 'antd/lib/config-provider/SizeContext'
 import React from 'react'
 import './index.less'
-const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
+// const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const contentStyle: React.CSSProperties = {
     height: '160px',
@@ -27,7 +27,7 @@ export function HistoryTable({ dataSource, pagination, loading, size, type }: IP
 
 
     function clickHandler(pv: IZsy_CtgRecord) {
-  
+
         SZsy_CtgRecord.getReport(pv.id, type)
             .then((printData) => {
                 // mchcEvent.emit('print_modal', { printData: data })

@@ -1,14 +1,14 @@
-import { MyIcon } from '@lm_fe/components';
-import { SLocal_State, SMchc_FormDescriptions } from '@lm_fe/service';
-import { Button, Col, Input, Row } from 'antd';
-import dayjs from 'dayjs';
-import { get, isEmpty, map } from 'lodash';
 import React from 'react';
+import dayjs from 'dayjs';
+import { Row, Col, Button, Input } from 'antd';
+import { get, map, isEmpty } from 'lodash';
 import DynamicForm from '../../BaseModalForm/DynamicForm';
-import CheckboxGroup from '../../ConfigComponents/CheckboxGroup';
-import DatePickerCus from '../../GeneralComponents/DatePicker';
-import ReferralOrganizationSelect from '../../selects/ReferralOrganizationSelect';
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { formDescriptionsWithoutSectionApi } from '../../utils/adapter';
+import DatePickerCus from '../../GeneralComponents/DatePicker';
+import CheckboxGroup from '../../ConfigComponents/CheckboxGroup';
+import ReferralOrganizationSelect from '../../selects/ReferralOrganizationSelect';
+import { SLocal_State, SMchc_FormDescriptions } from '@lm_fe/service';
 class ReferralRegister extends DynamicForm {
   state = {
     formDescriptions: {},
@@ -103,11 +103,11 @@ class ReferralRegister extends DynamicForm {
       <>
         <Row>
           {isEmpty(value) ? (
-            <Button icon={<MyIcon value='PlusOutlined' />} onClick={this.handleBtnAdd}>
+            <Button icon={<PlusOutlined />} onClick={this.handleBtnAdd}>
               添加转入登记
             </Button>
           ) : (
-            <Button icon={<MyIcon value='CloseOutlined' />} onClick={this.handleBtnDelete}>
+            <Button icon={<CloseOutlined />} onClick={this.handleBtnDelete}>
               删除转入登记
             </Button>
           )}

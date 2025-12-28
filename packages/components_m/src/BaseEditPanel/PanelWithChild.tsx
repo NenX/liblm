@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './less/panel-with-child.module.less';
-import { PanelTitle } from './PanelWithChildFC';
 export interface IPanelWithChildProps { }
 interface IState {
   data: {
@@ -32,21 +31,40 @@ export class PanelWithChild extends React.Component<IPanelWithChildProps, IState
     const {
       data: { name, age, currentGestationalWeek, sureEdd, edd, outpatientNO, inpatientNO, checkupNO },
     } = this.state;
-
-    const h = [
-      { title: '姓名', value: name },
-      { title: '年龄', value: age },
-      { title: '孕周', value: currentGestationalWeek },
-      { title: '孕产期', value: sureEdd || edd },
-      { title: '就诊卡号', value: outpatientNO },
-      inpatientNO ? { title: '住院号', value: inpatientNO } : null,
-      { title: '产检编号', value: checkupNO },
-
-    ]
     return (
-      <PanelTitle headerItems={h} />
+      <div className={styles["panel-with-child_header"]}>
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>姓名：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{name}</span>
+        </div>
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>年龄：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{age}</span>
+        </div>
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>孕周：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{currentGestationalWeek}</span>
+        </div>
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>预产期：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{sureEdd || edd}</span>
+        </div>
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>就诊卡号：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{outpatientNO}</span>
+        </div>
+        {inpatientNO && (
+          <div className={styles["panel-with-child_header-item"]}>
+            <span className={styles["panel-with-child_header-item-label"]}>住院号：</span>
+            <span className={styles["panel-with-child_header-item-value"]}>{inpatientNO}</span>
+          </div>
+        )}
+        <div className={styles["panel-with-child_header-item"]}>
+          <span className={styles["panel-with-child_header-item-label"]}>产检编号：</span>
+          <span className={styles["panel-with-child_header-item-value"]}>{checkupNO}</span>
+        </div>
+      </div>
     );
-
   };
 
   renderContent = () => {

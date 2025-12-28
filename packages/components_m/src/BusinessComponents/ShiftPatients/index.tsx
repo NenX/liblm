@@ -1,10 +1,11 @@
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Col, Form, Input, Row, Space } from 'antd';
 import { filter, get, isEmpty, map, set } from 'lodash';
 import React, { Component } from 'react';
 import BaseFormComponent from '../../BaseFormComponent';
 
-import { LazyAntd, MyIcon } from '@lm_fe/components';
-import { expect_array, request } from '@lm_fe/utils';
+import { LazyAntd } from '@lm_fe/components';
+import { request } from '@lm_fe/utils';
 import styles from './index.less';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
@@ -148,10 +149,9 @@ export default class CaesareanChildren extends Component<any, any> {
         <div style={{ paddingLeft: 30, color: '#3d8bf7' }}>
           <span>交班患者{index + 1}：</span>
           <Space>
-            <MyIcon value='PlusCircleOutlined' onClick={this.handleAdd} />
+            <PlusCircleOutlined onClick={this.handleAdd} />
             {this.state.childrens.length > 1 ? (
-              <MyIcon
-                value='MinusCircleOutlined'
+              <MinusCircleOutlined
                 onClick={() => {
                   this.handleDelete(index);
                 }}
@@ -299,8 +299,8 @@ export default class CaesareanChildren extends Component<any, any> {
                   }
                 }}
               >
-                {
-                  expect_array(areaNameList).map((item: any, index) => {
+                {areaNameList &&
+                  areaNameList.map((item: any, index) => {
                     return (
                       <Option value={`${item.areaName}`} key={index}>
                         {item.areaName}

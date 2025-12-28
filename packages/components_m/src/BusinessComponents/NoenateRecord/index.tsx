@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MinusCircleOutlined } from '@ant-design/icons';
 import { Button, Divider, Form } from 'antd';
 import { cloneDeep, filter, get, isEmpty, map, set, split } from 'lodash';
 import DynamicForm from '../../BaseModalForm/DynamicForm';
@@ -7,7 +8,6 @@ import { formDescriptionsWithoutSectionApi } from '../../utils/adapter';
 import { fromApi, toApi } from './config';
 import NoenateRecordFormSection from './NoenateRecordFormSection';
 
-import { MyIcon } from '@lm_fe/components';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
 import styles from './index.less';
 
@@ -154,7 +154,7 @@ class NoenateRecord extends DynamicForm {
           />
         </div>
         <div className={styles["foetal-panel-delete"]} title="删除" onClick={this.handleRemoveFetus(item)}>
-          <MyIcon value='MinusCircleOutlined' />
+          <MinusCircleOutlined />
         </div>
       </div>
     );

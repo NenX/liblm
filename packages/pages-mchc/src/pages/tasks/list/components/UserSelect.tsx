@@ -1,7 +1,8 @@
-import { MyIcon, PatientAutoComplete } from '@lm_fe/components_m';
-import { Col, Row } from 'antd';
-import { filter, get, isEmpty, map } from 'lodash';
 import React, { Component } from 'react';
+import { Col, Row } from 'antd';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { filter, get, isEmpty, map } from 'lodash';
+import { PatientAutoComplete } from '@lm_fe/components_m';
 
 export default class UserSelect extends Component {
   state = {
@@ -74,11 +75,11 @@ export default class UserSelect extends Component {
                 />
               </Col>
               <Col span={1} offset={1}>
-                <MyIcon value='PlusCircleOutlined' onClick={this.handleAdd} />
+                <PlusCircleOutlined onClick={this.handleAdd} />
               </Col>
               <Col span={1} offset={1}>
                 {index !== 0 && (
-                  <MyIcon value='MinusCircleOutlined' style={{ color: 'red' }} onClick={this.handleDelete(get(user, 'key'))} />
+                  <MinusCircleOutlined style={{ color: 'red' }} onClick={this.handleDelete(get(user, 'key'))} />
                 )}
               </Col>
             </Row>

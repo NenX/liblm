@@ -1,14 +1,15 @@
-import { ICommonOption } from '@lm_fe/env';
-import { InputNumberProps } from 'antd';
+import { AutoCompleteProps, InputNumberProps, InputProps } from 'antd';
 import { CheckboxGroupProps } from 'antd/lib/checkbox';
+import { ICheckboxWithInputProps } from '../../GeneralComponents/CheckboxWithInput_gold';
 import { ICusDatePickerProps } from '../../GeneralComponents/DatePicker';
 import { IInputWithLabelProps } from '../../GeneralComponents/InputWithLabel';
 import { IMultipleInputWithLabelProps } from '../../GeneralComponents/MultipleInputWithLabel';
 import { MyAutoCompleteProps } from '../MyAutoComplete';
+import { ICommonOption } from '@lm_fe/env';
 
-import { IMyCheckboxProps, IMyInputProps } from '@lm_fe/components';
+import { IMySelectProps } from '../MySelect'
 import { FocusEventHandler } from 'react';
-import { IMySelectProps } from '../MySelect';
+import { IMyInputProps } from '@lm_fe/components';
 
 
 
@@ -30,17 +31,17 @@ export type TOption =
     { inputType: 'InputNumber', props?: InputNumberProps } |
     { inputType: 'input_number', props?: InputNumberProps } |
     { inputType: 'MyInputNumber', props?: InputNumberProps } |
-    { inputType: 'CheckboxWithInput', props?: IMyCheckboxProps } |
-    { inputType: 'MyCheckbox', props?: IMyCheckboxProps } |
-    { inputType: 'MC', props?: IMyCheckboxProps } |
-    { inputType: 'Checkbox', props?: IMyCheckboxProps }
+    { inputType: 'CheckboxWithInput', props?: ICheckboxWithInputProps } |
+    { inputType: 'MyCheckbox', props?: ICheckboxWithInputProps } |
+    { inputType: 'MC', props?: ICheckboxWithInputProps } |
+    { inputType: 'Checkbox', props?: ICheckboxWithInputProps }
 
 export interface IArrayInputProps {
     autoFocus?: boolean
     disabled?: boolean
     inputWidth?: number,
     value?: string
-    uniqueKey?: string
+    optionKey?: string
     onChange?(v: string | any[]): void
     separator?: string
     marshal?: number

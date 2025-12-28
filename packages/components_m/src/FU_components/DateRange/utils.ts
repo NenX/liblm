@@ -15,6 +15,7 @@ export function areEqual(prevProps: RangePickerProps, nextProps: RangePickerProp
     return true
 
 }
+export const UNKNOWN_TIME_SYMBOL = '1970-01-01 00:00:00'
 export type IMyRangePickerProps = {
     marshal?: number
     value?: any

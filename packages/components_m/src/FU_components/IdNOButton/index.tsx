@@ -1,5 +1,7 @@
-import { LazyAntd, MyIcon, useMchcDriverStatus } from '@lm_fe/components';
-import { mchcDriver, mchcEnv, mchcLogger, T_ReadCard_Msg } from '@lm_fe/env';
+import { DisconnectOutlined, DownOutlined, ScanOutlined, UploadOutlined } from '@ant-design/icons';
+import { LazyAntd, useMchcDriverStatus } from '@lm_fe/components';
+import { mchcDriver, mchcEnv, mchcLogger } from '@lm_fe/env';
+import { T_ReadCard_Msg } from '@lm_fe/env';
 import { SLocal_State } from '@lm_fe/service';
 import { Button, ButtonProps, Menu, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -46,13 +48,13 @@ export function IdNOButton(props: IIdNOButtonButtonProps) {
     <Dropdown.Button disabled={!__DEV__ && !isOpen}
       style={{ color: isOpen ? undefined : 'red' }}
       type={isOpen ? 'primary' : undefined}
-      icon={<MyIcon value='DownOutlined' />}
+      icon={< DownOutlined />}
       overlay={menuProps}
       onClick={e => send_msg(target)}
     >
       <Space>
         {
-          isOpen ? <MyIcon value='ScanOutlined' /> : <MyIcon value='DisconnectOutlined' style={{ color: 'red' }} />
+          isOpen ? <ScanOutlined /> : <DisconnectOutlined style={{ color: 'red' }} />
         }
         <span>读取{target}</span>
       </Space>
@@ -81,7 +83,7 @@ export function SnapButton(props: IIdNOButtonButtonProps) {
   return (
     <Button
       type="primary"
-      icon={<MyIcon value='UploadOutlined' />}
+      icon={<UploadOutlined />}
       disabled={!isOpen}
       onClick={readSnap}
     >

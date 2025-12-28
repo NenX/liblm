@@ -56,7 +56,7 @@ export default class AsyncAutoComplete extends Component {
     const { valueKey, columns } = this.props;
     return (
       <AutoComplete
-        popupMatchSelectWidth={false}
+        dropdownMatchSelectWidth={false}
         onSearch={this.handleSearch}
         onPopupScroll={this.handlePopupScroll}
         onFocus={this.handleFocus}

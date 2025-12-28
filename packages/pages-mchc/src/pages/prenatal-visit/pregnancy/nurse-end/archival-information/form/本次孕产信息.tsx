@@ -1,24 +1,11 @@
-import { ICommonOption, mchcEnv } from "@lm_fe/env";
+import { get_check_invert_values } from "@lm_fe/components_m";
+import { mchcEnv } from "@lm_fe/env";
 import { IMchc_FormDescriptions_Field_Nullable } from "@lm_fe/service";
-import { form_config_家族史 } from "../../../common";
-import { marry_deps } from "./common";
 import { 既往史_pack } from "./既往史";
-import { conceiveMode, not_yes_input } from "@lm_fe/pages";
-import { 个人史_pack } from "./个人史";
+import { marry_deps, month1_12 } from "./common";
 
 
-const 有无option: ICommonOption[] = [
-    {
-        "value": false,
-        "label": "无"
-    },
-    {
-        "value": true,
-        "label": "有",
-        "warning": true,
-        "inputType": "Input"
-    }
-]
+
 
 
 export const 本次孕产信息_config = () => {
@@ -39,6 +26,7 @@ export const 本次孕产信息_config = () => {
         },
     }
 
+    const jws = 既往史_pack() as any
     const config: IMchc_FormDescriptions_Field_Nullable = {
         "name": "本次孕产信息",
         "children": [
@@ -114,38 +102,37 @@ export const 本次孕产信息_config = () => {
                 "inputProps": { "placeholder": "请输入BMI", "style": { "width": 156 }, "disabled": true },
                 layout: '1/3',
             },
-            conceiveMode(),
-            // {
-            //     "key": "pregnancyInfo.conceiveMode__",
-            //     "label": "受孕方式",
-            //     "inputType": "MC",
-            //     required: mchcEnv.in(['南医增城', '越秀妇幼']) ? false : true,
 
-            //     "inputProps": {
-            //         marshal: 1,
-            //         options: [
-            //             { value: 2, label: '自然' },
-            //             {
-            //                 value: 1, label: 'IVF', parentheses: true, inputType: 'ArrayInput', props: {
-            //                     // marshal: 1,
-            //                     options: [
-            //                         { inputType: 'DatePicker', prefix: '移植时间' },
-            //                         { inputType: 'Input', prefix: '第', suffix: '天胚胎' },
-            //                         { inputType: 'Input', prefix: '胚胎数', },
-            //                     ]
-            //                 }
-            //             },
-            //             { "value": 4, "label": "ICSI", },
-            //             { "value": 5, "label": "PGT", },
-            //             { "value": 6, "label": "AIH", },
-            //             { "value": 7, "label": "AID", },
-            //             {
-            //                 "value": 3, "label": "其他", inputType: 'Input',
-            //             }
-            //         ]
-            //     },
-            //     layout: '1/1',
-            // },
+            {
+                "key": "pregnancyInfo.conceiveMode__",
+                "label": "受孕方式",
+                "inputType": "MC",
+                required: mchcEnv.in(['南医增城', '越秀妇幼']) ? false : true,
+
+                "inputProps": {
+                    marshal: 1,
+                    options: [
+                        { value: 2, label: '自然' },
+                        {
+                            value: 1, label: 'IVF', parentheses: true, inputType: 'ArrayInput', props: {
+                                options: [
+                                    { inputType: 'DatePicker', prefix: '移植时间' },
+                                    { inputType: 'Input', prefix: '第', suffix: '天胚胎' },
+                                    { inputType: 'Input', prefix: '胚胎数', },
+                                ]
+                            }
+                        },
+                        { "value": 4, "label": "ICSI", },
+                        { "value": 5, "label": "PGT", },
+                        { "value": 6, "label": "AIH", },
+                        { "value": 7, "label": "AID", },
+                        {
+                            "value": 3, "label": "其他", inputType: 'Input',
+                        }
+                    ]
+                },
+                layout: '1/1',
+            },
             {
                 "key": "pregnancyInfo.maritalAge",
                 "label": "结婚年龄",
@@ -187,18 +174,24 @@ export const 本次孕产信息_config = () => {
                 "key": "本次孕产信息一键勾选",
                 "label": "一键勾选",
                 "inputType": "check_invert_button",
+                inputPropsFn() {
+                    return {
+                        check_invert_values: {
+                            ...get_check_invert_values([config]),
+                            'pregnancyInfo.fmh': [{ nothing: true }, null]
+                        }
+                    }
+                },
                 layout: '1/3',
             },
-            // {
-            //     "key": "pregnancyInfo.dysmenorrhea__",
-            //     "label": "痛经",
-            //     "inputType": "MC",
+            {
+                "key": "pregnancyInfo.dysmenorrhea__",
+                "label": "痛经",
+                "inputType": "MC",
 
-            //     "inputProps": { marshal: 1, options: [{ value: false, label: '否' }, { value: true, label: '是', inputType: 'MyInput' }] },
-            //     layout: '1/3',
-            // },
-
-            not_yes_input('pregnancyInfo.dysmenorrhea', '痛经'),
+                "inputProps": { marshal: 1, options: [{ value: false, label: '否' }, { value: true, label: '是', inputType: 'MyInput' }] },
+                layout: '1/3',
+            },
             {
                 "key": "pregnancyInfo.nearRelation",
                 "label": "近亲结婚",
@@ -208,8 +201,39 @@ export const 本次孕产信息_config = () => {
 
 
                 layout: '1/3',
+            }, {
+                "key": "pregnancyInfo.smoke__",
+                "label": "吸烟",
+                "inputType": "MC",
+                "inputProps": { marshal: 1, options: '否,是i', sp: [{ label: '否', value: false }, { value: true, label: '是', suffix: '支/天' },] },
+                layout: '1/3',
+            }, {
+                "key": "pregnancyInfo.alcohol__",
+                "label": "饮酒",
+                "inputType": "MC",
+                "inputProps": { marshal: 1, options: '否,是i', sp: [{ label: '否', value: false }, { value: true, label: '是', suffix: 'ml' },] },
+                layout: '1/3',
+            }, {
+                "key": "pregnancyInfo.hazardoussubstances__",
+                "label": "接触有害物质",
+                "inputType": "MC",
+                "inputProps": { marshal: 1, options: '否,是i', sp: [{ label: '否', value: false }, { value: true, label: '是' }] },
+
+                layout: '1/3',
+            }, {
+                "key": "pregnancyInfo.medicine__",
+                "label": "近期是否服药",
+                "inputType": "MC",
+                "inputProps": { marshal: 1, options: '否,是i', sp: [{ label: '否', value: false }, { value: true, label: '是' }] },
+
+                layout: '1/3',
+            }, {
+                "key": "pregnancyInfo.radioactivity__",
+                "label": "接触放射性",
+                "inputType": "MC",
+                "inputProps": { marshal: 1, options: '否,是i', sp: [{ label: '否', value: false }, { value: true, label: '是' }] },
+                layout: '1/3',
             },
-            ...个人史_pack(),
 
 
 
@@ -218,23 +242,23 @@ export const 本次孕产信息_config = () => {
 
 
 
-            ...既往史_pack(),
+            ...jws,
 
 
 
-            // {
-            //     "key": "pregnancyInfo.fmh",
-            //     "label": "家族史",
-            //     "inputType": "checkbox_group_object",
-            //     required: mchcEnv.in(['广三']),
-            //     "inputProps": {
-            //         uniqueKey: '家族史',
-            //     },
-            //     layout: '1/1',
-            //     "isNewRow": 1,
-            // },
+            {
+                "key": "pregnancyInfo.fmh",
+                "label": "家族史",
+                "inputType": "checkbox_group_object",
+                required: mchcEnv.in(['广三']),
+                "inputProps": {
+                    optionKey: '家族史',
+                },
+                layout: '1/1',
+                "isNewRow": 1,
+            },
 
-            form_config_家族史('pregnancyInfo'),
+
             {
                 "key": "pregnancyInfo.personalBg",
                 "label": "女方ABO血型",
@@ -243,7 +267,7 @@ export const 本次孕产信息_config = () => {
 
                 // "specialConfig": { "type": "aboMapping" },
 
-                "inputProps": { uniqueKey: 'aboMapping', marshal: 0 },
+                "inputProps": { optionKey: 'aboMapping', marshal: 0 },
 
                 // "inputProps": { "placeholder": "请选择ABO血型" },
                 layout: '1/3',
@@ -253,7 +277,7 @@ export const 本次孕产信息_config = () => {
                 "label": "女方Rh血型",
                 "inputType": "MC",
                 required: mchcEnv.in(['广三']),
-                "inputProps": { uniqueKey: 'rhMapping', marshal: 0 },
+                "inputProps": { optionKey: 'rhMapping', marshal: 0 },
 
                 layout: '1/3',
             },
@@ -281,7 +305,7 @@ export const 本次孕产信息_config = () => {
                     ...marry_deps
                 },
                 // "specialConfig": { "type": "aboMapping" },
-                "inputProps": { uniqueKey: 'aboMapping', marshal: 0 },
+                "inputProps": { optionKey: 'aboMapping', marshal: 0 },
 
                 layout: '1/3',
             }, {
@@ -292,7 +316,7 @@ export const 本次孕产信息_config = () => {
                     ...marry_deps
                 },
                 // "specialConfig": { "type": "rhMapping" },
-                "inputProps": { uniqueKey: 'rhMapping', marshal: 0 },
+                "inputProps": { optionKey: 'rhMapping', marshal: 0 },
 
                 layout: '1/3',
             }, {

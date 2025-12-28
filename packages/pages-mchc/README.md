@@ -1,4 +1,4 @@
-# @lm_fe/pages-mchc +4+
+# @lm_fe/pages-mchc
 
 
 mchc 页面级模块
@@ -9,11 +9,10 @@ mchc 页面级模块
 | /config-table/list | 缺省 |
 | /config-table/list2 | 缺省 |
 | /config-table/panel | 缺省 |
-| /config-table/panel2 | 缺省 |
 | /data-report/admission-visit | 建档上报 |
 | /data-report/breast-cancer | 乳腺癌上报 |
-| /data-report/cervical-cancer | 数据上报-宫颈癌上报 |
-| /data-report/first-visit | 数据上报-首诊上报 |
+| /data-report/cervical-cancer | 宫颈癌上报 |
+| /data-report/first-visit | 首诊上报 |
 | /data-report/labour-record | 产科住院-新生儿分娩记录 |
 | /data-report/labour-record-common | 分娩上报 |
 | /data-report/premarital-checkup | 婚前检查上报 |
@@ -40,7 +39,6 @@ mchc 页面级模块
 | /gynecological-diseases/women/women-exam-records/edit | 缺省 |
 | /gynecological-diseases/women/women-exam-records | 缺省 |
 | /highrisk-management/list | 高危孕产妇管理-高危统计 |
-| /knowledge/list | 缺省 |
 | /my-knowledge/list | 我的知识库 |
 | /pregnant-school/lessons | 孕妇学校-课程列表 |
 | /pregnant-school/midwifery-lessons | 助产士-课程列表 |
@@ -51,7 +49,7 @@ mchc 页面级模块
 | /pregnant-school/statistics | 孕妇学校-统计 |
 | /prenatal-visit/fetal-monitor | 胎监-列表 |
 | /prenatal-visit/gbs | B族链球菌-列表 |
-| /prenatal-visit/physical-sign/list | 体格检查管理 |
+| /prenatal-visit/physical-sign/list | 体格检查 |
 | /prenatal-visit/pregnancy/add | 缺省 |
 | /prenatal-visit/pregnancy/check | 缺省 |
 | /prenatal-visit/pregnancy/list | 缺省 |
@@ -61,18 +59,16 @@ mchc 页面级模块
 | /referral-management/referral-in/list | 缺省 |
 | /referral-management/referral-out/add | 缺省 |
 | /referral-management/referral-out/list | 缺省 |
-| /statistics/archives/list | 统计管理-建档统计 |
-| /statistics/further-visit/detail | 统计管理-就诊列表 |
-| /statistics/further-visit/list | 统计管理-门诊就诊统计 |
+| /statistics/archives/list | 缺省 |
 | /system/configuration | 系统管理-运维配置页 |
 | /system/request-log | 系统管理-Http日志 |
 | /system/role | 系统管理-角色管理 |
 | /system/user | 系统管理-用户管理 |
 | /system-config | 系统配置页 |
 | /task-logs | 宣教任务管理 |
-| /tasks/list | 宣教随访-宣教任务管理 |
+| /tasks/list | 宣教任务管理 |
+| /tasks/test | 缺省 |
 | /test | 测试页 |
-| /visit-management/remind-record | 复诊追踪-预约提醒记录 |
-| /visit-management/telephone-followup | 复诊追踪-超时电话随访 |
+| /visit-management/remind-record | 预约提醒记录 |
 | /visit-management/telephone-followup-record | 电话随访记录 |
 | /visit-management/timeout-remind-record | 超时提醒记录 |

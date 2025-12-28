@@ -47,7 +47,7 @@ export default class DiagnosisAutoComplete extends Component {
     const { data, options } = this.state;
     return (
       <AutoComplete
-        popupMatchSelectWidth={800}
+        dropdownMatchSelectWidth={800}
         onSearch={this.handleGetOptions}
         onChange={this.handleChange}
         value={data}

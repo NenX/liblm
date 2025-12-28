@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/utils",
-    "version": "0.2.5",
+    "version": "0.1.203",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,19 +21,19 @@
         "access": "public"
     },
     "devDependencies": {
+        "@noah-libjs/utils": "^0.0.7",
         "rollup": "^2.70.2"
     },
     "dependencies": {
         "@lm_fe/static": "*",
-        "@noah-libjs/request": "*",
-        "@noah-libjs/utils": "*",
         "axios": ">=0.26.1",
         "dayjs": "^1.11.13",
+        "lodash": "*",
         "reconnecting-websocket": "4.x",
         "store": "2.x"
     },
     "keywords": [],
     "author": "",
     "license": "MIT",
-    "gitHead": "9e8eab8af4aa2675ed973be51fe85cf2e3c2ed27"
+    "gitHead": "4b4f8e475bb35ea8c44bd441d239583e45e75981"
 }

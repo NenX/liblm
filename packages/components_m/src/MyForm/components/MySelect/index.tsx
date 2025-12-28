@@ -23,7 +23,7 @@ export default function MySelect(props: MySelectProps) {
           options={options}
           multiple={!radio}
           disabled={disabled}
-          popupMatchSelectWidth={false}
+          dropdownMatchSelectWidth={false}
           style={{ color: warningOption === value ? '#ff517d' : '', ...style }}
           uniqueKey={uniqueKey}
           {...others}

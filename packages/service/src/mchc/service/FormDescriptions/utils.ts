@@ -2,7 +2,7 @@ import { Common_Form_Config_Names, mchcEnv } from "@lm_fe/env"
 import { safe_json_parse } from "@lm_fe/utils"
 import { FormInstance } from "antd"
 import { get, isArray, isNumber, isString } from "lodash"
-import { IMchc_FormDescriptions, IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable_Arr, IMchc_FormDescriptions_MIX } from "@noah-libjs/components"
+import { IMchc_FormDescriptions, IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable_Arr, IMchc_FormDescriptions_MIX } from "./types"
 
 
 
@@ -107,7 +107,7 @@ export function get_preset_form_config(name: Common_Form_Config_Names) {
 
 
 export function get_lazy(config: any) {
-    let d = (get(config, '__lazy_config') || get(config, 'default.__lazy_config')) as unknown as IMchc_FormDescriptions_Field_Nullable_Arr
+    let d = (get(config, '__lazy_config') || get(config, 'default.__lazy_config'))  as unknown as IMchc_FormDescriptions_Field_Nullable_Arr
     return d
 }
 //

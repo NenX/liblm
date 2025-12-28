@@ -1,13 +1,16 @@
-import { MyIcon, Table_L } from "@lm_fe/components";
-import { mchcEvent } from '@lm_fe/env';
+import { DeleteOutlined } from "@ant-design/icons";
+import { LazyAntd } from '@lm_fe/components';
+import { mchcEvent, mchcLogger } from '@lm_fe/env';
 import { IMchc_Doctor_Pregnancymh, SMchc_Doctor, TIdTypeCompatible } from '@lm_fe/service';
 import { Button, message, Space } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { cloneDeep, forEach, get, map, orderBy, set, size, throttle } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { CustomIcon } from '../../../../GeneralComponents/CustomIcon';
 import EditableCell from '../../MyTable/TableEditableCell';
 import { getConfig } from './config';
 import './index.less';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 type IItem = Partial<IMchc_Doctor_Pregnancymh> & { mergeIndex?: number, _children?: IMchc_Doctor_Pregnancymh['children'][0], _key?: number | string }
 interface IInnerProp {
@@ -21,14 +24,14 @@ interface MyTableProps {
   onChange: Function;
   dispatch?: Function;
   value: IItem[];
-  disabled?: boolean,
   input_props: IInnerProp;
 }
 interface IColumn extends ColumnsType<IItem> {
   key: string
   title: string
   width: number
-  editor: any
+  editor: any,
+  hidden: boolean,
   children?: IColumn[]
 }
 
@@ -40,28 +43,18 @@ const addData: IItem = {
 }
 
 function getPropsValue<T extends keyof IInnerProp>(k: T, a: any, b: IInnerProp,) {
-  return (get(a, k) ?? get(a?.config?.input_props, k) ?? get(b, k)) as IInnerProp[T]
+  return get(a, k) ?? get(a?.config?.input_props, k) ?? get(b, k) as IInnerProp[T]
 }
 
 export default function MyForm_Business_PregnancyHistory(props: MyTableProps) {
-  const __config = getConfig() as IInnerProp
+  const { value, onChange, dispatch } = props;
+  const __input_props = getConfig() as IInnerProp
 
-  const { Wrap, config } = window.BF_Wrap2({
-    default_conf: {
-      title: `组件-孕产史`,
-      tableColumns: [__config],
-
-    }
-  })
-  const conf = get(config, 'tableColumns', [])[0]
-  console.log('conf', { conf, config })
-  const { value, onChange, dispatch, disabled } = props;
-
-  const __ignoreKeys = getPropsValue('ignoreKeys', conf, __config) ?? []
-  const __tableColumns = getPropsValue('tableColumns', conf, __config,) ?? []
-  const __needNotThisTime = getPropsValue('needNotThisTime', conf, __config,)
-  const __closeAdd = getPropsValue('closeAdd', conf, __config,)
-  const __pregnancyId = getPropsValue('pregnancyId', conf, __config,)
+  const __ignoreKeys = getPropsValue('ignoreKeys', props, __input_props) ?? []
+  const __tableColumns = getPropsValue('tableColumns', props, __input_props,).filter(Boolean) ?? [] // 过滤掉 false 值
+  const __needNotThisTime = getPropsValue('needNotThisTime', props, __input_props,)
+  const __closeAdd = getPropsValue('closeAdd', props, __input_props,)
+  const __pregnancyId = getPropsValue('pregnancyId', props, __input_props,)
 
   const ignoreKeys = __ignoreKeys.map((_) => _.startsWith('children') ? _.replace('children', '_children') : _)
 
@@ -105,21 +98,6 @@ export default function MyForm_Business_PregnancyHistory(props: MyTableProps) {
     const _value = orderBy(safeValue, ['gravidityindex'], ['asc'])
 
 
-
-    const d = splitData(_value)
-    set_dataSource(d ?? [])
-    set_selectedRowKeys([])
-
-    console.log('value', _value, d)
-
-
-    return () => {
-
-    }
-  }, [value,])
-  useEffect(() => {
-
-
     /*计算本孕一行占据的宽度*/
     let length = 0;
     forEach(__tableColumns, (item) => {
@@ -130,15 +108,19 @@ export default function MyForm_Business_PregnancyHistory(props: MyTableProps) {
         length++;
       }
     });
+    const d = splitData(_value)
     set_tableColumns(__tableColumns)
     set_tableColumnsLength(length - 1)
+    set_dataSource(d ?? [])
+    set_selectedRowKeys([])
 
+    console.log('value', _value, d)
 
 
     return () => {
 
     }
-  }, [config,])
+  }, [value,])
 
 
 
@@ -470,7 +452,6 @@ export default function MyForm_Business_PregnancyHistory(props: MyTableProps) {
               return {
                 children: (
                   <EditableCell
-                    disabled={disabled}
                     value={get(record, col.key)}
                     onChange={(val: any) => handleEdit(val, col.key, index)}
                     editor={col.editor}
@@ -503,51 +484,49 @@ export default function MyForm_Business_PregnancyHistory(props: MyTableProps) {
   //   onChange: handleRowSelectChange,
   // };
   return (
-    <Wrap>
-      <div className="preg-his-table">
-        {__closeAdd ? (
-          ''
-        ) : (
-          <div style={{ marginBottom: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="preg-his-table">
+      {__closeAdd ? (
+        ''
+      ) : (
+        <div style={{ marginBottom: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 
-            {
-              <span hidden={!g && !p} style={{ fontSize: 18, }}>
-                <span style={{ color: '#999' }}>孕产：</span>
-                <span style={{ fontWeight: 'bold' }}>{g ?? '--'}/{p ?? '--'}</span>
-              </span>
-            }
+          {
+            <span hidden={!g && !p} style={{ fontSize: 18, }}>
+              <span style={{ color: '#999' }}>孕产：</span>
+              <span style={{ fontWeight: 'bold' }}>{g ?? '--'}/{p ?? '--'}</span>
+            </span>
+          }
 
-            <Space>
-              <Button disabled={disabled} id="add" type="primary" ghost onClick={handleAdd} icon={<MyIcon value="PlusOutlined" />}>
-                新增
-              </Button>
-              <Button disabled={disabled} id="delete" danger icon={<MyIcon value="DeleteOutlined" />} onClick={handleDelete}>
-                删除
-              </Button>
-            </Space>
+          <Space>
+            <Button id="add" type="primary" ghost onClick={handleAdd} icon={<CustomIcon type="icon-add" />}>
+              新增
+            </Button>
+            <Button id="delete" danger icon={<DeleteOutlined />} onClick={handleDelete}>
+              删除
+            </Button>
+          </Space>
 
 
-          </div>
-        )}
+        </div>
+      )}
 
-        <Table_L
-          bordered
-          scroll={{ x: 1200 }}
-          // rowSelection={rowSelection}
-          onRow={(record, index) => {
-            return {
-              onClick: () => handleRowClick(record, index),
-            };
-          }}
-          rowClassName={(row) => rowClassName(row)}
-          columns={cloneColumns || []}
-          dataSource={dataSource || []}
-          childrenColumnName="noChildren"
-          rowKey={(record: any) => record._key}
-          pagination={false}
-        />
-      </div>
-    </Wrap>
+      <Table
+        bordered
+        scroll={{ x: 1200 }}
+        // rowSelection={rowSelection}
+        onRow={(record, index) => {
+          return {
+            onClick: () => handleRowClick(record, index),
+          };
+        }}
+        rowClassName={(row) => rowClassName(row)}
+        columns={cloneColumns || []}
+        dataSource={dataSource || []}
+        childrenColumnName="noChildren"
+        rowKey={(record: any) => record._key}
+        pagination={false}
+      />
+    </div>
   );
 }
 // export default MyForm_Business_PregnancyHistory

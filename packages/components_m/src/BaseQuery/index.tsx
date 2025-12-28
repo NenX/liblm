@@ -1,5 +1,4 @@
-import { MyIcon } from '@lm_fe/components';
-import { mchcLogger } from '@lm_fe/env';
+import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Form } from 'antd';
 import { identity, map, pickBy } from 'lodash';
 import React from 'react';
@@ -7,6 +6,7 @@ import DynamicForm from '../BaseModalForm/DynamicForm';
 import { formatTimeToDate, formatTimeToUTC, formatTimeToYearMonth } from '../utils/format';
 import RenderInputItemComponent from './RenderInputItemComponent';
 import './index.less';
+import { mchcLogger } from '@lm_fe/env';
 interface IState {
   queryFormDescriptions: object;
 
@@ -37,8 +37,8 @@ export default class BaseQuery extends DynamicForm<IProps, IState> {
       this.printTableRef = React.createRef();
       await this.form?.setFieldsValue(defaultValues);
       // 初始化页面请求列表数据
-      this.form && this.handleSearch(this.form.getFieldsValue());
-    }, 400);
+      this.handleSearch(this.form.getFieldsValue());
+    }, 100);
   }
 
   // 提取query默认值
@@ -175,10 +175,10 @@ export default class BaseQuery extends DynamicForm<IProps, IState> {
   public renderBtn() {
     return (
       <React.Fragment>
-        <Button icon={<MyIcon value='RedoOutlined' />} onClick={this.handleReset}>
+        <Button icon={<RedoOutlined />} onClick={this.handleReset}>
           重置
         </Button>
-        <Button type="primary" icon={<MyIcon value='SearchOutlined' />} htmlType="submit">
+        <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
           查询
         </Button>
         {

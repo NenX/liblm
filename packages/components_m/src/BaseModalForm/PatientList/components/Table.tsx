@@ -21,7 +21,7 @@ export default class ProductsTable extends BaseTableOld {
           marginTop: 20,
           paddingBottom: 10,
           height: '100%',
-          overflowY: 'auto',
+          overflowY: 'scroll',
         }}
         {...rest}
         scroll={{ x: get(rest, 'scroll.x') || '100vw' }}

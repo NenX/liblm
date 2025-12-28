@@ -1,13 +1,13 @@
-import { MyIcon } from '@lm_fe/components';
-import { SMchc_FormDescriptions } from '@lm_fe/service';
-import { Button, Col, Divider, Input, InputNumber, Radio, Row, Tabs } from 'antd';
-import { cloneDeep, get, isEmpty, isEqual, isFunction, map, set, toArray } from 'lodash';
 import React from 'react';
+import { Tabs, Input, Row, Col, Radio, InputNumber, Button, Divider } from 'antd';
+import { map, get, set, isEmpty, isFunction, toArray, cloneDeep, isEqual } from 'lodash';
 import DynamicForm from '../../BaseModalForm/DynamicForm';
 import FilterDateInput from '../../MyForm/components/business/FilterDateInput';
-import NormalSelect from '../../selects/NormalSelect';
-import { formDescriptionsWithoutSectionApi } from '../../utils/adapter';
+import { PlusOutlined } from '@ant-design/icons';
 import PregnancyHistoryFormSection from './PregnancyHistoryFormSection';
+import NormalSelect from '../../selects/NormalSelect';
+import { formDescriptionsWithoutSectionApi, formDescriptionsFromApi } from '../../utils/adapter';
+import { SMchc_FormDescriptions } from '@lm_fe/service';
 const TAB_TITLE = '孕次';
 interface IProps {
   value?: any;
@@ -348,7 +348,7 @@ class PregnancyHistoryForm extends DynamicForm {
     return (
       <>
         <div style={{ marginLeft: 8, marginBottom: 8 }}>
-          <Button onClick={this.add} type="default" icon={<MyIcon value='PlusOutlined' />}>
+          <Button onClick={this.add} type="default" icon={<PlusOutlined />}>
             添加孕产史信息
           </Button>
         </div>

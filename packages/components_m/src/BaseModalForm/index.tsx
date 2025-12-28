@@ -5,7 +5,6 @@ import DynamicForm from '../BaseModalForm/DynamicForm';
 import { request } from '@lm_fe/utils';
 // const FormSection = lazy(() => import('./FormSection'));
 import { MyFormSection } from '../FU_components/FormSection'
-import { validate_form } from '@lm_fe/components';
 export default ({
   formDescriptions,
   url,
@@ -95,12 +94,10 @@ export default ({
       let tip = '';
       let method = '';
 
-      const formData = await validate_form(this.form)
-
-      if (!formData) return
+      await this.form.validateFields();
       const values = isFunction(toApi)
-        ? toApi({ ...data, ...formData, id })
-        : { ...data, ...formData, id };
+        ? toApi({ ...data, ...this.form.getFieldsValue(), id })
+        : { ...data, ...this.form.getFieldsValue(), id };
       if (isFunction(onSubmit)) {
         onSubmit({
           ...values,
@@ -135,7 +132,7 @@ export default ({
         <Modal
           centered
           {...modalProps}
-          open={visible}
+          visible={visible}
           onCancel={onCancel}
           onOk={this.handleSubmit}
           title={id ? `修改${title}` : `添加${title}`}

@@ -1,7 +1,6 @@
 import { InputProps } from "antd";
 import { FC } from "react";
 export { InputProps }
-import React from "react";
 export default function Custom<T>(props: InputProps & { CustomedComponent: FC<T>, [x: string]: any }) {
     const { CustomedComponent, value, onChange, ...others } = props
     //@ts-ignore

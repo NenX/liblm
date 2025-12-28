@@ -67,7 +67,7 @@ export class Request extends EventEmitter<{ beforeRequest: any, afterResponse: a
         return headerMessage
     }
 
-    displayMsg(res?: AxiosResponse<{ data?: any, code?: number, msg?: string }>) {
+    displayMsg(res: AxiosResponse<{ data?: any, code?: number, msg?: string }>) {
         const isSuccessful = Request.checkRTCode(res)
         const msg = Request.getMsg(res)
 
@@ -140,10 +140,7 @@ export class Request extends EventEmitter<{ beforeRequest: any, afterResponse: a
                 return _onErr(e);
             },
             (error: AxiosError) => {
-
                 Request.logger.error('请求出错：', { error })
-                this.displayMsg(error.response)
-
                 const response = error?.response
                 const e = Request.createErr(response, error)
                 return _onErr(e)

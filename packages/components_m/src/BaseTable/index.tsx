@@ -1,4 +1,8 @@
-import { ContainerDimensions, LazyAntd, MyIcon } from '@lm_fe/components';
+import {
+  FilterOutlined,
+  PlusOutlined, SearchOutlined
+} from '@ant-design/icons';
+import { ContainerDimensions, LazyAntd } from '@lm_fe/components';
 import { Browser } from '@lm_fe/utils';
 import {
   Input, InputNumber, Space
@@ -6,8 +10,8 @@ import {
 import { TableProps } from 'antd/lib/table';
 import { FilterDropdownProps } from 'antd/lib/table/interface';
 import classnames from 'classnames';
-import dayjs from 'dayjs';
 import { compact, get, indexOf, map, set } from 'lodash';
+import dayjs from 'dayjs';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { mchcEnv } from '@lm_fe/env';
@@ -147,7 +151,7 @@ export function BaseTable(props: IProps) {
           <OkButton
             type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<MyIcon value='SearchOutlined' />}
+            icon={<SearchOutlined />}
             style={{ width: 90 }}
           >
             查询
@@ -190,7 +194,7 @@ export function BaseTable(props: IProps) {
           cellHeaderAction,
           'filterIcon',
           <div className={styles["filter-block"]}>
-            <MyIcon value='FilterOutlined' />
+            <FilterOutlined />
           </div>,
         );
       }
@@ -208,7 +212,7 @@ export function BaseTable(props: IProps) {
     const { onAdd, addText, disabled } = props;
     if (onAdd) {
       return (
-        <OkButton disabled={disabled} icon={<MyIcon value='PlusOutlined' />} type="primary" onClick={onAdd}>
+        <OkButton disabled={disabled} icon={<PlusOutlined />} type="primary" onClick={onAdd}>
           {addText || '新增'}
         </OkButton>
       );
@@ -260,15 +264,15 @@ export function BaseTable(props: IProps) {
               <OkButton
                 className={styles["global-base-table_title-operations-left_filter"]}
                 type="link"
-                icon={<MyIcon value='FilterOutlined' />}
+                icon={<FilterOutlined />}
                 onClick={handleQueryClick}
               >
                 <div style={{ display: 'inline-flex', marginLeft: '5px' }}>
                   筛选
                   {queryVisible ? (
-                    <CustomIcon type="icon-down" />
+                    <CustomIcon type="icon-down"  />
                   ) : (
-                    <CustomIcon type="icon-dropdown" />
+                    <CustomIcon type="icon-dropdown"  />
                   )}
                 </div>
               </OkButton>
@@ -319,7 +323,7 @@ export function BaseTable(props: IProps) {
   // 如果一个页面多次引用此组件，则添加唯一标记id
   const selector = `#t_${tableId} thead.ant-table-thead`;
 
-  // console.log('scrollY', restHeight)
+  console.log('scrollY', restHeight)
   return (
     <div className={classnames('global-base-table', className)} id={`t_${tableId}`}>
       {!isFucking广三 && renderTitle()}

@@ -25,7 +25,6 @@ import dayjs from 'dayjs';
 import MedicalRecord from '../../../../../.others/MedicalRecord';
 import './index.less';
 import { mchcModal__ } from '@lm_fe/pages';
-import { mchcEnv } from '@lm_fe/env';
 const BASE_URL = '/api/pd-ppfos';
 export class SecondVisit extends Component {
   state = {
@@ -140,7 +139,7 @@ export class SecondVisit extends Component {
       },
     );
     await this.initData();
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
   };
 
   handleDelete = (item) => async () => {

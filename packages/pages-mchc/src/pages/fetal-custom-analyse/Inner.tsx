@@ -2,11 +2,11 @@ import { LazyAntd, SimpleForm } from '@lm_fe/components'
 import { mchcLogger } from '@lm_fe/env'
 import { IZsy_CtgRecord, SZsy_CtgRecord } from '@lm_fe/service'
 import { formatDate, getSearchParamsAll, getSearchParamsValue, request } from '@lm_fe/utils'
-import { Button, Divider, Empty, Form, Layout, Menu, Pagination, Spin } from 'antd'
+import { Button, Divider, Empty, Form, Layout, Menu, Spin, Pagination } from 'antd'
 import React, { useEffect, useState } from 'react'
 import './index.less'
 import ATable from './Table'
-const { Tree, TreeSelect, Select, Table, Dropdown } = LazyAntd
+// const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const { Header, Content, Sider } = Layout
 interface IProps {
@@ -151,7 +151,7 @@ export default function Test(props: IProps) {
             style={{
                 width: 1200,
                 padding: 0,
-                overflowY: 'auto'
+                overflowY: 'scroll'
             }}
         >
 

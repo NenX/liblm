@@ -8,7 +8,6 @@ import Table from './components/Table';
 import { getFutureDate } from '@lm_fe/utils';
 
 import { tableColumns } from './config/table';
-import { mchcEnv } from '@lm_fe/env';
 export default class List extends BaseListOld {
   staticDefaultQuery = {
     'type.equals': 2,
@@ -80,7 +79,7 @@ export default class List extends BaseListOld {
   };
 
   handleItemSave = (rowData: any) => async () => {
-    const { baseUrl, head_info } = this.props;
+    const { baseUrl, pregnancyData } = this.props;
     await this.form?.validateFields();
     const formData = this.form?.getFieldsValue();
     const physicalExamMeasure = {
@@ -103,13 +102,13 @@ export default class List extends BaseListOld {
     if (get(data, 'id')) {
       await request.put(baseUrl, data);
     } else {
-      set(data, 'outpatientNO', get(head_info, 'outpatientNO'));
-      set(data, 'name', get(head_info, 'name'));
+      set(data, 'outpatientNO', get(pregnancyData, 'outpatientNO'));
+      set(data, 'name', get(pregnancyData, 'name'));
       set(data, 'type', 2);
       await request.post(baseUrl, data);
     }
     this.form?.resetFields();
-    mchcEnv.success('保存成功');
+    message.success('保存成功');
     await this.setState({
       editKey: undefined,
     });

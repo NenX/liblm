@@ -1,4 +1,4 @@
-import { getPresetOptions, getSimpleOptions, ICommonOption, mchcLogger, mchcUtils, safe_fetch_options } from "@lm_fe/env";
+import { getPresetOptions, getSimpleOptions, ICommonOption, mchcUtils, safe_fetch_options } from "@lm_fe/env";
 import { IMySelectProps } from "./types";
 import { useEffect, useState } from "react";
 import { isBoolean, isNumber, isString } from "lodash";
@@ -41,14 +41,14 @@ export function get_mode(props: IMySelectProps,) {
 }
 const defaultOptions: ICommonOption[] = []
 export function get_select_opt(props: IMySelectProps) {
-    const { uniqueKey, options, uniqueKey, startIndex, useString } = props
-    const preOptions = uniqueKey ? getPresetOptions(uniqueKey as any) : null
+    const { optionKey, options, uniqueKey, startIndex, useString } = props
+    const preOptions = optionKey ? getPresetOptions(optionKey as any) : null
     const _option = typeof options === 'string' ? getSimpleOptions(options, { start: startIndex, useString }) : options
     const a: ICommonOption[] = preOptions ?? _option ?? (uniqueKey && mchcUtils.getDictionariesEnumerations(uniqueKey) as any) ?? props.options ?? defaultOptions;
     return a
 }
 export function use_options(props: IMySelectProps) {
-    const { fetch_options, uniqueKey, options: _options, uniqueKey } = props
+    const { fetch_options, optionKey, options: _options, uniqueKey } = props
     const [options, set_options] = useState<ICommonOption[]>([])
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState<ICommonOption[]>([]);
@@ -62,7 +62,6 @@ export function use_options(props: IMySelectProps) {
 
     useEffect(() => {
         const safeData = getData(value, options, marshal, type)
-
         setData(safeData)
     }, [value, options]);
 
@@ -77,7 +76,7 @@ export function use_options(props: IMySelectProps) {
             set_options(get_select_opt(props))
 
         }
-    }, [fetch_options, uniqueKey, _options, uniqueKey]);
+    }, [fetch_options, optionKey, _options, uniqueKey]);
 
     return { loading, options, data, setData }
 }
@@ -103,8 +102,7 @@ function getData(value: any, options: ICommonOption[], marshal: number, type: "m
             // ? options.filter(_ => _.value === v)
             ? options.filter(_ => numberLikeCompare(_.value, v))
             : [])
-
-    // mchcLogger.log('MySelect', { numberLikeCompare, v, options })
+    // mchcLogger.log('MySelect', value, safeData, options)
     return safeData
 }
 

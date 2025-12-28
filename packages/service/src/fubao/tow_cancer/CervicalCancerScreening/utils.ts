@@ -24,12 +24,12 @@ export function processTwoCancer_remote(data: IFubao_CervicalCancerScreening) {
 
 
     //病史情况
-    // let cervicalCancerMedicalHistory = (['previousCervicalScreening', 'gynecologicalDiseasesHistory'] as const)
-    //     .reduce((obj, k) => {
-    //         return mchcUtils.noteToCommonOption(obj, k)
-    //     }, data.cervicalCancerMedicalHistory)
+    let cervicalCancerMedicalHistory = (['previousCervicalScreening', 'gynecologicalDiseasesHistory'] as const)
+        .reduce((obj, k) => {
+            return mchcUtils.noteToCommonOption(obj, k)
+        }, data.cervicalCancerMedicalHistory)
 
-    data.cervicalCancerMedicalHistory = mchcUtils.autoNoteToCommonOption(data.cervicalCancerMedicalHistory)
+    data.cervicalCancerMedicalHistory = cervicalCancerMedicalHistory
 
     //妇科检查
     let cervicalCancerGynecologicExamination = (['vulva', 'secretions', 'vaginal', 'cervix', 'zg', 'appendix'] as const)
@@ -61,12 +61,12 @@ export function processTwoCancer_local(_data: IFubao_CervicalCancerScreening) {
 
     //病史情况
 
-    // let cervicalCancerMedicalHistory = (['previousCervicalScreening', 'gynecologicalDiseasesHistory'] as const)
-    //     .reduce((obj, k) => {
-    //         return mchcUtils.commonOptionToNote(obj, k)
-    //     }, data.cervicalCancerMedicalHistory)
+    let cervicalCancerMedicalHistory = (['previousCervicalScreening', 'gynecologicalDiseasesHistory'] as const)
+        .reduce((obj, k) => {
+            return mchcUtils.commonOptionToNote(obj, k)
+        }, data.cervicalCancerMedicalHistory)
 
-    data.cervicalCancerMedicalHistory = mchcUtils.autoCommonOptionToNote(data.cervicalCancerMedicalHistory)
+    data.cervicalCancerMedicalHistory = cervicalCancerMedicalHistory
 
     //妇科检查
     // let cervicalCancerGynecologicExamination = (['vulva', 'secretions', 'vaginal', 'cervix', 'zg', 'appendix'] as const)

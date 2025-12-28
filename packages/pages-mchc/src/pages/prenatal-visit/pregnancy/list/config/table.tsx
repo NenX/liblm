@@ -105,14 +105,14 @@ export default defineFormConfig([
       const label = ctx.mchcEnv.get_option_label('档案状态', state)
       const Button = ctx.ui.Button
       if (label === '已审核' || label === '已结案') {
-        const color = label === '已审核' ? '#21ac8d' : '#ebb923'
+        const className = label === '已审核' ? 'egister_2' : ''
         return (
           <Button
-            style={{ borderColor: color, color }}
             size="small"
-            onClick={function () {
+            onClick={() => {
               ctx.safeTo(`/prenatal-visit/pregnancy/nurse-end?id=${id}`, { id });
             }}
+            className={`egister_ ${className}`}
           >
             {label}
           </Button>
@@ -124,8 +124,9 @@ export default defineFormConfig([
           onClick={() => {
             ctx.safeTo(`/prenatal-visit/pregnancy/check?id=${id}`, { id })
           }}
+          className={`egister_ egister_1`}
         >
-          {label || '-'}
+          {label}
         </Button>
       );
     },

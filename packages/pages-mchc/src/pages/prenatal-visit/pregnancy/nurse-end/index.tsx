@@ -13,22 +13,29 @@ import InformedConsent from './InformedConsent/index1';
 import PostpartumVisit from './postpartum-visit/index1';
 import { mchcUtils } from '@lm_fe/env';
 import { MyLazyComponent } from '@lm_fe/components';
-import { use_provoke } from '@lm_fe/provoke';
-
+const getDoctorEndId = mchcUtils.getDoctorEndId
+const TABS = {
+  ArchivalInformation: '1',
+  FurtherVisit: '2',
+  PostpartumVisit: '3',
+  DoctorInformedConsent: '4',
+  InformedConsent: '5',
+  OuterCourtReport: '6',
+  CloseArchives: '7',
+};
 function NurseMain(props: any) {
-  const { sys_theme, config } = use_provoke()
-  const 护士端_模块隐藏 = config.护士端_模块隐藏 || []
+  console.log('NurseMain props', props)
   const [headerData, set_headerData] = useState({})
-  const [activeKey, set_activeKey] = useState<string>('')
+  const [activeKey, set_activeKey] = useState(TABS['ArchivalInformation'])
   const pregnancy_id = get(props, `id`) ?? getSearchParamsValue('id');
 
   useEffect(() => {
     getHeaderInfo();
-    set_activeKey(mm[0]?.title)
+    console.log('useEffect getHeaderInfo')
     return () => {
 
     };
-  }, [pregnancy_id]);
+  }, []);
 
 
 
@@ -58,29 +65,49 @@ function NurseMain(props: any) {
   };
 
 
-  const mm = [
-    { title: '档案信息', comp: () => <ArchivalInformation id={pregnancy_id} reloadHeader={getHeaderData} {...props} /> },
-    { title: '复诊管理', comp: () => <FurtherVisit id={get(headerData, 'outpatientNO')} head_info={headerData} {...props} /> },
-    { title: '产后复诊管理', comp: () => <PostpartumVisit id={get(headerData, 'outpatientNO')} head_info={headerData} {...props} /> },
-    { title: '补助券管理', comp: () => <InformedConsent id={pregnancy_id} head_info={headerData} {...props} /> },
-    { title: '结案管理', comp: () => <CloseArchives id={pregnancy_id} {...props} /> },
-  ].filter(_ => !护士端_模块隐藏.includes(_.title))
+
 
 
   function renderContent() {
+    const id = get(props, 'id') || getSearchParamsValue('id');
+    const nurseDeskVoucher = SLocal_SystemConfig.get('nurseDeskVoucher')
 
     return (
       <MyLazyComponent>
-        <Tabs destroyOnHidden className="panel-with-child_content-tabs" style={{ background: sys_theme.bg_color, }} activeKey={activeKey} onChange={handleChangeTab}>
-          {
-            mm.map(_ => {
-              return <Tabs.TabPane tab={_.title} key={_.title}>
-                {_.comp()}
-              </Tabs.TabPane>
-            })
-          }
-
-
+        <Tabs className="panel-with-child_content-tabs" activeKey={activeKey} onChange={handleChangeTab}>
+          <Tabs.TabPane tab="档案信息" key={TABS['ArchivalInformation']}>
+            <ArchivalInformation id={id} reloadHeader={getHeaderData} {...props} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="复诊管理" key={TABS['FurtherVisit']}>
+            {activeKey === TABS['FurtherVisit'] && (
+              <FurtherVisit id={get(headerData, 'outpatientNO')} pregnancyData={headerData} {...props} />
+            )}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="产后复诊管理" key={TABS['PostpartumVisit']}>
+            {activeKey === TABS['PostpartumVisit'] && (
+              <PostpartumVisit id={get(headerData, 'outpatientNO')} pregnancyData={headerData} {...props} />
+            )}
+          </Tabs.TabPane>
+          {/* <Tabs.TabPane tab="文书管理" key={TABS['DoctorInformedConsent']}>
+          {activeKey === TABS['DoctorInformedConsent'] && (
+            <DoctorInformedConsent id={id} pregnancyData={headerData} {...props} />
+          )}
+        </Tabs.TabPane> */}
+          {nurseDeskVoucher && (
+            <Tabs.TabPane tab="补助券管理" key={TABS['InformedConsent']}>
+              {activeKey === TABS['InformedConsent'] && (
+                <InformedConsent id={id} pregnancyData={headerData} {...props} />
+              )}
+            </Tabs.TabPane>
+          )}
+          {/* <Tabs.TabPane tab="外院报告" key={TABS['OuterCourtReport']}>
+          {activeKey === TABS['OuterCourtReport'] && (
+            <OuterCourtReport id={id} pregnancyData={headerData} {...props} />
+          )}
+        </Tabs.TabPane> */}
+          <Tabs.TabPane tab="结案管理" key={TABS['CloseArchives']}>
+            {activeKey === TABS['CloseArchives'] && <CloseArchives id={id} {...props} />}
+          </Tabs.TabPane>
         </Tabs>
       </MyLazyComponent>
     );

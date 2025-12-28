@@ -102,8 +102,6 @@ export default class EditableCell extends Component<EditableCellProps> {
             <RenderComponent
               editing={editing}
               {...editor}
-              {...(editor.input_props || {})}
-              marshal={0}
               disabled={this.props.disabled}
               onChange={(val: any) => this.handleChange(val)}
               value={this.state.value}

@@ -1,2 +1,3 @@
 import { lazy } from 'react';
-export const MyMonaco = lazy(() => import('./Inner'))
+const a = lazy(() => import('./Inner'))
+export const MyMonaco = a

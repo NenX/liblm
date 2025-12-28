@@ -12,7 +12,7 @@ interface IProps {
 
 const opt_url = '/api/progestation/check/followup/progestationCheckFollowupCase'
 
-export function Follow_up_btn_孕前(props: { handleSearch: () => void, rowData: any }) {
+export function Follow_up_btn(props: { handleSearch: () => void, rowData: any }) {
     const { handleSearch, rowData = {} } = props
     const { premaritalCheckArchivesId, fileType } = rowData
 

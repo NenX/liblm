@@ -3,17 +3,18 @@
 .container {
     display: flex;
     height: 100vh;
-    // background-color: #f0f8ff;
+    background-color: #f0f8ff;
     margin: 0;
 }
 
 .left-panel {
     flex: 1;
+    background-color:@color;
 }
 
 .right-panel {
     flex: 1;
-    // background-color: #f0f0f0;
+    background-color: #f0f0f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,7 +27,7 @@
     border-radius: 4px;
     box-shadow: 10px 10px 20px rgba(1, 36, 73, .4);
     // outline: 1px solid #9db9d1;
-    // background-color: #fff;
+    background-color: #fff;
     transform: translateY(-100%);
     opacity: 0;
 }
@@ -35,6 +36,10 @@
     color: #888;
 }
 
+.login-form h2 {
+    color: @color;
+    font-size: 24px;
+}
 
 
 

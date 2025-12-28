@@ -11,7 +11,6 @@ import {
 } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { HighriskGradeColorSpan } from 'src/FU_components';
-import { use_provoke } from '@lm_fe/provoke';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 interface IProps {
     headerInfo?: IMchc_Doctor_OutpatientHeaderInfo
@@ -74,11 +73,12 @@ export function HighRiskGradeSelect(props: IProps) {
 // value Ⅰ Ⅱ ...
 export function HighRiskGradeSelectPure(props: { value?: string, onChange?(v: string): void, disabled?: boolean }) {
     const { value, onChange, disabled } = props
-    const { 可选高危等级 } = use_provoke('可选高危等级',)
 
+    const [gradeOptions, set_gradeOptions] = useState<IMchc_HighriskGradeConfig[]>([])
 
     useEffect(() => {
-
+        SMchc_Common.getHighriskGradeConfig()
+            .then(set_gradeOptions)
 
         return () => {
 
@@ -98,10 +98,12 @@ export function HighRiskGradeSelectPure(props: { value?: string, onChange?(v: st
             style={{ width: 140 }}
             value={value}
         >
-            {map(可选高危等级, (item) => (
+            {map(gradeOptions, (item) => (
                 <Select.Option value={item.label}>
-                    <HighriskGradeColorSpan color={item.note} />
+                    <HighriskGradeColorSpan level={item.label} />
                     {item.colorText}
+                    {/* {item.label} */}
+
                 </Select.Option>
             ))}
         </Select>

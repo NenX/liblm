@@ -7,7 +7,6 @@ import { get, set } from 'lodash';
 import dayjs from 'dayjs';
 import { valueToApi, valueToForm } from '../config/adapter';
 import Form from './components/Form';
-import { mchcEnv } from '@lm_fe/env';
 class BasicInfo extends BaseEditPanel<any> {
   static defaultProps = {
     baseUrl: '/api/progestation/check/saveProgestationCheckArchivesGuidanceAsses', request,
@@ -120,7 +119,7 @@ class BasicInfo extends BaseEditPanel<any> {
     const res = (await request.post(baseUrl, params)).data
     if (get(res, 'code') === 1) {
       if (get(values, 'isPrint')) {
-        mchcEnv.success(get(res, 'msg'), 0.5).then(() => {
+        message.success(get(res, 'msg'), 0.5).then(() => {
           this._handlePrint(get(res, 'data.id'))
 
         });

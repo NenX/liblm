@@ -15,7 +15,7 @@ export const SLocal_State = {
     return this.userData
   },
   get userData() {
-    return mchcEnv.user_data as IMchc_User
+    return mchcEnv.userData as IMchc_User
   },
   get isDev() {
 

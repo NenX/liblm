@@ -555,7 +555,7 @@ export default {
       align: 'center',
       title: '胎儿麻醉药物量',
       inputProps: {
-        popupMatchSelectWidth: 300,
+        dropdownMatchSelectWidth: 300,
         options: [
           {
             label: '罗库溴胺量(mg)=0.1-0.6(mg/kg)*胎重(kg)',

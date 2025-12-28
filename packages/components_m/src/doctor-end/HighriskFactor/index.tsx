@@ -516,7 +516,7 @@ export class HighriskFactor extends Component<IProps, IndexState> {
     return (
       <Modal
         className={styles["highrisk-pop"]}
-        open={visible}
+        visible={visible}
         width={1000}
         onCancel={this.handleClose}
         onOk={this.handleSubmit}

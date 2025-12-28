@@ -66,7 +66,7 @@ export default defineFormConfig([{
             hidden: true,
             "inputType": "MS",
             required,
-            inputProps: { uniqueKey: '民族s', marshal: 0 },
+            inputProps: { optionKey: '民族s', marshal: 0 },
             layout: '1/3',
         },
         {

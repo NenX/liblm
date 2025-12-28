@@ -1,6 +1,8 @@
 import { getSameOptions } from "@lm_fe/env";
-import { defineFormConfig } from "@lm_fe/service";
+import { defineFormConfig, IMchc_FormDescriptions_Field_Nullable } from "@lm_fe/service";
 import { ROMAN_NUMERALS } from "@lm_fe/utils";
+import { 知情同意书_tab } from "./common";
+import { get_check_invert_values } from "@lm_fe/components_m";
 
 
 
@@ -17,7 +19,7 @@ export default defineFormConfig([
                 "key": "gynecologicalPatient.occupation",
                 "label": "职业",
                 "inputType": "MA",
-                inputProps: { uniqueKey: '职业s', marshal: 0, disabled: true },
+                inputProps: { optionKey: '职业s', marshal: 0, disabled: true },
                 layout: '1/4',
 
             },
@@ -26,7 +28,7 @@ export default defineFormConfig([
                 "key": "gynecologicalPatient.telephone",
                 "label": "联系电话",
                 "inputType": "MyInput",
-                inputProps: { uniqueKey: '职业s', marshal: 0, disabled: true },
+                inputProps: { optionKey: '职业s', marshal: 0, disabled: true },
                 layout: '1/4',
 
             },
@@ -46,7 +48,7 @@ export default defineFormConfig([
                 "key": "archivist",
                 "label": "建档人",
                 "inputType": "MyInput",
-                inputProps: { uniqueKey: '职业s', marshal: 0, disabled: true },
+                inputProps: { optionKey: '职业s', marshal: 0, disabled: true },
                 layout: '1/4',
 
             },
@@ -55,7 +57,7 @@ export default defineFormConfig([
                 "label": "单位或地址",
                 // "inputType": "MyAddress",
                 "inputType": 'MyInput',
-                inputProps: { uniqueKey: '职业s', marshal: 0, disabled: true },
+                inputProps: { optionKey: '职业s', marshal: 0, disabled: true },
                 layout: '1/1',
 
             },
@@ -602,7 +604,11 @@ export default defineFormConfig([
                 {
                     "label": "一键勾选",
                     "inputType": "check_invert_button",
-
+                    inputPropsFn() {
+                        return {
+                            check_invert_values: get_check_invert_values(cache)
+                        }
+                    },
                     layout: "1/3",
 
                 }

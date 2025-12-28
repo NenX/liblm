@@ -60,7 +60,7 @@ export default defineFormConfig(
                 "inputType": "MS",
                 hidden: true,
                 "required": true,
-                inputProps: { uniqueKey: '民族s', marshal: 0 },
+                inputProps: { optionKey: '民族s', marshal: 0 },
                 layout: '1/3',
             },
             {
@@ -77,7 +77,7 @@ export default defineFormConfig(
                 hidden: true,
                 "inputType": "MS",
                 "rules": [{ "required": true, "message": "婚姻状态是必填项" }],
-                inputProps: { uniqueKey: '婚姻', marshal: 0 },
+                inputProps: { optionKey: '婚姻', marshal: 0 },
                 layout: '1/3',
             },
 
@@ -86,7 +86,7 @@ export default defineFormConfig(
                 "label": "文化程度",
                 hidden: true,
                 "inputType": "MS",
-                inputProps: { uniqueKey: '文化程度s', marshal: 0 },
+                inputProps: { optionKey: '文化程度s', marshal: 0 },
                 layout: '1/3',
             },
 
@@ -95,7 +95,7 @@ export default defineFormConfig(
                 "label": "职业",
                 hidden: true,
                 "inputType": "MS",
-                inputProps: { uniqueKey: '职业s', marshal: 0 },
+                inputProps: { optionKey: '职业s', marshal: 0 },
                 layout: '1/3',
             },
 

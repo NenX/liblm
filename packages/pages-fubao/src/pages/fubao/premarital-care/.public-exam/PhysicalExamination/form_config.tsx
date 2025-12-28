@@ -19,7 +19,7 @@ export default defineFormConfig(
             "key": "weight",
             "label": "体重(kg)",
             "inputType": "input_number",
-            required: true,
+            "rules": [{ 'required': true, 'message': '体重(kg)是必填项' }],
             "inputProps": { 'placeholder': '请输入体重' },
             layout: '1/3',
 
@@ -27,7 +27,7 @@ export default defineFormConfig(
             "key": "bmi",
             "label": "BMI",
             "inputType": "input_with_range",
-            required: true,
+            "rules": [{ 'required': true, 'message': 'BMI是必填项' }],
             "specialConfig": { 'tip': 'BMI的正常范围值是18.5~24.9kg/㎡', 'min': 18.5, 'max': 24.9 },
             "inputProps": { 'placeholder': '请输入BMI', 'disabled': true },
             layout: '1/3',

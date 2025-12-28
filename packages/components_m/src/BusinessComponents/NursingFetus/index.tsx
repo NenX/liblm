@@ -1,11 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
-import { safe_json_parse } from '@lm_fe/utils';
-import { Tabs } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import { get, isNil, isObject, map, omit, set } from 'lodash';
 import React, { Component } from 'react';
 import FetusForm from './components';
+import { Tabs } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { map, get, set, isEmpty, isObject, isNil, omit, pickBy } from 'lodash';
+import { FormInstance } from 'antd/lib/form';
 import { toApi } from './config/adapter';
+import { safe_json_parse } from '@lm_fe/utils';
 const TITLE = '胎儿';
 export default class NursingFetus extends Component {
   state = {
@@ -150,7 +150,7 @@ export default class NursingFetus extends Component {
         onChange={this.onChange}
         addIcon={
           <div>
-            <MyIcon value='PlusOutlined' />
+            <PlusOutlined />
             增加{TITLE}
           </div>
         }

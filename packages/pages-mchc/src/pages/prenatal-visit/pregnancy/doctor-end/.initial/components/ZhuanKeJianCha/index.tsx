@@ -3,12 +3,11 @@ import { mchcUtils } from '@lm_fe/env';
 import { BF_Wrap2 } from '@lm_fe/pages';
 import { SMchc_Doctor } from '@lm_fe/service';
 import { FormInstance } from 'antd';
-import  React from 'react';
+import * as React from 'react';
 import { useEffect } from 'react';
-import { IInitial_Tab_props } from '../../types';
-export default function ZhuanKeJianCha(props: IInitial_Tab_props) {
-  const { form, active, disabled_save } = props
-  const id = mchcUtils.single_id()
+export default function ZhuanKeJianCha(props: { form: FormInstance, active: boolean }) {
+  const { form, active } = props
+  const id = mchcUtils.getDoctorEndId()
   const { Wrap, config } = BF_Wrap2({ default_conf: { tableColumns: () => import('./form_config'), title: '门诊-专科检查', } })
   useEffect(() => {
     if (active) {
@@ -26,8 +25,6 @@ export default function ZhuanKeJianCha(props: IInitial_Tab_props) {
 
   return <Wrap>
     <FormSectionForm
-      disableAll={disabled_save}
-
       onValuesChange={(changedValues) => {
 
       }}

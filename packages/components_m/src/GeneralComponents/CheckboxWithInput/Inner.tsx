@@ -30,7 +30,7 @@ export default (props: IProps) => {
   const [inputOffset, setInputOffset] = useState(0);
   const rowRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    !isEmpty(value) && setData(safe_json_parse(value, {})!);
+    !isEmpty(value) && setData(safe_json_parse(value));
   }, [value]);
 
   useEffect(() => {

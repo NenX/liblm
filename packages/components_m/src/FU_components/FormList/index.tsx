@@ -2,10 +2,10 @@ import { Button, Form } from 'antd';
 import React, { useEffect } from 'react';
 import { useMarshal } from '../../utils/useMarshal';
 // import FormSection, { IFormSectionProps } from '../../BaseModalForm/FormSection';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { IMchc_FormDescriptions_Field, SMchc_FormDescriptions } from '@lm_fe/service';
 import { cloneDeep } from 'lodash';
 
-import { MyIcon } from '@lm_fe/components';
 import { MyFormSection } from '../FormSection';
 import { IFormSectionProps } from '../FormSection/types';
 import { TCommonComponent } from '../types';
@@ -54,7 +54,7 @@ export const MyFormList_必须搭配Form使用: TCommonComponent<IProps, string 
                                         <MyFormSection key={key} disableAll={disabled} formDescriptions={arr} />
                                     </div>
                                     <div style={{ width: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <MyIcon value='MinusCircleOutlined' rev={''} onClick={() => remove(name)} />
+                                        <MinusCircleOutlined rev={''} onClick={() => remove(name)} />
                                     </div>
                                 </div>
                             )
@@ -62,7 +62,7 @@ export const MyFormList_必须搭配Form使用: TCommonComponent<IProps, string 
                         )
                     }
                     <Form.Item>
-                        <Button type="dashed" onClick={() => add(defaultData)} block icon={<MyIcon value='PlusOutlined' rev={''} />}>
+                        <Button type="dashed" onClick={() => add(defaultData)} block icon={<PlusOutlined rev={''} />}>
 
                         </Button>
                     </Form.Item>

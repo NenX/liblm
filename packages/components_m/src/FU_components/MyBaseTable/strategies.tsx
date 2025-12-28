@@ -23,7 +23,26 @@ const m = {
     Switch,
     SwitchSelect
 }
+export function MyBaseListRenderFormItem({ searchSchema, disabled }: { searchSchema: ILmFormItemConfigMixin[], disabled?: boolean }) {
 
+    return (
+        <Space>
+            {
+                searchSchema?.map((config) => {
+                    const { type, innerOptions, outerOptions } = config
+                    const C = m[type]
+                    if (C) {
+                        return <Form.Item style={{ margin: 0, }} {...outerOptions}><C disabled={disabled} allowClear placeholder="请选择" style={{ minWidth: 120 }} {...innerOptions} /></Form.Item>
+                    }
+
+                    return (
+                        <Form.Item style={{ margin: 0, }}>{"type error " + config?.type}</Form.Item>
+                    )
+                }) || null
+            }
+        </Space>
+    )
+}
 export function MyBaseListRenderFormSection({ config, disabled, form }: { config: IMchc_FormDescriptions_Field_Nullable[], disabled?: boolean, form?: FormInstance }) {
 
     return (

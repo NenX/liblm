@@ -10,7 +10,7 @@ interface IProps {
 
 const opt_url = '/api/premarital/check/followup/premaritalCheckFollowupCase'
 
-export function Follow_up_btn_婚前(props: { handleSearch: () => void, rowData: any }) {
+export function Follow_up_btn(props: { handleSearch: () => void, rowData: any }) {
     const { handleSearch, rowData = {} } = props
     const { premaritalCheckArchivesId, fileType } = rowData
 

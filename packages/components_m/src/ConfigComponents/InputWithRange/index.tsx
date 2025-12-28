@@ -1,7 +1,6 @@
 import { safe_json_parse } from '@lm_fe/utils';
 import { get } from 'lodash';
 import InputWithRange from '../../GeneralComponents/InputWithRange';
-import React from 'react';
 export default (props: any) => {
   const { config, onChange, value } = props;
   const specialConfig = get(config, 'specialConfig') ?? safe_json_parse(get(config, 'special_config'));

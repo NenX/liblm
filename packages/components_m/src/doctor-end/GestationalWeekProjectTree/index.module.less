@@ -3,14 +3,15 @@
 .gestational-week-project-tree {
   position: relative;
   min-height: 80px;
-  padding-top: 18px;
+  padding: 16px 38px 16px 0px;
 
   &-btns {
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
-    // span,
+    display: flex;
+    flex-direction: column;
+    span,
     a {
       display: inline-block;
       width: 24px;
@@ -18,12 +19,15 @@
       margin: 6px;
       line-height: 24px;
       text-align: center;
+      border-radius: 3px;
     }
     span::selection {
       color: unset !important;
       background: none !important;
     }
-
+    .center-button {
+      padding-top: 2px;
+    }
 
     .abnormal-button {
       font-weight: bold;

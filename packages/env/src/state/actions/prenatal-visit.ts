@@ -8,16 +8,43 @@ export const initRiskWs = (ws: any) => (dispatch: Dispatch) => {
   dispatch({ type: ACTION_TYPE.INIT_HIGH_RISK_WS, data: ws });
 };
 
+/** 获取孕册数据*/
+export const getPregnancyData = (pregnancyId: string) => async (dispatch: Dispatch) => {
+  const data = (await request.get(`/api/pregnancies/${pregnancyId}`)).data;
+  dispatch({
+    type: ACTION_TYPE.PRENATAL_VISIT_MAIN_PREGNANCY,
+    payload: {
+      data,
+    },
+  });
+  // console.log('data',data);
 
+  return data;
+};
 
 /**保存头部信息 */
 export const saveHeaderInfo = (data: any) => (dispatch: Dispatch) => {
   dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_HEADERINFO, data });
 };
 
+/** 诊断搜索词*/
+export const setDiagnosesWord = (data: string) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: ACTION_TYPE.PRENATAL_VISIT_MAIN_DIAGNOSESWORD,
+    payload: {
+      data,
+    },
+  });
+};
 
-
-
+export const changeDiagnosesTemplate = (data: boolean) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: ACTION_TYPE.PRENATAL_VISIT_MAIN_DIAGNOSESTEMPLATE,
+    payload: {
+      data,
+    },
+  });
+};
 
 /** 获取诊断数据*/
 export const getDiagnosesList = (pregnancyId: string) => async (dispatch: Dispatch) => {
@@ -51,7 +78,20 @@ export const setDiagnosesList = (data: any) => async (dispatch: Dispatch) => {
   });
 };
 
-
+/** 获取高危因素标记数据*/
+export const getHighriskSign = (pregnancyId: string) => async (dispatch: Dispatch) => {
+  const res = await request.get(`/api/autoCaseRecognition?pregnancyId=${pregnancyId}`);
+  const data = filter(res, (item) => item.type === 'ALERT_HIGHRISK');
+  // if (isArray(data) && data.length > 0) {
+  //   forEach(data, (item) => (item.visible = true));
+  // }
+  dispatch({
+    type: ACTION_TYPE.PRENATAL_VISIT_MAIN_HIGHRISKSIGN,
+    payload: {
+      data,
+    },
+  });
+};
 
 /** 修改高危因素标记数据*/
 export const setHighriskSign = (data: any) => async (dispatch: Dispatch) => {
@@ -72,7 +112,16 @@ export const changeTolac = (isShowTolac: boolean) => (dispatch: Dispatch) => {
   });
   // dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_WEBSOCKET_CANCLEFORM, data: 'cicatrix' });
 };
-
+// 静脉血栓
+export const changeScreening = (isShowScreening: boolean) => (dispatch: Dispatch) => {
+  dispatch({
+    type: ACTION_TYPE.PRENATAL_VISIT_MAIN_SCREENING,
+    payload: {
+      data: isShowScreening,
+    },
+  });
+  // dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_WEBSOCKET_CANCLEFORM, data: 'thrombus' });
+};
 
 // 子痫
 export const changePreeclampsia = (isShowPreeclampsia: boolean) => (dispatch: Dispatch) => {
@@ -126,7 +175,9 @@ export const delWebsocketMultierm = () => (dispatch: Dispatch) => {
   dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_WEBSOCKET_DEL });
 };
 
-
+export const changeWebsocketLevel = (data: any) => (dispatch: Dispatch) => {
+  dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_WEBSOCKET_LEVEL, data });
+};
 export const changeWebsocketLevelNew = (data: any) => (dispatch: Dispatch) => {
   dispatch({ type: ACTION_TYPE.PRENATAL_VISIT_WEBSOCKET_LEVEL_NEW, data });
 };

@@ -1,9 +1,10 @@
-import { IMchc_Doctor_OutpatientHeaderInfo, SLocal_State } from "@lm_fe/service";
-import { getFutureDate } from '@lm_fe/utils';
+import React, { Component } from 'react';
 import { Button } from 'antd';
 import dayjs from 'dayjs';
-import { forEach, get, isEmpty, set } from 'lodash';
-import React, { Component } from 'react';
+import { get, set, isEmpty, forEach, size } from 'lodash';
+import { IMchc_Doctor_OutpatientHeaderInfo, SLocal_State } from "@lm_fe/service";
+import { mchcModal } from '../../modals';
+import { getFutureDate } from '@lm_fe/utils';
 
 class Index extends Component<{ form: any }> {
 
@@ -11,7 +12,7 @@ class Index extends Component<{ form: any }> {
     const { form } = this.props;
     const pregnancyData = form.getFieldValue();
 
-    window.mchc_modal.open('高危因素管理', {
+    mchcModal.open('高危因素管理', {
       modal_data: {
         data: pregnancyData,
         pregnancyId: pregnancyData?.id,

@@ -1,6 +1,15 @@
+import {
+    DeleteOutlined,
+    EditOutlined,
+    CopyOutlined,
+    ExportOutlined,
+    PlusOutlined,
+    PrinterOutlined,
+    ReloadOutlined, SearchOutlined
+} from '@ant-design/icons';
 import { mchcConfig, mchcEnv, mchcEvent, mchcLogger } from '@lm_fe/env';
 import { ModelService, TIdTypeCompatible } from '@lm_fe/service';
-import { Browser, cloneDeep, downloadFile, formatDateTime, safe_async_call, safeGetFromFuncOrData, sleep } from '@lm_fe/utils';
+import { Browser, downloadFile, formatDateTime, safe_async_call, sleep } from '@lm_fe/utils';
 import { Button, Divider, Form, message, Space, TablePaginationConfig } from 'antd';
 import { get, isFunction, isNil, isString, omit } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
@@ -9,17 +18,23 @@ import './index.module.less';
 import { IMyBaseList_ActionCtx, IMyBaseList_ColumnType, MyBaseListProps } from './types';
 import { formatProps, get_dataIndex, get_title, tranformQueryData, use_my_baselist } from './utils';
 
-import { MyIcon, Table_L, useMyEffectSafe } from '@lm_fe/components';
+import { LazyAntd, useMyEffectSafe } from '@lm_fe/components';
 import { getDefaultRequiredRules, InterceptDisplayFC, MyBaseListComponents, OkButton } from '@lm_fe/components_m';
-import { use_provoke } from '@lm_fe/provoke';
-import { TableRowSelection } from 'antd/es/table/interface';
 import { mchcModal__ } from '../../modals';
 const browserClient = Browser.client || {};
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
-
-export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible, editKey?: any }>(_props: MyBaseListProps<T>) {
-    const sys_theme = use_provoke(s => s.sys_theme)
+export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible }>(_props: MyBaseListProps<T>) {
+    const staticDefaultQuery = {
+        // current: 1,
+        // pageSize: 14,
+        page: 0,
+        size: mchcConfig.get('列表一页显示条数') || 14,
+        sort: 'id,desc', // 基本列表都需要倒序
+        'deleteFlag.equals': 0
+    };
+    type TStaticQuery = typeof staticDefaultQuery
 
     const props = formatProps(_props);
     const {
@@ -34,7 +49,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         ignore_env,
         get_fuck_page,
         ModalForm,
-        baseTitle = '',
+        baseTitle,
 
         rowKey,
         showExport,
@@ -46,7 +61,6 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         needChecked,
         requestBeforeEdit,
         addText,
-        editText,
         name,
         apiPrefix,
         ActionAddonBefore,
@@ -78,16 +92,6 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         action_col
     } = props
 
-    const staticDefaultQuery = {
-        // current: 1,
-        // pageSize: 14,
-        page: 0,
-        size: needPagination ? (mchcConfig.get('列表一页显示条数') || 14) : 999,
-        sort: 'id,desc', // 基本列表都需要倒序
-        'deleteFlag.equals': 0
-    };
-    type TStaticQuery = typeof staticDefaultQuery
-
 
 
     const myBaseListService = useRef<ModelService<T>>()
@@ -96,19 +100,16 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
     const queryRef = useRef<HTMLDivElement>(null)
     const wrapRef = useRef<HTMLDivElement>(null)
 
-    const defaultQueryValue = Object.assign({} as TStaticQuery, staticDefaultQuery, searchParams)
+    const defaultQueryValue = Object.assign({} as TStaticQuery, staticDefaultQuery, searchParams as TStaticQuery)
 
     const defaultQuery = useRef(defaultQueryValue)
     const showSearch = !!(searchConfig.length)
-
+    // Object.assign(defaultQuery.current, searchParams)
 
     const { table_columns } = use_my_baselist<T>(props)
-    let actCellWidth = (+showRowDelBtn + +showRowEditBtn + +showRowPrintBtn) * 60
+    let actCellWidth = (+showRowDelBtn + +showRowEditBtn + +showRowPrintBtn) * 50
     if (ActionAddonBefore) {
         actCellWidth += 70
-    }
-    if (editText) {
-        actCellWidth += editText.length * 14
     }
     const searchForm = props.searchForm ?? _searchForm
     useEffect(() => {
@@ -136,7 +137,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
     const [tableHeight, setTableHeight] = useState(500)
     const [checkRows, setCheckRows] = useState<T[]>([])
 
-    const [table_form] = Form.useForm()
+    const [form] = Form.useForm()
 
 
     const editKeyRef = useRef(0)
@@ -164,11 +165,11 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
         setTimeout(() => {
 
-            const h = document.body.clientHeight
+            const h = browserClient.clientHeight
             const formHeight = formWrapper.current?.clientHeight ?? 0
             const queryHeight = queryRef.current?.clientHeight ?? 0
             const tableHeaderHeight = wrapRef.current?.querySelector('.ant-table-header')?.clientHeight ?? 0
-            setTableHeight(h - queryHeight - tableHeaderHeight - 118 - 60)
+            setTableHeight(h - queryHeight - tableHeaderHeight - 100 - 80)
             if (formHeight > 40) {
                 setLongSearchForm(true)
             }
@@ -265,10 +266,10 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 ...(modalFormConfig?.modal_data),
                 formDescriptions: cal_columns,
 
-                async onSubmit(new_data, old_data) {
-                    const _data = Object.assign({}, rowData, new_data)
+                async onSubmit(values) {
+                    const _data = Object.assign({}, rowData, values)
 
-                    const submitData = await safe_async_call(beforeSubmit, _data, old_data)
+                    const submitData = await safe_async_call(beforeSubmit, _data)
                     mchcLogger.log('submitData', submitData)
                     if (!submitData) return
                     return create_or_update(submitData)
@@ -277,7 +278,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 },
                 async getInitialData() {
                     const fn = handleBeforePopup
-                    let _data = cloneDeep(rowData ?? {})
+                    let _data = rowData ?? {}
                     if (rowData?.id && requestBeforeEdit) {
                         const res = await myBaseListService.current?.getOne(rowData?.id)
                         if (res) _data = res
@@ -306,12 +307,13 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
     /* istanbul ignore next */
     const actionCol: IMyBaseList_ColumnType<T> = action_col?.(render_props) ?? {
-        title: __DEV__ ? (actCellWidth + '') : '操作',
+        title: '操作',
         dataIndex: '__operation',
         fixed: 'right',
         align: 'center',
         isActive: 0,
-
+        showSorter: false,
+        showFilter: false,
         width: actCellWidth,
         render: (value: any, rowData: T, index: number) => {
             const editable = isEditing(rowData);
@@ -339,17 +341,17 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                     }
 
                     {
-                        showRowEditBtn ? <OkButton title={'编辑/查看'} icon={<MyIcon value='EditOutlined' />} size="small" onClick={e => handleEdit(rowData)} btn_text={editText} /> : null
+                        showRowEditBtn ? <OkButton title='编辑/查看' icon={<EditOutlined />} size="small" onClick={e => handleEdit(rowData)} /> : null
                     }
                     {
-                        showCopy ? <OkButton title='复制' icon={<MyIcon value='CopyOutlined' />} size="small" onClick={e => handleEdit(omit(rowData, ['id']) as T)} /> : null
+                        showCopy ? <OkButton title='复制' icon={<CopyOutlined />} size="small" onClick={e => handleEdit(omit(rowData, ['id']) as T)} /> : null
                     }
 
                     {
-                        showRowPrintBtn ? <OkButton title='打印' icon={<MyIcon value='PrinterOutlined' />} size="small" onClick={e => handleRowPrint(rowData)} /> : null
+                        showRowPrintBtn ? <OkButton title='打印' icon={<PrinterOutlined />} size="small" onClick={e => handleRowPrint(rowData)} /> : null
                     }
                     {
-                        showRowDelBtn ? <OkButton title='删除' icon={<MyIcon value='DeleteOutlined' />} danger type="primary" size="small" onClick={e => handleDelete(rowData)} /> : null
+                        showRowDelBtn ? <OkButton title='删除' icon={<DeleteOutlined />} danger type="primary" size="small" onClick={e => handleDelete(rowData)} /> : null
                     }
 
                 </Space>
@@ -369,7 +371,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         const isOk = confirm('确认是否删除？')
         if (!isOk) return
         await myBaseListService.current?.del(rowData.id);
-        mchcEnv.success(`删除${baseTitle}成功`);
+        message.success(`删除${baseTitle}成功`);
         handleSearch();
     };
     async function handleRowPrint(rowData: T) {
@@ -385,21 +387,19 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         })
     };
 
-    async function handleItemSave(d?: any) {
-        await table_form.validateFields();
-        const old_data = d ?? dataSource.find(_ => _.id === editKeyRef.current) ?? {}
-        const _data = { ...old_data, ...table_form.getFieldsValue() }
-        const submitData = await safe_async_call(beforeSubmit, _data, old_data)
-
+    async function handleItemSave(_data?: any) {
+        await form.validateFields();
+        const rowData = _data ?? dataSource.find(_ => _.id === editKeyRef.current) ?? {}
+        const submitData = { ...rowData, ...form.getFieldsValue() }
         await create_or_update(submitData)
 
-        table_form.resetFields();
+        form.resetFields();
 
 
     }
 
     function handleItemCancel() {
-        table_form.resetFields();
+        form.resetFields();
         set___Id(undefined)
         safe_set_edit_key(0)
 
@@ -427,7 +427,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
             }
 
-            table_form.setFieldsValue(rowData);
+            form.setFieldsValue(rowData);
             const key = rowData.editKey || rowData.id
             set___Id(rowData.id)
             safe_set_edit_key(key)
@@ -461,23 +461,20 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         }
         if (needEditInTable) {
             if (editKeyRef.current) {
-                message.error('请先保存上一条记录~');
+                message.error('请先保存上一条记录');
                 return;
             }
             const mockKey = +new Date();
 
 
+            safe_set_edit_key(mockKey)
 
-            let new_data = {
-                editKey: mockKey,
-            } as T;
-            new_data = handleBeforePopup?.(new_data) ?? new_data
-            const new_arr = [
-                new_data,
+            setDataSource([
+                {
+                    editKey: mockKey,
+                },
                 ...dataSource,
-            ]
-            handleEdit(new_data)
-            setDataSource(new_arr)
+            ])
 
         } else {
             if (ModalForm) {
@@ -540,7 +537,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         setLoading(true)
 
         const [res] = await Promise
-            .all([myBaseListService.current.page({ params, }), sleep(100)])
+            .all([myBaseListService.current.page({ params, }), sleep(.2)])
             .finally(() => setLoading(false))
 
         const { data, pagination } = res
@@ -608,7 +605,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
             editing,
             dataIndex,
             title,
-            inputType,
+            inputType = 'input',
             inputProps,
             rules,
             record,
@@ -618,10 +615,10 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
             render,
             ...restProps
         } = cell;
-        const C: any = MyBaseListComponents[inputType as 'MyCheckbox'] ?? (() => "Unkown Cell Component:" + inputType)
+        const C: any = MyBaseListComponents[inputType as 'MyCheckbox'] ?? (() => "Unkown Cell Component!")
         return (
             <td {...restProps} title={get(record, dataIndex)}>
-                {(editing && inputType) ? (
+                {editing ? (
                     <Form.Item
                         name={dataIndex}
                         style={{
@@ -632,13 +629,29 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                         <C {...inputProps} inputType={inputType} config={inputConfig ?? cell} />
                     </Form.Item>
                 ) : (
-                    (C?.DisplayFC && !render) ? <InterceptDisplayFC C={C} config={inputConfig ?? cell} value={get(record, dataIndex)} /> : children
+                    (C.DisplayFC && !render) ? <InterceptDisplayFC C={C} config={inputConfig ?? cell} value={get(record, dataIndex)} /> : children
                 )}
             </td>
         );
     };
 
-
+    const renderOthersModal = () => {
+        return (
+            <>
+                {visible && ModalForm && (
+                    <ModalForm
+                        visible={visible}
+                        editable={editable}
+                        id={___id}
+                        extraModalData={extraModalData}
+                        onCancel={() => { handleCancel(); handleSearch(); }}
+                        onSearch={handleSearch}
+                        onOk={() => { handleCancel(); handleSearch(); }}
+                    />
+                )}
+            </>
+        );
+    };
     async function search() {
         // setDataSource([])
         setCheckRows([])
@@ -649,16 +662,124 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         handleSearch(q)
 
     }
+    const renderAdd = () => {
+
+        return (
+            <Space>
+
+                {RenderBtns?.call(window, actionCtx)}
+                {
+                    (showExport || onExport) ? <OkButton icon={<ExportOutlined />} type="primary" onClick={() => {
+                        if (onExport) {
+                            onExport(actionCtx)
+                        } else {
+                            myBaseListService.current?.export(getSearchParams() as any).then(r => {
+                                downloadFile(r, `${baseTitle}${formatDateTime()}.xlsx`, 'application/vnd.ms-excel')
+                            })
+                        }
+                    }}>
+                        {'导出'}
+                    </OkButton> : null
+                }
+                {
+                    showPrint ? <OkButton icon={<ExportOutlined />} type="primary" onClick={() => {
+                        if (onPrint) {
+                            onPrint(actionCtx)
+                        } else {
+                            mchcModal__.open('print_modal', {
+                                modal_data: {
+                                    requestData: {
+                                        url: name + 'print',
+                                        ...getSearchParams(),
+                                        ...printDefaultConfig
+                                    }
+                                }
+                            })
+                        }
+                    }}>
+                        {'打印'}
+                    </OkButton> : null
+                }
+                {
+                    showAdd ? <OkButton disabled={loading} icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
+                        {addText || '新增'}
+                    </OkButton> : null
+                }
+                {
+                    showSearch ? (
+                        <>
+                            <Divider type='vertical' />
+                            <Button.Group >
+                                {RenderSearchBtns?.call(window, actionCtx)}
+
+                                <OkButton htmlType="reset" icon={<ReloadOutlined />} disabled={loading} onClick={() => {
+                                    searchForm.resetFields()
+                                    defaultQuery.current = defaultQueryValue
+                                    setDataSource([])
+                                    setCurrent(1)
+                                    setPageSize(defaultQueryValue.size)
+                                    handleSearch()
+
+                                }} >
+                                    重置
+                                </OkButton>
+
+                                <OkButton type="primary" htmlType="submit" disabled={loading} onClick={() => search()} icon={<SearchOutlined />}
+                                >
+                                    查询
+                                </OkButton>
+                            </Button.Group>
+                        </>
+                    ) : null
+                }
+            </Space>
+        );
 
 
+    };
+    const renderTitle = () => {
+        return (
+            <div
+                ref={queryRef}
+                style={{ padding: 4, ...(longSearchForm ? { display: 'flex', flexDirection: 'column-reverse' } : { display: 'flex', justifyContent: 'space-between' }) }}
+            >
+                <div ref={formWrapper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4 }}>
+                    {
+                        showSearch ? (
+                            <Form initialValues={initialSearchValue} form={searchForm} layout="inline" onFinish={() => {
+                                search()
+                            }}>
+                                {searchConfig ? <MyBaseListRenderFormSection config={searchConfig} disabled={loading} /> : null}
+
+
+
+
+
+
+
+                            </Form>
+                        ) : null
+                    }
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', borderBottom: longSearchForm ? '1px dashed #ddd' : 0, paddingBottom: 4, paddingRight: 28 }}>
+                    {renderAdd()}
+                    {/* <OkButton icon={<ReloadOutlined />} onClick={e => {
+              searchForm.resetFields()
+              handleSearch()
+            }} loading={loading} style={{ margin: '0 6px' }} /> */}
+                </div>
+
+
+
+
+
+            </div>
+        );
+    };
 
     const mergedColumns = format_columns(cal_columns);
-    const rowSelection: TableRowSelection<T> = {
-        // type: 'checkbox',
-        onChange: handleRowSelected,
-        selectedRowKeys: checkRows.map(_ => _.id as any)
-    }
-    const __pagination: TablePaginationConfig | boolean = needPagination ? {
+
+    const __pagination: TablePaginationConfig = needPagination ? {
         position: ['bottomCenter'],
         total,
         size: 'small',
@@ -675,7 +796,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
         onShowSizeChange: handlePageChange,
         showQuickJumper: true,
         showSizeChanger: true,
-    } : false
+    } : {}
     const __components = (needEditInTable || true)
         ? {
             body: {
@@ -683,19 +804,8 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
             },
         }
         : {}
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-
-
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-
-
-
     return (
-        <div ref={wrapRef} style={{ background: sys_theme.bg_color, }}>
+        <div className="base-list" ref={wrapRef}>
             <Form
                 onSubmitCapture={e => {
                     message.info('onSubmitCapture')
@@ -704,7 +814,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                     message.info('onFinish')
 
                 }}
-                form={table_form}
+                form={form}
                 component={false}
                 onFieldsChange={handleFieldsChange}
             >
@@ -712,109 +822,10 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
 
                 <div className="global-base-table" id="global-base-table">
-                    <div
-                        ref={queryRef}
-                        style={{ padding: 4, ...(longSearchForm ? { display: 'flex', flexDirection: 'column-reverse' } : { display: 'flex', justifyContent: 'space-between' }) }}
-                    >
-                        <div ref={formWrapper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4 }}>
-                            {
-                                showSearch ? (
-                                    <Form initialValues={initialSearchValue} form={searchForm} layout="inline" onFinish={() => {
-                                        search()
-                                    }}>
-                                        {searchConfig ? <MyBaseListRenderFormSection config={searchConfig} disabled={loading} /> : null}
+                    {renderTitle?.()}
 
 
-
-
-
-
-
-                                    </Form>
-                                ) : null
-                            }
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', borderBottom: longSearchForm ? `1px dashed ${sys_theme.colorBorder}` : 0, paddingBottom: 4, paddingRight: 28 }}>
-                            <Space>
-
-                                {RenderBtns?.call(window, actionCtx)}
-                                {
-                                    (showExport || onExport) ? <OkButton icon={<MyIcon value='ExportOutlined' />} type="primary" onClick={() => {
-                                        if (onExport) {
-                                            onExport(actionCtx)
-                                        } else {
-                                            myBaseListService.current?.export(getSearchParams() as any).then(r => {
-                                                downloadFile(r, `${baseTitle}${formatDateTime()}.xlsx`, 'application/vnd.ms-excel')
-                                            })
-                                        }
-                                    }}>
-                                        {'导出'}
-                                    </OkButton> : null
-                                }
-                                {
-                                    showPrint ? <OkButton icon={<MyIcon value='ExportOutlined' />} type="primary" onClick={() => {
-                                        if (onPrint) {
-                                            onPrint(actionCtx)
-                                        } else {
-                                            mchcModal__.open('print_modal', {
-                                                modal_data: {
-                                                    requestData: {
-                                                        url: name + 'print',
-                                                        ...getSearchParams(),
-                                                        ...printDefaultConfig
-                                                    }
-                                                }
-                                            })
-                                        }
-                                    }}>
-                                        {'打印'}
-                                    </OkButton> : null
-                                }
-                                {
-                                    showAdd ? <OkButton disabled={loading} icon={<MyIcon value='PlusOutlined' />} type="primary" onClick={handleAdd}>
-                                        {addText || '新增'}
-                                    </OkButton> : null
-                                }
-                                {
-                                    showSearch ? (
-                                        <>
-                                            <Divider type='vertical' />
-                                            <Button.Group >
-                                                {RenderSearchBtns?.call(window, actionCtx)}
-
-                                                <OkButton htmlType="reset" icon={<MyIcon value='ReloadOutlined' />} disabled={loading} onClick={() => {
-                                                    searchForm.resetFields()
-                                                    defaultQuery.current = defaultQueryValue
-                                                    setDataSource([])
-                                                    setCurrent(1)
-                                                    setPageSize(defaultQueryValue.size)
-                                                    handleSearch()
-
-                                                }} >
-                                                    重置
-                                                </OkButton>
-
-                                                <OkButton type="primary" htmlType="submit" disabled={loading} onClick={() => search()} icon={<MyIcon value='SearchOutlined' />}
-                                                >
-                                                    查询
-                                                </OkButton>
-                                            </Button.Group>
-                                        </>
-                                    ) : null
-                                }
-                            </Space>
-
-                        </div>
-
-
-
-
-
-                    </div>
-
-
-                    <Table_L
-                        size='small'
+                    <Table
                         dataSource={dataSource}
                         rowKey={rowKey || 'id'}
                         bordered
@@ -823,14 +834,14 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                         title={undefined}
                         style={{
                             padding: '0 12px',
-                            paddingBottom: needPagination ? 0 : 8
                             // height: `calc(100% - 0px)`,
-                            // overflow:'auto'
+                            // overflow:'scroll'
                         }}
                         components={__components}
                         scroll={{
                             scrollToFirstRowOnChange: true,
                             x: get(otherTableProps, 'scroll.x') || 'calc(100px)',
+                            // y: get(otherTableProps, 'scroll.y') || (browserClient.clientHeight < 900 ? browserClient.clientHeight - 300 : 700),
                             y: get(otherTableProps, 'scroll.y') || tableHeight,
                         }}
 
@@ -838,7 +849,11 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                         columns={mergedColumns}
 
                         rowSelection={
-                            needChecked ? rowSelection : undefined
+                            needChecked ? {
+                                type: 'checkbox',
+                                onChange: handleRowSelected,
+                                selectedRowKeys: checkRows.map(_ => _.id as any)
+                            } : undefined
                         }
 
                         onRow={(record: T) => {
@@ -858,25 +873,11 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 </div>
 
             </Form>
-            <>
-                {visible && ModalForm && (
-                    <ModalForm
-                        open={visible}
-                        editable={editable}
-                        id={___id}
-                        extraModalData={extraModalData}
-                        onCancel={() => { handleCancel(); handleSearch(); }}
-                        onSearch={handleSearch}
-                        onOk={() => { handleCancel(); handleSearch(); }}
-                    />
-                )}
-            </>
+            {renderOthersModal()}
             {
                 children
             }
         </div>
     );
 }
-
-
 export default _MyBaseList

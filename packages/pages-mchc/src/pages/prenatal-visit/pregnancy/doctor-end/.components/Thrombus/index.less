@@ -1,0 +1,96 @@
+@media print {
+  html,
+  body {
+    background-color: #fff !important;
+    .printscreening {
+      .tree-title {
+        width: 100%;
+      }
+      .tree-title > .ant-tree-switcher,
+      .tree-title > .ant-tree-checkbox {
+        display: none;
+      }
+      .tree-title > .ant-tree-node-content-wrapper {
+        width: 100%;
+        height: 30px;
+        margin-bottom: 10px;
+        line-height: 30px;
+        text-align: center;
+        background-color: #e6f7ff;
+        border-bottom: 3px solid #6699ff;
+      }
+      .tree-left .ant-tree-treenode {
+        width: 100%;
+        white-space: pre-wrap;
+        &:nth-child(2),
+        &:nth-child(6) {
+          margin-bottom: 8px;
+          padding-bottom: 8px;
+          border-bottom: 1px dashed #6699ff;
+        }
+      }
+      .tree-right .ant-tree-treenode {
+        width: 100%;
+        &:nth-child(2),
+        &:nth-child(3) {
+          margin-bottom: 45px;
+          padding-bottom: 8px;
+          border-bottom: 1px dashed #6699ff;
+        }
+        &:nth-child(3) {
+          margin-bottom: 115px;
+          padding-bottom: 127px;
+        }
+      }
+    }
+  }
+}
+.screening-modal {
+  .tree-title {
+    width: 100%;
+  }
+  .tree-title > .ant-tree-switcher,
+  .tree-title > .ant-tree-checkbox {
+    display: none;
+  }
+  .tree-title > .ant-tree-node-content-wrapper {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #e6f7ff;
+    border-bottom: 3px solid #6699ff;
+  }
+  .tree-left .ant-tree-treenode {
+    width: 100%;
+    white-space: pre-wrap;
+    &:nth-child(2),
+    &:nth-child(6) {
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #6699ff;
+    }
+  }
+  .tree-right .ant-tree-treenode {
+    width: 100%;
+    &:nth-child(2),
+    &:nth-child(3) {
+      margin-bottom: 45px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #6699ff;
+    }
+    &:nth-child(3) {
+      margin-bottom: 115px;
+      padding-bottom: 127px;
+    }
+  }
+
+  .footer-tips {
+    float: left;
+    width: 680px;
+    color: #666;
+    font-size: 12px;
+    text-align: left;
+  }
+}

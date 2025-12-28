@@ -1,11 +1,13 @@
-import { MyIcon } from '@lm_fe/components';
+import { PlusOutlined } from '@ant-design/icons';
+import { mchcLogger } from '@lm_fe/env';
 import { scrollIntoView } from '@lm_fe/utils';
 import { Tabs } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { ICommonFormTabsProps } from './types';
+import { cloneDeep } from 'lodash';
 export default function CommonFormTabs<T extends { id: number }>(props: ICommonFormTabsProps<T>) {
     type TData = { _title?: string; _key: number; } & T
-    const { value = [], onChange, onTabChange, on_row_value_change, title = '项', renderTabNode, onIdxChange, form, disabled } = props;
+    const { value = [], onChange, onTabChange, title = '项', renderTabNode, onIdxChange, disabled } = props;
 
 
     const [arr, _setArr] = useState<TData[]>([])
@@ -27,13 +29,11 @@ export default function CommonFormTabs<T extends { id: number }>(props: ICommonF
         set_activeKey(k)
         activeKeyRef.current = k
     }
-    function safeOnchange(v: TData[], idx: number) {
+    function safeOnchange(v: any) {
         if (onTabChange) {
             onTabChange(v)
         } else {
             onChange?.(v)
-            on_row_value_change?.(v, idx)
-
         }
     }
     useEffect(() => {
@@ -57,17 +57,8 @@ export default function CommonFormTabs<T extends { id: number }>(props: ICommonF
 
 
     useEffect(() => {
-        onIdxChange?.(_activeKey, arrRef.current)
-    }, [_activeKey, value])
-
-    // useEffect(() => {
-    //     const cache_key = `_FormTabs_item_${title}`
-    //     mchcEnv.setGlobalCache(cache_key, value[_activeKey])
-    //     mchcLogger.log(cache_key, value[_activeKey])
-    //     return () => {
-    //         mchcEnv.setGlobalCache(cache_key, null)
-    //     }
-    // }, [_activeKey, value])
+        onIdxChange?.(_activeKey)
+    }, [_activeKey,])
 
 
 
@@ -102,7 +93,7 @@ export default function CommonFormTabs<T extends { id: number }>(props: ICommonF
 
         ));
         setKey(k)
-        safeOnchange(newPanes, k)
+        safeOnchange(newPanes)
 
         scrollIntoView('#xx')
     };
@@ -125,7 +116,7 @@ export default function CommonFormTabs<T extends { id: number }>(props: ICommonF
 
         setKey(newKey)
 
-        safeOnchange([...newPanes], newKey)
+        safeOnchange([...newPanes])
 
     };
 
@@ -139,7 +130,7 @@ export default function CommonFormTabs<T extends { id: number }>(props: ICommonF
                 onChange={_onChange}
                 addIcon={
                     <div>
-                        <MyIcon value='PlusOutlined' />
+                        <PlusOutlined />
                         增加
                     </div>
                 }

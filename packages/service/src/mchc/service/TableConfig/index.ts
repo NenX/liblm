@@ -1,32 +1,30 @@
-import { safe_get_symbol, safe_get_object_symbol } from "@lm_fe/env"
-import { safeGetFromFuncOrData } from "@lm_fe/utils"
+import { getSymbolFromDynamicScript } from "@lm_fe/env"
 import { ModelService } from "../../../ModelService"
-import { IMchc_FormDescriptions_Field_Nullable, IMchc_FormDescriptions_Field_Nullable_Arr, SMchc_FormDescriptions } from "../FormDescriptions"
-import { set_deps_string, set_fn_string, stringify_bf, stringify_bf_fn, stringify_bf_obj } from "./utils"
-export { IMchc_FormDescriptions_Field_Nullable_Arr, stringify_bf_obj }
+import { IMchc_FormDescriptions_Field_Nullable_Arr, SMchc_FormDescriptions } from "../FormDescriptions"
+import { expect_array, safeGetFromFuncOrData } from "@lm_fe/utils"
+import { get, isFunction, set } from "lodash"
+import { format_fn_string, make_bf_script_field } from "./utils"
 export interface IMchc_TableConfig {
-    "id": any,
+    "id": 16,
     "initialSearchValue": any,
-    "initialValues": any,
     searchParams: any
     tableColumns: any
     searchConfig: any
     watchScript: any
-    "name": any,
-    "dept": any,
-    "apiPrefix": any,
-    "title": any,
-    "rowKey": any,
+    "name": string,
+    "dept": string,
+    "apiPrefix": string,
+    "title": string,
+    "rowKey": string,
     handleBeforePopup: any
     genColumns: any
     beforeSubmit: any
-    targetLabelCol?: number,
-    "showAction": any,
-    "category": any,
-    "needSync": any,
-    "needPrint": any,
-    "showAdd": any,
-    "showExport": any,
+    "showAction": number,
+    "category": null,
+    "needSync": number,
+    "needPrint": null,
+    "showAdd": number,
+    "showExport": number,
     "deleteFlag": false
     // new
     "renderExtraBtns": any
@@ -38,55 +36,40 @@ class Mchc_TableConfig_Service extends ModelService<IMchc_TableConfig> {
 
         const _con = { ...config }
 
-        _con.genColumns = safe_get_symbol(config.genColumns, props,)!
+        _con.genColumns = getSymbolFromDynamicScript(config.genColumns, props,)!
 
-        _con.handleBeforePopup = safe_get_symbol(config.handleBeforePopup, props,)!
+        _con.handleBeforePopup = getSymbolFromDynamicScript(config.handleBeforePopup, props,)!
+        _con.beforeSubmit = getSymbolFromDynamicScript(config.beforeSubmit, props,)!
 
-        _con.watchScript = safe_get_symbol(config.watchScript, props,)!
+        let tableColumns = getSymbolFromDynamicScript(config.tableColumns, props, [])
+        _con.tableColumns = safeGetFromFuncOrData(tableColumns)
 
-        _con.beforeSubmit = safe_get_symbol(config.beforeSubmit, props,)!
+        const initialSearchValue = getSymbolFromDynamicScript(config.initialSearchValue, props,)
+        _con.initialSearchValue = safeGetFromFuncOrData(initialSearchValue)
 
-        _con.tableColumns = safe_get_object_symbol(config.tableColumns, props, [])
+        const searchParams = getSymbolFromDynamicScript(config.searchParams, props,)
+        _con.searchParams = safeGetFromFuncOrData(searchParams)
 
-
-        _con.initialSearchValue = safe_get_object_symbol(config.initialSearchValue, props, {})
-
-
-        _con.searchParams = safe_get_object_symbol(config.searchParams, props, {})
-
-        _con.initialValues = safe_get_object_symbol(config.initialValues, props, {})
-
-        _con.searchConfig = safe_get_object_symbol(config.searchConfig, props, [])
+        const searchConfig = getSymbolFromDynamicScript(config.searchConfig, props,)
+        _con.searchConfig = safeGetFromFuncOrData(searchConfig)
         return _con
-    }
-
-
-    async clippy_local(value: any, example = false) {
-        const fd_arr = await SMchc_FormDescriptions.extract_form_config(value)
-        const fd_with_safe_fn = this.format_fd_arr(fd_arr)
-        return stringify_bf_obj(fd_with_safe_fn, example)
     }
     async process_local(config: Partial<IMchc_TableConfig>, props?: any) {
 
         const _con = { ...config }
+        const fd = await SMchc_FormDescriptions.extract_form_config(config.tableColumns,)
 
-        _con.tableColumns = await this.clippy_local(config.tableColumns, true)
+        const fd_with_safe_fn = this.transfer_fn_to_string(fd)
+        _con.tableColumns = make_bf_script_field(fd_with_safe_fn, true)
 
-        _con.handleBeforePopup = stringify_bf_fn(config.handleBeforePopup,)
-        // _con.handleBeforePopup = make_bf_script_field(config.handleBeforePopup,)
-
-        _con.watchScript = stringify_bf_fn(config.watchScript,)
-
-        _con.beforeSubmit = stringify_bf_fn(config.beforeSubmit,)
-        // _con.beforeSubmit = stringify_bf_obj(config.beforeSubmit,)
-
-        _con.genColumns = stringify_bf_fn(config.genColumns,)
-        _con.initialSearchValue = stringify_bf(config.initialSearchValue,)
-        _con.searchParams = stringify_bf(config.searchParams,)
-        _con.initialValues = stringify_bf_obj(config.initialValues,)
+        _con.genColumns = make_bf_script_field(config.genColumns,)
+        _con.handleBeforePopup = make_bf_script_field(config.handleBeforePopup,)
+        _con.beforeSubmit = make_bf_script_field(config.beforeSubmit,)
+        _con.initialSearchValue = make_bf_script_field(config.initialSearchValue,)
+        _con.searchParams = make_bf_script_field(config.searchParams,)
 
         const searchConfig = await SMchc_FormDescriptions.extract_form_config(config.searchConfig,)
-        _con.searchConfig = stringify_bf_obj(searchConfig,)
+        _con.searchConfig = make_bf_script_field(searchConfig,)
 
 
 
@@ -96,7 +79,7 @@ class Mchc_TableConfig_Service extends ModelService<IMchc_TableConfig> {
 
         return _con
     }
-    format_fd_arr(fd: IMchc_FormDescriptions_Field_Nullable_Arr) {
+    transfer_fn_to_string(fd: IMchc_FormDescriptions_Field_Nullable_Arr) {
 
         if (!Array.isArray(fd))
             return []
@@ -105,48 +88,28 @@ class Mchc_TableConfig_Service extends ModelService<IMchc_TableConfig> {
         return fd.map(f => {
             const cloned = { ...f }
 
-            set_fn_string(cloned, 'render')
-            set_fn_string(cloned, 'title')
-            set_fn_string(cloned, 'processRemote')
-            set_fn_string(cloned, 'processLocal')
-            set_fn_string(cloned, 'checkWarn')
-            set_fn_string(cloned, 'required')
-            // set_fn_string(cloned, 'disabledDeps')
-            // set_fn_string(cloned, 'requiredDeps')
-            // set_fn_string(cloned, 'showDeps')
-            set_deps_string(cloned)
-            const props = f?.inputProps || f?.props
-            if (props) {
-                const cloned_ip = { ...props }
-                set_fn_string(cloned_ip, 'DisplayFC_render')
-                set_fn_string(cloned_ip, 'component')
-                set_fn_string(cloned_ip, 'genRowData')
-                set_fn_string(cloned_ip, 'onPatientAutoComplete')
-                set_fn_string(cloned_ip, 'onPatientSelect')
-                set_fn_string(cloned_ip, 'onClick')
-                set_fn_string(cloned_ip, 'on_btn_click')
-                set_fn_string(cloned_ip, 'onIdxChange')
-                set_fn_string(cloned_ip, 'fetch_options')
-                set_fn_string(cloned_ip, 'EditInTable_beforeAdd')
-                set_fn_string(cloned_ip, 'on_row_value_change')
-                set_fn_string(cloned_ip, 'gen_obj')
-                set_fn_string(cloned_ip, 'onFocus')
-                set_fn_string(cloned_ip, 'onBlur')
+            format_fn_string(cloned, 'render')
+            format_fn_string(cloned, 'title')
+            format_fn_string(cloned, 'processRemote')
+            format_fn_string(cloned, 'processLocal')
+            format_fn_string(cloned, 'required')
+            format_fn_string(cloned, 'disabledDeps')
+            format_fn_string(cloned, 'requiredDeps')
+            format_fn_string(cloned, 'showDeps')
 
-                if (cloned_ip.fds) {
-                    cloned_ip.fds = this.format_fd_arr(cloned_ip.fds)
-                }
-                if (cloned_ip.formDescriptions) {
-                    cloned_ip.formDescriptions = this.format_fd_arr(cloned_ip.formDescriptions)
-                }
-
+            if (f?.inputProps) {
+                const cloned_ip = { ...f?.inputProps }
+                format_fn_string(cloned_ip, 'DisplayFC_render')
+                format_fn_string(cloned_ip, 'component')
+                format_fn_string(cloned_ip, 'genRowData')
+                format_fn_string(cloned_ip, 'onPatientAutoComplete')
                 cloned.inputProps = cloned_ip
             }
             if (cloned.children) {
-                cloned.children = this.format_fd_arr(cloned.children)
+                cloned.children = this.transfer_fn_to_string(cloned.children)
             }
 
-            return cloned as IMchc_FormDescriptions_Field_Nullable
+            return cloned
         })
 
 

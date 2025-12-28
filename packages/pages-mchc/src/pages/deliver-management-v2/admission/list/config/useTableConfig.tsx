@@ -1,11 +1,12 @@
-import { MyIcon, useMyEffectSafe } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { useMyEffectSafe } from '@lm_fe/components';
 import { mchcDriver, mchcEvent } from "@lm_fe/env";
-import { IdNOButton, MyBaseListProps } from '@lm_fe/pages';
 import { downloadFile, request } from "@lm_fe/utils";
-import { Button, Divider, Form } from "antd";
+import { Button, Divider, Form, Popconfirm } from "antd";
 import React, { useEffect } from "react";
 import { queryFormDescriptions } from "./form";
 import { tableColumns } from "./table";
+import { IdNOButton, MyBaseListProps } from '@lm_fe/pages';
 
 export const baseTableConfig: MyBaseListProps = {
     baseTitle: '孕册',
@@ -101,8 +102,8 @@ export function useTableConfig(props: any) {
         handleDoubleClickRow,
         RenderSearchBtns({ handleSearch, getSearchParams }) {
             return <>
-                {/* <OkButton btn_text='导出' primary onClick={() => handleExport(getSearchParams())} /> */}
-                {/* <OkButton disabled btn_text='读取身份证' /> */}
+                {/* <OkButton text='导出' primary onClick={() => handleExport(getSearchParams())} /> */}
+                {/* <OkButton disabled text='读取身份证' /> */}
 
             </>
         },
@@ -128,7 +129,7 @@ export function useTableConfig(props: any) {
                             <Button
                                 type="link"
                                 size="small"
-                                icon={<MyIcon value='EyeOutlined' className="global-table-action-icon" />}
+                                icon={<EyeOutlined className="global-table-action-icon" />}
                                 onClick={() => handleView(rowData)}
                             >
                                 查看
@@ -138,12 +139,12 @@ export function useTableConfig(props: any) {
                             <Button
                                 type="link"
                                 size="small"
-                                icon={<MyIcon value='EditOutlined' className="global-table-action-icon" />}
+                                icon={<EditOutlined className="global-table-action-icon" />}
                                 onClick={() => handleEdit(rowData)}
                             >
                                 编辑
                             </Button>
-                            {/* <Divider type="vertical" />
+                            <Divider type="vertical" />
                             <Popconfirm
                                 title={`确定要删除吗?`}
                                 onConfirm={() => handleDelete(rowData)}
@@ -153,7 +154,7 @@ export function useTableConfig(props: any) {
                                 <Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />}>
                                     删除
                                 </Button>
-                            </Popconfirm> */}
+                            </Popconfirm>
                         </>
                     },
                 },

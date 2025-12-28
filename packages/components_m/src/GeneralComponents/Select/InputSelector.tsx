@@ -51,7 +51,7 @@ class InputSelect extends Component<DefaultSelectProps> {
       multiple = false,
       tags = false,
       style = {},
-      popupMatchSelectWidth = true,
+      dropdownMatchSelectWidth = true,
       uniqueKey,
       dictionaries,
     } = this.props;
@@ -84,7 +84,7 @@ class InputSelect extends Component<DefaultSelectProps> {
         allowClear
         showSearch
         mode={selectMode}
-        popupMatchSelectWidth={popupMatchSelectWidth}
+        dropdownMatchSelectWidth={dropdownMatchSelectWidth}
         onChange={this.handleChange}
         placeholder={`请选择或者输入`}
       >

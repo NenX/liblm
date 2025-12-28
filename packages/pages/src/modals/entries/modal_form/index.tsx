@@ -1,12 +1,12 @@
-import { validate_form, handle_form_error, IGlobalModalProps } from '@lm_fe/components';
+import { IGlobalModalProps } from '@lm_fe/components';
 import { Form, FormInstance, Modal } from 'antd';
 import { FieldData } from 'rc-field-form/lib/interface';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import React from 'react';
-import { mchcDriver, mchcEnv, mchcEvent, mchcLogger } from '@lm_fe/env';
+import { mchcDriver, mchcEvent } from '@lm_fe/env';
 import { FormSection } from '@lm_fe/components_m';
-import { noop, safe_async_call, sleep } from '@lm_fe/utils';
+import { safe_async_call } from '@lm_fe/utils';
 import { IMchc_FormDescriptions_Field } from '@lm_fe/service';
 import { BF_Wrap2 } from 'src/components';
 import { ErrorBoundarySmall } from 'src/components/exception/ErrorBoundarySmall';
@@ -16,7 +16,7 @@ interface __props<T extends string = any> {
   formDescriptions?: { [x in T]: any } | IMchc_FormDescriptions_Field[]
   onFieldsChange?(changedFields: FieldData[], allFields: FieldData[], form: FormInstance): void
   onValuesChange?(changedValues: { [x in T]: any }, values: { [x in T]: any }, form: FormInstance): void;
-  onSubmit?(new_data: any, old_data: any): Promise<any>
+  onSubmit?(v: any): Promise<any>
   getInitialData?(): Promise<any>
   form?: FormInstance
   targetLabelCol?: number
@@ -32,57 +32,19 @@ export default function MyModalForm<T extends string>({ modal_data, onOk, bodySt
   const [_form] = Form.useForm()
   const form = modal_data.form ?? _form
   const [data, setData] = useState<any>({})
-  const { Wrap, config } = BF_Wrap2({ default_conf: { title: bf_title!, tableColumns: formDescriptions, handleBeforePopup: (values) => (values ?? {}) } })
-  const inited = useRef(false)
-  const [loading, setLoading] = useState(false)
+  const { Wrap, config } = BF_Wrap2({ default_conf: { title: bf_title!, tableColumns: formDescriptions } })
+
   useEffect(() => {
-    if (inited.current) return noop
-
-    if (!bf_title) {
-      base_int().then(finish_init);
-      return noop
-    }
-
-
-    if (config) {
-      mchcLogger.log('modal_form config', { config })
-
-      if (config.handleBeforePopup) {
-        base_int()
-          .then(config.handleBeforePopup)
-          .then(finish_init);
-
-
-      } else {
-        base_int().then(finish_init);
-
-      }
-
-    }
-
-    return noop
-  }, [bf_title, config])
-
-  async function base_int() {
-    return safe_async_call(() => getInitialData?.())
-      .then(v => {
-        let init_data = v ?? {}
-
-        return init_data
+    safe_async_call(() => getInitialData?.())
+      .then?.(v => {
+        setData(v)
+        form.setFieldsValue(v);
       })
-  }
-  async function finish_init(base = {}) {
-    inited.current = true
 
+    return () => {
 
-    setData(base)
-    await sleep(400)
-    mchcLogger.log('modal_form init', { base, form, xx: form.getFieldsValue() })
-
-    form.setFieldsValue(base);
-
-
-  }
+    }
+  }, [])
   useEffect(() => {
     return mchcDriver.on_rm('data', e => {
       if (e.type === 'ReadCard') {
@@ -103,28 +65,28 @@ export default function MyModalForm<T extends string>({ modal_data, onOk, bodySt
     <Modal
 
       title={data?.id ? `修改${title}` : `添加${title}`}
-      okButtonProps={{ loading }}
+
       centered
-      destroyOnHidden
+      destroyOnClose
       width={width ?? "60vw"}
-      styles={{
-        body: { height: '70vh', overflowY: 'auto', overflowX: 'hidden', ...bodyStyle }
-      }}
 
-      onOk={async (e) => {
-        const formData = await validate_form(form)
+      bodyStyle={{ padding: '12px 20px', height: '70vh', overflowY: 'scroll', ...bodyStyle }}
 
-        if (!formData) return
-        setLoading(true)
-        safe_async_call(onSubmit!, { ...data, ...formData }, data)
-          .then(a => {
+      onOk={(e) => {
+        form
+          .validateFields()
+          .then(async () => {
+            const formData = form.getFieldsValue();
 
+            let a = await safe_async_call(onSubmit!, { ...data, ...formData })
             if (!a) return
             onOk?.(e)
+
           })
-          .finally(() => setLoading(false))
+          .catch((error) => {
+            console.error('modal_form 发生错误', error);
 
-
+          });
       }}
       {...others}
 

@@ -1,17 +1,17 @@
-import { Button, Col, Divider, Popconfirm, Row } from 'antd';
-import { get } from 'lodash';
 import React from 'react';
-import ApiPermissionCard from './components/ApiPermissionCard';
-import MenuPermissionCard from './components/MenuPermissionCard';
 import RoleTable from './components/RoleTable';
 import RolesModal from './components/RolesModal';
-import { processFromApi, toApi } from './config/adapter';
 import { tableColumns } from './config/table';
+import { Popconfirm, Button, Row, Col, message, Divider } from 'antd';
+import { get } from 'lodash';
+import { processFromApi, toApi } from './config/adapter';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import MenuPermissionCard from './components/MenuPermissionCard';
+import ApiPermissionCard from './components/ApiPermissionCard';
 
-import { BaseListOld, MyIcon } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
-import { request } from '@lm_fe/utils';
 import './index.less';
+import { BaseListOld } from '@lm_fe/components_m';
+import { request } from '@lm_fe/utils';
 
 export default class Roles extends BaseListOld {
   static defaultProps = {
@@ -46,7 +46,7 @@ export default class Roles extends BaseListOld {
             <Button
               type="link"
               size="small"
-              icon={<MyIcon value='EditOutlined' className="global-table-action-icon" />}
+              icon={<EditOutlined className="global-table-action-icon" />}
               onClick={() => {
                 this.setState({
                   visible: true,
@@ -64,10 +64,10 @@ export default class Roles extends BaseListOld {
               okText="确定"
               cancelText="取消"
             >
-              <Button type="link" size="small" icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />}>
-              删除
-            </Button>
-          </Popconfirm >
+              <Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />}>
+                删除
+              </Button>
+            </Popconfirm>
           </>
         );
       },
@@ -104,7 +104,7 @@ export default class Roles extends BaseListOld {
     const { baseUrl } = this.props;
     try {
       await request.put(baseUrl as string, toApi({ ...activeRole, authorities: checkedData }));
-      mchcEnv.success('保存 API 权限成功');
+      message.success('保存 API 权限成功');
       await this.handleSearch();
     } catch (error) {
       console.log(error);
@@ -116,7 +116,7 @@ export default class Roles extends BaseListOld {
     const { baseUrl } = this.props;
     try {
       await request.put(baseUrl as string, toApi({ ...activeRole, permissions: checkedData }));
-      mchcEnv.success('保存菜单/权限成功');
+      message.success('保存菜单/权限成功');
       await this.handleSearch();
     } catch (error) {
       console.log(error);

@@ -1,13 +1,12 @@
-import { FormSectionForm } from '@lm_fe/components_m';
-import { mchcEvent, mchcLogger } from '@lm_fe/env';
-import { request } from '@lm_fe/utils';
-import { Col, Form, FormInstance, Row } from 'antd';
+import { FormSectionForm, OkButton } from '@lm_fe/components_m';
+import { Col, Form, FormInstance, Result, Row } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
-import { BF_Wrap2 } from './Wrap';
-import { IBF_props } from './types';
-export * from './utils';
-export * from './Wrap';
-export * from './types';
+import { IBF_props, use_table_config } from './use_table_config';
+import { BF_Wrap, BF_Wrap2 } from './Wrap';
+import { expect_array, request } from '@lm_fe/utils';
+import { mchcEvent, mchcLogger } from '@lm_fe/env';
+export * from './Wrap'
+export * from './utils'
 interface IHistoryConf {
     url1?: "/api/prenatalExam/column/history/value?recordId=25&columnCode=nt",
     url2?: "/api/prenatalExam/column/history/value?recordId=25&columnCode=nt",
@@ -23,13 +22,12 @@ interface IHistoryItem {
 }
 export interface IBF_Form_Props extends IBF_props {
     form?: FormInstance
-    disabled?: boolean
     fallback_init: () => Promise<any>
     fallback_finish: (v: any) => Promise<void>
     history_args: { relationId: any }
 }
 export function BF_Form(props: IBF_Form_Props) {
-    const { history_args, fallback_finish, fallback_init, disabled } = props
+    const { history_args, fallback_finish, fallback_init } = props
     const [_form] = Form.useForm()
     const history_url = useRef<string>()
     const [_form_first] = Form.useForm()
@@ -81,7 +79,7 @@ export function BF_Form(props: IBF_Form_Props) {
         if (history_url.current) {
             const submitData = { ...remote_data.current, ...v }
             mchcLogger.log('submitData', submitData)
-            await request.put(history_url.current, submitData, { successText: '操作成功' })
+            request.put(history_url.current, submitData, { successText: '操作成功' })
             // .then(init)
         } else {
             await fallback_finish(v);
@@ -106,13 +104,13 @@ export function BF_Form(props: IBF_Form_Props) {
                 first ?
                     <Row>
                         <Col span={14}>
-                            <FormSectionForm disableAll={disabled} size='small' targetLabelCol={first ? 2 : 2} onFinish={update} form={form} formDescriptions={config?.tableColumns} />
+                            <FormSectionForm targetLabelCol={first ? 2 : 2} onFinish={update} form={form} formDescriptions={config?.tableColumns} />
                         </Col>
                         <Col span={10}>
-                            <FormSectionForm disableAll={disabled} size='small' targetLabelCol={first ? 2 : 2} disableAll form={_form_first} formDescriptions={config?.tableColumns} />
+                            <FormSectionForm targetLabelCol={first ? 2 : 2} disableAll form={_form_first} formDescriptions={config?.tableColumns} />
                         </Col>
                     </Row>
-                    : <FormSectionForm disableAll={disabled} size='small' onFinish={update} form={form} formDescriptions={config?.tableColumns} />
+                    : <FormSectionForm onFinish={update} form={form} formDescriptions={config?.tableColumns} />
             }
         </Wrap>
     )

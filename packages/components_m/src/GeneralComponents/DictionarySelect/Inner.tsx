@@ -214,7 +214,7 @@ class GeneralComponents_DictionarySelect extends React.Component<IProps> {
         <Col flex="1">
           <Select
             {...others}
-            popupMatchSelectWidth
+            dropdownMatchSelectWidth
             mode={mode}
             allowClear
             showSearch

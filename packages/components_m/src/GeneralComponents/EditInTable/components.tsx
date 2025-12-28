@@ -1,31 +1,26 @@
-import { MyIcon, MyLazyComponent, Select_L } from "@lm_fe/components"
-import { AnyObject, expect_array, request } from "@lm_fe/utils"
 import { Button, Form, Popconfirm } from "antd"
-import React, { useEffect, useState } from "react"
-import { MyFormSectionForm } from "src/FU_components/FormSection/FormSectionForm"
 import { IEditInTable_Row_Append_Config } from "./utils"
+import React, { useEffect, useState } from "react"
+import { PlusOutlined } from "@ant-design/icons"
+import { MyFormSectionForm } from "src/FU_components/FormSection/FormSectionForm"
+import { LazyAntd, MyLazyComponent } from "@lm_fe/components"
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 export function FFF(props: { arr: { recordTime: string, key: string }[], config: IEditInTable_Row_Append_Config, onSelect(values: any | any[]): void, hidden?: boolean, disabled?: boolean }) {
-    const { config, onSelect, hidden, arr, disabled, } = props
-    const { fds, processDataAsync, btnProps = {}, popProps = {}, process_url, process_args = {} } = config
+    const { config, onSelect, hidden, arr, disabled } = props
+    const { fds, processDataAsync, btnProps = {}, popProps = {}, } = config
     if (hidden) return null
-    async function process(values: AnyObject, arr: any[]) {
-        if (processDataAsync)
-            return processDataAsync(values, arr)
-        if (process_url)
-            return (await request.post(process_url, { ...values, ...process_args }, { successText: '操作成功' })).data
-        return values
-    }
+
     const [form] = Form.useForm()
     return <Popconfirm
 
         {...popProps}
         onConfirm={async () => {
             let values = form.getFieldsValue()
-            console.log('ssbb 0', { values })
+            if (processDataAsync) {
+                values = await processDataAsync(values, arr)
+            }
 
-            values = await process(values, arr)
-            values = expect_array(values, [values ?? {}])
             onSelect(values)
         }}
         title={
@@ -37,7 +32,7 @@ export function FFF(props: { arr: { recordTime: string, key: string }[], config:
                     })
             }))} />
         }>
-        <Button disabled={disabled} type='dashed' icon={<MyIcon value="PlusOutlined" />} size='small' {...btnProps}>{btnProps.children}</Button>
+        <Button disabled={disabled} type='dashed' icon={<PlusOutlined />} size='small' {...btnProps}>{btnProps.children}</Button>
     </Popconfirm>
 }
 
@@ -52,7 +47,7 @@ export function CalInputOutput(props: { arr: { recordTime: string, key: string }
         }}
         title={
             <div>
-                <Select_L style={{ width: 140 }} value={selectKey} dropdownStyle={{ zIndex: 9999 }} options={arr.map(_ => ({ label: _.recordTime, value: _.key }))} onSelect={setSelectKey} />
+                <Select style={{ width: 140 }} value={selectKey} dropdownStyle={{ zIndex: 9999 }} options={arr.map(_ => ({ label: _.recordTime, value: _.key }))} onSelect={setSelectKey} />
             </div>
         }>
         <Button size='small'>计算出入量</Button>
@@ -70,9 +65,14 @@ export
 
     return <Popconfirm icon={null} placement="right"
         // trigger='hover'
+        onVisibleChange={(v) => {
 
+        }}
+        overlayInnerStyle={{
+            // background: '#eee', outline: '2px solid #333'
+        }}
         style={{ zIndex: 999, }}
-        styles={{ root: { zIndex: 999, } }}
+        overlayStyle={{ zIndex: 999, }}
         cancelButtonProps={{ hidden: true }}
         okButtonProps={{ hidden: true }}
         title={

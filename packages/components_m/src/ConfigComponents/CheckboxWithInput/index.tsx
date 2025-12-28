@@ -2,7 +2,6 @@ import { safe_json_parse, safe_json_stringify } from '@lm_fe/utils';
 import { get, isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import CheckboxWithInput from '../../GeneralComponents/CheckboxWithInput';
-import React from 'react';
 type Option = {
   value?: string;
   label?: string;

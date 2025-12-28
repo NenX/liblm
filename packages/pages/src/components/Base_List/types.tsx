@@ -1,4 +1,4 @@
-import { IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable, IMchc_TableConfig, ModelService, T_GET_FUCK_PAGE, TIdTypeCompatible } from '@lm_fe/service';
+import { IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable, ModelService, T_GET_FUCK_PAGE, TIdTypeCompatible } from '@lm_fe/service';
 import { ModalProps } from 'antd/lib/modal';
 import { ColumnGroupType, ColumnType, TableProps } from 'antd/lib/table';
 import { FC, ReactNode } from 'react';
@@ -6,9 +6,6 @@ import { IModalFormProps } from '../../modals/entries/modal_form';
 import { AnyObject, PartialSome } from '@lm_fe/utils';
 import { FormInstance } from 'antd';
 import { IPdfFrameView_Props } from '@lm_fe/components';
-import type { TableProps as RcTableProps } from 'rc-table';
-
-export { TableProps, RcTableProps }
 export interface IGlobalEnumItem<T = string> {
   label: T
   value: number
@@ -43,12 +40,12 @@ export interface RenderColProps<T = any> {
   setVisible: (v: boolean) => void,
   setEditable: (v: boolean) => void,
   setId: (v?: number) => void,
-  create_or_update(submitData: Partial<T>): Promise<void>,
+  create_or_update(submitData: Partial<T>): Promise<void>, 
 }
 
 type RenderColFn<T> = FC<RenderColProps<T> & { rowData: T, }>
 export interface MyBaseListProps<T extends { id?: any } = any> extends TableProps<T> {
-  bf_conf?: IMchc_TableConfig
+
   dbg_dataSource?: any[];
 
   effect_ctx?: any
@@ -75,14 +72,13 @@ export interface MyBaseListProps<T extends { id?: any } = any> extends TableProp
   action_col?: (ctx: RenderColProps<T>) => IMyBaseList_ColumnType<T>;
   // add文本
   addText?: string;
-  editText?: string;
   // 是否展示编辑列
   showAction?: boolean;
   // 当 BaseList 作为子组件的时候，可能需要使用，参考 nursing-record
   // 展示搜索功能，如果为 true，则必须传 Query 组件
 
   beforeSearch?(v: Partial<T>): Partial<T>
-  beforeSubmit?(new_v: any, old_v?: any): Promise<Partial<T> | null>
+  beforeSubmit?(v: any): Promise<Partial<T> | null>
 
   // 其它表格属性
   otherTableProps?: TableProps<T>;

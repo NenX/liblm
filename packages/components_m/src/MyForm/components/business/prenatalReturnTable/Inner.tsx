@@ -1,4 +1,5 @@
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { LazyAntd } from '@lm_fe/components';
 import { Button, Space } from 'antd';
 import classNames from 'classnames';
 import { cloneDeep, debounce, find, get, isArray, map, set, split } from 'lodash';
@@ -202,10 +203,10 @@ export default class PrenatalReturnTable extends Component<PrenatalReturnTablePr
         {editable && !hiddenBtn && (
           <Space className="btns-wrapper">
             <Button type="primary" onClick={this.handleAdd}>
-              <MyIcon value='PlusCircleOutlined' />新 增
+              <PlusCircleOutlined />新 增
             </Button>
             <Button onClick={this.handleDelete}>
-              <MyIcon value='DeleteOutlined' />删 除
+              <DeleteOutlined />删 除
             </Button>
           </Space>
         )}

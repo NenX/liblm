@@ -1,22 +1,12 @@
 import { formatTimeToDate, OkButton } from "@lm_fe/components_m";
 import { APP_CONFIG, mchcLogger } from "@lm_fe/env";
-import { BF_Wrap2, MyBaseList } from "@lm_fe/pages";
-import { get, request } from "@lm_fe/utils";
+import { MyBaseList } from "@lm_fe/pages";
+import { request } from "@lm_fe/utils";
 import { message } from "antd";
+import { get } from "lodash";
 import React from "react";
 import { RemindType } from "./types";
-import { defineFormConfig } from "@lm_fe/service";
 
-
-function get_fuck_ids(arr: any[]) {
-  const mixed = arr.map((_) => [get<number>(_, 'id'), get<number>(_, 'prenatalVisit.id')]);
-  return mixed.reduce((sum, [id, pid],) => {
-    sum.idx.push(id)
-    sum.prenatalVisitIds.push(pid)
-    return sum
-  }, { idx: [] as number[], prenatalVisitIds: [] as number[] })
-
-}
 
 // remindType 预约提醒1 超时提醒2 超时电话提醒3
 
@@ -28,38 +18,6 @@ const req_url: { [x in RemindType]: string } = {
 export default function RemindRecord(prop: { remindType: RemindType }) {
   const remindType = prop.remindType
   const url = req_url[remindType]
-
-
-  const { config, Wrap } = BF_Wrap2({
-    default_conf: {
-      title: '复诊追踪-预约提醒记录',
-      name: '/api/prenatal-visit-logs',
-      searchConfig: defineFormConfig([
-        { label: '门诊号', name: 'outpatientNO', inputType: 'Input' },
-        { label: '姓名', name: 'name', inputType: 'Input' },
-        { label: '证件号码', name: 'idNO', inputType: 'Input' },
-        { label: '检查日期', name: 'filingDay', inputType: 'rangeDate' },
-      ]),
-      tableColumns: defineFormConfig(
-        [
-          { title: '门诊号', dataIndex: 'outpatientNO', layout: '1/3' },
-          { title: '姓名', dataIndex: 'name', layout: '1/3' },
-          { title: '年龄', dataIndex: 'age', layout: '1/3' },
-          { title: '电话', dataIndex: 'telephone', layout: '1/3' },
-          { title: '证件号码', dataIndex: 'idNO', layout: '1/3' },
-          { title: 'hbcab', dataIndex: 'hbcab', inputType: 'MA', inputProps: { options: '阴性,阳性,不详' }, layout: '1/3' },
-          { title: 'hbsag', dataIndex: 'hbsag', inputType: 'MA', inputProps: { options: '阴性,阳性,不详' }, layout: '1/3' },
-          { title: 'hbeag', dataIndex: 'hbeag', inputType: 'MA', inputProps: { options: '阴性,阳性,不详' }, layout: '1/3' },
-          { title: 'hbeab', dataIndex: 'hbeab', inputType: 'MA', inputProps: { options: '阴性,阳性,不详' }, layout: '1/3' },
-          { title: 'hbcab', dataIndex: 'hbcab', inputType: 'MA', inputProps: { options: '阴性,阳性,不详' }, layout: '1/3' },
-          { inputType: 'check_invert_button', hidden: true, layout: '1/3' },
-          { title: '身份证地址', dataIndex: 'permanentResidenceAddress', inputType: 'MyAddress', layout: '1/1' },
-
-        ]
-      )
-    }
-  })
-
   return <MyBaseList
     name="/api/prenatal-visit-logs"
 
@@ -86,20 +44,22 @@ export default function RemindRecord(prop: { remindType: RemindType }) {
       const selectRows = ctx.getCheckRows()
       return <OkButton primary disabled={!selectRows.length} onClick={async () => {
         const q = ctx.getSearchParams()
+        mchcLogger.log('qq', { q, selectRows })
+
+
         const remindWay = get(q, 'remindWay.equals');
-        mchcLogger.log('qq', { q, selectRows, remindWay })
-
-
-        // if (!remindWay) {
-        //   message.info('请选择提醒方式...');
-        //   return
-        // }
+        if (!remindWay) {
+          message.info('请选择提醒方式...');
+          return
+        }
         const prenatalVisitIds = selectRows.map((_) => get(_, 'prenatalVisit.id'));
 
-
+        // if (prenatalVisitIds.length <= 0) {
+        //   return message.info('请选择需要提醒的用户...！');
+        // }
         const params = {
           remindWay,
-          ...get_fuck_ids(selectRows),
+          prenatalVisitIds,
         };
         // await request.post('/api/prenatal-visit-logs/apppointmentRemind', params);
         await request.post(url, params);
@@ -195,10 +155,10 @@ export default function RemindRecord(prop: { remindType: RemindType }) {
           width: APP_CONFIG.CELL_WIDTH_LARGE,
           render: (a, record) => {
             return <OkButton size="small" primary onClick={async () => {
+              const id = get(record, 'prenatalVisit.id');
               const params = {
                 remindWay: record.remindWay, // 提醒方式 1 短信 2微信
-                ...get_fuck_ids([record]),
-
+                prenatalVisitIds: [id],
               };
               await request.post(url, params);
               message.info('发送操作成功，详情请看发送记录~');

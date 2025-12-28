@@ -1,7 +1,7 @@
 import { SLocal_State, SMchc_TemplateTrees } from '@lm_fe/service';
 
 import { DataNode } from 'antd/lib/tree';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { rootTemplate, transferTemplates } from '../methods';
 import { needUserIDTypes } from '../common';
 import { ITemplateType } from '../types';

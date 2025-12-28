@@ -86,7 +86,7 @@ export const tableColumns: any = [
 
     inputType: 'MyAutoComplete',
     inputProps: {
-      uniqueKey: '意识s',
+      optionKey: '意识s',
     },
   },
   {
@@ -105,7 +105,7 @@ export const tableColumns: any = [
     //     editable: true,
     //     align: 'center',
     //     inputType: 'MyAutoComplete',
-    //     inputProps: { uniqueKey: '入量s' },
+    //     inputProps: { optionKey: '入量s' },
     //     width: APP_CONFIG.CELL_WIDTH_TINY,
     //   },
     //   {
@@ -134,7 +134,7 @@ export const tableColumns: any = [
     //     editable: true,
     //     align: 'center',
     //     inputType: 'MyAutoComplete',
-    //     inputProps: { uniqueKey: '出量s' },
+    //     inputProps: { optionKey: '出量s' },
     //     width: APP_CONFIG.CELL_WIDTH_TINY,
     //   },
     //   {
@@ -167,7 +167,7 @@ export const tableColumns: any = [
     width: APP_CONFIG.CELL_WIDTH_TINY,
     inputType: 'MyAutoComplete',
     inputProps: {
-      uniqueKey: '乳房情况s',
+      optionKey: '乳房情况s',
     },
   },
   {
@@ -178,7 +178,7 @@ export const tableColumns: any = [
     width: APP_CONFIG.CELL_WIDTH_TINY,
     inputType: 'MyAutoComplete',
     inputProps: {
-      uniqueKey: '泌乳情况s',
+      optionKey: '泌乳情况s',
     },
   },
   {
@@ -193,7 +193,7 @@ export const tableColumns: any = [
         width: APP_CONFIG.CELL_WIDTH_TINY,
         inputType: 'MyAutoComplete',
         inputProps: {
-          uniqueKey: '腹部伤口s',
+          optionKey: '腹部伤口s',
         },
       },
       {
@@ -204,7 +204,7 @@ export const tableColumns: any = [
         width: APP_CONFIG.CELL_WIDTH_TINY,
         inputType: 'MyAutoComplete',
         inputProps: {
-          uniqueKey: '会阴伤口s',
+          optionKey: '会阴伤口s',
         },
       },
     ],
@@ -230,7 +230,7 @@ export const tableColumns: any = [
     align: 'center',
     inputType: 'MyAutoComplete',
     inputProps: {
-      uniqueKey: '宫底高度s',
+      optionKey: '宫底高度s',
     },
     width: APP_CONFIG.CELL_WIDTH_TINY,
   },

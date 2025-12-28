@@ -1,10 +1,11 @@
-import { request } from '@lm_fe/utils';
-import { Button, Input, Modal, Radio } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Modal, Input, Radio, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { cloneDeep } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { request } from '@lm_fe/utils';
 import styles from './index.less';
 
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import { LazyAntd } from '@lm_fe/components';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
@@ -92,7 +93,7 @@ function TemplateModal({ user, visible, onCancel, onSelect }: any) {
       centered
       className={styles["diagnosis-modal"]}
       title="诊断模板"
-      open={visible}
+      visible={visible}
       width={750}
       onCancel={onCancel}
       footer={null}
@@ -112,7 +113,7 @@ function TemplateModal({ user, visible, onCancel, onSelect }: any) {
             <Radio.Button value={3}>个人</Radio.Button>
           </Radio.Group>
           {type !== 1 && (
-            <Button className={styles["diagnosis-modal-search-add"]} icon={<MyIcon value='PlusOutlined' />}>
+            <Button className={styles["diagnosis-modal-search-add"]} icon={<PlusOutlined />}>
               添加模板
             </Button>
           )}

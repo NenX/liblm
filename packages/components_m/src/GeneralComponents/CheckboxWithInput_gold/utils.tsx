@@ -1,4 +1,5 @@
-import { ICommonOption, getDualModeOptions, getPresetOptions, mchcUtils } from '@lm_fe/env';
+import { ICommonOption, getDualModeOptions, getPresetOptions, getSimpleOptions, mchcUtils } from '@lm_fe/env';
+import { IMchc_FormDescriptions_Field_Nullable, SMchc_FormDescriptions } from '@lm_fe/service';
 import { safe_json_parse_arr } from '@lm_fe/utils';
 import { isNil, isString } from 'lodash';
 
@@ -55,8 +56,9 @@ function parse_MC_string_options(props: ICheckboxWithInputProps) {
 export function parse_MC_option(props: ICheckboxWithInputProps) {
   if (!props) return []
   const marshal = props.marshal ?? 1
+  const optionKey: any = props.optionKey
   const uniqueKey: any = props.uniqueKey
-  const preOptions = uniqueKey ? getPresetOptions(uniqueKey, marshal === 0) : null
+  const preOptions = optionKey ? getPresetOptions(optionKey, marshal === 0) : null
   const dicOptions = uniqueKey ? mchcUtils.getDictionariesEnumerations(uniqueKey) : null
   const options = preOptions ?? dicOptions ?? parse_MC_string_options(props) ?? []
   return options as ICheckboxWithInputOption[]
@@ -89,3 +91,25 @@ export function parse_MC_value(props: ICheckboxWithInputProps, changedValue: ICo
 }
 
 
+export function get_check_invert_values(configs: IMchc_FormDescriptions_Field_Nullable[]) {
+  if (!Array.isArray(configs)) return {}
+  const children = configs.filter(_ => ['MC', 'MA'].includes(_?.inputType!) || Array.isArray(_?.children))
+
+  const check_invert_values = children
+    .filter(_ => !_?.disabled_check)
+    .reduce((a, item, idx) => {
+      const name = SMchc_FormDescriptions.get_form_item_name_raw(item)
+      const props = { ...(item?.inputProps! ?? {}), config: item } as any
+      const options = parse_MC_option(props)
+      const firstOption = options[0]
+      const cArr = item?.children
+      let cObj = {}
+      if (Array.isArray(cArr)) {
+        cObj = get_check_invert_values(cArr)
+        return { ...a, ...cObj }
+      } else {
+        return { ...a, [`${name}`]: [parse_MC_value(props, [firstOption]), null, { props, options }], }
+      }
+    }, {} as { [x: string]: any[] })
+  return check_invert_values
+}

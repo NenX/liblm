@@ -22,7 +22,7 @@ const infectionKeywordMap: VType<string[]> = {
   艾: ['HIV', 'hiv', '艾滋'],
   梅: ['梅毒'],
   乙: ['乙肝', 'HBsAg阳性', '乙型肝炎', '乙型病毒性肝炎', '小三阳', '大三阳'],
-  传染病: ['结核病', '重症感染性肺炎', '特殊病毒感染', '丙型病毒性肝炎', '传染病', '病毒性肝炎'],
+  传染病: ['结核病', '重症感染性肺炎', '特殊病毒感染', '丙型病毒性肝炎', '传染病', '病毒性肝炎', 'AIDS'],
 };
 const infectionExcludeKeywordMap: VType<string[]> = {
   艾: [],
@@ -62,7 +62,7 @@ function getTheFuckingLabel(str: string, isMulti = false): IRet | null {
 }
 export function handleFuckinginfectionNoteLabel(infectionNote?: string) {
   if (!infectionNote) return [];
-  const arr = infectionNote.split(',').filter((_) => _ && !['无', '未查'].includes(_));
+  const arr = infectionNote.split(',').filter((_) => _ && _ !== '无');
   const len = arr.length;
   let result = arr.map((str) => getTheFuckingLabel(str, len > 1)!).filter((_) => _);
   let hash: Partial<VType<boolean>> = {};

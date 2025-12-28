@@ -38,7 +38,7 @@ export const tableColumns: IMchc_FormDescriptions_Field_Nullable[] = [
     width: APP_CONFIG.CELL_WIDTH_SMALL,
     inputType: 'MS',
     inputProps: {
-      uniqueKey: '证件类型',
+      optionKey: '证件类型',
       marshal: 0
     }
   },

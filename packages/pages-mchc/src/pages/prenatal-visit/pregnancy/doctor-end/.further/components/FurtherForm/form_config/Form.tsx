@@ -4,13 +4,10 @@ import { BF_Wrap2 } from '@lm_fe/pages';
 import { FormInstance } from "antd";
 import React from "react";
 
-import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo, IMchc_FormDescriptions_Field } from "@lm_fe/service";
+import { IMchc_Doctor_Diagnoses } from "@lm_fe/service";
 import { checkAssociatedForm } from "../config";
-import { expect_array } from "@lm_fe/utils";
 interface IProps {
     form?: FormInstance
-    disableAll?: boolean
-    headerInfo?: IMchc_Doctor_OutpatientHeaderInfo
     diagnosesList: IMchc_Doctor_Diagnoses<"mchc">[]
 }
 interface IDataShape {
@@ -27,11 +24,11 @@ function load_form_config() {
 
 
 export default (props: IProps) => {
-    const { diagnosesList, headerInfo, form } = props
+    const { diagnosesList } = props
 
-    const { config, Wrap } = BF_Wrap2({ default_conf: { tableColumns: () => import('./default'), title: '复诊-产检信息' }, }, { headerInfo, form })
+    const { config, Wrap } = BF_Wrap2({ default_conf: { tableColumns: () => import('./default'), title: '复诊-产检信息' }, })
 
-    const form_config = expect_array<IMchc_FormDescriptions_Field>(config?.tableColumns)
+    const form_config = (config?.tableColumns ?? [])
         .map(f => {
             if (!f?.usr1) return f
             return { ...f, isActive: !checkAssociatedForm(diagnosesList, f?.usr1) }
@@ -40,7 +37,7 @@ export default (props: IProps) => {
     // return <MyFormSectionForm<IDataShape> formDescriptions={load_form_config} {...props} onValuesChange={(changedValues, values) => { }} />
     return <Wrap>
 
-        <MyFormSectionForm<IDataShape> size='small' style={{ padding: '0 4px', overflow: 'hidden' }} formDescriptions={form_config} {...props} onValuesChange={(changedValues, values) => { }} />
+        <MyFormSectionForm<IDataShape> size='small'  style={{ padding: '0 4px', overflow: 'hidden' }} formDescriptions={form_config} {...props} onValuesChange={(changedValues, values) => { }} />
 
     </Wrap>
 }

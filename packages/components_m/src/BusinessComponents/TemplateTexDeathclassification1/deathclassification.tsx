@@ -6,6 +6,7 @@ const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 import React from 'react';
 // import { Input, Space } from 'antd';
+// import { AudioOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import styles from './deathclassification.less';
 import { LazyAntd } from '@lm_fe/components';
@@ -108,7 +109,7 @@ export default class deathclassification extends React.Component {
                 <div style={{ height: 128 }} />
               </Spin> :
               <List
-                style={{ overflow: 'auto', height: '430px' }}
+                style={{ overflow: 'scroll', height: '430px' }}
                 size="small"
                 split={false}
                 bordered={false}

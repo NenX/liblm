@@ -1,13 +1,12 @@
 import React from 'react';
 import { BaseEditPanelForm as Form } from '@lm_fe/components_m';
 import { toApi, fromApi } from './adapter';
-import { BaseEditPanel, BaseEditPanelIProps } from '@lm_fe/components_m';
+import {BaseEditPanel,BaseEditPanelIProps} from '@lm_fe/components_m';
 import { formDescriptionsWithoutSectionApi } from '@lm_fe/components_m';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import { message } from 'antd';
 import { get } from 'lodash';
 import { SMchc_FormDescriptions } from '@lm_fe/service'
-import { mchcEnv } from '@lm_fe/env';
 interface IProps extends BaseEditPanelIProps {
   data?: any;
   type: 'wife' | 'husband';
@@ -25,7 +24,7 @@ export default class PremaritalExam extends BaseEditPanel<IProps> {
   async componentDidMount() {
     const { data, moduleName } = this.props;
     const formDescriptions = await SMchc_FormDescriptions.getModuleParseCache(moduleName!);
-
+    
     const formDescriptionsWithoutSection = formDescriptionsWithoutSectionApi(formDescriptions);
     const formKey = get(data, 'id') || Math.random();
     this.setState({
@@ -58,10 +57,10 @@ export default class PremaritalExam extends BaseEditPanel<IProps> {
         await request.put(`/${baseUrl}`, {
           data: params,
         });
-        mchcEnv.success(`修改${title}成功`);
+        message.success(`修改${title}成功`);
       } else {
         (await request.post(baseUrl, params)).data
-        mchcEnv.success(`新增${title}成功`);
+        message.success(`新增${title}成功`);
       }
     }
   };

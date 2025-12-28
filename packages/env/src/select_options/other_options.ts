@@ -1,6 +1,6 @@
-
-import { isFunction } from "lodash";
+import { mchcEnv } from "src/env";
 import { getPresetOptions, getSameOptions, getSimpleOptions, ICommonOption } from "./preset_options";
+import { isFunction } from "lodash";
 
 function toOptions(data: any) {
     if (typeof data === 'string') {
@@ -50,9 +50,16 @@ const appointmentCycleOptions = () => [
     { label: '1天后', value: 1 },
     { label: '2天后', value: 2 },
     { label: '3天后', value: 3 },
-    { label: '4天后', value: 4 },
-    { label: '5天后', value: 5 },
-    { label: '6天后', value: 6 },
+
+    ...(
+        mchcEnv.is('广三')
+            ? []
+            : [
+                { label: '4天后', value: 4 },
+                { label: '5天后', value: 5 },
+                { label: '6天后', value: 6 },
+            ]
+    )
 ]
 
 // 下次复诊 时间段
@@ -171,7 +178,12 @@ const downsScreenOptions = [
     { label: '高风险', value: 2 },
 ];
 
-
+// 产前诊断
+const prenatalDiagnosisOptions = [
+    { label: '正常', value: 1 },
+    { label: '异常', value: 2 },
+    { label: '拒绝产前诊断和知情同意书', value: 4 },
+];
 
 // 受孕方式
 const conceiveModeOptions = [
@@ -413,6 +425,7 @@ export const otherOptions = {
     rhythmOptions,
     liverOptions,
     downsScreenOptions,
+    prenatalDiagnosisOptions,
     conceiveModeOptions,
     engagementOptions,
     hbOptions,

@@ -1,4 +1,3 @@
-// 宫内输血手术过程记录
 import { DatePicker_L, LazyAntd } from '@lm_fe/components';
 import { formatDate, formatDateTime } from '@lm_fe/utils';
 import { Button, Col, Form, Input, Row } from 'antd';

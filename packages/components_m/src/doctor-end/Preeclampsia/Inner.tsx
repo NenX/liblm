@@ -349,9 +349,9 @@ export default function Preeclampsia(props: IProps) {
   const treeGuideNodes = transferTemplateData(treeGuide);
   const footer = [
     <>
-      {/* <p className="footer-tips">
-        {mchcEnv.is('郫都') ? '参考指南：第十版《妇产科学》' : '参考指南：2018美国妇产科医师协会“妊娠期低剂量阿司匹林的应用”'}
-      </p> */}
+      <p className="footer-tips">
+        {mchcEnv.is('郫都') ? '参考指南：子痫前期的预防及预测指南(2025)' : '参考指南：2018美国妇产科医师协会“妊娠期低剂量阿司匹林的应用”'}
+      </p>
       <Space style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Button onClick={handleCancel}>取消</Button>
         <Button type="primary" onClick={handleOk}>

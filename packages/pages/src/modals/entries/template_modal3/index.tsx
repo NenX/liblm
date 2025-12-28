@@ -1,7 +1,8 @@
-import { IGlobalModalProps, LazyAntd, MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { IGlobalModalProps, LazyAntd } from '@lm_fe/components';
 import { IMchc_TemplateTree_Item, SLocal_State } from '@lm_fe/service';
 import { request, safe_json_parse } from '@lm_fe/utils';
-import { Button, Col, Modal, Popconfirm, Row } from 'antd';
+import { Button, Col, message, Modal, Popconfirm, Row } from 'antd';
 import { compact, concat, get, indexOf, isEmpty, keyBy, keys, map, set, size } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
@@ -20,14 +21,13 @@ interface IProps {
   admissionId?: any
   canOperate?: boolean
   simpleTypes?: ITemplateConfig[]
-  defaultExpandAll: boolean
-  on_tpl_check?: (e: { leaf: Partial<IMchc_TemplateTree_Item>[], result: Partial<MyDataNode>[], content: string }) => void
+  onValueCheck?: (e: { result: Partial<IMchc_TemplateTree_Item>[], [x: string]: any }) => void
 
 }
 export default function TemplateModal(props: IGlobalModalProps<IProps>) {
 
   const { modal_data, width, close, onClose, ...others } = props
-  const { admissionId, on_tpl_check, defaultExpandAll, onOk, } = modal_data;
+  const { admissionId, onValueCheck, onOk, } = modal_data;
 
   const simpleTypes = Array.isArray(modal_data.simpleTypes) ? modal_data.simpleTypes : MODAL_TEMPLATE_TYPES['科室个人']
 
@@ -45,6 +45,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
 
   const safeTypes = [...simpleTypes.map(_ => ({ ..._, ...baseType })),]
   const canOperate = mchcEnv.is('广三') ? user?.groups?.some?.(_ => ['ADMIN', 'MASTERNURSE'].includes(_.name.toUpperCase())) : (modal_data.canOperate ?? true)
+  const isExpandAll = false
   useEffect(() => {
 
     getTemplateList();
@@ -188,7 +189,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
     set_editModalVisible(false)
     set_activeTemplate({})
 
-    mchcEnv.success('提交模板成功');
+    message.success('提交模板成功');
     getTemplateList();
   };
   // 编辑
@@ -206,7 +207,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
     if (!t) return
     e.stopPropagation();
     await t.delItem?.({ item: template });
-    mchcEnv.success('删除模板成功');
+    message.success('删除模板成功');
     getTemplateList();
   };
 
@@ -227,13 +228,21 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
 
   function handleOk() {
     const rowKey = selectedRowKeys.map(_ => _.split('_').pop())
+    let content = '';
+    let treeData = result;
 
+    let treeDataMapping = keyBy(treeData, 'id');
 
+    map(rowKey, (id) => {
 
-    const leaf = result.filter(_ => _.isLeaf && !_.children?.length && rowKey.includes(_.id?.toString()!))
-    const content = leaf.map(_ => _.val).join(' / ')
+      const item = get(treeDataMapping, id);
+      if (!isEmpty(item) && get(item, 'isLeaf')) {
+        content += `${get(item, `val`)}；`;
+      }
+    });
 
-    on_tpl_check?.({ leaf, result, content });
+    const data = { result: result.filter(_ => _.isLeaf && !_.children?.length && rowKey.includes(_.id?.toString()!)), raw: result, selectedRowKeys: rowKey, treeDataMapping }
+    onValueCheck?.(data);
     close?.(true)
   };
 
@@ -273,13 +282,13 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
   function renderDiagnosisHistory() {
     const treeData = transferTemplateData(diagnosisList);
     return (
-      size(treeData) > 0 && <Tree checkable defaultExpandAll={defaultExpandAll} onCheck={handleSelectTemplates} treeData={treeData} />
+      size(treeData) > 0 && <Tree checkable defaultExpandAll={isExpandAll} onCheck={handleSelectTemplates} treeData={treeData} />
     );
   };
 
   function renderLabexams() {
     return labexams.length > 0 ? (
-      <Tree checkable defaultExpandAll={defaultExpandAll} treeData={labexams} onCheck={handleSelectTemplates}></Tree>
+      <Tree checkable defaultExpandAll={isExpandAll} treeData={labexams} onCheck={handleSelectTemplates}></Tree>
     ) : (
       '暂无数据'
     );
@@ -296,13 +305,12 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
               {canOperate && (
                 <div className={styles["template-list-item__actions"]}>
                   {/* <PlusCircleOutlined className={styles["template-list-item__actions-icon"]} onClick={handleAddTemplate} /> */}
-                  <MyIcon
-                    value='EditOutlined'
+                  <EditOutlined
                     className={styles["template-list-item__actions-icon"]}
                     onClick={handleEditTemplate(template)}
                   />
                   <Popconfirm title="确定要删除这个模板吗？" onConfirm={handleConfirmDelete(template)}>
-                    <MyIcon value='DeleteOutlined' className={styles["template-list-item__actions-icon"]} />
+                    <DeleteOutlined className={styles["template-list-item__actions-icon"]} />
                   </Popconfirm>
                 </div>
               )}
@@ -346,7 +354,7 @@ export default function TemplateModal(props: IGlobalModalProps<IProps>) {
               {map(splitTemplatesMapping, (templateTree, id) => {
                 return (
                   <Col span={12}>
-                    <Tree checkable defaultExpandAll={defaultExpandAll} onCheck={handleSelectTemplates}>
+                    <Tree checkable defaultExpandAll={isExpandAll} onCheck={handleSelectTemplates}>
                       {renderTreeNode([templateTree])}
                     </Tree>
                   </Col>

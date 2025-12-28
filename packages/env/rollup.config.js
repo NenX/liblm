@@ -12,7 +12,7 @@ export default commandLineArgs => {
   return {
     ...config,
     plugins: [
- 
+
       postcss({
         use: [
           ['less', { javascriptEnabled: true }],
@@ -28,7 +28,7 @@ export default commandLineArgs => {
       ...config.output,
       entryFileNames: `[name].js`,
       format: 'esm',
- 
+      sourcemap: true, // 👈 开启 source map
     }
   }
 }

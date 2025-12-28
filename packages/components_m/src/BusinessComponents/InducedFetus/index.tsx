@@ -1,9 +1,9 @@
-import { MyIcon } from '@lm_fe/components';
-import { Tabs } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import { get, map } from 'lodash';
 import React, { Component } from 'react';
 import FetusForm from './components';
+import { Tabs } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { map, get } from 'lodash';
+import { FormInstance } from 'antd/lib/form';
 import { toApi, valueToApi } from './config/adapter';
 const TITLE = '胎儿';
 export default class NursingFetus extends Component {
@@ -99,7 +99,7 @@ export default class NursingFetus extends Component {
         onChange={this.onChange}
         addIcon={
           <div>
-            <MyIcon value='PlusOutlined' />
+            <PlusOutlined />
             增加{TITLE}
           </div>
         }

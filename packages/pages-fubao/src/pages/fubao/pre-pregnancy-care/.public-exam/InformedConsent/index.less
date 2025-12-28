@@ -3,6 +3,7 @@
   overflow: hidden;
 
   &-list {
+    background-color: #fafafa;
     height: 100%;
     overflow-y: auto;
 
@@ -16,6 +17,7 @@
 
     .ant-collapse > .ant-collapse-item > .ant-collapse-header {
       padding: 8px;
+      background: #f5f6fa;
 
       .ant-collapse-arrow {
         position: initial;
@@ -34,7 +36,9 @@
     &__item {
       cursor: pointer;
 
-  
+      &_active {
+        background: #eaf4fd;
+      }
     }
   }
   &-detail {
@@ -43,6 +47,7 @@
 
     &-block {
       height: 100%;
+      background-color: #ffffff;
 
       .ant-row {
         justify-content: center;

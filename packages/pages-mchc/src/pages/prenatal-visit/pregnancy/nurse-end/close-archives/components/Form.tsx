@@ -1,11 +1,13 @@
-import { BaseEditPanelForm, getGestationalWeekBySureEdd, MyIcon } from '@lm_fe/components_m';
-import { mchcModal__ } from '@lm_fe/pages';
-import { SMchc_Common } from '@lm_fe/service';
-import { Button, FormInstance, message, Popconfirm, Space } from 'antd';
-import dayjs from 'dayjs';
-import { debounce, get } from 'lodash';
 import React from 'react';
+import { Button, FormInstance, Popconfirm, Space, message } from 'antd';
+import { get, debounce } from 'lodash';
 import store from 'store';
+import { SaveOutlined, PrinterOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+import { BaseEditPanelForm, getGestationalWeekBySureEdd } from '@lm_fe/components_m'
+import { request } from '@lm_fe/utils';
+import { SMchc_Common } from '@lm_fe/service';
+import { mchcModal__ } from '@lm_fe/pages';
 export default class ClosingArchivesForm extends BaseEditPanelForm {
   state = {
     recordstate: '',
@@ -90,7 +92,7 @@ export default class ClosingArchivesForm extends BaseEditPanelForm {
       <Button
         type="primary"
         size="large"
-        icon={<MyIcon value='PrinterOutlined' />}
+        icon={<PrinterOutlined />}
         disabled={!printId}
         onClick={() => {
           this.handlePrint()
@@ -112,7 +114,7 @@ export default class ClosingArchivesForm extends BaseEditPanelForm {
         okText="确定"
         cancelText="取消"
       >
-        <Button size="large" type="primary" icon={<MyIcon value='SaveOutlined' />}>
+        <Button size="large" type="primary" icon={<SaveOutlined />}>
           保存
         </Button>
       </Popconfirm>
@@ -120,7 +122,7 @@ export default class ClosingArchivesForm extends BaseEditPanelForm {
       <Button
         size="large"
         type="primary"
-        icon={<MyIcon value='SaveOutlined' />}
+        icon={<SaveOutlined />}
         htmlType="submit"
         onClick={debounce(this.handleFinish)}
       >

@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { form_config } from './form_config';
 import { request } from '@lm_fe/utils';
-import { mchcEnv, mchcLogger } from '@lm_fe/env';
 export default function Form_乳腺癌筛查(props: { activeItem: any, id: any, onRefresh?: (a: any, b: any, c?: any) => void }) {
   const { onRefresh, id, activeItem } = props
 
@@ -55,7 +54,7 @@ export default function Form_乳腺癌筛查(props: { activeItem: any, id: any, 
   };
 
   async function handleSubmit(values: any) {
-    mchcLogger.log('handleSubmit', { values, data })
+
 
     let params: any = values
 
@@ -84,8 +83,6 @@ export default function Form_乳腺癌筛查(props: { activeItem: any, id: any, 
 
       onRefresh && onRefresh('Screening', activeItem, true);
     }
-    mchcEnv.success('操作成功')
-
   };
   return <Wrap>
     <BaseEditPanelFormFC form={form} formDescriptions={config?.tableColumns}

@@ -17,7 +17,7 @@ export const form_config: IMchc_FormDescriptions_Field_Nullable[] = [{
 
         "inputType": "input_number",
         "tranferRules": { 'path': 'physicalExamMeasure.weight' },
-        required: true,
+        "rules": [{ 'required': true, 'message': '体重(kg)是必填项' }],
 
         "inputProps": { 'placeholder': '请输入体重', 'style': { 'width': 156 } },
         "span": 8,
@@ -36,7 +36,7 @@ export const form_config: IMchc_FormDescriptions_Field_Nullable[] = [{
 
         "inputType": "pressure",
         "tranferRules": { 'path': 'physicalExamMeasure.bloodPressure' },
-        required: true,
+        "rules": [{ 'required': true, 'message': '血压(mmHg)是必填项' }],
 
         "inputProps": { 'style': { 'width': 156 } },
         "span": 8,
@@ -55,7 +55,7 @@ export const form_config: IMchc_FormDescriptions_Field_Nullable[] = [{
 
         "inputType": "input_number",
         "tranferRules": { 'path': 'physicalExamMeasure.weight' },
-        required: true,
+        "rules": [{ 'required': true, 'message': '体温(°C)是必填项' }],
 
         "inputProps": { 'placeholder': '请输入体温', 'style': { 'width': 156 } },
         "span": 8,

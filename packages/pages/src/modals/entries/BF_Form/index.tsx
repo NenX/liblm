@@ -18,7 +18,7 @@ export default function FormChrono({ modal_data, visible, onCancel, props, ...ot
     return (
         <Modal
 
-            open={visible}
+            visible={visible}
             title="Test"
             width={1000}
             footer={null}

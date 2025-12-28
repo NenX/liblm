@@ -1,40 +1,30 @@
 import { mchcLogger } from "@lm_fe/env"
 import { IMchc_FormDescriptions_Field } from "@lm_fe/service"
-import { isFunction, safe_json_parse } from "@lm_fe/utils"
+import { safe_json_parse } from "@lm_fe/utils"
 import { FormInstance } from "antd"
-import { InputStatus } from "antd/es/_util/statusUtils"
 import React, { useEffect, useState } from "react"
 import { use_chrono } from "src/FU_components/FormSection/use_chrono"
 
-export function InterceptComponent(props: { [x: string]: any, config: IMchc_FormDescriptions_Field, C: any, form?: FormInstance, disabled?: boolean, formName?: any, value?: any, onChange?: (...v: any[]) => void }) {
+export function InterceptComponent(props: { [x: string]: any, config: IMchc_FormDescriptions_Field, C: any, form?: FormInstance, formName?: any, value?: any, onChange?: (...v: any[]) => void }) {
     const { config = {}, formName, form, C, ...others } = props
     const { chrono, value, onChange, Wrap } = use_chrono(props)
     const { inputProps, processLocal, processRemote, specialConfig, special_config } = config
     const _inputProps: any = inputProps ?? {}
     const __value = value ?? _inputProps.value
-    const _value = processRemote?.(__value, form, config) ?? __value
+    const _value = processRemote?.(__value, form) ?? __value
     const formDescriptionSpecialConfig = safe_json_parse(specialConfig,) ?? safe_json_parse(special_config, {})
 
     const _onChange = (...arg: any[]) => {
-        if (isFunction(processLocal)) {
-            arg[0] = processLocal(arg[0], form, config) ?? arg[0]
+        arg[0] = processLocal?.(arg[0], form) ?? arg[0]
+        if (processLocal) {
             mchcLogger.log('processLocal', { arg })
         }
         onChange?.(...arg) ?? _inputProps.onChange?.(...arg)
     }
-    const [status, set_status] = useState<InputStatus>('')
+    const [warn, set_warn] = useState(false)
     useEffect(() => {
-        const s = config.checkWarn?.(_value, form)
-        if (s) {
-            if (s === true) {
-                set_status('error')
-            } else {
-                set_status(s)
-            }
 
-        } else {
-            set_status('')
-        }
+        set_warn(config.checkWarn?.(_value, form) ?? false)
         return () => {
 
         }
@@ -47,8 +37,7 @@ export function InterceptComponent(props: { [x: string]: any, config: IMchc_Form
                 {...formDescriptionSpecialConfig}
                 {...others}
                 {...inputProps}
-                disabled={inputProps?.disabled ?? others.disabled}
-                status={_inputProps?.status ?? status}
+                warn={warn}
                 value={_value}
                 onChange={_onChange}
                 formName={formName}

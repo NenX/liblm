@@ -3,9 +3,9 @@ import { TIdTypeCompatible } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
 import { Form, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { form_config } from './form_config';
 import { mchcLogger } from '@lm_fe/env';
 import { MyFormSectionForm } from '@lm_fe/components_m';
-import { BF_Wrap2 } from 'src/components';
 interface IProps {
     pregnancyId: TIdTypeCompatible
 }
@@ -13,18 +13,14 @@ export default function Test({ modal_data, visible, onCancel, close, ...others }
     const { pregnancyId, } = modal_data
 
     const [form] = Form.useForm()
-    const { config, Wrap } = BF_Wrap2({
-        default_conf: {
-            title: '高危管理-高危随访',
-            tableColumns: () => import('./form_config')
-        }
-    })
+    const [recordData, setRecordData] = useState()
+
     useEffect(() => {
         if (pregnancyId) {
             request.get(`/api/highrisk/getFollowupCaseByPregnancyId?pregnancyId=${pregnancyId}`, { unboxing: true }).then(r => {
                 mchcLogger.log('高危随访', r.data)
 
-                form.setFieldsValue(r.data)
+                setRecordData(r.data)
             })
         }
 
@@ -43,22 +39,24 @@ export default function Test({ modal_data, visible, onCancel, close, ...others }
         <Modal
             {...others}
 
-            open={visible}
+            visible={visible}
             width={'80%'}
             onCancel={onCancel}
             style={{ top: '20px' }}
-            styles={{ body: { height: '80vh', overflowY: 'auto' } }}
-            destroyOnHidden
+            bodyStyle={{ height: '80vh', overflowY: 'scroll' }}
+            destroyOnClose
             className="diag-record-modal"
             onOk={async () => {
                 const values = form.getFieldsValue()
+                const data: any = Object.assign({ pregnancyId }, recordData, values)
+                mchcLogger.log('高危随访', data)
 
                 try {
-                    if (values.id) {
-                        await request.put(`/api/highrisk/updateFollowupCase`, values, { successText: '操作成功' })
+                    if (data.id) {
+                        await request.put(`/api/highrisk/updateFollowupCase`, data, { successText: '操作成功' })
                     } else {
                         close?.(true)
-                        await request.post(`/api/highrisk/addFollowupCase`, values, { successText: '操作成功' })
+                        await request.post(`/api/highrisk/addFollowupCase`, data, { successText: '操作成功' })
                     }
                     close?.(true)
 
@@ -74,14 +72,18 @@ export default function Test({ modal_data, visible, onCancel, close, ...others }
 
 
         >
-            <Wrap>
-                <MyFormSectionForm
-                    formName='高危随访'
-                    form={form}
-                    targetLabelCol={3}
-                    bf_config={config}
-                />
-            </Wrap>
+            <MyFormSectionForm
+                formName='高危随访'
+                size='small'
+                style={{ paddingBottom: 128 }}
+                data={recordData}
+                form={form}
+                targetLabelCol={3}
+                onValuesChange={(a, b) => {
+                    mchcLogger.log('高危随访', a, b)
+                }}
+                formDescriptions={form_config}
+            />
         </Modal>
     );
 

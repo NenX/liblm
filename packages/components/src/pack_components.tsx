@@ -1,16 +1,17 @@
-import { packs } from '@noah-libjs/components'
-import { MyAddress } from './MyAddress'
+import { MyInput } from './MyInput'
 import { MyImageEditor } from './MyImageEditor'
-import { PatientSelect } from './PatientSelect'
-import { ArraySingle } from './ArraySingle'
+import { MyAddress } from './MyAddress'
 
-export * from './MyAddress'
+
+export * from './MyInput'
 export * from './MyImageEditor'
-export * from './PatientSelect'
+export * from './MyAddress'
+
 export const pack_components = {
-    ...packs,
+    MI: MyInput,
+    input: MyInput,
+    Input: MyInput,
+    MyInput,
     MyAddress,
-    MyImageEditor,
-    ArraySingle,
-    PatientSelect
+    MyImageEditor
 }

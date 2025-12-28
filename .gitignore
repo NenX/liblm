@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-.nx
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -371,3 +371,4 @@ CNAME
 /public
 serve_pack
 target
+/.idea/

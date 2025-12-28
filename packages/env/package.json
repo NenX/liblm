@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/env",
-    "version": "0.2.5",
+    "version": "0.1.203",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,11 +23,11 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@lm_fe/utils": "^0.2.5",
-        "dayjs": "^1.11.13"
+        "@lm_fe/static": "*",
+        "@lm_fe/utils": "^0.1.203"
     },
     "devDependencies": {
         "rollup": "^2.70.2"
     },
-    "gitHead": "9e8eab8af4aa2675ed973be51fe85cf2e3c2ed27"
+    "gitHead": "4b4f8e475bb35ea8c44bd441d239583e45e75981"
 }

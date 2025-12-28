@@ -6,7 +6,6 @@ import { DoctorEnd_SurveyReport } from "src/pages/prenatal-visit/pregnancy/docto
 export const 知情同意书_tab = defineFormConfig([
     {
         label: '知情同意书',
-        fd_lazy: true,
         children: [
             {
                 inputType: 'node',
@@ -18,7 +17,6 @@ export const 知情同意书_tab = defineFormConfig([
     },
     {
         label: '影像报告',
-        fd_lazy: true,
         children: [
             {
                 inputType: 'component',
@@ -33,7 +31,6 @@ export const 知情同意书_tab = defineFormConfig([
     },
     {
         label: '检验报告',
-        fd_lazy: true,
         children: [
             {
                 inputType: 'component',

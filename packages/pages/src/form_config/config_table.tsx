@@ -1,8 +1,8 @@
-import { mchcEnv } from "@lm_fe/env"
+import { mchcModal__ } from "@lm_fe/pages"
 
 import { IMchc_FormDescriptions_Field_Nullable, SLocal_History } from "@lm_fe/service"
 import { copyText, genHappyPath } from "@lm_fe/utils"
-import { Space } from "antd"
+import { Space, message } from "antd"
 import React from "react"
 export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullable[] => [
     {
@@ -12,7 +12,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
         children: [
             {
                 inputType: 'MyMonaco',
-                inputProps: { language: 'javascript', height: '74vh' },
+                inputProps: { language: 'javascript', height: '70vh' },
                 dataIndex: 'tableColumns',
             }
         ]
@@ -64,29 +64,9 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 inputType: 'MyInput',
                 dataIndex: 'dept',
             },
-            {
-                title: '标签宽度',
-                layout: '1/3',
-                inputType: 'InputNumber',
-                inputProps: { min: 2, max: 20 },
-                dataIndex: 'targetLabelCol',
-            },
 
 
-            {
-                title: '表单回选前钩子',
 
-                hidden: true,
-                containerType: 'tabs',
-
-                children: [
-                    {
-                        inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
-                        dataIndex: 'handleBeforePopup',
-                    }
-                ]
-            },
 
             {
                 title: '表单联动设置',
@@ -97,12 +77,25 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'watchScript',
                     }
                 ]
             },
+            {
+                title: '表单回选前钩子',
 
+                hidden: true,
+                containerType: 'tabs',
+
+                children: [
+                    {
+                        inputType: 'MyMonaco',
+                        inputProps: { language: 'javascript', height: '50vh' },
+                        dataIndex: 'handleBeforePopup',
+                    }
+                ]
+            },
             {
                 title: '表单提交前钩子',
 
@@ -111,7 +104,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'beforeSubmit',
                     }
                 ]
@@ -130,7 +123,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                     打开
                 </a>
 
-                <a onClick={() => copyText(p) && mchcEnv.success('复制成功！')}>
+                <a onClick={() => copyText(p) && message.success('复制成功！')}>
                     复制地址
                 </a>
             </Space>
@@ -147,7 +140,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                     打开
                 </a>
 
-                <a onClick={() => copyText(p) && mchcEnv.success('复制成功！')}>
+                <a onClick={() => copyText(p) && message.success('复制成功！')}>
                     复制地址
                 </a>
             </Space>
@@ -163,7 +156,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '显示默认操作列',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'showAction',
@@ -174,7 +167,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '显示添加按钮',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'showAdd',
@@ -185,7 +178,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '显示行打印按钮',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'showRowPrintBtn',
@@ -196,7 +189,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '显示导出按钮',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'showExport',
@@ -207,7 +200,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '显示打印按钮',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'showPrint',
@@ -228,20 +221,6 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
             //     dataIndex: 'rowPrintUrlSuffix',
             //     hidden: true,
             // },
-
-            {
-                title: '查询配置',
-                containerType: 'tabs',
-
-                hidden: true,
-                children: [
-                    {
-                        inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
-                        dataIndex: 'searchConfig',
-                    }
-                ]
-            },
             {
                 title: '静态查询参数',
                 containerType: 'tabs',
@@ -250,11 +229,24 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'searchParams',
                     }
                 ]
 
+            },
+            {
+                title: '查询配置',
+                containerType: 'tabs',
+
+                hidden: true,
+                children: [
+                    {
+                        inputType: 'MyMonaco',
+                        inputProps: { language: 'javascript', height: '50vh' },
+                        dataIndex: 'searchConfig',
+                    }
+                ]
             },
             {
                 title: '默认查询参数',
@@ -264,7 +256,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'initialSearchValue',
                     }
                 ]
@@ -277,7 +269,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'genColumns',
                     }
                 ]
@@ -290,7 +282,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 children: [
                     {
                         inputType: 'MyMonaco',
-                        inputProps: { language: 'javascript', height: '56vh' },
+                        inputProps: { language: 'javascript', height: '50vh' },
                         dataIndex: 'RenderBtns',
                     }
                 ]
@@ -308,7 +300,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '打印',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'needPrint',
@@ -319,7 +311,7 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '同步',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'needSync',
@@ -330,21 +322,14 @@ export const config_table_fd = (props: any): IMchc_FormDescriptions_Field_Nullab
                 title: '导入',
                 inputType: 'MyCheckbox',
                 inputProps: {
-                    uniqueKey: '否是',
+                    optionKey: '否是',
                     marshal: 0,
                 },
                 dataIndex: 'needImport',
                 hidden: true,
                 layout: '1/3',
             },
-            {
-                title: '初始值',
-                inputType: 'MyMonaco',
-                inputProps: { language: 'javascript', height: '70vh' },
-                dataIndex: 'initialValues',
-                layout: '1/3',
-            },
         ]
     },
-
+    
 ]

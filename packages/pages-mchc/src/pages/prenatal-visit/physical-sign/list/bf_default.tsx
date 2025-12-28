@@ -1,14 +1,20 @@
 import { defineFormConfig } from "@lm_fe/service";
 import React from 'react';
-import { APP_CONFIG, mchcEnv, rt_ctx } from '@lm_fe/env';
-const ctx = rt_ctx
+import { APP_CONFIG, mchcEnv } from '@lm_fe/env';
+
 const c = React.createElement
 let engagementOption = [
   { label: '入', value: '入' },
   { label: '未', value: '未' },
   { label: '半', value: '半' },
 ]
-
+if (mchcEnv.in(['郫都'])) {
+  engagementOption = [
+    { label: '浮', value: '浮' },
+    { label: '半入', value: '半入' },
+    { label: '入', value: '入' },
+  ]
+}
 let fetalMovement = [
 
   { label: '无', value: '无' },
@@ -36,7 +42,7 @@ let presentation = [
   { label: '-', value: '-' },
 ]
 
-export default defineFormConfig([
+export const form_confg = defineFormConfig([
   {
     title: '就诊卡号',
     dataIndex: 'outpatientNO',
@@ -60,7 +66,7 @@ export default defineFormConfig([
     rules: [{ required: false, message: '请输入创建时间' }],
     inputType: 'DatePicker',
     inputProps: { disabled: true },
-
+    sortType: 'date',
     layout: '1/3',
 
   },
@@ -177,8 +183,8 @@ export default defineFormConfig([
     inputProps: { min: 0, type: 'number' },
     width: 50,
     // render: (value: any) => value || '',
-
-
+    sortType: 'number',
+    showFilter: false,
     align: 'center',
     layout: '1/3'
   },
@@ -196,8 +202,8 @@ export default defineFormConfig([
     inputProps: { min: 0, type: 'number' },
     width: 50,
     // render: (value: any) => value || '',
-
-
+    sortType: 'number',
+    showFilter: false,
     align: 'center',
     layout: '1/3'
   },
@@ -217,8 +223,8 @@ export default defineFormConfig([
     // render: (value: any) => (
     //   <InputWithRange value={value} min={60} max={100} hiddenIpt={true} style={{ display: 'block' }} />
     // ),
-
-
+    sortType: 'number',
+    showFilter: false,
     align: 'center',
     layout: '1/3'
   },
@@ -263,11 +269,18 @@ export default defineFormConfig([
     dataIndex: 'fetusesMeasure',
     inputType: 'ArrayPanel',
     isActive: false,
-    hidden: true,
+    hidden: !mchcEnv.is('郫都'),
     render: (value: any) => {
-      return ctx.ui.render_arr(value, '/', 'fetalMovement')
-
-
+      if (!value) {
+        return ''
+      }
+      let str = '';
+      if (value.length === 1) {
+        str = value[0].fetalMovement;
+      } else {
+        value.map((item) => (str += `${item.fetalMovement || '--'};`));
+      }
+      return str;
     },
     width: 60,
   },
@@ -280,7 +293,7 @@ export default defineFormConfig([
       targetLabelCol: 2,
       tip: '胎儿信息',
       formDescriptions: [
-        { layout: '1/5', inputType: 'MA', label: '胎动', name: 'fetalMovement', isActive: false, inputProps: { marshal: 0, options: fetalMovement } },
+        mchcEnv.is('郫都') ? { layout: '1/5', inputType: 'MA', label: '胎动', name: 'fetalMovement', inputProps: { marshal: 0, options: fetalMovement } } : null,
         { layout: '1/5', inputType: 'input_number', label: '胎心率', name: 'fetalHeartRate' },
         { layout: '1/5', inputType: 'MS', label: '位置', name: 'fetalPosition', inputProps: { marshal: 0, options: fetalPosition } },
         { layout: '1/5', inputType: 'MS', label: '胎方位', name: 'position', inputProps: { marshal: 0, options: position } },
@@ -288,9 +301,16 @@ export default defineFormConfig([
       ]
     },
     render: (value: any) => {
-      return ctx.ui.render_arr(value, '/', 'fetalHeartRate')
-
-
+      if (!value) {
+        return ''
+      }
+      let str = '';
+      if (value.length === 1) {
+        str = value[0].fetalHeartRate;
+      } else {
+        value.map((item) => (str += `${item.fetalHeartRate || '--'};`));
+      }
+      return str;
     },
     width: 60,
   },
@@ -300,8 +320,16 @@ export default defineFormConfig([
     inputType: 'ArrayPanel',
     isActive: false,
     render: (value: any) => {
-      return ctx.ui.render_arr(value, '/', 'fetalPosition')
-
+      if (!value) {
+        return ''
+      }
+      let str = '';
+      if (value.length === 1) {
+        str = value[0].fetalPosition;
+      } else {
+        value.map((item) => (str += `${item.fetalPosition || '--'};`));
+      }
+      return str;
     },
     width: 60,
   },
@@ -311,7 +339,16 @@ export default defineFormConfig([
     inputType: 'ArrayPanel',
     isActive: false,
     render: (value: any) => {
-      return ctx.ui.render_arr(value, '/', 'position')
+      if (!value) {
+        return ''
+      }
+      let str = '';
+      if (value.length === 1) {
+        str = value[0].position;
+      } else {
+        value.map((item) => (str += `${item.position || '--'};`));
+      }
+      return str;
     },
     width: 60,
   },
@@ -321,8 +358,16 @@ export default defineFormConfig([
     inputType: 'ArrayPanel',
     isActive: false,
     render: (value: any) => {
-      return ctx.ui.render_arr(value, '/', 'presentation')
-
+      if (!value) {
+        return ''
+      }
+      let str = '';
+      if (value.length === 1) {
+        str = value[0].presentation;
+      } else {
+        value.map((item) => (str += `${item.presentation || '--'};`));
+      }
+      return str;
     },
     width: 60,
   },

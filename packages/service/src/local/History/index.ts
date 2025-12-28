@@ -33,16 +33,6 @@ export const SLocal_History = {
 
         return this.historyPush(path)
     },
-    safe_history_replace(path: any, props?: any) {
-        let history = props?.history
-
-        if (history?.replace) {
-
-            return history.replace(path);
-        }
-
-        return this.historyReplace(path)
-    },
     historyPush(path: any, state?: any) {
         if (!path) return
         const history = mchcUtils.getGlobalHistory()

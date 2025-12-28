@@ -1,4 +1,4 @@
-import { MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { mchcEnv } from "@lm_fe/env";
 import { BF_Wrap2, mchcModal__, MyBaseList } from '@lm_fe/pages';
 import { request } from "@lm_fe/utils";
@@ -50,7 +50,7 @@ export default function BreastCancerDataReport(prop: any) {
 								<Button
 									size="small"
 									type="link"
-									icon={<MyIcon value='UploadOutlined' className="global-table-action-icon" />}
+									icon={<UploadOutlined className="global-table-action-icon" />}
 									disabled={rowData.state}
 									onClick={() => {
 										request.get(`/api/labour-records/${rowData.id}/upload`)
@@ -62,7 +62,7 @@ export default function BreastCancerDataReport(prop: any) {
 								<Button
 									size="small"
 									type="link"
-									icon={<MyIcon value='EditOutlined' className="global-table-action-icon" />}
+									icon={<EditOutlined className="global-table-action-icon" />}
 									onClick={() => {
 										console.log('ctx', rowData.id, ctx);
 										mchcModal__.open('modal_form', {
@@ -87,7 +87,7 @@ export default function BreastCancerDataReport(prop: any) {
 													} else {
 														await request.post(`/api/labour-records`, finalValues);
 													}
-													mchcEnv.success('修改成功');
+													message.success('修改成功');
 													ctx.handleSearch()
 													return true;
 												},
@@ -96,7 +96,7 @@ export default function BreastCancerDataReport(prop: any) {
 									}}>
 									编辑
 								</Button>
-								<Button type="link" size="small" icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />} onClick={() => ctx.handleDelete(rowData)}>
+								<Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />} onClick={() => ctx.handleDelete(rowData)}>
 									删除
 								</Button>
 							</Button.Group>

@@ -1,4 +1,3 @@
-import React from 'react';
 import BaseEditPanelForm from '../../../BaseEditPanel/BaseEditPanelForm';
 import { event } from '@lm_fe/utils';
 export const formItemLayout = {

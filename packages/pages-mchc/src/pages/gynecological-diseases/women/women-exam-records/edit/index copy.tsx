@@ -1,4 +1,4 @@
-import { LoadingPlaceholder, PanelTitle, PanelWithChild, PanelWithChildFC } from '@lm_fe/components_m';
+import { LoadingPlaceholder, PanelWithChild, PanelWithChildFC } from '@lm_fe/components_m';
 import {
   getSearchParamsValue,
   //  fubaoRequest as
@@ -70,16 +70,24 @@ export class panel extends PanelWithChild {
 
   renderHeader = () => {
     const { data } = this.state;
-    const h = [
-      { title: '姓名', value: get(data, 'gynecologicalPatient.name') },
-      { title: '年龄', value: get(data, 'gynecologicalPatient.age') },
-      { title: '门诊号', value: get(data, 'gynecologicalPatient.outpatientNO') },
-
-    ]
     return (
-      <PanelTitle headerItems={h} />
+      <div className={PanelWithChild.styles["panel-with-child_header"]}>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>姓名:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'gynecologicalPatient.name')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>年龄:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'gynecologicalPatient.age')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-label"]}>门诊号:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-value"]}>
+            {get(data, 'gynecologicalPatient.outpatientNO')}
+          </span>
+        </div>
+      </div>
     );
-
   };
 
   renderTabs = () => {
@@ -171,7 +179,7 @@ export function Old(props: any) {
     { title: '门诊号', value: get(data, 'gynecologicalPatient.outpatientNO') },
     // { title: '联系电话', value: get(data, 'gynecologicalPatient.telephone') },
   ]
-  return <div style={{ background: '#fff', height: '100%', overflowY: 'auto' }}>
+  return <div style={{ background: '#fff', height: '100%', overflowY: 'scroll' }}>
 
 
     {

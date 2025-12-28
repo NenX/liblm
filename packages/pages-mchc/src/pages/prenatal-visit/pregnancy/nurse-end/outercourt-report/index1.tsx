@@ -1,4 +1,5 @@
-import { BaseListOld, MyIcon, PDFPreview_View } from '@lm_fe/components_m';
+import { DeleteOutlined, EyeOutlined, LoadingOutlined } from '@ant-design/icons';
+import { BaseListOld, PDFPreview_View } from '@lm_fe/components_m';
 import { SLocal_SystemConfig } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
 import { Button, Divider, Modal, Popconfirm } from 'antd';
@@ -22,14 +23,14 @@ class List extends BaseListOld {
 
   constructor(props) {
     super(props);
-    const head_info = props.head_info || {};
+    const pregnancyData = props.pregnancyData || {};
     this.state = {
       total: 0,
       defaultQuery: {
         page: 0,
         size: 20,
         sort: 'reportDate,DESC',
-        'patientNo.equals': head_info.outpatientNO,
+        'patientNo.equals': pregnancyData.outpatientNO,
       },
       dataSource: [],
       visible: false,
@@ -77,9 +78,9 @@ class List extends BaseListOld {
               disabled={base64loading}
               icon={
                 base64loading && rowData.id === id ? (
-                  <MyIcon value='LoadingOutlined' className="global-table-action-icon" />
+                  <LoadingOutlined className="global-table-action-icon" />
                 ) : (
-                  <MyIcon value='EyeOutlined' className="global-table-action-icon" />
+                  <EyeOutlined className="global-table-action-icon" />
                 )
               }
               onClick={() => this.handleView(value)}
@@ -94,7 +95,7 @@ class List extends BaseListOld {
               okText="确定"
               cancelText="取消"
             >
-              <Button type="link" size="small" icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />}>
+              <Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />}>
                 删除
               </Button>
             </Popconfirm>
@@ -117,7 +118,7 @@ class List extends BaseListOld {
           destroyOnClose
           title="影像图片"
           footer={null}
-          open={visible}
+          visible={visible}
           className="custom-outercourt-modal"
           onCancel={this.handleCancel}
         >

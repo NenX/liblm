@@ -1,20 +1,19 @@
-import { MyIcon } from "@lm_fe/components";
-import { mchcEnv } from "@lm_fe/env";
-import { use_provoke } from "@lm_fe/provoke";
-import { Button, Card, Checkbox, Form, Input } from "antd";
-import classNames from "classnames";
 import React, { useEffect, useState } from "react";
-import styles from './index.module.less';
+import styles from './index.module.less'
+import classNames from "classnames";
+import { Button, Checkbox, Form, Input } from "antd";
+import { SafetyOutlined, UserOutlined, } from "@ant-design/icons";
+import store from 'store'
+import { mchcEnv } from "@lm_fe/env";
 
 interface IProps {
+    systemName?: string
     logo?: string
     onFinish(values: any): Promise<void>
 }
 export default function LoginInner(props: IProps) {
 
-    const { logo, onFinish } = props
-    const { config, sys_theme } = use_provoke('config', 'sys_theme',)
-
+    const { systemName = '默认系统名', logo, onFinish } = props
 
     useEffect(() => {
 
@@ -25,35 +24,35 @@ export default function LoginInner(props: IProps) {
     }, [])
 
     return <div className={classNames(styles["container"])}>
-        <div style={{ background: sys_theme.colorPrimary }} className={classNames(styles["left-panel"])}>
+        <div className={classNames(styles["left-panel"])}>
             <div className={classNames(styles["decorations "])}>
                 <div className={classNames(styles["dot"], styles["dot-1"])}></div>
                 <div className={classNames(styles["dot"], styles["dot-2"])}></div>
                 <div className={classNames(styles["dot"], styles["dot-3"])}></div>
             </div>
         </div>
-        <div className={classNames(styles["right-panel"])} style={{ background: sys_theme.darkTheme ? '#222' : '#fff' }}>
+        <div className={classNames(styles["right-panel"])}>
             <div />
-            <Card className={classNames(styles["login-form"], styles["animate-in"])}>
+            <div className={classNames(styles["login-form"], styles["animate-in"])}>
 
-                <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 24, color: sys_theme.colorPrimary }}>
+                <h2>
                     {logo ? <img alt="logo" src={logo} /> : null}
-                    {config?.systemName}
+                    {systemName}
                 </h2>
                 <LoginForm onFinish={onFinish} />
-            </Card>
+            </div>
             <footer className={classNames(styles["footer"])}>
                 {/* {APP_CONFIG.COPYRIGHT} */}
                 <div>
                     备案号：
-                    <Button type='link' href="https://beian.miit.gov.cn">
+                    <a href="https://beian.miit.gov.cn">
                         粤ICP备17048892号-1
-                    </Button>
+                    </a>
                 </div>
                 Copyright © 2020{' '}
-                <Button size='small' type='link' href="http://www.lian-med.com/">
+                <a href="http://www.lian-med.com/">
                     广州莲印医疗科技有限公司
-                </Button>
+                </a>
                 , 版权所有
             </footer>
         </div>
@@ -75,7 +74,7 @@ function LoginForm(props: { onFinish(values: any): Promise<void> }) {
             name="username"
             rules={[{ required: true, message: '请输入用户名!', },]}
         >
-            <Input autoFocus allowClear size="large" prefix={<MyIcon value='UserOutlined' />} placeholder="请输入用户名" />
+            <Input autoFocus allowClear size="large" prefix={<UserOutlined />} placeholder="请输入用户名" />
         </Form.Item>
         <Form.Item
             name="password"
@@ -85,11 +84,11 @@ function LoginForm(props: { onFinish(values: any): Promise<void> }) {
                     message: '请输入密码！',
                 },
                 { type: 'string' },
-                // { min: 5, message: '密码不能少于5位' },
-                // { max: 16, message: '密码不能超过16位' },
+                { min: 5, message: '密码不能少于5位' },
+                { max: 16, message: '密码不能超过16位' },
             ]}
         >
-            <Input.Password visibilityToggle={false} allowClear size="large" prefix={<MyIcon value='SafetyOutlined' />} placeholder="请输入密码" />
+            <Input.Password visibilityToggle={false} allowClear size="large" prefix={<SafetyOutlined />} placeholder="请输入密码" />
         </Form.Item>
         <Form.Item hidden={!__LOCAL__} valuePropName="checked" name="remember" label={`记住密码（${__LOCAL__}）`}>
             <Checkbox onChange={e => {

@@ -23,14 +23,14 @@ export default defineFormConfig(
         {
           "key": "gynecologicalMotherExam.fundalHeight",
           "label": "宫高",
-          "inputType": "InputNumber",
-          "inputProps": { 'unit': 'cm', },
+          "inputType": "input",
+          "inputProps": { 'unit': 'cm', 'type': 'number' },
           layout: '1/4',
         }, {
           "key": "gynecologicalMotherExam.waistHip",
           "label": "腹围",
-          "inputType": "InputNumber",
-          "inputProps": { 'unit': 'cm', },
+          "inputType": "input",
+          "inputProps": { 'unit': 'cm', 'type': 'number' },
           layout: '1/4',
         }, {
           "key": "gynecologicalMotherExam.engagement",

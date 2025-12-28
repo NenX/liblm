@@ -1,4 +1,5 @@
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { LazyAntd } from '@lm_fe/components';
 import { Button, Divider, Form, Popconfirm, Space } from 'antd';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
@@ -42,7 +43,7 @@ export default function ReferralToRegister({ onChange, value = [], ...rest }: an
           </span>
         ) : (
           <>
-            <Button type="link" icon={<MyIcon value='EditOutlined' />} className="table-action-btn" onClick={() => edit(record)}>
+            <Button type="link" icon={<EditOutlined />} className="table-action-btn" onClick={() => edit(record)}>
               编辑
             </Button>
             <Divider type="vertical" />
@@ -57,7 +58,7 @@ export default function ReferralToRegister({ onChange, value = [], ...rest }: an
                 type="link"
                 title="删除"
                 size="small"
-                icon={<MyIcon value='DeleteOutlined' />}
+                icon={<DeleteOutlined />}
                 className="table-action-btn"
               >
                 删除
@@ -181,7 +182,7 @@ export default function ReferralToRegister({ onChange, value = [], ...rest }: an
         }}
         footer={() => {
           return (
-            <Button block icon={<MyIcon value='PlusOutlined' />} onClick={handleAdd}>
+            <Button block icon={<PlusOutlined />} onClick={handleAdd}>
               增加
             </Button>
           );

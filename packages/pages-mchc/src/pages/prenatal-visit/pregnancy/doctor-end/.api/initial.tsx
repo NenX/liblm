@@ -85,10 +85,12 @@ export default {
 
   /** 根据预产期B超，更新当天产检孕周” */
   updateGesweekAlert: (pregnancyId: any, sureEdd: any) =>
-    request.get<{ remind: string }>(`/api/updateGesweekAlert?pregnancyId=${pregnancyId}&sureEdd=${sureEdd}`).then(r => r.data),
+    request.get(`/api/updateGesweekAlert?pregnancyId=${pregnancyId}&sureEdd=${sureEdd}`).then(r => r.data),
   updateGesweekBysureEdd: (data: any) => request.post(`/api/updateGesweekBysureEdd`, data).then(r => r.data),
 
-
+  /** 高危因素自动判定 */
+  autoCaseRecognition: (pregnancyId: any) =>
+    request.get(`/api/autoCaseRecognition?pregnancyId=${pregnancyId}`).then(r => r.data),
 
   /** 历史首检记录 */
   findFirstVisitOperatingRecord: (pregnancyId: any) =>

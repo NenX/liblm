@@ -15,7 +15,7 @@ export interface ICheckboxWithInputProps {
     type?: 'single' | 'multiple';
     disabled?: boolean;
     inputWidth?: number;
-    uniqueKey?: string
+    optionKey?: string
     config?: IMchc_FormDescriptions_Field
     uniqueKey?: string
     marshal?: number

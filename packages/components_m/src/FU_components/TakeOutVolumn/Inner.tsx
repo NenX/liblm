@@ -16,8 +16,8 @@ const TakeOutVolumn: TCommonComponent<TakeOutVolumnProps, any> = function TakeOu
             actionConfig={{ layout: '1/4', }}
             // targetLabelCol={2}
             formDescriptions={[
-                { inputType: 'MyAutoComplete', layout: '1/3', label: '内容', name: 'outcomingContent', inputProps: { uniqueKey: '出量s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
-                { inputType: 'MyAutoComplete', layout: '1/3', label: '颜色', name: 'outcomingColor', inputProps: { uniqueKey: '颜色s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
+                { inputType: 'MyAutoComplete', layout: '1/3', label: '内容', name: 'outcomingContent', inputProps: { optionKey: '出量s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
+                { inputType: 'MyAutoComplete', layout: '1/3', label: '颜色', name: 'outcomingColor', inputProps: { optionKey: '颜色s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
                 { inputType: 'input_number', layout: '1/3', label: 'ml', name: 'outcomingML', inputProps: { style: { paddingRight: 4 } } },
             ]}
         />

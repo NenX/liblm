@@ -1,13 +1,12 @@
 import { BaseEditPanelFormFC } from '@lm_fe/components_m';
 import { BF_Wrap2, mchcModal__ } from '@lm_fe/pages';
-import { SFubao_CervicalCancerScreening } from '@lm_fe/service';
-import { request } from '@lm_fe/utils';
+import { SFubao_BreastCancerScreening, SFubao_CervicalCancerScreening } from '@lm_fe/service';
 import { Button, Form } from 'antd';
-import dayjs from 'dayjs';
 import { get, set } from 'lodash';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { form_config } from './form_config';
-import { mchcEnv, mchcLogger } from '@lm_fe/env';
+import { request } from '@lm_fe/utils';
 export default function Form_宫颈癌筛查(props: { activeItem: any, id: any, onRefresh?: (a: any, b: any, c?: any) => void }) {
   const { onRefresh, id, activeItem } = props
 
@@ -53,8 +52,6 @@ export default function Form_宫颈癌筛查(props: { activeItem: any, id: any, 
   };
 
   async function handleSubmit(values: any) {
-    mchcLogger.log('handleSubmit', { values, data })
-
     if (get(data, 'id')) {
       // 修改
       let params = {
@@ -76,11 +73,10 @@ export default function Form_宫颈癌筛查(props: { activeItem: any, id: any, 
         twoCancerScreeningId: Number(id),
       };
       const res = (await SFubao_CervicalCancerScreening.postOrPut(params as any))
-
+      console.log('values', { values, data, params })
 
       onRefresh && onRefresh('Screening', activeItem, true);
     }
-    mchcEnv.success('操作成功')
   };
   return <Wrap>
     <BaseEditPanelFormFC

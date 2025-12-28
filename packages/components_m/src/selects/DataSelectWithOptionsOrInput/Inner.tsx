@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AutoComplete } from 'antd';
 import { get, map, includes } from 'lodash';
 import { request } from '@lm_fe/utils';
-import { getInputStyle } from '@lm_fe/components';
-
+import { getInputStyle } from 'src/utils';
 export default function DataSelectWithOptionsOrInput(props: any) {
   const { onChange, inputProps, width, style = {}, value } = props;
   const [options, setOptions] = useState<any[]>([]);
@@ -106,7 +105,7 @@ export default function DataSelectWithOptionsOrInput(props: any) {
       // bordered={false}
       style={_style}
       {...props}
-      popupMatchSelectWidth={get(inputProps, 'popupMatchSelectWidth') || 120}
+      dropdownMatchSelectWidth={get(inputProps, 'dropdownMatchSelectWidth') || 120}
       options={options || []}
       onChange={handleChange}
       value={value}

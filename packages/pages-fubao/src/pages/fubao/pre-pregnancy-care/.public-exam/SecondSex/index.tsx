@@ -6,6 +6,7 @@ import { BF_Wrap2 } from '@lm_fe/pages';
 import { TIdTypeCompatible } from '@lm_fe/service';
 import { Form } from 'antd';
 import React, { useEffect, useState } from 'react';
+import form_config from '../../../premarital-care/.public-exam/SecondSex/form_config';
 import { mchcUtils } from '@lm_fe/env';
 interface IProps {
   type: 'husband' | 'wife'
@@ -19,8 +20,8 @@ export default function PhysicalExamination(props: IProps) {
 
   const { Wrap, config } = BF_Wrap2({
     default_conf: {
-      title: `孕前检查-第二性征${type}`,
-      tableColumns: () => type === 'husband' ? import('../../../premarital-care/.public-exam/SecondSex/form_config_nan') : import('../../../premarital-care/.public-exam/SecondSex/form_config_nv'),
+      title: `孕前检查-第二性征`,
+      tableColumns: form_config
     }
   })
   useEffect(() => {

@@ -80,7 +80,4 @@ export interface IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit {
     isOpenVTETable: number
     isOpenSCTable: number
     isOpenEclampsiaTable: number
-
-    // added
-    isBanned: boolean
 }

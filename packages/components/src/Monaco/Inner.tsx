@@ -11,9 +11,7 @@ interface IProps {
     height?: string
     theme?: "vs-dark" | 'light'
 }
-function MyMonaco(props: IProps) {
-    const { value, onChange, language, defaultValue, height = '400px', theme = "vs-dark" } = props
-    console.log('MyMonaco', props)
+function MyMonaco({ value, onChange, language, defaultValue, height = '400px', theme = "vs-dark" }: IProps) {
     const [inner_value, set_inner_value] = useState(value)
     const inited = useRef(false)
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { CloseOutlined, SaveOutlined } from '@ant-design/icons';
 import { BaseEditPanelForm, fubaoHistoryPush, getBMI, resolveFubaoPath } from '@lm_fe/components_m';
-import { mchcEnv, mchcUtils } from '@lm_fe/env';
+import { mchcUtils } from '@lm_fe/env';
 import { SLocal_History } from '@lm_fe/service';
 import { Button, Space, message } from 'antd';
 import { FormInstance } from 'antd/lib/form';
@@ -17,7 +17,7 @@ export default class AdmissionForm extends BaseEditPanelForm {
           'premaritalCheckArchivesBasicInformation',
           'permanentResidenceAddress',
         ]);
-        !value && mchcEnv.info('请先填写完整的户口地址信息！');
+        !value && message.info('请先填写完整的户口地址信息！');
         value &&
           this.form?.setFieldsValue({
             womanPremaritalCheckArchivesDetailVM: {
@@ -35,7 +35,7 @@ export default class AdmissionForm extends BaseEditPanelForm {
           'premaritalCheckArchivesBasicInformation',
           'permanentResidenceAddress',
         ]);
-        !value && mchcEnv.info('请先填写完整的户口地址信息！');
+        !value && message.info('请先填写完整的户口地址信息！');
         value &&
           this.form?.setFieldsValue({
             manPremaritalCheckArchivesDetailVM: {
@@ -50,7 +50,7 @@ export default class AdmissionForm extends BaseEditPanelForm {
           'premaritalCheckArchivesBasicInformation',
           'residenceAddress',
         ]);
-        !value && mchcEnv.info('请先填写完整的居住地址信息！');
+        !value && message.info('请先填写完整的居住地址信息！');
         value &&
           this.form?.setFieldsValue({
             manPremaritalCheckArchivesDetailVM: {

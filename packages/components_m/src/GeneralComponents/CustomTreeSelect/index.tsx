@@ -15,7 +15,7 @@ export default class CustomTreeSelect extends Component {
       <TreeSelect
         {...rest}
         allowClear
-        popupMatchSelectWidth={get(this.props, 'popupMatchSelectWidth') || 350}
+        dropdownMatchSelectWidth={get(this.props, 'dropdownMatchSelectWidth') || 350}
         getPopupContainer={getPopupContainer}
         style={{ width: '100%' }}
         treeData={options}

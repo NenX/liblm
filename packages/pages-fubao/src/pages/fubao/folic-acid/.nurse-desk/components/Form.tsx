@@ -4,7 +4,7 @@ import {
   SaveOutlined
 } from '@ant-design/icons';
 import { BaseEditPanelForm, fromApi, LazyAntd, resolveFubaoPath } from '@lm_fe/components_m';
-import { mchcEnv, mchcUtils } from '@lm_fe/env';
+import { mchcUtils } from '@lm_fe/env';
 import { SLocal_History } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
 import { Button, message, Modal, Space } from 'antd';
@@ -40,7 +40,7 @@ class AdmissionForm extends BaseEditPanelForm {
           this.setState({
             IDCardLoading: false,
           });
-          return mchcEnv.info(`${e.data}，请重新读卡`);
+          return message.info(`${e.data}，请重新读卡`);
         }
         if (e && e.data && e.data.includes('{')) {
           d = JSON.parse(e.data);

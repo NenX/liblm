@@ -1,13 +1,13 @@
-import { MyIcon } from '@lm_fe/components';
-import { SMchc_FormDescriptions } from '@lm_fe/service';
-import { Button, Divider, Form } from 'antd';
-import { cloneDeep, filter, get, isEmpty, map, set, split } from 'lodash';
 import React from 'react';
-import DynamicForm from '../../BaseModalForm/DynamicForm';
-import { formDescriptionsWithoutSectionApi } from '../../utils/adapter';
-import { fromApi, toApi } from './config';
+import { Form, Divider, Button } from 'antd';
+import { MinusCircleOutlined } from '@ant-design/icons';
+import { map, get, cloneDeep, set, filter, split, isEmpty } from 'lodash';
 import FoetalAppendageFormSection from './FoetalAppendageFormSection';
+import DynamicForm from '../../BaseModalForm/DynamicForm';
+import { fromApi, toApi } from './config';
+import { formDescriptionsWithoutSectionApi } from '../../utils/adapter';
 import './index.less';
+import { SMchc_FormDescriptions } from '@lm_fe/service';
 const TAB_TITLE = '胎儿';
 interface IProps {
   value?: any;
@@ -154,7 +154,7 @@ class FoetalAppendage extends DynamicForm<IProps> {
           />
         </div>
         <div className="foetal-panel-delete" title="删除" onClick={this.handleRemoveFetus(item)}>
-          <MyIcon value='MinusCircleOutlined' />
+          <MinusCircleOutlined />
         </div>
       </div>
     );

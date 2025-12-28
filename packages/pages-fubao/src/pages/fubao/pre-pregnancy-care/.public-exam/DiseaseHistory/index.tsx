@@ -1,13 +1,12 @@
 import React from 'react';
 import { message, Space } from 'antd';
 import { get } from 'lodash';
-import { BaseEditPanel, BaseEditPanelIProps } from '@lm_fe/components_m';
+import {BaseEditPanel,BaseEditPanelIProps} from '@lm_fe/components_m';
 import { formDescriptionsWithoutSectionApi } from '@lm_fe/components_m';
 import Form from './components/Form';
 import { toApi, fromApi } from '../adapter';
 import { fubaoRequest as request } from '@lm_fe/utils'
 import { SMchc_FormDescriptions } from '@lm_fe/service';
-import { mchcEnv } from '@lm_fe/env'
 interface IProps extends BaseEditPanelIProps {
   data?: any;
   baseUrl: '/api/wives' | '/api/husbands';
@@ -61,10 +60,10 @@ export default class DiseaseHistory extends BaseEditPanel<IProps> {
     );
     if (id) {
       await request.put(baseUrl, params);
-      mchcEnv.success(`修改${title}成功`);
+      message.success(`修改${title}成功`);
     } else {
       (await request.post(baseUrl, params)).data
-      mchcEnv.success(`新增${title}成功`);
+      message.success(`新增${title}成功`);
     }
   };
 

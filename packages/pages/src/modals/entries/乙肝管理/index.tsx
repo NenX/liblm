@@ -11,7 +11,7 @@ interface IProos {
 
 }
 type IData = Partial<IMchc_HBvManage>
-export default function Syphilis_Management(props: IGlobalModalProps<IProos>) {
+export default function SyphilisManagement(props: IGlobalModalProps<IProos>) {
 
   const { modal_data, close, ...others } = props;
   const { headerInfo } = modal_data
@@ -69,11 +69,11 @@ export default function Syphilis_Management(props: IGlobalModalProps<IProos>) {
 
     const config: Partial<IMchc_FormDescriptions_Field>[] = [
 
-      { name: 'hbsag', key: 'hbsag', label: 'HBsAg', inputType: 'MyAutoComplete', span: 24, inputProps: { uniqueKey: '阴阳3s' } },
-      { name: 'hbsab', key: 'hbsab', label: 'HBsAb', inputType: 'MyAutoComplete', span: 24, inputProps: { uniqueKey: '阴阳3s' } },
-      { name: 'hbeag', key: 'hbeag', label: 'HBeAg', inputType: 'MyAutoComplete', span: 24, inputProps: { uniqueKey: '阴阳3s' } },
-      { name: 'hbeab', key: 'hbeab', label: 'HBeAb', inputType: 'MyAutoComplete', span: 24, inputProps: { uniqueKey: '阴阳3s' } },
-      { name: 'hbcab', key: 'hbcab', label: 'HBcAb', inputType: 'MyAutoComplete', span: 24, inputProps: { uniqueKey: '阴阳3s' } },
+      { name: 'hbsag', key: 'hbsag', label: 'HBsAg', inputType: 'MyAutoComplete', span: 24, inputProps: { optionKey: '阴阳3s' } },
+      { name: 'hbsab', key: 'hbsab', label: 'HBsAb', inputType: 'MyAutoComplete', span: 24, inputProps: { optionKey: '阴阳3s' } },
+      { name: 'hbeag', key: 'hbeag', label: 'HBeAg', inputType: 'MyAutoComplete', span: 24, inputProps: { optionKey: '阴阳3s' } },
+      { name: 'hbeab', key: 'hbeab', label: 'HBeAb', inputType: 'MyAutoComplete', span: 24, inputProps: { optionKey: '阴阳3s' } },
+      { name: 'hbcab', key: 'hbcab', label: 'HBcAb', inputType: 'MyAutoComplete', span: 24, inputProps: { optionKey: '阴阳3s' } },
       { name: 'hbvDna', key: 'hbvDna', label: 'HBV DNA', inputType: 'MyAutoComplete', span: 24, unit: 'IU/ml', inputProps: { options: ['_ * 10 ^ _'] } },
 
       {
@@ -83,7 +83,7 @@ export default function Syphilis_Management(props: IGlobalModalProps<IProos>) {
         inputType: 'MyCheckbox',
         inputProps: {
 
-          uniqueKey: '否是s',
+          optionKey: '否是s',
         },
         span: 24,
       },

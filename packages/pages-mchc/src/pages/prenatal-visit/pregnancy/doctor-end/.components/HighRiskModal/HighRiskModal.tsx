@@ -41,7 +41,7 @@ export default function HighRiskModal({ visible, onCancle, onShow, id, ...prps }
     <Modal
       className="high-risk-container"
       title="高危快讯"
-      open={visible}
+      visible={visible}
       // style={{ top: '48px' }}
       width={1095}
       onCancel={handleCancel}

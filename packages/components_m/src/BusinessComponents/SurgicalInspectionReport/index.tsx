@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { getResourcesByID } from '../../utils/defaultMethod';
 // import { mockData } from './mock';
 import { LazyAntd } from '@lm_fe/components';
+import { mchcModal } from '../../modals';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const SaveLabExamsUrl = '/api/lab-exams'; // 手术记录-送检结果保存接口
@@ -370,7 +371,7 @@ export default class SurgicalInspectionReport extends Component<IProps, IState> 
 
   handlePrint = () => {
     const { printUrl, printResource, printTemplate, } = this.props
-    window.mchc_modal.open('print_modal', {
+    mchcModal.open('print_modal', {
       modal_data: {
         requestData: {
           url: printUrl,

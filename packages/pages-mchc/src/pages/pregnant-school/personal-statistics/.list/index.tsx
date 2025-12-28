@@ -1,8 +1,8 @@
 
-import { BaseListOld } from '@lm_fe/components_m';
-
+import { bindLifecycle } from 'react-keep-alive-pro';
 import { Query, Table } from './components/index';
 import { tableColumns } from './config/index';
+import { BaseListOld } from '@lm_fe/components_m';
 // import './index.less';
 class List extends BaseListOld {
   static defaultProps = {
@@ -19,4 +19,4 @@ class List extends BaseListOld {
   };
 }
 
-export default List
+export default bindLifecycle(List);

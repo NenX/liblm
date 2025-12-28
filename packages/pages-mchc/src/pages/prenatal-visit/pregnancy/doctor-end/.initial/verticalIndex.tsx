@@ -1,3 +1,8 @@
+import {
+  ExclamationCircleOutlined,
+  PrinterOutlined,
+  SaveOutlined
+} from '@ant-design/icons';
 import { Button, Form, Modal, Space, message } from 'antd';
 import {
   cloneDeep,
@@ -7,10 +12,10 @@ import {
   pick,
   set
 } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { MyForm, MyIcon, getBMI, getFormData, getGesWeek } from '@lm_fe/components_m';
-import { mchcEnv, mchcUtils } from '@lm_fe/env';
+import { MyForm, getBMI, getFormData, getGesWeek } from '@lm_fe/components_m';
+import { mchcUtils } from '@lm_fe/env';
 import { mchcModal__ } from '@lm_fe/pages';
 import { SMchc_Doctor } from '@lm_fe/service';
 import { getSearchParamsValue } from '@lm_fe/utils';
@@ -29,7 +34,7 @@ import ZKJC from './components/ZhuanKeJianCha';
 import { getRequiredForm, physicalKeys } from './func';
 import './index.less';
 import { datatoApiKey, formTabKey } from './methods/config';
-const single_id = mchcUtils.single_id
+const getDoctorEndId = mchcUtils.getDoctorEndId
 interface IndexState {
   tabs: any;
   step: string;
@@ -66,11 +71,18 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
     formChange,
     updateHeaderInfo,
     setDiagnosesList,
+    setDiagnosesWord,
+    diagnosesWord,
     saveHeaderInfo,
+    getHighriskDiagnosis,
 
+    changeScreening,
+    changeDiagnosesTemplate,
     changePreeclampsia,
     changeSyphilis,
+    changePreventPreeclampsia,
     diagnosesList,
+    isShowPreventPreeclampsia,
 
   } = props;
 
@@ -138,6 +150,7 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
       set_zdFormConfig(formConfig.formDiagnoses.fields)
       verticalInitData();
       /**cjl---- */
+      // setActiveTabKey();
     })()
     return () => {
 
@@ -251,7 +264,7 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
       formHandler6.subscribe('syncBtn', 'click', async (val: any) => {
         const syncData = await api.further.syncPatientReport(pregnancyId!);
         await verticalInitData();
-        mchcEnv.info('同步数据成功！');
+        message.info('同步数据成功！');
         formHandler6['syncDate'].actions.setValue(get(syncData, 'syncDate'));
       });
     }
@@ -260,7 +273,7 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
   /**纵向一览风格初始数据 */
   async function verticalInitData() {
 
-    const pregnancyId = single_id();
+    const pregnancyId = getDoctorEndId();
     let res = await SMchc_Doctor.getFirstVisitInfoOfOutpatient(pregnancyId);
 
     const d = res.diagnosisAndAdvice.diagnoses
@@ -351,8 +364,8 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
           'allergyOtherNote',
         ]),
       );
-      mchcEnv.success('信息保存成功');
-      const id = single_id();
+      message.success('信息保存成功');
+      const id = getDoctorEndId();
       updateHeaderInfo(id);
       set_allFormData(data)
       handleFormChange(false);
@@ -414,7 +427,7 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
         onCancel={() => set_updateGesweekModalVisible(false)}
       >
         <p>
-          <MyIcon value='ExclamationCircleOutlined' />
+          <ExclamationCircleOutlined />
           <span> 请注意：</span>
         </p>
         <p>{get(updateGesweekTips, 'remind')}</p>
@@ -459,11 +472,18 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
 
 
 
+              changeScreening={changeScreening}
+              changeDiagnosesTemplate={changeDiagnosesTemplate}
               changePreeclampsia={changePreeclampsia}
               changeSyphilis={changeSyphilis}
+              changePreventPreeclampsia={changePreventPreeclampsia}
               diagnosesList={diagnosesList}
+              isShowPreventPreeclampsia={isShowPreventPreeclampsia}
               headerInfo={headerInfo}
               setDiagnosesList={setDiagnosesList}
+              setDiagnosesWord={setDiagnosesWord}
+              getHighriskDiagnosis={getHighriskDiagnosis}
+              diagnosesWord={diagnosesWord}
               saveHeaderInfo={saveHeaderInfo}
 
 
@@ -482,14 +502,14 @@ function DoctorEnd_Initial_Vertical(props: IDoctorEnd_InitialProps) {
     <div className="prenatal-visit-main_initial">
       {verticalRender()}
       <Space className="prenatal-visit-main_initial-btns">
-        <Button size="large" onClick={() => handlePrint('prenatalVisit')} icon={<MyIcon value='PrinterOutlined' />}>
+        <Button size="large" onClick={() => handlePrint('prenatalVisit')} icon={<PrinterOutlined />}>
           打印档案
         </Button>
-        <Button size="large" onClick={() => handlePrint('prenatalVisit1')} icon={<MyIcon value='PrinterOutlined' />}>
+        <Button size="large" onClick={() => handlePrint('prenatalVisit1')} icon={<PrinterOutlined />}>
           打印病历
         </Button>
         <Button size="large" type="primary" onClick={verticlaHandleSubmit.bind(this)}>
-          <MyIcon value='SaveOutlined' /> 保存
+          <SaveOutlined /> 保存
         </Button>
       </Space>
       {renderUpdateGesweekTips()}

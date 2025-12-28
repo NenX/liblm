@@ -30,7 +30,7 @@ export default function MyAddressOld({
 
   useEffect(() => {
     get_old_address_options(needStreet).then(opt => {
-      setOptions(opt[0] as any[])
+      setOptions(opt)
     })
 
   }, []);

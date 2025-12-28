@@ -2,14 +2,14 @@ import { FormSectionForm, getBMI } from '@lm_fe/components_m';
 import { mchcUtils } from '@lm_fe/env';
 import { BF_Wrap2 } from '@lm_fe/pages';
 import { IMchc_Doctor_FirstVisitInfoOfOutpatient, SMchc_Doctor } from '@lm_fe/service';
-import  React from 'react';
+import * as React from 'react';
 import { useEffect } from 'react';
 import { IInitial_Tab_props } from '../../types';
 // import form_conf from './config';
 type TData = IMchc_Doctor_FirstVisitInfoOfOutpatient['physicalExam']
 export default function JWS(props: IInitial_Tab_props) {
-  const { form, active, disabled_save } = props
-  const id = mchcUtils.single_id()
+  const { form, active } = props
+  const id = mchcUtils.getDoctorEndId()
 
   const { Wrap, config } = BF_Wrap2({ default_conf: { title: '门诊-体格检查', tableColumns: () => import('./config') } })
   useEffect(() => {
@@ -27,22 +27,20 @@ export default function JWS(props: IInitial_Tab_props) {
 
   return <Wrap>
     <FormSectionForm
-      disableAll={disabled_save}
-
       onValuesChange={(changedValues: TData, values: TData) => {
         const changedBase = changedValues.physicalBaseExam
 
-        // if (changedBase?.preheight || changedBase?.weight) {
-        //   const { preheight, weight } = values.physicalBaseExam
-        //   const bmi = getBMI(weight, preheight,)
-        //   form.setFieldsValue({ physicalBaseExam: { bmi } })
-        // }
+        if (changedBase?.preheight || changedBase?.weight) {
+          const { preheight, weight } = values.physicalBaseExam
+          const bmi = getBMI(weight, preheight,)
+          form.setFieldsValue({ physicalBaseExam: { bmi } })
+        }
 
-        // if (changedBase?.preheight || changedBase?.preweight) {
-        //   const { preheight, preweight } = values.physicalBaseExam
-        //   const preBmi = getBMI(preweight, preheight,)
-        //   form.setFieldsValue({ physicalBaseExam: { preBmi } })
-        // }
+        if (changedBase?.preheight || changedBase?.preweight) {
+          const { preheight, preweight } = values.physicalBaseExam
+          const preBmi = getBMI(preweight, preheight,)
+          form.setFieldsValue({ physicalBaseExam: { preBmi } })
+        }
 
       }}
       onFinish={(v) => {

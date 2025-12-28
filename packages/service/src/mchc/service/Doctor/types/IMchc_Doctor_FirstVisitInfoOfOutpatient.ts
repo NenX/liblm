@@ -1,6 +1,5 @@
 import { IMchc_Doctor_Diagnoses } from "./common";
 import { IMchc_Doctor_FirstVisitPastmhOutpatient } from "./IMchc_Doctor_FirstVisitPastmhOutpatient";
-import { IMchc_Doctor_FirstVisitPresentmhOutpatient } from "./IMchc_Doctor_FirstVisitPresentmhOutpatient";
 import { IMchc_Doctor_Pregnancymh } from "./IMchc_Doctor_Pregnancymh";
 
 
@@ -8,7 +7,22 @@ export interface IMchc_Doctor_FirstVisitInfoOfOutpatient {
 
 
     id: number
-    presentmh: IMchc_Doctor_FirstVisitPresentmhOutpatient,
+    presentmh: {
+        "id": 1373,
+        "lmp": "2022-08-04",
+        "edd": "2023-05-11",
+        "sureEdd": "2023-05-11",
+        "sureEddModify": null,
+        "conceiveMode": 1,
+        "conceiveModeNote": null,
+        "chiefcomplaint": null,
+        "presentmhNote": null,
+        "yolksac": null,
+        "sac": null,
+        "ntExams": null,
+        "nfExams": null,
+        "mlUltrasounds": null
+    },
     pastmh: IMchc_Doctor_FirstVisitPastmhOutpatient,
     othermh: {
         "id": 1373,

@@ -1,11 +1,12 @@
 import { defineFormConfig } from "@lm_fe/service";
 
 
-import { rt_ctx } from "@lm_fe/env";
+import { mchcEnv, rt_ctx } from "@lm_fe/env";
 import { IMchc_FormDescriptions_Field } from "@lm_fe/service";
 
-import { ROMAN_NUMERALS } from "@lm_fe/utils";
 import { 乳房触检_config_建瓯 } from "../../../MammaryCancer/Screening/form/建瓯";
+import { get_check_invert_values } from "@lm_fe/components_m";
+import { ROMAN_NUMERALS } from "@lm_fe/utils";
 const ctx = rt_ctx;
 const React = ctx.React;
 const isRequired = false
@@ -375,7 +376,11 @@ function 妇科检查_config_建瓯() {
             {
                 "label": "一键勾选",
                 "inputType": "check_invert_button",
-
+                inputPropsFn() {
+                    return {
+                        check_invert_values: get_check_invert_values([cache[0]])
+                    }
+                },
                 layout: "1/3",
 
             }]

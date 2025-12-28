@@ -25,7 +25,7 @@ export default function DateSelect(props: IProps) {
 
   const rowHeight = `${100 / 6}%`;
   return (
-    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', overflowY: 'auto' }}>
+    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', overflowY: 'scroll' }}>
       <table width="98%" style={{ height: '100%' }} cellSpacing={0} cellPadding={0} border={1} borderColor="#EDEEF6">
         <tr style={{ height: 30, backgroundColor: '#F9F9FC' }}>
           {Array(7)

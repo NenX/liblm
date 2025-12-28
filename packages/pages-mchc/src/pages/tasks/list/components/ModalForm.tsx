@@ -1,6 +1,6 @@
 // import DataSelect from '@/components/DataSelect';
 import { createResources, DataSelect, GeneralComponents_DictionarySelect, getResources, updateResources } from '@lm_fe/components_m';
-import { mchcEnv, mchcStore } from '@lm_fe/env';
+import { mchcStore } from '@lm_fe/env';
 import { Form, Input, message, Modal, Switch, Tooltip } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { get } from 'lodash';
@@ -10,7 +10,6 @@ import PushDate from './PushDate';
 import RangeInput from './RangeInput';
 import UserSelect from './UserSelect';
 import { LazyAntd } from '@lm_fe/components';
-import { peek_provoke } from '@lm_fe/provoke';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 /**
  * 以下字段要和数据字典保持一致
@@ -67,7 +66,7 @@ export class ModalForm extends Component {
     } else {
       await createResources('/api/knowledge-tasks', data);
     }
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
     onCancel && onCancel();
     onSearch && onSearch();
   };
@@ -207,7 +206,7 @@ export class ModalForm extends Component {
   };
 
   judgeReportBtnPermission = () => {
-    const permissions = Object.values(peek_provoke(s => s.permissions) ?? {})
+    const permissions = Object.values(mchcStore.state?.user?.permissionsMapping ?? {})
     for (let index = 0; index < permissions.length; index++) {
       const permission = permissions[index];
       if (get(permission, 'type') === 'function' && get(permission, 'key') === 'follow-up-report-permission') {
@@ -229,7 +228,7 @@ export class ModalForm extends Component {
         wrapperCol={{ span: 20 }}
         onFieldsChange={this.handleFieldsChange}
       >
-        <Modal title="编辑任务" width={800} onOk={this.handleSubmit} open={visible} onCancel={onCancel}>
+        <Modal title="编辑任务" width={800} onOk={this.handleSubmit} visible={visible} onCancel={onCancel}>
           <Form.Item rules={[{ required: true, message: '任务标题是必填项' }]} name="title" label="任务标题">
             <Input />
           </Form.Item>

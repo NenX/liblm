@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseEditPanelForm as Form } from '@lm_fe/components_m';
 import { toApi, fromApi } from './adapter';
-import { BaseEditPanel, BaseEditPanelIProps } from '@lm_fe/components_m';
+import {BaseEditPanel,BaseEditPanelIProps} from '@lm_fe/components_m';
 import { formDescriptionsWithoutSectionApi } from '@lm_fe/components_m';
 import {
   request
@@ -10,7 +10,6 @@ import {
 import { message } from 'antd';
 import { get } from 'lodash';
 import { SMchc_FormDescriptions } from '@lm_fe/service'
-import { mchcEnv } from '@lm_fe/env';
 interface IProps extends BaseEditPanelIProps {
   data?: any;
 }
@@ -27,7 +26,7 @@ export class GynecologicalNote extends BaseEditPanel<IProps> {
   async componentDidMount() {
     const { data, moduleName } = this.props;
     const formDescriptions = await SMchc_FormDescriptions.getModuleParseCache(moduleName!);
-
+    
     const formDescriptionsWithoutSection = formDescriptionsWithoutSectionApi(formDescriptions);
     const formKey = get(data, 'id') || Math.random();
     this.setState({
@@ -51,21 +50,21 @@ export class GynecologicalNote extends BaseEditPanel<IProps> {
     );
     const params = get(propsData, 'id')
       ? {
-        id: get(propsData, 'id'),
-        gynecologicalNote,
-      }
+          id: get(propsData, 'id'),
+          gynecologicalNote,
+        }
       : {
-        gynecologicalNote,
-        gynecologicalPatient: { id: get(propsData, 'gynecologicalPatient.id') },
-      };
+          gynecologicalNote,
+          gynecologicalPatient: { id: get(propsData, 'gynecologicalPatient.id') },
+        };
     if (get(params, 'id')) {
       await request.put(baseUrl, params);
-      mchcEnv.success(`修改${title}成功`);
+      message.success(`修改${title}成功`);
     } else {
       const result = (await request.post(baseUrl, params)).data
       const { updateWomenExamRecordsEditingId } = this.props;
       // await updateWomenExamRecordsEditingId(get(result, 'id'));
-      mchcEnv.success(`新增${title}成功`);
+      message.success(`新增${title}成功`);
     }
   };
 }

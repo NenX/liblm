@@ -1,6 +1,9 @@
+import { get_check_invert_values } from "@lm_fe/components_m";
 
-import { mchcEnv } from "@lm_fe/env";
 import { IMchc_FormDescriptions_Field_Nullable } from '@lm_fe/service';
+// import { 既往史_pack } from '../../../../nurse-end/archival-information/form/既往史';
+// import { 既往史_pack_建瓯 } from "../../../../../../prenatal-visit/pregnancy/nurse-end/archival-information/form_new/建瓯";
+import { mchcEnv } from "@lm_fe/env";
 
 async function check_config() {
   if (mchcEnv.is('建瓯')) {
@@ -21,6 +24,13 @@ async function getConfig() {
       "key": "既往史一键勾选",
       "label": "一键勾选",
       "inputType": "check_invert_button",
+      inputPropsFn() {
+        return {
+          check_invert_values: {
+            ...get_check_invert_values(config),
+          }
+        }
+      },
       layout: '1/3',
     },
   ];

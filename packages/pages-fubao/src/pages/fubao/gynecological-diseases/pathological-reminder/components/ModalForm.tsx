@@ -107,7 +107,7 @@ export class ModalForm extends Component {
       id: get(currentRecord, 'id'),
     };
     const res = await request.put('/api/two/cancer/screening/updateTwoCancerPathologicalExaminationRemind', params);
-
+    
     onCancel && onCancel();
     onSearch && onSearch();
   };
@@ -132,7 +132,7 @@ export class ModalForm extends Component {
         onOk={() => {
           this.handleSubmit(0);
         }}
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         footer={[
           <Popconfirm

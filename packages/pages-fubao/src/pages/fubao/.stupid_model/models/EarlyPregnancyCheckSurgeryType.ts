@@ -5,7 +5,6 @@ import { get } from 'lodash';
 import { ModelService } from '../ModelService';
 import { IModel_PreoperativeExamination } from './PreoperativeExamination';
 import { SLocal_State } from '@lm_fe/service';
-import { mchcEnv } from '@lm_fe/env';
 export interface IModel_EarlyPregnancyCheckSurgeryType {
   age: number;
   deleteFlag: number;
@@ -164,7 +163,7 @@ class MY_ModelService extends ModelService<IModel_EarlyPregnancyCheckSurgeryType
       method: 'POST',
       data: this.transferSubmitData(data),
     }).then((r) => {
-      mchcEnv.info(r.msg!);
+      message.info(r.msg);
       return this.transferSourceData(r.data);
     });
   }
@@ -173,7 +172,7 @@ class MY_ModelService extends ModelService<IModel_EarlyPregnancyCheckSurgeryType
       url: `/api/family/planning/cancelAppointmentSurgery/${id}`,
       method: 'DELETE',
     }).then((r) => {
-      mchcEnv.info(get(r, 'data.msg')!);
+      message.info(get(r, 'data.msg'));
     });
   }
   getOptionalPregnancyList(name?: string) {

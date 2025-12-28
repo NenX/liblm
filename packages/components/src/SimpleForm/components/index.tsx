@@ -20,14 +20,15 @@ import SwitchSelect from './extra/SwitchSelect'
 import { RangePickerProps } from 'antd/lib/date-picker'
 import { ComponentClass } from 'react'
 import TabForm from './TabForm'
-import { Select_L } from '@noah-libjs/components'
+import { LazyAntd } from 'src/LazyAntd'
 
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
 const { RangePicker } = DatePicker
 export interface IC {
     Input: typeof Input
-    Select: typeof Select_L
+    Select: typeof Select
     Radio: typeof Radio
     InputNumber: typeof InputNumber
     Checkbox: typeof Checkbox
@@ -51,7 +52,7 @@ export interface IC {
 }
 export const ComponentMapping: IC = {
     Input,
-    Select: Select_L,
+    Select,
     Radio,
     InputNumber,
     Checkbox,

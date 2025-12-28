@@ -1,7 +1,7 @@
-import { DoctorEnd_ImageReport_Report, formatTimeToDate, PDFPreview_View } from '@lm_fe/components_m';
+import { DoctorEnd_ImageReport_Report, formatTimeToDate, LazyAntd, PDFPreview_View } from '@lm_fe/components_m';
 import React, { useEffect, useState } from 'react';
 
-import { Button, Col, Input, Modal, Pagination, Row } from 'antd';
+import { Button, Col, Input, Modal, Row } from 'antd';
 import { cloneDeep, get, map, orderBy } from 'lodash';
 import { api } from '../.api';
 // import aImg from '@/assets/imgs/images/a.jpg';
@@ -12,6 +12,7 @@ import { IMchc_Doctor_OutpatientHeaderInfo } from '@lm_fe/service';
 import { filter_obj_to_url_search, request } from '@lm_fe/utils';
 import classnames from 'classnames';
 import './index.less';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 let hostUrl = process.env.NODE_ENV === 'production' ? '' : 'http://120.79.170.18:8975';
 interface IProps {

@@ -4,8 +4,11 @@ import { message } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { config_table_fd } from '../../form_config/config_table';
 import { mchcModal__ } from '../../modals';
-import { IBF_props } from './types';
-
+export interface IBF_props {
+    // title: string
+    // history_args?: { relationId: any }
+    default_conf: Partial<Omit<IMchc_TableConfig, 'title'>> & { title: `${string}-${string}` }
+}
 
 export function use_table_config(setting: IBF_props, props?: any) {
     let { default_conf } = setting
@@ -15,8 +18,8 @@ export function use_table_config(setting: IBF_props, props?: any) {
 
     const [config, setConfig] = useState<IMchc_TableConfig>()
     const config_raw = useRef<Partial<IMchc_TableConfig>>()
-    async function _fetch_conf() {
-        let __title = default_conf.title
+    async function fetch_config() {
+        let __title = default_conf_ref.current.title
         if (!__title) return
         setLoading(true)
         const res = await SMchc_TableConfig
@@ -27,10 +30,6 @@ export function use_table_config(setting: IBF_props, props?: any) {
             message.warning('存在多份配置')
         }
         const _config = arr[0]
-        if (!_config) {
-            setConfig(undefined)
-            return
-        }
         config_raw.current = { ..._config }
         if (!_config?.tableColumns) return
 
@@ -49,7 +48,6 @@ export function use_table_config(setting: IBF_props, props?: any) {
     }
     function edit_config(edit_config = config_raw.current, is_recover = false) {
         mchcModal__.open('modal_form', {
-            title: is_recover ? '恢复初始化' : '',
             width: '90vw',
             maskClosable: false,
             bodyStyle: { height: '80vh' },
@@ -70,7 +68,7 @@ export function use_table_config(setting: IBF_props, props?: any) {
                     } else {
                         await SMchc_TableConfig.post(v, { ignore_usr: true })
                     }
-                    await _fetch_conf()
+                    await fetch_config()
                     return 1
                 },
                 formDescriptions: config_table_fd
@@ -81,23 +79,16 @@ export function use_table_config(setting: IBF_props, props?: any) {
 
     useEffect(() => {
 
-        if (default_conf.title
-            //  && !config_raw.current
-        ) {
-            default_conf.handleBeforePopup = default_conf.handleBeforePopup ?? (values => values)
-            default_conf.beforeSubmit = default_conf.beforeSubmit ?? ((new_values, old_values) => new_values)
-            default_conf.watchScript = default_conf.watchScript ?? ((changed, values, form) => { })
-            default_conf.initialSearchValue = default_conf.initialSearchValue ?? (() => ({}))
-            default_conf.searchParams = default_conf.searchParams ?? (() => ({}))
+        if (default_conf.title && !config_raw.current) {
             SMchc_TableConfig.process_local(default_conf)
                 .then(r => {
 
                     default_conf_ref.current = r
-                    _fetch_conf()
+                    fetch_config()
                 })
 
         }
         return () => { }
-    }, [default_conf.title])
+    }, [])
     return { config, init_config, edit_config, loading, recover_config }
 };

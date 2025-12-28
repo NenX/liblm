@@ -1,8 +1,10 @@
 import { BF_Wrap2, MyBaseList } from '@lm_fe/pages'
-import { defineFormConfig } from '@lm_fe/service'
-import { formatDate, getMomentRange } from "@lm_fe/utils"
+import { mchcLogger } from "@lm_fe/env"
+import { formatDate, getMomentRange, request } from "@lm_fe/utils"
+import { Button } from "antd"
 import React from "react"
-import { Follow_up_btn_婚前 } from 'src/pages/fubao/statistic/premarital-checkup/.婚检随访'
+import { defineFormConfig } from '@lm_fe/service'
+import { Follow_up_btn } from "./.随访"
 import { BASE_URL } from './const'
 export default function BreastCancerDataReport(prop: any) {
 
@@ -51,9 +53,7 @@ export default function BreastCancerDataReport(prop: any) {
 
 
             searchConfig={config?.searchConfig}
-            ActionAddonBefore={(ctx) => {
-                return <Follow_up_btn_婚前 rowData={ctx.rowData} handleSearch={ctx.handleSearch} />
-            }}
+
             // showAction={false}
             showExport
             tableColumns={config?.tableColumns}

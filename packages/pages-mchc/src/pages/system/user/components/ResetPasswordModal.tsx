@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { Modal, Form, Input, message } from 'antd';
 import { SLocal_State } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { use_provoke } from '@lm_fe/provoke';
-import { mchcEnv } from '@lm_fe/env';
 
 const formItemLayout = {
   labelCol: {
@@ -25,8 +23,6 @@ interface IProps {
 
 function ResetPasswordModal({ visible, onCancel, dataSource, roles = [] }: IProps) {
   const user = SLocal_State.getUserData()
-  const { user_info } = use_provoke('user_info',)
-
   const [form] = Form.useForm();
   useEffect(() => {
     visible && form.resetFields();
@@ -36,7 +32,7 @@ function ResetPasswordModal({ visible, onCancel, dataSource, roles = [] }: IProp
     form
       .validateFields()
       .then((values) => {
-        if (!mchcEnv.isAdmin) {
+        if (!user?.groups.some(_=>_.nickname === 'ADMIN')) {
           message.info('您没有权限修改其他用户的密码，请联系管理员...');
         } else {
           request
@@ -46,15 +42,15 @@ function ResetPasswordModal({ visible, onCancel, dataSource, roles = [] }: IProp
               login: dataSource.login,
             })
             .then((r) => {
-              mchcEnv.success('重置密码成功');
+              message.success('重置密码成功');
               onCancel();
             })
             .catch((error) => {
-              mchcEnv.error('重置密码失败...');
+              message.error('重置密码失败...');
             });
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   return (
@@ -62,7 +58,7 @@ function ResetPasswordModal({ visible, onCancel, dataSource, roles = [] }: IProp
       centered
       destroyOnClose
       width={400}
-      open={visible}
+      visible={visible}
       onCancel={onCancel}
       onOk={handleSubmit}
       title="重置密码"

@@ -1,6 +1,9 @@
-import { Button, Col, Layout, message, Modal, Popconfirm, Row } from 'antd';
-import { compact, concat, filter, get, indexOf, isEmpty, isNil, keyBy, keys, map, set, size } from 'lodash';
 import React from 'react';
+import { Modal, Button,  message, Popconfirm, Row, Col, Layout } from 'antd';
+import { map, get, set, isEmpty, keyBy, indexOf, keys, compact, isNil, concat, size, filter } from 'lodash';
+import { transferTemplates } from './methods';
+import EditModal from './EditModal';
+import { EditOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import {
   createResources,
   deleteResourcesByID,
@@ -8,12 +11,10 @@ import {
   getResourcesByID,
   updateResources,
 } from '../../utils/defaultMethod';
-import EditModal from './EditModal';
 import styles from './index.module.less';
-import { transferTemplates } from './methods';
-import { DEFAULT_URL, MODAL_NAVS, needUserIDTypes, NurseTypesMapping } from './utils';
+import { DEFAULT_URL, MODAL_NAVS, NurseTypesMapping, needUserIDTypes } from './utils';
 
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import { LazyAntd } from '@lm_fe/components';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
@@ -326,13 +327,13 @@ export class TemplateModal extends React.Component<IProps, IState> {
                 <div>&nbsp;{get(template, 'val')}&nbsp;</div>
                 {(templateType === 1 || templateType === 2) && (
                   <div className={styles["template-list-item__actions"]}>
-                    <MyIcon value='PlusCircleOutlined' className={styles["template-list-item__actions-icon"]} onClick={this.handleAddTemplate} />
-                    <MyIcon value='EditOutlined'
+                    <PlusCircleOutlined className={styles["template-list-item__actions-icon"]} onClick={this.handleAddTemplate} />
+                    <EditOutlined
                       className={styles["template-list-item__actions-icon"]}
                       onClick={this.handleEditTemplate(template)}
                     />
                     <Popconfirm title="确定要删除这个模板吗？" onConfirm={this.handleConfirmDelete(template)}>
-                      <MyIcon value='DeleteOutlined' className={styles["template-list-item__actions-icon"]} />
+                      <DeleteOutlined className={styles["template-list-item__actions-icon"]} />
                     </Popconfirm>
                   </div>
                 )}
@@ -351,13 +352,13 @@ export class TemplateModal extends React.Component<IProps, IState> {
               <div>{get(template, 'val')}</div>
               {(templateType === 1 || templateType === 2) && (
                 <div className={styles["template-list-item__actions"]}>
-                  <MyIcon value='PlusCircleOutlined' className={styles["template-list-item__actions-icon"]} onClick={this.handleAddTemplate} />
-                  <MyIcon value='EditOutlined'
+                  <PlusCircleOutlined className={styles["template-list-item__actions-icon"]} onClick={this.handleAddTemplate} />
+                  <EditOutlined
                     className={styles["template-list-item__actions-icon"]}
                     onClick={this.handleEditTemplate(template)}
                   />
                   <Popconfirm title="确定要删除这个模板吗？" onConfirm={this.handleConfirmDelete(template)}>
-                    <MyIcon value='DeleteOutlined' className={styles["template-list-item__actions-icon"]} />
+                    <DeleteOutlined className={styles["template-list-item__actions-icon"]} />
                   </Popconfirm>
                 </div>
               )}

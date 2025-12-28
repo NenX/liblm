@@ -32,9 +32,9 @@ export default function EditModal(props: any) {
 
   return (
     <Modal
-      centered
+
       getContainer={getContainer}
-      open={visible}
+      visible={visible}
       className="textarea-with-template__modal-edit"
       onCancel={onCancel}
       onOk={handleSubmit}

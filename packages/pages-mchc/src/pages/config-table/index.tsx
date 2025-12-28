@@ -56,10 +56,7 @@ export default (props) => {
             // name="/syphilis-quality-control"
             name="/tableConfig"
             tableColumns={[...config_table_fd(props), {
-                title: '预览',
-                isActive: 0,
-                dataIndex: 'id',
-                render(value, record) {
+                title: '预览', dataIndex: 'id', render(value, record) {
                     return <Space>
                         <a target="blank" onClick={() => mchcModal__.open('test', { modal_data: { content: <MyConfigPanel configId={value} id={1} /> }, width: '90vw', title: record.title })}>
                             表单
@@ -74,7 +71,7 @@ export default (props) => {
             modalFormConfig={
                 {
                     width: "96vw",
-                    bodyStyle: { height: '80vh', overflowY: 'auto' },
+                    bodyStyle: { height: '80vh', overflowY: 'scroll' },
                     modal_data: {
                         modalFormSize: 'small'
                     }

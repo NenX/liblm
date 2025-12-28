@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/components",
-    "version": "0.2.5",
+    "version": "0.1.203",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,36 +9,17 @@
         "clean": "rimraf dist",
         "prebuild": "pnpm clean"
     },
-    "main": "dist/src/index.js",
+    "main": "dist/index.js",
     "directories": {
         "lib": "dist"
     },
     "files": [
         "dist"
     ],
-    "types": "dist/src/index.d.ts",
     "peerDependencies": {
-        "@lm_fe/scripts": "*",
-        "@monaco-editor/react": "^4.5.1",
-        "axios": ">=0.26.0",
-        "braft-editor": ">=2.3.9",
-        "classnames": "*",
-        "dayjs": "^1.11.13",
-        "echarts": "^5.0.1",
-        "fabric": "5.*",
-        "history": "^4.9.0",
-        "monaco-editor": "^0.39.0",
-        "quill": "1.*",
-        "quill-image-resize-module": "3.*",
+        "antd": ">=4.9.1 <=4.17.4",
         "react": "*",
-        "react-container-dimensions": "1.4.1",
-        "react-dnd": "^11.1.3",
-        "react-dnd-html5-backend": "^11.1.3",
-        "react-keep-alive-pro": "*",
-        "react-resizable": "3.0.4",
-        "react-router-dom": "^5.2.0",
-        "react-to-print": "^2.14.7",
-        "reconnecting-websocket": "4.x"
+        "react-router-dom": "^5.2.0"
     },
     "keywords": [],
     "author": "",
@@ -52,16 +33,31 @@
         "rollup-plugin-postcss": "^4.0.2"
     },
     "dependencies": {
-        "@lm_fe/env": "^0.2.5",
-        "@lm_fe/provoke": "^0.2.5",
-        "@lm_fe/scripts": "*",
-        "@lm_fe/service": "^0.2.5",
-        "@lm_fe/utils": "^0.2.5",
-        "@noah-libjs/components": "*"
+        "@lm_fe/env": "^0.1.203",
+        "@lm_fe/scripts": "0.1.102",
+        "@lm_fe/service": "^0.1.203",
+        "@lm_fe/static": "*",
+        "@lm_fe/utils": "^0.1.203",
+        "@monaco-editor/react": "^4.5.1",
+        "antd-img-crop": "*",
+        "classnames": "*",
+        "fabric": "5.*",
+        "history": "^4.9.0",
+        "monaco-editor": "^0.39.0",
+        "qrcode.react": "^4.2.0",
+        "quill": "1.*",
+        "quill-image-resize-module": "3.*",
+        "react-color": "2.*",
+        "react-container-dimensions": "1.4.1",
+        "react-dnd": "^11.1.3",
+        "react-dnd-html5-backend": "^11.1.3",
+        "react-keep-alive-pro": "*",
+        "react-resizable": "3.0.4",
+        "react-to-print": "^2.14.7"
     },
     "publishConfig": {
         "access": "public"
     },
     "license": "MIT",
-    "gitHead": "9e8eab8af4aa2675ed973be51fe85cf2e3c2ed27"
+    "gitHead": "4b4f8e475bb35ea8c44bd441d239583e45e75981"
 }

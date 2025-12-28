@@ -38,9 +38,9 @@ function doc_setDefault<T extends MchcTypes>(doc: IMchc_Admission_Document<T>) {
         {
             ..._,
 
-            // apgar: Object.keys(_).reduce((sum, k) => {
-            //     return k.startsWith('apgar') ? { ...sum, [k]: _[k] } : sum
-            // }, {})
+            apgar: Object.keys(_).reduce((sum, k) => {
+                return k.startsWith('apgar') ? { ...sum, [k]: _[k] } : sum
+            }, {})
         }
     ))
 }
@@ -52,6 +52,6 @@ function __setOneIfArrEmpty<T>(arr: T[]) {
 }
 
 function __orderByDatetime<T extends AnyObject>(data: T[], key: keyof T) {
-    const res = (data ?? []).map(_ => ({ ..._, disabled: (_.disabled || !_.editFlag) }))
+    const res = (data ?? []).map(_ => ({ ..._, disabled: __DEV__ ? false : (_.disabled || !_.editFlag) }))
     return res.sort((a, b) => +new Date(a[key]) - +new Date(b[key]))
 }

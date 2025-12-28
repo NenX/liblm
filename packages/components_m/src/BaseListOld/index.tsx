@@ -1,4 +1,4 @@
-import { MyIcon, validate_form } from '@lm_fe/components';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { mchcLogger } from '@lm_fe/env';
 import { formatDate, isMoment, request, Request } from '@lm_fe/utils';
 import { Button, Divider, Form, message, Popconfirm } from 'antd';
@@ -8,6 +8,7 @@ import { get, isArray, isFunction, isNil, map } from 'lodash';
 import React, { FC, lazy } from 'react';
 import BaseFormComponent from '../BaseFormComponent';
 import BaseTable from '../BaseTableOld';
+import { mchcModal } from '../modals';
 import { getDefaultRequiredRules } from '../utils/defaultMethod';
 import './index.less';
 import { getDataSource } from './methods';
@@ -147,7 +148,7 @@ export default class BaseListOld extends React.Component<IProps, IState> {
             ExtraButton ? <ExtraButton rowData={rowData} /> : null
           }
           <Button type="link" size="small" onClick={this.handleEdit(rowData)}>
-            <MyIcon value='EditOutlined' className="global-table-action-icon global-table-action-view" />
+            <EditOutlined className="global-table-action-icon global-table-action-view" />
             编辑
           </Button>
           <Divider type="vertical" />
@@ -158,7 +159,7 @@ export default class BaseListOld extends React.Component<IProps, IState> {
             cancelText="取消"
           >
             <Button type="link" size="small">
-              <MyIcon value='DeleteOutlined' className="global-table-action-icon" />
+              <DeleteOutlined className="global-table-action-icon" />
               删除
             </Button>
           </Popconfirm>
@@ -193,9 +194,8 @@ export default class BaseListOld extends React.Component<IProps, IState> {
     const { baseUrl, baseTitle, toApi, needEditInTable, showAdd } = this.props;
     const { id } = this.state;
     const form = this.form as FormInstance;
-    const formData = await validate_form(form)
-
-    if (!formData) return
+    await this.form?.validateFields();
+    const formData = form.getFieldsValue();
     map(formData, (data, key) => {
       if (isMoment(data)) {
         formData[key] = formatDate(data);
@@ -282,7 +282,7 @@ export default class BaseListOld extends React.Component<IProps, IState> {
     const id = rowData?.id
     const that = this
     const url = this.props.baseUrl
-    window.mchc_modal.open('modal_form', {
+    mchcModal.open('modal_form', {
       width: '80vw',
 
       modal_data: {
@@ -479,7 +479,7 @@ export default class BaseListOld extends React.Component<IProps, IState> {
       editing,
       dataIndex,
       title,
-      inputType,
+      inputType = 'input',
       inputProps,
       rules,
       record,

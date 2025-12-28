@@ -3,7 +3,7 @@ import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { get } from 'lodash';
 import { mchcEnv } from '@lm_fe/env';
-export default ({ onChange, value, disabled, actionApi = '/api/uploadImage' }: { onChange?(v: any): void, value?: any, disabled?: boolean, actionApi?: string }) => {
+export default ({ onChange, value, disabled }: { onChange?(v: any): void, value?: any, disabled?: boolean }) => {
   const [fileList, setFileList] = useState<any[]>([]);
 
   React.useEffect(() => {
@@ -49,7 +49,7 @@ export default ({ onChange, value, disabled, actionApi = '/api/uploadImage' }: {
     <ImgCrop rotate aspect={1.5}>
       <Upload
         disabled={disabled}
-        action={actionApi}
+        action="/api/uploadImage"
         listType="picture-card"
         fileList={fileList}
         onChange={handleChange}

@@ -1,5 +1,6 @@
-import { MyCheckbox, pack_components } from '@lm_fe/components';
+import { pack_components } from '@lm_fe/components';
 import { AutoComplete, Checkbox, InputNumber } from 'antd';
+import MyCheckbox from '../../GeneralComponents/CheckboxWithInput_gold';
 import CusDatePicker from '../../GeneralComponents/DatePicker';
 import GeneralComponents_InputWithLabel from '../../GeneralComponents/InputWithLabel';
 import MultipleInputWithLabel from '../../GeneralComponents/MultipleInputWithLabel';

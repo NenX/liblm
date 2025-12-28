@@ -4,14 +4,17 @@ import { get, map } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import CloseArchives from '../../nurse-end/close-archives/index1';
 import HusbandInfo from './husband';
+import './index.less';
 import PregnancyBase from './pregnancy';
 
 export interface IDoctorEnd_BaseProps {
+  isAllPregnancies: boolean
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
   isSingle?: boolean
 }
 
 function DoctorEnd_Base(props: IDoctorEnd_BaseProps) {
+  const { isAllPregnancies } = props;
   const [tabs, set_tabs] = useState([
     { key: 'tab-0', title: '孕妇信息', component: PregnancyBase, form: Form.useForm()[0] },
     { key: 'tab-1', title: '丈夫信息', component: HusbandInfo, form: Form.useForm()[0] },
@@ -38,9 +41,10 @@ function DoctorEnd_Base(props: IDoctorEnd_BaseProps) {
     handleSubmit(key, true);
   }
   return (
-    <div >
+    <div className="prenatal-visit-main_base">
       <Tabs
         type="card"
+        className="prenatal-visit-main_base-tabs"
         activeKey={step}
         onChange={tabsChange.bind(this)}
       >

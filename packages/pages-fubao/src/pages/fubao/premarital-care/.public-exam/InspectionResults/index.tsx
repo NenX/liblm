@@ -5,7 +5,6 @@ import Form from './components/Form';
 import { valueToApi, valueToForm } from '../config/adapter';
 import { BaseEditPanel, formDescriptionsWithoutSectionApi } from '@lm_fe/components_m';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
-import { mchcEnv } from '@lm_fe/env';
 import { getSearchParamsValue, fubaoRequest as request } from '@lm_fe/utils';
 export default class BasicInfo extends BaseEditPanel<any> {
   static defaultProps = {
@@ -21,7 +20,7 @@ export default class BasicInfo extends BaseEditPanel<any> {
 
   extraEvents = {
     handleClickReport: (name: any) => {
-      mchcEnv.info('暂未开放此功能，敬请期待；');
+      message.info('暂未开放此功能，敬请期待；');
     },
     reportStyleInit: () => {
       return {
@@ -93,11 +92,11 @@ export default class BasicInfo extends BaseEditPanel<any> {
     const _res = await request.post(baseUrl, params)
     const res = _res.data
     if (get(res, 'code') === 1) {
-
+      
       let newData = get(res, 'data.0');
       this.setState({ newData });
     } else {
-
+      
     }
   };
 }

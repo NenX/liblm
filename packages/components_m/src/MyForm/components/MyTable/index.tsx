@@ -1,15 +1,15 @@
 import { LazyAntd } from '@lm_fe/components';
-import { APP_CONFIG } from '@lm_fe/env';
 import { formatDate } from '@lm_fe/utils';
 import { Button } from 'antd';
-import dayjs from 'dayjs';
 import { cloneDeep, filter, get, indexOf, isArray, isEmpty, isEqual, join, map, set } from 'lodash';
+import dayjs from 'dayjs';
 import React, { Component } from 'react';
 import BaseFormComponent from '../../../BaseFormComponent';
+import { CELL_WIDTH_SMALL } from '../business/PdProcedure/config/common-table-item';
 import styles from './index.less';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
-export default class MyTable1 extends Component<{ disabled?: boolean }> {
+export default class PdProcedure extends Component<{ disabled?: boolean }> {
   columns: any;
 
   constructor(props) {
@@ -58,7 +58,7 @@ export default class MyTable1 extends Component<{ disabled?: boolean }> {
       return {
         ...column,
         align: align || 'center',
-        width: width || APP_CONFIG.CELL_WIDTH_SMALL,
+        width: width || CELL_WIDTH_SMALL,
         dataIndex,
         render: (value, rowData, rowIndex) => {
           let renderValue = value;

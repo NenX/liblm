@@ -9,7 +9,6 @@ import {
   request
   // fubaoRequest as request 
 } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 interface IProps extends BaseEditPanelIProps {
   data?: any;
 }
@@ -59,12 +58,12 @@ export class BasicInfo extends BaseEditPanel<IProps> {
       };
     if (get(params, 'id')) {
       await request.put(baseUrl, params);
-      mchcEnv.success(`修改${title}成功`);
+      message.success(`修改${title}成功`);
     } else {
       const result = (await request.post(baseUrl, params)).data
       const { updateWomenExamRecordsEditingId } = this.props;
       // await updateWomenExamRecordsEditingId(get(result, 'id'));
-      mchcEnv.success(`新增${title}成功`);
+      message.success(`新增${title}成功`);
     }
   };
 }

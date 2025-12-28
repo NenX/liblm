@@ -1,10 +1,10 @@
-import { MyIcon } from '@lm_fe/components';
 import { BF_Wrap2, IdNOButton, mchcModal__, MyBaseList, useReadIdNO } from '@lm_fe/pages';
 import { SLocal_History } from '@lm_fe/service';
 import { Button, Form, Space } from 'antd';
 import React, { useEffect } from 'react';
 import Gaopaiyi_List from 'src/pages/prenatal-visit/report/list';
 import { bf_default } from './bf_default';
+import { EyeOutlined } from '@ant-design/icons';
 
 export default function Gynecological_diseases_women(props: any) {
 
@@ -34,7 +34,7 @@ export default function Gynecological_diseases_women(props: any) {
               mchcModal__.open('modal_page', {
                 title: '高拍仪查看',
                 modal_data: {
-                  content: <Gaopaiyi_List type={6} search={{ patientNo: rowData.outpatientNO }} />
+                  content: <Gaopaiyi_List type='6' search={{ patientNo: rowData.outpatientNO }} />
                 }
               })
             }}
@@ -44,7 +44,7 @@ export default function Gynecological_diseases_women(props: any) {
 
           <Button
             size="small"
-            icon={<MyIcon value='EyeOutlined' />}
+            icon={<EyeOutlined />}
             onClick={() => {
               SLocal_History.safe_history_push(`/gynecological-diseases/women/women-exam-records?id=${rowData.id}`, props);
 

@@ -3,9 +3,7 @@ import { numberLikeCompare } from '@lm_fe/utils';
 import { Col, Row } from 'antd';
 import { isNil } from 'lodash';
 import React, { useMemo } from 'react';
-import { getInputStyle } from '@lm_fe/components';
-
-
+import { getInputStyle } from '../../utils';
 import { ICommonOption } from '../../utils/select_options';
 import { TCommonComponent } from '../types';
 import { componentMap } from './components';
@@ -58,13 +56,13 @@ const MySelect: TCommonComponent<IMySelectProps, string | number> = (props) => {
     //   return onChange?.(undefined)
     // }
     // const v = marshal ? (Number(marshal) == 2 ? changedValue : JSON.stringify(changedValue,)) : (type === 'single' ? (changedValue[0]?.value ?? null) : changedValue.map(_ => _.value).join(','))
-    // console.log('abc', changedValue, marshal, v)
+
     const v = parse_MC_value(props, changedValue)
-    // mchcLogger.log('safe_onChange', {v,changedValue})
+    mchcLogger.log('abc', changedValue, marshal, v)
     onChange?.(v)
   }
   function handleChange(rawValue: any) {
-    // mchcLogger.log('safe_onChange 00', {rawValue})
+    mchcLogger.log('handleChange1', rawValue)
     const checkedValues = (Array.isArray(rawValue) ? rawValue : [rawValue])
 
     const hasExclusiveItem = checkedValues
@@ -75,7 +73,9 @@ const MySelect: TCommonComponent<IMySelectProps, string | number> = (props) => {
         const option = options.find(o => o.value === v)
         return option?.exclusive
       })
+    mchcLogger.log('handleChange2', hasExclusiveItem)
     const values = !isNil(hasExclusiveItem) ? [hasExclusiveItem] : checkedValues.filter(v => !options.find(_ => _.value === v)?.exclusive)
+    mchcLogger.log('handleChange3', values)
     const changedData: ICommonOption[] = values
       .filter(v => is_multiple ? true : !isChecked(v))
       .map(v => {
@@ -84,6 +84,7 @@ const MySelect: TCommonComponent<IMySelectProps, string | number> = (props) => {
         return { value: option?.value, label: option?.label, text: old?.text ?? undefined }
       })
 
+    mchcLogger.log('handleChange4', changedData)
     setData(changedData)
     safe_onChange(changedData);
   };

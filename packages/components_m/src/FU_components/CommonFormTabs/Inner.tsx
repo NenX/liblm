@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { MyFormSectionForm } from '../FormSection/FormSectionForm';
 import CommonFormTabs from './CommonFormTabs';
 import { IFormTabsProps } from './types';
-import { useFormTabs } from './utils';
 
 function _FormTabs<T = any>(props: IFormTabsProps<T>) {
-    const { value = [], fds = [], onChange, on_row_value_change, form, FormSize, disabled } = props
-    const { forms: _forms } = useFormTabs()
-    const forms = props.forms || _forms
+    const { value = [], fds = [], onChange, forms = [], FormSize, disabled } = props
+
+
     useEffect(() => {
+        console.log('value', value)
         if ([value, forms].every(Array.isArray)) {
             value.forEach((v, idx) => {
                 const f = forms[idx]
@@ -20,7 +20,7 @@ function _FormTabs<T = any>(props: IFormTabsProps<T>) {
         return () => {
 
         }
-    }, [value])
+    }, [value, forms])
 
 
 
@@ -30,12 +30,11 @@ function _FormTabs<T = any>(props: IFormTabsProps<T>) {
         <CommonFormTabs<any>
             renderTabNode={(data, index) => {
                 return (
-                    <MyFormSectionForm disableAll={disabled} size={FormSize} form={forms[index]} data={data} formDescriptions={fds} onValuesChange={(changed_item, item) => {
+                    <MyFormSectionForm disableAll={disabled} size={FormSize} form={forms[index]} data={data} formDescriptions={fds} onValuesChange={(changedValues, values) => {
+                        console.log('www', data, values)
                         // debugger
-                        value[index] = { ...data, ...item } as any
-                        // onChange?.([...value],)
-                        onChange?.(value,)
-                        on_row_value_change?.(value, index, changed_item, form)
+                        value[index] = { ...data, ...values } as any
+                        onChange?.([...value], index, changedValues)
                     }} />
                 )
             }}

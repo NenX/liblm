@@ -1,11 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
-import { Button, Col, Input, message, Popconfirm, Row } from 'antd';
-import dayjs from 'dayjs';
-import { cloneDeep, get, set } from 'lodash';
 import React from 'react';
+import { message, Row, Col, Button, Popconfirm, Input } from 'antd';
+import { get, cloneDeep, set } from 'lodash';
 import { CustomIcon, } from '../../GeneralComponents/CustomIcon';
-import styles from './index.module.less';
+import { PlusCircleOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs';
 import Template from './template';
+import styles from './index.module.less';
 class Index extends React.Component {
   state = {
     isShowDiagnosesTemplate: false,
@@ -83,7 +83,7 @@ class Index extends React.Component {
     return (
       <div className={styles["diagWrapper"]}>
         {!isAllPregnancies && (
-          <Button className={styles["diag-btn"]} icon={<MyIcon value='PlusCircleOutlined' />} onClick={this.handleBtnClick}>
+          <Button className={styles["diag-btn"]} icon={<PlusCircleOutlined />} onClick={this.handleBtnClick}>
             添加诊断
           </Button>
         )}

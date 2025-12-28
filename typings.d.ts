@@ -14,13 +14,7 @@ declare module 'omit.js';
 
 
 interface Window {
-  BF_Wrap2(setting: any, props?: any): {
-    config: IMchc_TableConfig | undefined;
-    Wrap: React.FC<{
-      style?: React.CSSProperties;
-      children?: ReactNode;
-    }>;
-  }
+
   _store?: {
     getState(): any
   }
@@ -29,9 +23,7 @@ interface Window {
   mchcEnv?: any
   mchcStorage: StoreJsAPI
   mchc_env?: any
-  peek_provoke?: (key?: any) => any
   mchc_modal?: any
-  _provoke?: any
   _globalState?: { [x: string]: any }
   _globalHistory?: { push(k: string): void }
   _globalDispatch?: any

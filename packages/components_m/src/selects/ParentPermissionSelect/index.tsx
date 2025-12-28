@@ -37,7 +37,7 @@ export default (props: any) => {
       placeholder="请选择父级菜单"
       allowClear
       treeData={menus}
-      popupMatchSelectWidth={300}
+      dropdownMatchSelectWidth={300}
       {...props}
     />
   );

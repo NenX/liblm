@@ -1,5 +1,5 @@
 import { mchcEnv, MchcTypes } from "@lm_fe/env"
-import { AnyObject, request } from "@lm_fe/utils"
+import { request } from "@lm_fe/utils"
 import { ModelService } from "src/ModelService"
 import { TIdTypeCompatible } from "src/types"
 
@@ -9,20 +9,19 @@ import {
     IMchc_Doctor_Diagnoses, IMchc_Doctor_FirstVisitDiagnosisOutpatient, IMchc_Doctor_FirstVisitInfoOfOutpatient, IMchc_Doctor_FirstVisitPastmhOutpatient, IMchc_Doctor_OutpatientHeaderInfo,
     IMchc_Doctor_PreRiskAssessmentInfo,
     IMchc_Doctor_RiskRecordsOfOutpatient,
-    IMchc_Doctor_RvisitAfterDeliveryInfoOfOutpatient,
     IMchc_Doctor_RvisitInfoOfOutpatient,
     IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit,
     IMchc_Doctor_VteAssessForm
 } from "./types"
 import { IMchc_Doctor_BuildExamTimeAxis } from "./types/IMchc_Doctor_BuildExamTimeAxis"
-import { processFirstInfoOfOutpatient, processFirstPresent_local, processFirstPresent_remote, processLabExamOfOutpatient_local, processLabExamOfOutpatient_remote, processOther_local, processOther_remote, processPastmh_local, processPastmh_remote, processPhysicalExamOfOutpatient_local, processPhysicalExamOfOutpatient_remote, processRvisitInfoOfOutpatient } from "./utils"
+import { processFirstInfoOfOutpatient, processLabExamOfOutpatient_local, processLabExamOfOutpatient_remote, processOther_local, processOther_remote, processPastmh_local, processPastmh_remote, processPhysicalExamOfOutpatient_local, processPhysicalExamOfOutpatient_remote, processRvisitInfoOfOutpatient } from "./utils"
 
 export * from './types'
 
 export class Mchc_Doctor_Service extends ModelService {
     // 越秀妇幼
-    async getVisitEmrEditable(id?: number | null) {
-        const ret = await request.get<boolean>('/api/doctor/getVisitEmrEditable', { params: { visitId: id || null } })
+    async getVisitEmrEditable(visitId: number) {
+        const ret = await request.get<boolean>('/api/doctor/getVisitEmrEditable', { params: { visitId } })
         return ret.data
     }
 
@@ -57,18 +56,6 @@ export class Mchc_Doctor_Service extends ModelService {
         data.highriskLable = data.highriskLable?.trim()
         return data;
     };
-    /**获取产后复诊信息 */
-    async getRvisitAfterDeliveryInfoOfOutpatient(id: string) {
-        const res = await request.get<IMchc_Doctor_RvisitAfterDeliveryInfoOfOutpatient>('/api/doctor/getRvisitAfterDeliveryInfoOfOutpatient?id=' + id);
-        return res.data;
-    }
-
-    /**更新产后复诊记录 */
-    async updateRvisitAfterDeliveryInfoOfOutpatient(data: any) {
-        const res = await request.post('/api/doctor/updateRvisitAfterDeliveryInfoOfOutpatient', data);
-        return res.data;
-    }
-
     /**获取复诊记录数据 */
     async getRvisitInfoOfOutpatient(id: TIdTypeCompatible | { id: TIdTypeCompatible, serialNo?: any }) {
         const params = typeof id === 'object' ? id : { id }
@@ -119,9 +106,9 @@ export class Mchc_Doctor_Service extends ModelService {
     }
 
 
-    /** 检验检查时间轴 增加 type 0:所有 ，1:正常 ，2:异常; mode: 0 所有，1过滤   */
-    async buildExamTimeAxisByType(pregnancyId: TIdTypeCompatible, type: 0 | 1 | 2 = 0, mode: 0 | 1 = 0) {
-        const { data } = await request.get<IMchc_Doctor_BuildExamTimeAxis[]>(`/api/buildExamTimeAxis`, { params: { pregnancyId, type, mode } })
+    /** 检验检查时间轴 增加 type 0:所有 ，1:正常 ，2:异常   */
+    async buildExamTimeAxisByType(pregnancyId: TIdTypeCompatible, type?: 0 | 1 | 2) {
+        const { data } = await request.get<IMchc_Doctor_BuildExamTimeAxis[]>(`/api/buildExamTimeAxis`, { params: { pregnancyId, type } })
         return data
     }
 
@@ -166,14 +153,7 @@ export class Mchc_Doctor_Service extends ModelService {
         const res = await request.put<IMchc_OutpatientDocumentStatus>('/api/doctor/updateOutpatientDocumentStatus', data);
         return res.data
     }
-    async getFirstVisitPresentmh(id: string) {
-        const res = await request.get('/api/doctor/getFirstVisitPresentmhOfOutpatient?id=' + id,);
-        return processFirstPresent_remote(res.data)
-    }
-    async updateFirstVisitPresentmh(data: any) {
-        const res = await request.put('/api/doctor/updateFirstVisitPresentmhOfOutpatient', processFirstPresent_local(data), { successText: '操作成功' });
-        return processFirstPresent_remote(res.data)
-    }
+
     /**既往史 */
     async getFirstVisitPastmhOutpatient(id: string) {
         const res = await request.get<IMchc_Doctor_FirstVisitPastmhOutpatient>('/api/doctor/getFirstVisitPastmhOutpatient?id=' + id);

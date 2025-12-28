@@ -10,7 +10,6 @@ import { getSearchParamsValue, request } from '@lm_fe/utils';
 import observePatientData from '../utils/observePatientData';
 import styles from './less/index.module.less';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
-import { mchcEnv } from '@lm_fe/env';
 export interface IProps {
   routerQuery?: any;
   moduleName?: string;
@@ -96,10 +95,10 @@ export default function BaseEditPanelFC(props: IProps) {
     let newData = null;
     if (get(values, 'id')) {
       newData = await request.put(baseUrl, params);
-      mchcEnv.success(`修改${title}成功`);
+      message.success(`修改${title}成功`);
     } else {
       newData = await request.post(baseUrl, params);
-      mchcEnv.success(`新增${title}成功`);
+      message.success(`新增${title}成功`);
     }
     setData(newData)
   };

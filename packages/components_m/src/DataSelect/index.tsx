@@ -4,7 +4,8 @@ import { TIdTypeCompatible } from '@lm_fe/service';
 import { AnyObject, request } from '@lm_fe/utils';
 import { SelectProps } from 'antd/lib/select';
 
-import { Select_L } from '@lm_fe/components';
+import { LazyAntd } from '@lm_fe/components';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
 interface IProps extends SelectProps<any> {
@@ -15,7 +16,7 @@ interface IProps extends SelectProps<any> {
   dataSource?: AnyObject[];
 }
 function DataSelect({ valueKey = 'value', labelKey = 'label', url, method = 'get', dataSource = [], ...rest }: IProps) {
-  const Option = Select_L.Option;
+  const Option = Select.Option;
   const [options, setOptions] = useState<AnyObject>(dataSource);
   useEffect(() => {
     url &&
@@ -31,7 +32,7 @@ function DataSelect({ valueKey = 'value', labelKey = 'label', url, method = 'get
   }, []);
 
   return (
-    <Select_L {...rest}>
+    <Select {...rest}>
       {options &&
         options.map((_) => {
           const value = _[valueKey]
@@ -41,7 +42,7 @@ function DataSelect({ valueKey = 'value', labelKey = 'label', url, method = 'get
             </Option>
           )
         })}
-    </Select_L>
+    </Select>
   );
 };
 const obj = Object.assign(DataSelect, {

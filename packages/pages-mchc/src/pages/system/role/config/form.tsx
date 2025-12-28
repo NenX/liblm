@@ -1,5 +1,3 @@
-import { mchcEnv } from "@lm_fe/env";
-
 export const modalFormDescriptions = {
   name: {
     key: 'name',
@@ -7,7 +5,7 @@ export const modalFormDescriptions = {
     rules: [{ required: true, message: '角色代码是必填项' }],
     inputType: 'input',
     inputProps: {
-
+      
     },
   },
   nickname: {
@@ -16,7 +14,7 @@ export const modalFormDescriptions = {
     rules: [{ required: true, message: '角色名称是必填项' }],
     inputType: 'input',
     inputProps: {
-
+      
     },
   },
   groupdesc: {
@@ -25,7 +23,7 @@ export const modalFormDescriptions = {
     rules: [{ required: true, message: '角色描述是必填项' }],
     inputType: 'text_area',
     inputProps: {
-
+      
     },
   },
   groupRanks: {
@@ -33,7 +31,6 @@ export const modalFormDescriptions = {
     label: '等级分类',
     inputType: 'MyEditTable',
     inputProps: {
-      marshal: 0,
       showEdit: true,
       formDescriptions: [
         {
@@ -57,9 +54,9 @@ export const modalFormDescriptions = {
         {
           dataIndex: 'administrator',
           title: '管理',
-          inputType: 'MySwitch',
+          inputType: 'MC',
           inputProps: {
-            options: mchcEnv.get_other_options('nyOptions'),
+            options: '是,否',
             marshal: 0
           },
         },

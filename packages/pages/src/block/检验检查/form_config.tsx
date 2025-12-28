@@ -26,7 +26,7 @@ export const form_confg = defineFormConfig([
         "key": "partnerBg",
         "label": "男方血型",
         "inputType": "select",
-        "inputProps": { 'options': mchcEnv.get_other_options('aboOptions'), marshal: 0, 'placeholder': 'ABO血型', },
+        "inputProps": { 'options': mchcEnv.get_other_options('aboOptions'), marshal: 0, 'placeholder': 'ABO血型', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' } },
         layout: '1/3',
         isNewRow: 1,
 
@@ -38,7 +38,7 @@ export const form_confg = defineFormConfig([
         "inputType": "select",
 
 
-        "inputProps": { marshal: 0, 'options': mchcEnv.get_other_options('rhOptions'), 'style': { 'marginLeft': '-1px' } },
+        "inputProps": { 'warningOption': 1, marshal: 0, 'options': mchcEnv.get_other_options('rhOptions'), 'style': { 'marginLeft': '-1px' } },
         layout: '1/3'
 
     }, {
@@ -46,7 +46,7 @@ export const form_confg = defineFormConfig([
         "label": "男方地贫",
         "inputType": "checkbox",
 
-        "inputProps": { options: '正常,异常i,未查,其他i', },
+        "inputProps": { options: '正常,异常i,未查,其他i', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     },
@@ -56,7 +56,7 @@ export const form_confg = defineFormConfig([
         "inputType": "select",
 
 
-        "inputProps": { 'options': mchcEnv.get_other_options('aboOptions'), marshal: 0, 'disabled': true, },
+        "inputProps": { 'options': mchcEnv.get_other_options('aboOptions'), marshal: 0, 'disabled': true, 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' } },
         layout: '1/3',
         "isNewRow": 1,
 
@@ -67,7 +67,7 @@ export const form_confg = defineFormConfig([
         "inputType": "select",
 
 
-        "inputProps": { 'options': mchcEnv.get_other_options('rhOptions'), marshal: 0, 'disabled': true },
+        "inputProps": { 'options': mchcEnv.get_other_options('rhOptions'), marshal: 0, 'warningOption': 1, 'style': { 'marginLeft': '-1px' }, 'disabled': true },
         layout: '1/3'
 
     }, {
@@ -81,51 +81,51 @@ export const form_confg = defineFormConfig([
     }, {
         "key": "tsh",
         "label": "TSH",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'uIU/ml',
+        "inputProps": { 'type': 'number', 'unit': 'uIU/ml', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' } },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "t3",
         "label": "游离T3",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'pmol/L',
+        "inputProps": { 'type': 'number', 'unit': 'pmol/L' },
         layout: '1/3'
 
     }, {
         "key": "t4",
         "label": "游离T4",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'pmol/L',
+        "inputProps": { 'type': 'number', 'unit': 'pmol/L' },
         layout: '1/3'
 
     }, {
         "key": "hb",
         "label": "HB",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'g/L',
+        "inputProps": { 'type': 'number', 'unit': 'g/L', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' } },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "mcv",
         "label": "MCV",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'fL',
+        "inputProps": { 'type': 'number', 'unit': 'fL' },
         layout: '1/3'
 
     }, {
         "key": "plt",
         "label": "PLT",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'x10^9/L',
+        "inputProps": { 'type': 'number', 'unit': 'x10^9/L' },
         layout: '1/3'
 
     }, {
@@ -136,124 +136,124 @@ export const form_confg = defineFormConfig([
         "inputProps": {
             // sp: [{ label: '弱阳性', value: 21 }],
             options: '阴性,弱阳性,阳性i,未查,其他i',
-
+            'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' },
         },
         layout: '1/3'
 
     }, {
         "key": "hbsag",
         "label": "HBsAg",
-        "inputType": "MA",
+        "inputType": "autoComplete",
 
-        "inputProps": { options: mchcEnv.get_other_options('hbOptions'), },
+        "inputProps": { 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, options: mchcEnv.get_other_options('hbOptions'), 'positiveWarning': true },
         layout: '1/3'
 
     }, {
         "key": "hbsab",
         "label": "HBsAb",
-        "inputType": "MA",
+        "inputType": "autoComplete",
 
-        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), },
+        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), 'positiveWarning': true },
         layout: '1/3'
 
     }, {
         "key": "hbeag",
         "label": "HBeAg",
-        "inputType": "MA",
+        "inputType": "autoComplete",
 
-        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), },
+        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), 'positiveWarning': true },
         layout: '1/3'
 
     }, {
         "key": "hbeab",
         "label": "HBeAb",
-        "inputType": "MA",
+        "inputType": "autoComplete",
 
-        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), },
+        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), 'positiveWarning': true },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "hbcab",
         "label": "HBcAb",
-        "inputType": "MA",
+        "inputType": "autoComplete",
 
-        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), },
+        "inputProps": { 'options': mchcEnv.get_other_options('hbOptions'), 'positiveWarning': true },
         layout: '1/3'
 
     }, {
         "key": "hbvdna",
         "label": "HBV DNA",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'IU/ml',
+        "inputProps": { 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, 'type': 'number', 'unit': 'IU/ml' },
         layout: '1/3'
 
     }, {
         "key": "alt",
         "label": "ALT",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'U/L',
+        "inputProps": { 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, 'type': 'number', 'unit': 'U/L' },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "ast",
         "label": "AST",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'U/L',
+        "inputProps": { 'type': 'number', 'unit': 'U/L' },
         layout: '1/3'
 
     }, {
         "key": "pt",
         "label": "PT",
-        "inputType": "InputNumber",
-        'unit': 'sec',
-        "inputProps": { 'min': 0, 'max': 20, 'disabled': true },
+        "inputType": "input",
+
+        "inputProps": { 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, 'type': 'number', 'unit': 'sec', 'min': 0, 'max': 20, 'disabled': true },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "inr",
         "label": "INR",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        "inputProps": { 'min': 0, 'max': 2, 'step': 0.1, 'disabled': true },
+        "inputProps": { 'type': 'number', 'min': 0, 'max': 2, 'step': 0.1, 'disabled': true },
         layout: '1/3'
 
     }, {
         "key": "aptt",
         "label": "APTT",
-        "inputType": "InputNumber",
-        'unit': 'sec',
-        "inputProps": { 'min': 0, 'max': 50, 'disabled': true },
+        "inputType": "input",
+
+        "inputProps": { 'type': 'number', 'unit': 'sec', 'min': 0, 'max': 50, 'disabled': true },
         layout: '1/3'
 
     }, {
         "key": "tt",
         "label": "TT",
-        "inputType": "InputNumber",
-        'unit': 'sec',
-        "inputProps": { 'min': 0, 'max': 20, 'disabled': true },
+        "inputType": "input",
+
+        "inputProps": { 'type': 'number', 'unit': 'sec', 'min': 0, 'max': 20, 'disabled': true },
         layout: '1/3',
         "isNewRow": 1,
 
     }, {
         "key": "fib",
         "label": "FIB",
-        "inputType": "InputNumber",
-        'unit': 'g/L',
-        "inputProps": { 'min': 0, 'max': 5, 'step': 0.1, 'disabled': true },
+        "inputType": "input",
+
+        "inputProps": { 'type': 'number', 'unit': 'g/L', 'min': 0, 'max': 5, 'step': 0.1, 'disabled': true },
         layout: '1/3'
 
     }, {
         "key": "sf",
         "label": "SF",
-        "inputType": "InputNumber",
+        "inputType": "input",
 
-        unit: 'ng/ml',
+        "inputProps": { 'type': 'number', 'unit': 'ng/ml' },
         layout: '1/3'
 
     }, {
@@ -261,7 +261,7 @@ export const form_confg = defineFormConfig([
         "label": "丙肝抗体",
         "inputType": "checkbox",
 
-        "inputProps": { options: '阴性,阳性i,未查', },
+        "inputProps": { options: '阴性,阳性i,未查', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -269,7 +269,7 @@ export const form_confg = defineFormConfig([
         "label": "丙肝RNA",
         "inputType": "checkbox",
 
-        "inputProps": { options: '阴性,阳性i,未查', },
+        "inputProps": { options: '阴性,阳性i,未查', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -277,7 +277,7 @@ export const form_confg = defineFormConfig([
         "label": "梅毒",
         "inputType": "checkbox",
 
-        "inputProps": { options: '阴性,阳性i,未查', },
+        "inputProps": { options: '阴性,阳性i,未查', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -285,7 +285,7 @@ export const form_confg = defineFormConfig([
         "label": "HIV",
         "inputType": "checkbox",
 
-        "inputProps": { options: '阴性,阳性i,未查', },
+        "inputProps": { options: '阴性,阳性i,未查', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -293,7 +293,7 @@ export const form_confg = defineFormConfig([
         "label": "GBS",
         "inputType": "checkbox",
 
-        "inputProps": { options: '阴性,阳性i,未查', },
+        "inputProps": { options: '阴性,阳性i,未查', 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -309,7 +309,7 @@ export const form_confg = defineFormConfig([
         "label": "早唐",
         "inputType": "checkbox",
 
-        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, },
+        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -317,7 +317,7 @@ export const form_confg = defineFormConfig([
         "label": "中唐",
         "inputType": "checkbox",
 
-        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, },
+        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -325,7 +325,7 @@ export const form_confg = defineFormConfig([
         "label": "NIPT",
         "inputType": "checkbox",
 
-        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, },
+        "inputProps": { options: mchcEnv.get_other_options('downsScreenOptions'), marshal: 0, 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -333,11 +333,7 @@ export const form_confg = defineFormConfig([
         "label": "产前诊断",
         "inputType": "checkbox",
 
-        "inputProps": {
-            options: [{ label: '正常', value: 1 },
-            { label: '异常', value: 2 },
-            { label: '拒绝产前诊断和知情同意书', value: 4 },], marshal: 0,
-        },
+        "inputProps": { options: mchcEnv.get_other_options('prenatalDiagnosisOptions'), marshal: 0, 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     }, {
@@ -345,7 +341,7 @@ export const form_confg = defineFormConfig([
         "label": "OGTT",
         "inputType": "checkbox",
 
-        "inputProps": { options: mchcEnv.get_other_options('ogttOptions'), },
+        "inputProps": { options: mchcEnv.get_other_options('ogttOptions'), 'labelSign': { 'type': 'iconfont', 'value': 'icon-number_light' }, },
         layout: '1/3'
 
     },

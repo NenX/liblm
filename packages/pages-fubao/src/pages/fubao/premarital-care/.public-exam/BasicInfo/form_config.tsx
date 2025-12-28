@@ -79,7 +79,7 @@ export default defineFormConfig(
             required() {
                 return ctx.required
             },
-            "inputProps": { uniqueKey: '民族s', marshal: 0 },
+            "inputProps": { optionKey: '民族s', marshal: 0 },
             layout: '1/3',
 
 
@@ -102,7 +102,7 @@ export default defineFormConfig(
             required() {
                 return ctx.required
             },
-            "inputProps": { uniqueKey: '省份s', },
+            "inputProps": { optionKey: '省份s', },
             layout: '1/3',
 
 
@@ -112,7 +112,7 @@ export default defineFormConfig(
 
             "inputType": "MS",
 
-            "inputProps": { uniqueKey: '文化程度s', marshal: 0 },
+            "inputProps": { optionKey: '文化程度s', marshal: 0 },
             layout: '1/3',
 
 
@@ -122,7 +122,7 @@ export default defineFormConfig(
 
             "inputType": "MS",
 
-            "inputProps": { uniqueKey: '职业s', marshal: 0 },
+            "inputProps": { optionKey: '职业s', marshal: 0 },
             layout: '1/3',
 
 

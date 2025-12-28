@@ -9,7 +9,7 @@ const MyAddressNew_ = lazy(() => import('./Inner'))
 
 
 function MyAddress(props: IMyAddressProps) {
-    if (mchcEnv.is_primary) {
+    if (mchcEnv.in(['建瓯', '广三', '郫都', '广州市八','南医附属'])) {
         return <MyAddressNew_ {...props} />
     }
     return <MyAddressOld {...props} />

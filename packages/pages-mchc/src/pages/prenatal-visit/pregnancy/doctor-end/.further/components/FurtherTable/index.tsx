@@ -1,30 +1,29 @@
-import { MyIcon, MyLazyComponent, Table_L } from '@lm_fe/components';
+import { LazyAntd, MyLazyComponent } from '@lm_fe/components';
 import { OkButton } from '@lm_fe/components_m';
 import { mchcUtils } from '@lm_fe/env';
 import { BF_Wrap2, mchcModal__ } from '@lm_fe/pages';
-import { use_provoke } from '@lm_fe/provoke';
 import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo, IMchc_Doctor_RvisitInfoOfOutpatient, IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit } from '@lm_fe/service';
-import { expect_array, identity } from '@lm_fe/utils';
 import { Space } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { filter_diagnoses } from '../../../.utils';
 import styles from './index.module.less';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
+
 interface IProps {
     visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient,
     headerInfo: IMchc_Doctor_OutpatientHeaderInfo,
     setDiagnosesList?(list: IMchc_Doctor_Diagnoses[]): void
     setFormData(v: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>): void
-    toggle_fuck(): void
-    fuck: boolean
+
     formData?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>,
     furtherRefresh(): void
 }
 
 export default function FurtherTable(props: IProps) {
-    const sys_theme = use_provoke(s => s.sys_theme)
-    const { setFormData, setDiagnosesList, visitsData, furtherRefresh, formData, toggle_fuck, fuck } = props;
 
-    const preg_id = mchcUtils.single_id(visitsData);
+    const { setFormData, setDiagnosesList, visitsData, headerInfo, formData, } = props;
+
+    const preg_id = mchcUtils.getDoctorEndId(visitsData);
 
 
 
@@ -67,34 +66,10 @@ export default function FurtherTable(props: IProps) {
 
 
 
+
     const renderTable = (isAll = false) => {
         return <Wrap>
-            <Table_L
-                bordered
-                title={
-                    isAll ? undefined : () => (
-                        <div className={styles['btn-wrap']}>
-                            <Space>
-                                <OkButton onClick={toggle_fuck} shape='circle' type='text' icon={fuck ? <MyIcon value='RightOutlined' /> : <MyIcon value='LeftOutlined' />} />
-                                <span>共 {filtered_rvisits.length} 条记录</span>
-                            </Space>
-                            <Space>
-                                <OkButton type="text" size="small" onClick={furtherRefresh} >
-                                    刷新
-                                </OkButton>
-                                <OkButton type="text" size="small" onClick={handlePrint} >
-                                    打印
-                                </OkButton>
-                                <OkButton type='text' size="small" onClick={() => mchcModal__.open('modal_page', { modal_data: { content: renderTable(true) } })}>
-                                    更多...
-                                </OkButton>
-                            </Space>
-                        </div>
-                    )
-                }
-                scroll={isAll ? undefined : { y: 160 }}
-                pagination={false}
-                size={isAll ? 'large' : 'small'}
+            <Table scroll={isAll ? undefined : { y: 160 }} bordered pagination={false} size={isAll ? 'large' : 'small'}
                 // rowSelection={{
                 //     selectedRowKeys: selectKeys,
                 //     onChange(keys, rows) {
@@ -105,12 +80,8 @@ export default function FurtherTable(props: IProps) {
                 // }}
 
                 onRow={(record) => {
-                    const is_target = record.id === formData?.id
-                    const background = is_target ? sys_theme.colors?.light[3] : undefined
-                    const cursor = is_target ? undefined : 'pointer'
-                    const color = is_target ? '#fff' : undefined
+
                     return {
-                        style: { background, cursor, color },
                         onClick(event) {
                             set_selectKeys([record.id])
                             set_selectRows([record])
@@ -127,27 +98,36 @@ export default function FurtherTable(props: IProps) {
 
                     };
                 }}
-                // rowClassName={r => {
-                //     return r.id === formData?.id ? styles['selected-row'] : ''
-                // }}
-                rowHoverable={false}
+                rowClassName={r => {
+                    return r.id === formData?.id ? styles['selected-row'] : ''
+                }}
                 rowKey={'id'}
                 dataSource={isAll ? filtered_rvisits : filtered_rvisits.slice(0, 5)}
-                columns={[
-                    ...expect_array<any>(config?.tableColumns),
-
-                ].filter(identity)}
+                columns={config?.tableColumns}
             />
         </Wrap>
 
     }
     return (
-        <div style={{ marginBottom: 8 }} className={styles['FurtherTable']}>
+        <div className={styles['FurtherTable']}>
             <MyLazyComponent size='middle'>
 
                 {renderTable()}
 
-
+                <div className={styles['btn-wrap']}>
+                    <span>共 {filtered_rvisits.length} 条记录</span>
+                    <Space>
+                        <OkButton type="text" size="small" onClick={props.furtherRefresh} >
+                            刷新
+                        </OkButton>
+                        <OkButton type="text" size="small" onClick={handlePrint} >
+                            打印
+                        </OkButton>
+                        <OkButton type='text' size="small" onClick={() => mchcModal__.open('modal_page', { modal_data: { content: renderTable(true) } })}>
+                            更多...
+                        </OkButton>
+                    </Space>
+                </div>
             </MyLazyComponent>
 
         </div>

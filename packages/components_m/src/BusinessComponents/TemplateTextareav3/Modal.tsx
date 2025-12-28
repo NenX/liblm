@@ -1,11 +1,11 @@
 // 出生缺陷诊断管理
-import { MyIcon } from '@lm_fe/components';
+import { CustomIcon } from '../../GeneralComponents/CustomIcon';
+import { CloseOutlined } from '@ant-design/icons'
 import {
   Input, List, Modal, Timeline
 } from 'antd';
 import { get } from 'lodash';
 import React from 'react';
-import { CustomIcon } from '../../GeneralComponents/CustomIcon';
 import styles from './Modal.less';
 const { Search } = Input;
 export default class modal extends React.Component {
@@ -45,7 +45,7 @@ export default class modal extends React.Component {
         <div style={{ display: 'flex', width: '100%', height: '460px' }}>
           <div style={{ width: '50%' }}>
             <List
-              style={{ overflow: 'auto', height: '468px' }}
+              style={{ overflow: 'scroll', height: '468px' }}
               size="small"
               split={false}
               bordered={false}
@@ -71,7 +71,7 @@ export default class modal extends React.Component {
                           <Timeline.Item color="#fff" className={styles["lis"]}>
                             {get(item, 'name')}
                             <span className={styles["delete"]} onClick={() => this.props.deleteinputValue(get(item, 'name'))}>
-                              <MyIcon value='CloseOutlined' />
+                              <CloseOutlined />
                             </span>
                           </Timeline.Item>
 
@@ -90,7 +90,7 @@ export default class modal extends React.Component {
                       <li className={styles["Listitem lis lisborder"]} style={{ marginLeft: '25px' }}>
                         {get(item, 'name')}
                         <span className={styles["delete"]} onClick={() => this.props.deleteinputValue(get(item, 'name'))}>
-                          <MyIcon value='CloseOutlined' />
+                          <CloseOutlined />
                         </span>
                       </li>
                     );

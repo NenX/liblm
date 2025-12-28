@@ -1,12 +1,13 @@
-import { DoctorEnd_SurveyReport_Report, formatTimeToDate, LoadingPlaceholder, MyIcon } from '@lm_fe/components_m';
-import { mchcModal__ } from '@lm_fe/pages';
+import { CalendarOutlined } from '@ant-design/icons';
+import { DoctorEnd_SurveyReport_Report, formatTimeToDate, LoadingPlaceholder, OkButton } from '@lm_fe/components_m';
 import { IMchc_Admission_HeaderInfoOfInpatientEmr, IMchc_Doctor_OutpatientHeaderInfo, IMchc_LabExamReport_Detail, IMchc_listPatientLabExamReport_Item, SMchc_Admission } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { Badge, Button, Collapse } from 'antd';
+import { Badge, Button, Collapse, Spin } from 'antd';
 import { assign, map, size } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import ExaminationItemCurve from './components/ExaminationItemCurve';
 import './index.less';
+import { mchcModal__ } from '@lm_fe/pages';
 interface IProps {
   headerInfo?: Partial<IMchc_Doctor_OutpatientHeaderInfo>
   headerInfoOfInpatientData?: Partial<IMchc_Admission_HeaderInfoOfInpatientEmr>
@@ -77,7 +78,7 @@ export function DoctorEnd_SurveyReport(props: IProps) {
     return (
       <div className="survey-left">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 4, }}>
-          <span>报告列表</span>
+          <span>检验报告列表</span>
           <Button.Group>
             <Button size='small' onClick={() => request.post('/api/syncReport', combinded, { successText: '成功' }).then(getLabExamGroup)}>同步</Button>
             <Button size='small' onClick={() => request.post('/api/examineReport', combinded, { successText: '成功' }).then(getLabExamGroup)}>审核</Button>
@@ -85,7 +86,7 @@ export function DoctorEnd_SurveyReport(props: IProps) {
           </Button.Group>
         </div>
         {size(reportList) > 0 ? (
-          <Collapse defaultActiveKey={['0']} expandIcon={() => <MyIcon value='CalendarOutlined' />}>
+          <Collapse defaultActiveKey={['0']} expandIcon={() => <CalendarOutlined />}>
             {map(reportList, (item, idx) => (
               <Collapse.Panel
                 header={

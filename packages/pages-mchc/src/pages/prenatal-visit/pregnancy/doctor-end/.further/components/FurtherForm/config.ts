@@ -72,4 +72,69 @@ export const checkAssociatedForm = (list: IMchc_Doctor_Diagnoses<"mchc">[] = [],
 
 
 
+export const getDynamicFormConfig = (config: any, list: IMchc_Doctor_Diagnoses<"mchc">[]) => {
+  const cloneConfig = cloneDeep(config);
+  if (isEmpty(cloneConfig)) return [];
+  const configObj = keyBy(cloneConfig, 'key');
+
+  /* 设置动态表单 胎儿超声表单 */
+  if (get(configObj, ['childUltrasounds'])) {
+    set(configObj, ['childUltrasounds', 'hidden'], checkAssociatedForm(list, diag_filter_map.ultrasounds));
+
+    if (checkAssociatedForm(list, diag_filter_map.fetalGrowth)) {
+      const inputProps = safe_json_parse(get(configObj, ['childUltrasounds', 'inputProps']));
+      set(inputProps, 'config.1.hidden', true);
+      set(configObj, ['childUltrasounds', 'inputProps'], inputProps);
+    }
+  }
+  /* 妊娠糖尿病表单 */
+  if (get(configObj, ['gdm.fbg'])) {
+    set(configObj, ['gdm.fbg', 'hidden'], checkAssociatedForm(list, diag_filter_map.diabetes));
+  }
+  if (get(configObj, ['gdm.pbg2'])) {
+    set(configObj, ['gdm.pbg2', 'hidden'], checkAssociatedForm(list, diag_filter_map.diabetes));
+  }
+  if (get(configObj, ['gdm.hbalc'])) {
+    set(configObj, ['gdm.hbalc', 'hidden'], checkAssociatedForm(list, diag_filter_map.diabetes));
+  }
+  if (get(configObj, ['gdm.inslname'])) {
+    set(configObj, ['gdm.inslname', 'hidden'], checkAssociatedForm(list, diag_filter_map.diabetes));
+  }
+  /* 妊娠高血压表单 */
+  if (get(configObj, ['pih.quality'])) {
+    set(configObj, ['pih.quality', 'hidden'], checkAssociatedForm(list, diag_filter_map.hypertension));
+  }
+  if (get(configObj, ['pih.quantity'])) {
+    set(configObj, ['pih.quantity', 'hidden'], checkAssociatedForm(list, diag_filter_map.hypertension));
+  }
+  if (get(configObj, ['pih.medication'])) {
+    set(configObj, ['pih.medication', 'hidden'], checkAssociatedForm(list, diag_filter_map.hypertension));
+  }
+  /* 心脏病表单 */
+  if (get(configObj, ['cardiacDisease.heartrate'])) {
+    set(configObj, ['cardiacDisease.heartrate', 'hidden'], checkAssociatedForm(list, diag_filter_map.coronary));
+  }
+  if (get(configObj, ['cardiacDisease.medication'])) {
+    set(configObj, ['cardiacDisease.medication', 'hidden'], checkAssociatedForm(list, diag_filter_map.coronary));
+  }
+  /* ICP表单 */
+  if (get(configObj, ['icp.tba'])) {
+    set(configObj, ['icp.tba', 'hidden'], checkAssociatedForm(list, diag_filter_map.ICP));
+  }
+  if (get(configObj, ['icp.alt'])) {
+    set(configObj, ['icp.alt', 'hidden'], checkAssociatedForm(list, diag_filter_map.ICP));
+  }
+  if (get(configObj, ['icp.ast'])) {
+    set(configObj, ['icp.ast', 'hidden'], checkAssociatedForm(list, diag_filter_map.ICP));
+  }
+  /* 甲减表单 */
+  if (get(configObj, ['hypothyroidism.tsh'])) {
+    set(configObj, ['hypothyroidism.tsh', 'hidden'], checkAssociatedForm(list, diag_filter_map.hypothyroidism));
+  }
+  if (get(configObj, ['hypothyroidism.t4'])) {
+    set(configObj, ['hypothyroidism.t4', 'hidden'], checkAssociatedForm(list, diag_filter_map.hypothyroidism));
+  }
+
+  return values(configObj);
+};
 

@@ -1,5 +1,6 @@
-import { get_echarat, MyIcon } from '@lm_fe/components';
-import { createRef, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
+import * as echarts from 'echarts';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { chartOption } from './chart';
 import './index.less';
 interface Iprops {
@@ -10,11 +11,8 @@ export default function ChartType({ ...props }: Iprops) {
   const chartRef: any = createRef();
   const chartInit: any = createRef();
   useEffect(() => {
-    get_echarat().then(ee => {
-      chartInit.current = ee.init(chartRef.current);
-      chartSetOption(chartOption);
-    })
-
+    chartInit.current = echarts.init(chartRef.current);
+    chartSetOption(chartOption);
   }, []);
 
   function chartSetOption(options: any) {
@@ -24,7 +22,7 @@ export default function ChartType({ ...props }: Iprops) {
     <div className="chart-type-container">
       <div className="title-content">
         <div className="title">接诊类型分布</div>
-        <MyIcon value='InfoCircleOutlined' title="接诊效率指在产科专科病历人均平均接诊时间" />
+        <InfoCircleOutlined title="接诊效率指在产科专科病历人均平均接诊时间" />
       </div>
       <div ref={chartRef} style={{ height: '220px' }}></div>
     </div>

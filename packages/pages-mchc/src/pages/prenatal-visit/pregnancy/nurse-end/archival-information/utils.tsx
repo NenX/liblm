@@ -1,8 +1,8 @@
-import { GetAgeByBirthDay, getBMI } from "@lm_fe/components_m";
-import { mchcLogger, mchcUtils } from "@lm_fe/env";
-import { conceive_fuck_edd, mchcModal__ } from "@lm_fe/pages";
+import { ALLOW_CALC_EDD_BASED_ON_IVF, GetAgeByBirthDay, getBMI } from "@lm_fe/components_m";
+import { ICommonOption, mchcLogger, mchcUtils } from "@lm_fe/env";
+import { mchcModal__ } from "@lm_fe/pages";
 import { SLocal_Calculator, SLocal_History, SLocal_State, SMchc_Common } from "@lm_fe/service";
-import { formatDate, set } from "@lm_fe/utils";
+import { formatDate } from "@lm_fe/utils";
 import { FormInstance, message } from "antd";
 import { get, includes, keys, size, values } from "lodash";
 
@@ -175,11 +175,28 @@ export async function archivalInformation_onValuesChange(changedValues: any, all
 
 
     if (is受孕方式) {
-        conceive_fuck_edd(__value).then(edd => {
-            form?.setFieldsValue(
-                set({}, 'pregnancyInfo.sureEdd', edd)
-            )
-        })
+        const data = __value as ICommonOption[]
+        const checkedValues = data?.[0]?.value
+        const textArr: any[] = data?.[0]?.text ?? []
+        const 移植时间 = textArr[0]
+        const 天数 = textArr[1] ?? 0
+        const 胚胎数 = textArr[2] ?? 0
+        const isIVF = checkedValues === 1
+
+        if (isIVF && 移植时间) {
+
+            const value = await SLocal_Calculator.calcEddBasedOnIVF(移植时间, 天数)
+            console.log('vv is受孕方式', value)
+            mchcModal__.confirmOnce({
+                title: '根据胚胎移植时间，是否调整预产期B超时间？',
+                storeKey: ALLOW_CALC_EDD_BASED_ON_IVF,
+                cb: () => form?.setFieldsValue({
+                    pregnancyInfo: {
+                        sureEdd: value,
+                    },
+                })
+            })
+        }
     }
 };
 function getKeyAndValue(changedValues: any) {

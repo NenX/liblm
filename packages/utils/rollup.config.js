@@ -8,7 +8,6 @@ import path from 'path'
 import { defineConfig } from 'rollup';
 import { readFileSync } from 'fs';
 import { dts } from "rollup-plugin-dts";
-import { exclude } from '../../rollup.config'
 
 export default defineConfig(x => {
   const pkg = JSON.parse(readFileSync('./package.json'))
@@ -42,14 +41,15 @@ export default defineConfig(x => {
           extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
           plugins: [
             '@babel/plugin-transform-runtime',
-            // [
-            //   "import",
-            //   {
-            //     "libraryName": "antd",
-            //     "libraryDirectory": "es",
-            //     "style": true
-            //   }
-            // ]
+            'babel-plugin-lodash',
+            [
+              "import",
+              {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": true
+              }
+            ]
           ],
         })
       ],
@@ -64,13 +64,14 @@ export default defineConfig(x => {
 
             ]
           })
-        ]
+        ],
+        sourcemap: true, // 👈 开启 source map
       },
       external
 
     },
     {
-      external: exclude(external, ['@noah-libjs/utils', '@noah-libjs/request']),
+      external,
       input: "dist/index.d.ts",
       output: [{ file: "dist/types.d.ts", format: "es" }],
       plugins: [dts({ respectExternal: true })],

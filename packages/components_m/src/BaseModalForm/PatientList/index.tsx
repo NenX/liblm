@@ -1,12 +1,12 @@
-import { MyIcon } from '@lm_fe/components';
-import { request } from '@lm_fe/utils';
-import { Button } from 'antd';
-import { concat, keyBy, values } from 'lodash';
 import React from 'react';
-import BaseListOld from 'src/BaseListOld';
-import Query, { queryValues } from './components/Query';
 import Table from './components/Table';
+import Query, { queryValues } from './components/Query';
 import { tableColumns } from './config/table';
+import { Button } from 'antd';
+import { EyeOutlined, ImportOutlined } from '@ant-design/icons';
+import { request } from '@lm_fe/utils';
+import { map, concat, keyBy, values } from 'lodash';
+import BaseListOld from 'src/BaseListOld';
 export default class List extends BaseListOld {
   static defaultProps = {
     baseUrl: '/api/wives',
@@ -49,10 +49,10 @@ export default class List extends BaseListOld {
         return (
           <>
             <Button className="table-action-btn" onClick={this.handleView(rowData)}>
-              <MyIcon value='EyeOutlined' title="查看" />
+              <EyeOutlined title="查看" />
             </Button>
             <Button title="导入" className="table-action-btn" type="primary" onClick={this.handleExport(rowData)}>
-              <MyIcon value='ImportOutlined' />
+              <ImportOutlined />
             </Button>
           </>
         );

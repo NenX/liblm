@@ -1,10 +1,11 @@
+import { ExportOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React from 'react';
 
-import { BaseQuery, MyIcon } from '@lm_fe/components_m';
-import { downloadFile, request } from '@lm_fe/utils';
 import { cloneDeep, isNil, map } from 'lodash';
 import { queryFormDescriptions } from '../config/form';
+import { BaseQuery } from '@lm_fe/components_m';
+import { downloadFile, request } from '@lm_fe/utils';
 
 class Query extends BaseQuery {
   state: any = { queryFormDescriptions };
@@ -12,13 +13,13 @@ class Query extends BaseQuery {
   renderBtn = () => {
     return (
       <React.Fragment>
-        <Button icon={<MyIcon value='RedoOutlined' />} onClick={this.handleReset}>
+        <Button icon={<RedoOutlined />} onClick={this.handleReset}>
           重置
         </Button>
-        <Button type="primary" icon={<MyIcon value='SearchOutlined' />} htmlType="submit">
+        <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
           查询
         </Button>
-        <Button type="primary" icon={<MyIcon value='ExportOutlined' />} onClick={this.handleExport}>
+        <Button type="primary" icon={<ExportOutlined />} onClick={this.handleExport}>
           导出
         </Button>
       </React.Fragment>

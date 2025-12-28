@@ -4,7 +4,6 @@ import { get } from 'lodash';
 import { Component } from 'react';
 import Deathclassification from './deathclassification';
 import styles from './index.less';
-import React from "react";
 // import Modal from '@/pages/deliver-management-v2/admission/deliver-edit/components/CaseTemplete/Modal';
 interface IProps {
   onChange: Function;
@@ -17,10 +16,10 @@ interface IProps {
 interface IState {
   modalVisible: boolean;
   value: any;
-  inputValue: any;
-  modalcontent: any;
-  str: any;
-  classificationData: any;
+  inputValue:any;
+  modalcontent:any;
+  str:any;
+  classificationData:any;
 }
 export default class TextareaWithTemplate extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -43,10 +42,10 @@ export default class TextareaWithTemplate extends Component<IProps, IState> {
     onChange && onChange(e.target.value);
   };
   openModal = async (value, data) => {
-    let detail = await request.get('/api/ic/getMaternalDeathClassifications');
-    this.setState({
-      classificationData: detail.data,
-    });
+        let detail = await request.get('/api/ic/getMaternalDeathClassifications');
+        this.setState({
+          classificationData: detail.data,
+        });
     this.setState({ modalVisible: true });
   };
 
@@ -61,28 +60,28 @@ export default class TextareaWithTemplate extends Component<IProps, IState> {
     // }
 
   };
-  onOk = (data) => {
+  onOk=(data)=>{
     const { onChange } = this.props;
     this.setState({ modalVisible: false });
-    if (data !== [] && data !== undefined) {
-      this.setState({
-        value: this.state.str.join('/')
-      })
-      onChange && onChange(this.state.str.join('/'));
+    if (data !== [] && data !== undefined) { 
+        this.setState({
+          value:this.state.str.join('/')
+        })
+        onChange && onChange(this.state.str.join('/'));
     }
   }
-
+ 
   listClick = (e) => {
-
-    if (!this.state.str.includes(e.target.innerText)) {
+    
+    if(!this.state.str.includes(e.target.innerText)){
       this.setState({
         str: [...this.state.str, e.target.innerText],
       });
-    } else {
+    }else{
       message.error("不可重复添加")
     }
-
-
+     
+    
   };
 
   onDeselect = (val) => {
@@ -93,18 +92,18 @@ export default class TextareaWithTemplate extends Component<IProps, IState> {
       str: data,
     });
   };
-  ificationReset = () => {
+  ificationReset=()=>{
     this.setState({
       str: [],
     });
   }
   render() {
-    const { modalVisible, value, inputValue } = this.state;
+    const { modalVisible, value,inputValue } = this.state;
 
-
+    
     const { disabled, patientId, admissionId, pregnancyId } = this.props;
-
-
+   
+    
     const inputProps = get(this.props, 'config.inputProps') || {};
     return (
       <div className={styles["textarea-with-template"]}>
@@ -121,7 +120,7 @@ export default class TextareaWithTemplate extends Component<IProps, IState> {
           }}
         />
         {modalVisible && (
-          // ></Deathclassification>
+        // ></Deathclassification>
           <Deathclassification
             visible={modalVisible}
             str={this.state.str}
@@ -136,7 +135,7 @@ export default class TextareaWithTemplate extends Component<IProps, IState> {
             admissionId={admissionId}
             pregnancyId={pregnancyId}
             index="Maternal"
-          // deleteinputValue={this.deleteinputValue}
+            // deleteinputValue={this.deleteinputValue}
           />
         )}
       </div>

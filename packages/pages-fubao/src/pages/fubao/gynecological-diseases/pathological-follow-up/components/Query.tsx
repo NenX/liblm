@@ -12,7 +12,6 @@ import { queryFormDescriptions } from '../config/form';
 import { downloadFile, formatDate as formatTimeToDate } from '@lm_fe/utils'
 import { map, isNil } from 'lodash';
 import { fubaoRequest as request } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 export default class Query extends BaseQuery {
   state = { queryFormDescriptions };
   renderBtn = () => (
@@ -30,7 +29,7 @@ export default class Query extends BaseQuery {
   );
 
   handleExport = async () => {
-    mchcEnv.info('暂无开放此功能，敬请期待！');
+    message.info('暂无开放此功能，敬请期待！');
     return;
     const data = await this.form.getFieldsValue();
     let queryData = {};

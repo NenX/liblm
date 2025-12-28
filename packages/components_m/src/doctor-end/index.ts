@@ -1,6 +1,6 @@
 import { lazy } from 'react'
-// export * from './Preeclampsia'
-// export * from './ScarredUterus'
+export * from './Preeclampsia'
+export * from './ScarredUterus'
 
 // export * from './HeaderInfoLayout'
 // export * from './HeaderInfo'

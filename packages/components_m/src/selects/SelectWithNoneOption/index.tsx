@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { get, map, set, compact, isEmpty, includes, without } from 'lodash';
 import { LazyAntd } from '@lm_fe/components';
-import { safe_json_parse } from '@lm_fe/utils';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 interface IProps {
   config: {};

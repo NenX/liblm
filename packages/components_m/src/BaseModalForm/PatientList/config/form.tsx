@@ -1,11 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
 import React from 'react';
+import { SearchOutlined } from '@ant-design/icons';
 export const queryFormDescriptions = {
   outpatientNO: {
     label: '门诊号',
     inputType: 'input',
     filterType: '',
-    prefix: <MyIcon value='SearchOutlined' />,
+    prefix: <SearchOutlined />,
   },
   name: {
     label: '姓名',

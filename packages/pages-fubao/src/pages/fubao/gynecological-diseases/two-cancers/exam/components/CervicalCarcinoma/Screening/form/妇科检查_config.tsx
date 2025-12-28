@@ -1,3 +1,5 @@
+import { get_check_invert_values } from "@lm_fe/components_m";
+import { mchcEnv } from "@lm_fe/env";
 import { IMchc_FormDescriptions_Field } from "@lm_fe/service";
 
 export function 妇科检查_config() {
@@ -79,7 +81,11 @@ export function 妇科检查_config() {
                 "key": "selectBtn",
                 "label": "一键勾选",
                 "inputType": "check_invert_button",
-     
+                inputPropsFn() {
+                    return {
+                        check_invert_values: get_check_invert_values(cache)
+                    }
+                },
                 layout: "1/3",
 
             }]

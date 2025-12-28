@@ -10,42 +10,37 @@ export * from './types'
 
 
 class Mchc_Admission_Service extends ModelService<IMchc_Admission> {
-    getSpecialDatayByParam(data: { code: any, [x: string]: any }) {
-        return request.post<IMchc_Admission_Document[]>('/api/getSpecialDatayByParam', data, { successText: '操作成功!' })
-            .then(res => expect_array(res.data))
+    async getSpecialDatayByParam(data: { code: any, [x: string]: any }) {
+        const res = await request.post<IMchc_Admission_Document[]>('/api/getSpecialDatayByParam', data, { successText: '操作成功!' })
+        return expect_array(res.data)
     }
-    calculateTotalInputAndOutput(data: any[]) {
+    async calculateTotalInputAndOutput(data: any[]) {
 
-        return request.post('/api/calculateTotalInputAndOutput', data, { successText: '操作成功!' })
-            .then(res => expect_array(res.data))
-
+        const res = await request.post('/api/calculateTotalInputAndOutput', data, { successText: '操作成功!' })
+        return expect_array(res.data)
     }
-    updateNursingDocument<T extends MchcTypes>(data: Partial<IMchc_Admission_Document<T>>) {
-        return request.post<IMchc_Admission_Document<T>>('/api/updateNursingDocument', data, { successText: '操作成功!' })
-            .then(res => processDocument(res.data))
-
+    async updateNursingDocument<T extends MchcTypes>(data: Partial<IMchc_Admission_Document<T>>) {
+        const res = await request.post<IMchc_Admission_Document<T>>('/api/updateNursingDocument', data, { successText: '操作成功!' })
+        return processDocument(res.data)
     }
-    newNursingDocument<T extends MchcTypes>(data: Partial<IMchc_Admission_Document<T>>) {
-        return request.post<IMchc_Admission_Document<T>>('/api/newNursingDocument', data, { successText: '操作成功!' })
-            .then(res => processDocument(res.data))
+    async newNursingDocument<T extends MchcTypes>(data: Partial<IMchc_Admission_Document<T>>) {
+        const res = await request.post<IMchc_Admission_Document<T>>('/api/newNursingDocument', data, { successText: '操作成功!' })
+        return processDocument(res.data)
 
     }
-    deleteNursingDocument() {
-        return request.get<string>('/api/deleteNursingDocument').then(r => r.data)
+    async deleteNursingDocument() {
+        return (await request.get<string>('/api/deleteNursingDocument')).data
 
     }
-    getInpatientEmrDocument<T extends MchcTypes>(id: TIdTypeCompatible) {
-        return request.get<IMchc_Admission_Document<T>>('/api/getInpatientEmrDocument', { params: { id } })
-            .then(res => processDocument(res.data))
-
+    async getInpatientEmrDocument<T extends MchcTypes>(id: TIdTypeCompatible) {
+        const res = await request.get<IMchc_Admission_Document<T>>('/api/getInpatientEmrDocument', { params: { id } })
+        return processDocument(res.data)
 
     }
-    importNursingDocument<T extends MchcTypes>(id: TIdTypeCompatible, code: string) {
-        return request.get<IMchc_Admission_Document<T>>('/api/importNursingDocument', { params: { id, code } })
+    async importNursingDocument<T extends MchcTypes>(id: TIdTypeCompatible, code: string) {
+        const res = await request.get<IMchc_Admission_Document<T>>('/api/importNursingDocument', { params: { id, code } })
 
-
-            .then(res => processDocument(res.data))
-
+        return processDocument(res.data)
 
     }
     async newOrUpdateNursingDocument<T extends MchcTypes>(data: Partial<IMchc_Admission_Document<T>>) {

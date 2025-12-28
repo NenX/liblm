@@ -1,9 +1,10 @@
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useMyEffectSafe } from '@lm_fe/components';
 import { mchcDriver, mchcEvent } from "@lm_fe/env";
 import { IdNOButton, mchcModal__, MyBaseListProps, QuickDocButton, safe_navigate } from '@lm_fe/pages';
 import { IMchc_Pregnancy } from "@lm_fe/service";
 import { downloadFile, request } from "@lm_fe/utils";
-import { Button, Form, Popconfirm, Space } from "antd";
+import { Button, Form, Popconfirm, Space, Tooltip } from "antd";
 import { get } from "lodash";
 import React, { useEffect } from "react";
 import PrenatalModal from "../components/prenatal-modal/prenatal-modal";
@@ -62,12 +63,6 @@ export function useTableConfig(props: any) {
     };
     function handlePrenatal(rowData: any) {
         mchcModal__.open('test', {
-            title: null,
-            closeIcon: null,
-            styles: {
-                header: { width: 0, height: 0 },
-
-            },
             modal_data: {
                 content: <PrenatalModal
                     selectedRowData={rowData}
@@ -119,7 +114,7 @@ export function useTableConfig(props: any) {
         RenderSearchBtns({ handleSearch, getSearchParams }) {
             return <>
 
-                {/* <OkButton disabled btn_text='读取身份证' /> */}
+                {/* <OkButton disabled text='读取身份证' /> */}
 
             </>
         },

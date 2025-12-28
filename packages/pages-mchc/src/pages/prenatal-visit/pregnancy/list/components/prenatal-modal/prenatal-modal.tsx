@@ -1,12 +1,14 @@
-import { MyIcon, PDFPreview_View } from '@lm_fe/components_m';
-import { BmiCanvas, FetusCanvas, FetusCanvasNICHD, Pregnogram, mchcModal__ } from '@lm_fe/pages';
-import { request, sleep } from '@lm_fe/utils';
-import { Button, Checkbox } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, PrinterOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Spin } from 'antd';
 import classnames from 'classnames';
 import { cloneDeep, findIndex, get, includes, map, remove, size } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { PRENATALLIST, prenatalEnum, prenatalToResource, previewEnum, printapi } from './constant';
+import { BmiCanvas, FetusCanvas, FetusCanvasNICHD, PDFPreview_View, Pregnogram } from '@lm_fe/components_m';
+import { request, sleep } from '@lm_fe/utils';
 import './index.less';
+import { mchcLogger } from '@lm_fe/env';
+import { mchcModal__ } from '@lm_fe/pages';
 interface IProps {
   [key: string]: any;
 }
@@ -303,14 +305,12 @@ export default function PrenatalModal({ ...props }: IProps) {
   return (
     <div className="prenatal-modal-container">
       <div className="prenatal-modal-container_mian">
-        <MyIcon
-          value='ArrowLeftOutlined'
+        <ArrowLeftOutlined
           type="icon-backx"
           className={classnames('mian-icon mian-back', { 'icon-disabled': currentCount == 0 })}
           onClick={handleIcon('last')}
         />
-        <MyIcon
-          value='ArrowRightOutlined'
+        <ArrowRightOutlined
           type="icon-backx"
           className={classnames('mian-icon mian-last', { 'icon-disabled': currentCount == 7 })}
           onClick={handleIcon('next')}
@@ -332,17 +332,16 @@ export default function PrenatalModal({ ...props }: IProps) {
                 全部预览
               </Button> */}
             </div>
-            <MyIcon
-              value='CloseOutlined'
+            <CloseOutlined
               style={{ fontSize: 22 }}
               onClick={handleClose}
             />
           </div>
-          <div className="mian-content-details" style={{ overflowY: 'auto' }}>
+          <div className="mian-content-details" style={{ overflowY: 'scroll' }}>
             <div className="details_show">{detailsShow()}</div>
           </div>
           <div className="mian-content-footer">
-            <Button type="primary" disabled={isPrint} onClick={handlePrint} icon={<MyIcon value='PrinterOutlined' type="icon-print" />}>
+            <Button type="primary" disabled={isPrint} onClick={handlePrint} icon={<PrinterOutlined type="icon-print" />}>
               打印
             </Button>
           </div>

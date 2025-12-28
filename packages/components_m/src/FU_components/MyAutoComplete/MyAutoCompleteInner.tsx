@@ -1,7 +1,7 @@
-import { getInputStyle, MyIcon } from '@lm_fe/components';
+import { CloseOutlined } from '@ant-design/icons';
 import { AutoComplete, Button } from 'antd';
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { getInputStyle } from '../../utils';
 import { MyAutoCompleteProps } from './types';
 import { useConfig_MyAutoComplete } from './useConfig';
 
@@ -9,7 +9,7 @@ import { useConfig_MyAutoComplete } from './useConfig';
 export default function MyAutoCompleteInner(props: MyAutoCompleteProps) {
 
   const {
-    popupMatchSelectWidth = 120,
+    dropdownMatchSelectWidth = 120,
     getPopupContainer = () => document.body,
     options: _options,
     style = {},
@@ -29,7 +29,7 @@ export default function MyAutoCompleteInner(props: MyAutoCompleteProps) {
 
   return (
     <AutoComplete
-      popupMatchSelectWidth={popupMatchSelectWidth}
+      dropdownMatchSelectWidth={dropdownMatchSelectWidth}
       style={_style}
       // bordered={false}
       allowClear
@@ -52,7 +52,7 @@ export default function MyAutoCompleteInner(props: MyAutoCompleteProps) {
                   title="删除"
                   size='small'
                   type='dashed'
-                  icon={<MyIcon value='CloseOutlined' />}
+                  icon={<CloseOutlined />}
                   onClick={e => {
                     e.stopPropagation()
                     remove(item)

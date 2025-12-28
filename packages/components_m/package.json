@@ -1,14 +1,14 @@
 {
     "name": "@lm_fe/components_m",
-    "version": "0.2.5",
+    "version": "0.1.203",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "rollup -c rollup.config.js",
-        "build:watch": "rimraf -rf ./dist/index.d.ts && rollup -c rollup.config.js --watch",
+        "build:watch": "rm -f ./dist/index.d.ts && rollup -c rollup.config.js --watch",
         "clean": "rimraf dist",
         "gen-modals": "gen-routes --source=./src/modals/entries --target=./src/modals/meta.ts --underline",
-        "prebuild:watch": "echo gen-modals",
+        "prebuild:watch": "pnpm gen-modals",
         "prebuild": "pnpm clean"
     },
     "main": "dist/index.js",
@@ -20,47 +20,34 @@
     ],
     "keywords": [],
     "author": "",
-    "peerDependencies": {
-        "axios": ">=0.26.0",
-        "braft-editor": ">=2.3.9",
-        "classnames": "*",
-        "dayjs": "^1.11.13",
-        "echarts": "^5.0.1",
-        "fabric": "5.*",
-        "history": "^4.9.0",
-        "quill": "1.*",
-        "quill-image-resize-module": "3.*",
-        "react": "*",
-        "react-container-dimensions": "1.4.1",
-        "react-dnd": "^11.1.3",
-        "react-dnd-html5-backend": "^11.1.3",
-        "react-keep-alive-pro": "*",
-        "react-quill": "1.*",
-        "react-resizable": "3.0.4",
-        "react-router-dom": "^5.2.0",
-        "react-to-print": "^2.14.7",
-        "reconnecting-websocket": "4.x"
-    },
     "devDependencies": {
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
         "acorn-jsx": "^5.3.2",
         "less": "^4.1.2",
-        "rimraf": "^6.0.1",
         "rollup": "^2.70.2",
         "rollup-plugin-postcss": "^4.0.2"
     },
     "dependencies": {
-        "@lm_fe/components": "^0.2.5",
-        "@lm_fe/env": "^0.2.5",
-        "@lm_fe/provoke": "^0.2.5",
-        "@lm_fe/scripts": "*",
-        "@lm_fe/service": "^0.2.5",
-        "@lm_fe/utils": "^0.2.5"
+        "@lm_fe/components": "^0.1.203",
+        "@lm_fe/env": "^0.1.203",
+        "@lm_fe/scripts": "0.1.102",
+        "@lm_fe/service": "^0.1.203",
+        "@lm_fe/static": "*",
+        "@lm_fe/utils": "^0.1.203",
+        "axios": ">=0.26.0",
+        "braft-editor": ">=2.3.9",
+        "classnames": "*",
+        "echarts": "^5.0.1",
+        "history": "^4.9.0",
+        "qrcode.react": "^1.0.0",
+        "quill": "1.*",
+        "react-quill": "1.*",
+        "react-to-print": "^2.14.7"
     },
     "publishConfig": {
         "access": "public"
     },
     "license": "MIT",
-    "gitHead": "9e8eab8af4aa2675ed973be51fe85cf2e3c2ed27"
+    "gitHead": "4b4f8e475bb35ea8c44bd441d239583e45e75981"
 }

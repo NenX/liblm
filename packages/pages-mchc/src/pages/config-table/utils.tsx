@@ -1,4 +1,4 @@
-import { safe_get_symbol, mchcEvent, mchcLogger } from "@lm_fe/env";
+import { getSymbolFromDynamicScript, mchcEvent, mchcLogger } from "@lm_fe/env";
 import { config_table_fd, mchcModal__, MyBaseListProps } from "@lm_fe/pages";
 import { IMchc_TableConfig, ModelService, SMchc_TableConfig, TIdType } from "@lm_fe/service";
 import { get_global_happy_arg, getHappyConfig, request, safeGetFromFuncOrData } from "@lm_fe/utils";
@@ -20,16 +20,16 @@ export function getConfigOne(props: ICommonProps) {
     })
 }
 export function useConfigHook(props?: any) {
-    const model = useRef<ModelService | null>()
+    const model = useRef<ModelService>()
     const [config, setconfig] = useState<Partial<IMchc_TableConfig>>()
     const config_raw = useRef<Partial<IMchc_TableConfig>>()
     const _requesting = useRef(false)
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        _fetch_conf()
+        fetch_config()
     }, [props])
 
-    function _fetch_conf() {
+    function fetch_config() {
         if (!_requesting.current) {
             _requesting.current = true
             setLoading(true)
@@ -62,7 +62,7 @@ export function useConfigHook(props?: any) {
                     } else {
                         await SMchc_TableConfig.post(v, { ignore_usr: true })
                     }
-                    await _fetch_conf()
+                    await fetch_config()
                     return 1
                 },
                 formDescriptions: config_table_fd
@@ -74,7 +74,7 @@ export function useConfigHook(props?: any) {
     useEffect(() => {
         const watchScript = config?.watchScript
         // const _message = message
-        const rm = mchcEvent.on_rm('my_form', safe_get_symbol(watchScript!, props) ?? function (event) {
+        const rm = mchcEvent.on_rm('my_form', getSymbolFromDynamicScript(watchScript!, props) ?? function (event) {
 
 
         })
@@ -86,7 +86,7 @@ export function useConfigHook(props?: any) {
     return [config, model, edit_config, loading] as const
 }
 export function getM(config?: Partial<IMchc_TableConfig>) {
-    if (!config?.name) return null
+    if (!config?.name) return
     return new ModelService({ n: config.name, needTransferParams: false, apiPrefix: config.apiPrefix })
 }
 export function getConfigFullUrl(config?: TConfig) {

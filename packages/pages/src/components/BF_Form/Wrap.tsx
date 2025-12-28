@@ -1,62 +1,29 @@
-import { Dropdown_L, LoadingPlaceholder, MyIcon, MyLazyComponent, OkButton } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
-import { use_provoke } from '@lm_fe/provoke';
-import { Button, MenuProps, Result } from 'antd';
+import { LazyAntd, LoadingPlaceholder, MyLazyComponent, OkButton } from '@lm_fe/components_m';
+import { SLocal_State } from '@lm_fe/service';
+import { Menu, Result } from 'antd';
 import React, { FC, ReactNode, useMemo } from 'react';
 import { ErrorBoundarySmall } from '../exception/ErrorBoundarySmall';
-import { IBF_props } from './types';
-import { use_table_config } from './use_table_config';
+import { IBF_props, use_table_config } from './use_table_config';
+import styles from './wrap.module.less';
+import { BuildOutlined } from '@ant-design/icons';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
-
-
-
-
-const items: MenuProps['items'] = [
-    // {
-    //     label: '編輯',
-    //     key: 'edit',
-    //     icon: <SettingOutlined />,
-    // },
-    {
-        label: '初始',
-        key: 'init',
-        icon: <MyIcon value='UndoOutlined' />,
-    },
-
-];
-
-export function BF_Wrap2(setting: IBF_props, props?: any) {
+export function BF_Wrap2(setting: IBF_props & {}, props?: any) {
 
     const { config, edit_config, init_config, loading, recover_config } = use_table_config(setting, props)
-    const sys_theme = use_provoke(s => s.sys_theme)
-
-    const handleMenuClick: MenuProps['onClick'] = (e) => {
-        if (e.key === 'edit') {
-            edit_config()
-        }
-        if (e.key === 'init') {
-            recover_config()
-        }
-    };
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
-
-
     const Wrap = useMemo<FC<{ style?: React.CSSProperties, children?: ReactNode }>>(
         () => ({ children, style = {} }) => {
             if (loading) return <LoadingPlaceholder />
+            const menu = (
+                <Menu>
+                    <Menu.Item onClick={() => edit_config()}>编辑</Menu.Item>
+                    <Menu.Item onClick={() => recover_config()}>初始</Menu.Item>
+                </Menu>
+            )
+            const isAdmin = SLocal_State.isAdmin
 
-            const isAdmin = mchcEnv.isAdmin || __DEV__
-
-            return <div style={{
-                ...style,
-                // height: '100%',
-                position: 'relative',
-                border: (isAdmin && !__DEV__) ? `1px dashed ${sys_theme.colorPrimary}` : 'none'
-            }}>
+            return <div style={{ ...style, background: '#fff', position: 'relative', border: isAdmin ? '1px dashed red' : 'none' }}>
 
                 {
                     config
@@ -71,28 +38,17 @@ export function BF_Wrap2(setting: IBF_props, props?: any) {
 
                             {
                                 isAdmin
-                                    ? <Dropdown_L
-                                        // title='编辑配置'
-                                        // type='primary'
-                                        // style={{ position: 'absolute', top: 6, right: 6, opacity: .8, width: 'auto' }}
-                                        // size='small'
-                                        menu={menuProps}
+                                    ? <Dropdown.Button
+                                        icon={<BuildOutlined />}
+                                        className={styles['edit-btn']}
+                                        size='small'
+                                        overlay={menu}
                                         trigger={['hover']}
                                     >
-                                        <Button
-                                            onClick={() => edit_config()}
-
-                                            size='small'
-                                            shape='circle'
-                                            type='primary'
-                                            style={{ position: 'absolute', top: 6, right: 6, opacity: .8, width: 'auto' }}
-                                            icon={<MyIcon value='AppstoreOutlined' />}
-                                        />
-
 
                                         {/* <div style={{ position: 'absolute', top: 6, right: 6, cursor: 'help' }} ><DownOutlined /></div> */}
 
-                                    </Dropdown_L>
+                                    </Dropdown.Button>
                                     : null
                             }
 
@@ -119,5 +75,3 @@ export function BF_Wrap2(setting: IBF_props, props?: any) {
         Wrap
     }
 };
-
-Object.assign(window, { BF_Wrap2 })

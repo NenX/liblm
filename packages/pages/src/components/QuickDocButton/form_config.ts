@@ -3,7 +3,7 @@ import { defineFormConfig } from "@lm_fe/service";
 const ctx = rt_ctx
 export default defineFormConfig(
     [
-        { label: '证件类型', name: 'idType', required: () => ctx.required, inputType: 'MS', inputProps: { uniqueKey: '证件类型', marshal: 0 }, layout: '1/3' },
+        { label: '证件类型', name: 'idType', required: () => ctx.required, inputType: 'MS', inputProps: { optionKey: '证件类型', marshal: 0 }, layout: '1/3' },
         { label: '证件号码', name: 'idNO', required: () => ctx.required, inputType: 'Input', inputProps: {}, layout: '1/3' },
         { label: '就诊卡号', name: 'outpatientNO', required: () => ctx.required, inputType: 'Input', inputProps: {}, layout: '1/3' },
         { label: '姓名', name: 'name', required: () => ctx.required, inputType: 'Input', inputProps: {}, layout: '1/3' },

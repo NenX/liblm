@@ -11,7 +11,6 @@ import { getFutureDate, getSearchParamsValue } from '@lm_fe/utils';
 import dayjs from 'dayjs';
 import { allowanceAccount, freeAllowance } from './data';
 import './index.less';
-import { mchcEnv } from '@lm_fe/env';
 
 const TreeSelect = LazyAntd.TreeSelect
 
@@ -70,12 +69,12 @@ export default class InformedConsent extends Component {
   };
 
   handleSave = async (content) => {
-    const { head_info } = this.props;
+    const { pregnancyData } = this.props;
     let { informedConsent } = this.state;
     const data = {
       ...informedConsent,
       content,
-      pregnancy: head_info,
+      pregnancy: pregnancyData,
       createDate: formatTimeToUTC(dayjs()),
       documentTemplate: get(informedConsent, 'documentTemplate'),
     };
@@ -84,7 +83,7 @@ export default class InformedConsent extends Component {
     } else {
       informedConsent = await createInformedConsent(data);
     }
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
     this.setState({
       informedConsent,
     });
@@ -111,14 +110,14 @@ export default class InformedConsent extends Component {
   };
 
   transferContent = (oldContent, allowanceObj) => {
-    const { head_info } = this.props;
-    set(head_info, 'freeAllowance', allowanceObj);
+    const { pregnancyData } = this.props;
+    set(pregnancyData, 'freeAllowance', allowanceObj);
     const reg = /\[\{\{.+?\}\}\]/g;
     const result = oldContent.matchAll(reg);
     let newContent = oldContent;
     for (const item of result) {
       if (item) {
-        newContent = newContent.replace(item[0], get(head_info, item[0].slice(3, -3)) || '   ');
+        newContent = newContent.replace(item[0], get(pregnancyData, item[0].slice(3, -3)) || '   ');
       }
     }
     return newContent;
@@ -284,8 +283,8 @@ export default class InformedConsent extends Component {
               <CaseTempleteEdit
                 key={get(informedConsent, 'id') || Math.random()}
                 containerProps={{ ...containerProps, height: containerProps.height - 88 }}
-                value={get(informedConsent, 'content')}
-                onChange={this.handleSave}
+                content={get(informedConsent, 'content')}
+                onSave={this.handleSave}
                 toolbars={false}
                 mode="STRICT"
               />

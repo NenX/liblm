@@ -41,7 +41,7 @@ export default (props: any) => {
             return (await request.get(`/api/gynecological-visits/${id}`)).data
         }
         if (__DEV__) {
-            await sleep(2 * 1000)
+            await sleep(2)
             return null
         }
         let login_res = await request.post<{ gynecologicalVisit: any }>(`/api/gynecological-patients/login`, getSearchParamsAll());
@@ -58,7 +58,7 @@ export default (props: any) => {
                 set(res, 'doctorName', res?.doctorName ?? SLocal_State.userData?.login)
 
                 setData(res)
-                await sleep(1 * 1000)
+                await sleep(1)
                 form.setFieldsValue(res)
             })
             .finally(() => setLoading(false))
@@ -74,7 +74,7 @@ export default (props: any) => {
         // { title: '联系电话', value: get(data, 'gynecologicalPatient.telephone') },
     ]
     const empty_node = loading ? <LoadingPlaceholder /> : <Result status="warning" title="请到护士站报到" />
-    return data ? <div style={{ background: '#fff', height: '100%', overflowY: 'auto' }}>
+    return data ? <div style={{ background: '#fff', height: '100%', overflowY: 'scroll' }}>
         <PanelTitle headerItems={h} />
         <Wrap>
             <MyFormSectionForm

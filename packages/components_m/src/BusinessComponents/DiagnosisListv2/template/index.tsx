@@ -1,10 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
+import { UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { SMchc_TemplateTrees } from '@lm_fe/service';
 import { Button, Input, message, Modal, Tabs } from 'antd';
 import { get, isString, map, omit, set, size } from 'lodash';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import TemplateTree from '../TemplateTree';
 import styles from './index.module.less';
+import React from 'react';
 export default class Index extends Component {
   state = {
     activeKey: '1',
@@ -65,7 +66,7 @@ export default class Index extends Component {
   };
 
   render() {
-    const { isShowDiagnosesTemplate, basicInfo } = this.props;
+    const { isShowDiagnosesTemplate, basicInfo, diagnosesWord } = this.props;
     const { allDiagnosesTemplate, activeKey } = this.state;
 
     return (
@@ -81,7 +82,7 @@ export default class Index extends Component {
           className={styles["diag-ipt"]}
           placeholder="请输入诊断信息"
           enterButton="添加诊断"
-          defaultValue={''}
+          defaultValue={diagnosesWord}
           onChange={(e) => this.handleChange(e.target.value)}
           onSearch={this.handleSearch}
         />
@@ -93,13 +94,12 @@ export default class Index extends Component {
                   {get(item, 'code') ? '（icd）' : null}
                   {get(item, 'val')}
                 </span>
-                <MyIcon value='UsergroupAddOutlined'
+                <UsergroupAddOutlined
                   className={styles["diag-icon"]}
                   title="同步到科室诊断"
                   onClick={() => this.handleAddIcon(item, 2)}
                 />
-                <MyIcon
-                value='UserAddOutlined'
+                <UserAddOutlined
                   className={styles["diag-icon"]}
                   title="同步到个人诊断"
                   onClick={() => this.handleAddIcon(item, 3)}

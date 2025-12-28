@@ -2,6 +2,7 @@
   height: 100%;
   overflow: hidden;
   &-list {
+    background-color: #fff;
     height: 100%;
     overflow-y: auto;
     .ant-card {
@@ -12,6 +13,7 @@
     }
     .ant-collapse > .ant-collapse-item > .ant-collapse-header {
       padding: 8px;
+      background: #f5f6fa;
       .ant-collapse-arrow {
         position: initial;
       }
@@ -25,12 +27,16 @@
     }
     &__item {
       cursor: pointer;
-
+      &_active {
+        background: #eaf4fd;
+      }
     }
   }
   &-detail {
     padding-left: 12px;
-
+    &-block {
+      background-color: #ffffff;
+    }
     .case-templete-container {
       .sde-toolbars {
         // display: none;

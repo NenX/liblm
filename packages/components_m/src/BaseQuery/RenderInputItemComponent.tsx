@@ -39,7 +39,7 @@ const tplMap = {
       <TreeSelect
         allowClear
         // treeDefaultExpandAll
-        popupMatchSelectWidth={false}
+        dropdownMatchSelectWidth={false}
         style={{ minWidth: 135 }}
         treeData={options}
         {...rest}

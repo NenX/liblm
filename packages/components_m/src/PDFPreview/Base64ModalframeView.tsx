@@ -43,7 +43,7 @@ export default function Base64ModalIframeView({ url, requestData = {}, width = 8
       <Spin spinning={loading}>
         <Button onClick={openModal}>{children}</Button>
         <Modal
-          open={visible}
+          visible={visible}
           title="打印预览"
           width={width}
           footer={null}

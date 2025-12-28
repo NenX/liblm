@@ -65,7 +65,11 @@ export default function diagTable({ visitsData, closeModal, headerInfo, isShowHi
 
     return (
       <div className="diag-wrapper" ref={printDiagRef}>
-
+        {/* <div className="diag-first">
+          1、G<span className="diag-GP">{get(pregnancyData, 'gravidity')}</span>P
+          <span className="diag-GP">{get(pregnancyData, 'parity')}</span>
+          妊娠<span className="diag-week">{get(pregnancyData, 'currentGestationalWeek')}</span>周
+        </div> */}
         <div style={{ fontWeight: 700, fontSize: '18px', marginTop: '15px', marginLeft: '15px', marginBottom: '15px' }}>
           <span>{get(headerInfo, 'name')}</span> &nbsp;&nbsp;&nbsp;&nbsp;
           <span>就诊卡号：{get(headerInfo, 'outpatientNO')}</span>&nbsp;&nbsp;&nbsp;&nbsp;

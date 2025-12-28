@@ -11,7 +11,7 @@ export interface IMemoriseItem {
 
 export type MyAutoCompleteProps = Omit<AutoCompleteProps, 'options' | 'onChange'> & {
     onChange?(str?: string): void
-    uniqueKey?: string,
+    optionKey?: string,
     memorieskey?: string,
     memoriesname?: string,
     memorable?: boolean,

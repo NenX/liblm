@@ -6,7 +6,7 @@ import { Button, Card, Checkbox, Col, Collapse, Form, List, Popconfirm, Row, mes
 import classnames from 'classnames';
 import { compact, find, get, isEmpty, keyBy, keys, map, replace, set, split } from 'lodash';
 import dayjs from 'dayjs';
-import { QRCode_L } from '@lm_fe/components';
+import { QRCode } from '@lm_fe/components';
 
 import React, { Component } from 'react';
 import { createInformedConsent, getInformedConsents, updateInformedConsent } from './method';
@@ -15,7 +15,6 @@ import { SLocal_Dictionary } from '@lm_fe/service';
 import { getSearchParamsValue } from '@lm_fe/utils';
 import { getTemplateById } from '@lm_fe/components_m';
 import './index.less';
-import { mchcEnv } from '@lm_fe/env';
 const signStates = [
   { label: '已签', value: '1' },
   { label: '拒签', value: '2' },
@@ -83,7 +82,7 @@ export class InformedConsent extends Component {
     } else {
       informedConsent = await createInformedConsent(data);
     }
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
     this.setState({
       informedConsent,
     });
@@ -280,7 +279,7 @@ export class InformedConsent extends Component {
         </Col>
         <Col className="patient-informed-consent-detail" span={19}>
           <div style={{ display: 'none' }}>
-            <QRCode_L id="qrCode" value={qrCodeData} />
+            <QRCode id="qrCode" value={qrCodeData} />
           </div>
           {isEmpty(informedConsent) && !isNew ? (
             <SelectTip />
@@ -292,7 +291,7 @@ export class InformedConsent extends Component {
                     url="document-templates?moduleType.equals=1&page=0&size=9999"
                     labelKey="title"
                     valueKey="id"
-                    popupMatchSelectWidth={350}
+                    dropdownMatchSelectWidth={350}
                     onChange={this.handleConsentChange}
                     value={get(informedConsent, 'documentTemplate.id')}
                   />
@@ -315,8 +314,8 @@ export class InformedConsent extends Component {
               <CaseTempleteEdit
                 key={get(informedConsent, 'id') || Math.random()}
                 containerProps={{ ...containerProps, height: containerProps.height - 88 }}
-                value={get(informedConsent, 'content')}
-                onChange={this.handleSave}
+                content={get(informedConsent, 'content')}
+                onSave={this.handleSave}
                 toolbars={false}
                 mode="STRICT"
                 hiddenButton={isAllPregnancies}

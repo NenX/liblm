@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { SMchc_TemplateTrees } from '@lm_fe/service';
 
 import { DataNode } from 'antd/lib/tree';
+import { useEffect, useState } from 'react';
 import { rootTemplate, transferTemplates } from '../methods';
 import { needUserIDTypes } from '../common';
 

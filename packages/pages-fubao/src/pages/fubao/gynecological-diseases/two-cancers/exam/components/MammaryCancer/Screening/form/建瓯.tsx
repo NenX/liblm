@@ -3,6 +3,7 @@ import { defineFormConfig } from "@lm_fe/service";
 
 import { IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable } from "@lm_fe/service";
 
+import { get_check_invert_values } from "@lm_fe/components_m";
 import { rt_ctx } from "@lm_fe/env";
 const isRequired = false
 const ctx = rt_ctx;
@@ -492,7 +493,11 @@ function 辅助检查_config_建瓯(): IMchc_FormDescriptions_Field_Nullable[] {
                 {
                     "label": "一键勾选",
                     "inputType": "check_invert_button",
-   
+                    inputPropsFn() {
+                        return {
+                            check_invert_values: get_check_invert_values([cache1])
+                        }
+                    },
                     layout: "1/2",
                 }
             ]
@@ -660,6 +665,11 @@ function 辅助检查_config_建瓯(): IMchc_FormDescriptions_Field_Nullable[] {
                 {
                     "label": "一键勾选",
                     "inputType": "check_invert_button",
+                    inputPropsFn() {
+                        return {
+                            check_invert_values: get_check_invert_values([cache2])
+                        }
+                    },
                     layout: "1/3",
                 }
             ]
@@ -776,7 +786,11 @@ export function 乳房触检_config_建瓯() {
                 {
                     "label": "一键勾选",
                     inputType: 'check_invert_button',
-      
+                    inputPropsFn() {
+                        return {
+                            check_invert_values: get_check_invert_values(cache)
+                        }
+                    }
                 }
             ]
         },
@@ -888,7 +902,11 @@ function 病史情况_config_建瓯() {
                 {
                     inputType: 'check_invert_button',
                     label: '一键勾选',
-
+                    inputPropsFn() {
+                        return {
+                            check_invert_values: get_check_invert_values(cache)
+                        }
+                    }
                 }
 
             ]

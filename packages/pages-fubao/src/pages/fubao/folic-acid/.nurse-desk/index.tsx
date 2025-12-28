@@ -12,7 +12,6 @@ import { get, isEmpty, map, set } from 'lodash';
 import dayjs from 'dayjs';
 import Form from './components/Form';
 import { form_config } from './form_config'
-import { mchcEnv } from '@lm_fe/env';
 class FolicAcidNurse extends BaseEditPanel {
   static defaultProps = {
     baseUrl: '/api/addFolateManagementFile',
@@ -91,11 +90,11 @@ class FolicAcidNurse extends BaseEditPanel {
       ? (await request.put('/api/updateFolateManagementFile', params)).data
       : (await request.post(baseUrl, params)).data
     if (get(res, 'code') === 1) {
-      mchcEnv.success(get(res, 'msg'));
+      message.success(get(res, 'msg'));
 
       SLocal_History.closeAndPush('/fubao/folic-acid/file-management/list')
     } else {
-      mchcEnv.warning(get(res, 'msg'));
+      message.warning(get(res, 'msg'));
     }
   };
 }

@@ -48,12 +48,12 @@ export default function List(props: {}) {
 
   return <Wrap>
     <MyBaseList
-      bf_conf={config}
-
+      name={config?.name}
+      searchParams={config?.searchParams}
       useListSourceCount
-      // initialSearchValue={{}}
+      initialSearchValue={{}}
+      searchConfig={config?.searchConfig}
       showRowPrintBtn
-      showPrint
       ActionAddonBefore={(ctx) => {
         const rowData = ctx.rowData
         const pregnancyId = rowData.pregnancyId
@@ -67,7 +67,7 @@ export default function List(props: {}) {
         // }}  >打印</OkButton>
         return <OkButton size='small' onClick={() => SLocal_History.historyPush(`/prenatal-visit/pregnancy/doctor-end?id=${pregnancyId}`)} >看诊</OkButton>
       }}
-      // tableColumns={__DEV__ ? () => import('./form_config') : config?.tableColumns}
+      tableColumns={__DEV__ ? () => import('./form_config') : config?.tableColumns}
     />
   </Wrap >
 }

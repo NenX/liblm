@@ -1,4 +1,5 @@
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import { PlusOutlined } from '@ant-design/icons';
+import { LazyAntd } from '@lm_fe/components';
 import { request } from '@lm_fe/utils';
 import { Button, Input, Modal, Radio } from 'antd';
 import { cloneDeep } from 'lodash';
@@ -91,7 +92,7 @@ function TemplateModal({ user, visible, onCancel, onSelect }: any) {
       centered
       className={styles["diagnosis-modal"]}
       title="诊断模板"
-      open={visible}
+      visible={visible}
       width={750}
       onCancel={onCancel}
       footer={null}
@@ -111,7 +112,7 @@ function TemplateModal({ user, visible, onCancel, onSelect }: any) {
             <Radio.Button value={3}>个人</Radio.Button>
           </Radio.Group>
           {type !== 1 && (
-            <Button className={styles["diagnosis-modal-search-add"]} icon={<MyIcon value='PlusOutlined' />}>
+            <Button className={styles["diagnosis-modal-search-add"]} icon={<PlusOutlined />}>
               添加模板
             </Button>
           )}

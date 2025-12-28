@@ -20,7 +20,7 @@ export default defineFormConfig(
             "dataIndex": "gender",
             inputType: 'MS',
             "inputProps": {
-                "uniqueKey": "性别2"
+                "optionKey": "性别2"
             }
         },
         {

@@ -26,9 +26,9 @@ export default function Test(props: IProps) {
     useEffect(() => {
         fetchData()
     }, [searchParams])
-    return <div style={{ height: '99%', }}>
+    return <div style={{ height: '100%', }}>
         <Radio.Group optionType='button' style={{margin:'10px'}} onChange={e=>setTabType(e.target.value)}  value={tabType} buttonStyle='solid' size='small' options={['判图', '历史'].map(label => ({ label, value: label }))} />
-        <div style={{ height: 'calc(99% - 50px)' }}>
+        <div style={{ height: 'calc(100% - 50px)' }}>
             {
                 tabType === '判图' ?
                     <Analyse /> :

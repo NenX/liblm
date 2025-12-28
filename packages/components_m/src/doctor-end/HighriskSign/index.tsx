@@ -64,7 +64,7 @@ class Index extends Component {
 
   handleSign = async () => {
     const { checkedNodes } = this.state;
-    const { setHighriskSign, pregnancyData } = this.props;
+    const { setHighriskSign, pregnancyData, getPregnancyData } = this.props;
     const { id, highriskGrade, highriskNote = '' } = pregnancyData;
 
     let level = 'Ⅰ';
@@ -90,6 +90,7 @@ class Index extends Component {
     };
     await SMchc_Pregnancy.put(signData);
 
+    await getPregnancyData(id);
     setHighriskSign([]);
     // this.handelNeverShow();
   };

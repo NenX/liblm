@@ -1,56 +1,58 @@
+import React, { Component } from 'react';
+import { Tabs } from 'antd';
+import { get, size } from 'lodash';
+import { api } from '../.api';
+import BloodGlucose from './components/BloodGlucose';
+import BloodPressure from './components/BloodPressure';
+import FetalMovement from './components/FetalMovement';
+import './index.less';
 import { mchcUtils } from '@lm_fe/env';
-import { Card, Tabs } from 'antd';
-import React, { lazy, useState } from 'react';
 
-import { Seg } from './Seg';
-import { OkButton } from '@lm_fe/components_m';
-import { mchcModal__ } from '@lm_fe/pages';
-const BloodGlucose_static = lazy(() => import('./BloodGlucose/static'))
-const BloodGlucose_record = lazy(() => import('./BloodGlucose/record'))
-const BloodPressure_static = lazy(() => import('./BloodPressure/static'))
-const BloodPressure_record = lazy(() => import('./BloodPressure/record'))
-const FetalMovement_static = lazy(() => import('./FetalMovement/static'))
-const FetalMovement_record = lazy(() => import('./FetalMovement/record'))
-export function DoctorEnd_HomeCare(props: any) {
+export class DoctorEnd_HomeCare extends Component {
+  state = {
+    defaultActiveKey: null,
+    bloodGlucose: [],
+    bloodPressure: [],
+    fetalMovement: [],
+  };
 
-  const pregnancyId = mchcUtils.single_id(props);
-  const [tabKey, setTabKey] = useState('BloodGlucoseInHome')
+  async componentDidMount() {
+    const pregnancyId = mchcUtils.getDoctorEndId(this.props);
+    const bloodGlucose = await api.home.getBloodGlucoseInHome(pregnancyId);
+    const bloodPressure = await api.home.getBloodPressureInHome(pregnancyId);
+    const fetalMovement = await api.home.getFetalMovementInHome(pregnancyId);
+    this.setState({
+      bloodGlucose,
+      bloodPressure,
+      fetalMovement,
+    });
+    if (size(bloodGlucose) > 0) {
+      this.setState({ defaultActiveKey: 'bloodGlucose' });
+    } else if (size(bloodPressure) > 0) {
+      this.setState({ defaultActiveKey: 'bloodPressure' });
+    } else if (size(fetalMovement) > 0) {
+      this.setState({ defaultActiveKey: 'fetalMovement' });
+    } else {
+      this.setState({ defaultActiveKey: 'bloodGlucose' });
+    }
+  }
 
-  return (
-    <Card size='small' actions={[<OkButton btn_text='打印' onClick={() =>
-      mchcModal__.open('print_modal', {
-        modal_data: {
-          requestData: {
-            url: '/api/pdf-preview',
-            id: pregnancyId,
-            resource: tabKey,
-
-          }
-        }
-      })} />]}>
-      <Tabs activeKey={tabKey} onChange={setTabKey} destroyOnHidden >
-        <Tabs.TabPane tab="血糖" key="BloodGlucoseInHome">
-          <Seg
-            pregnancyId={pregnancyId}
-            Static={BloodGlucose_static}
-            Record={BloodGlucose_record}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="血压" key="BloodPressureInHome">
-          <Seg
-            pregnancyId={pregnancyId}
-            Static={BloodPressure_static}
-            Record={BloodPressure_record}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="胎动" key="FetalMovementInHome">
-          <Seg
-            pregnancyId={pregnancyId}
-            Static={FetalMovement_static}
-            Record={FetalMovement_record}
-          />
-        </Tabs.TabPane>
-      </Tabs>
-    </Card>
-  )
+  render() {
+    const { defaultActiveKey, bloodGlucose, bloodPressure, fetalMovement } = this.state;
+    return defaultActiveKey ? (
+      <div className="prenatal-visit-main_home">
+        <Tabs defaultActiveKey={defaultActiveKey}>
+          <Tabs.TabPane tab="血糖" key="bloodGlucose">
+            <BloodGlucose bloodGlucose={bloodGlucose} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="血压" key="bloodPressure">
+            <BloodPressure bloodPressure={bloodPressure} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="胎动" key="fetalMovement">
+            <FetalMovement fetalMovement={fetalMovement} />
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
+    ) : null;
+  }
 }

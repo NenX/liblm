@@ -2,9 +2,7 @@ import { getPresetOptions } from '@lm_fe/env';
 import { AutoComplete, SelectProps } from 'antd';
 import { get, map } from 'lodash';
 import React from 'react';
-import { getInputStyle } from '@lm_fe/components';
-
-
+import { getInputStyle } from '../../utils';
 import { LazyAntd } from '@lm_fe/components';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 interface IProps extends SelectProps<any> {
@@ -13,14 +11,14 @@ interface IProps extends SelectProps<any> {
   showSearch?: boolean;
   autoWrite?: boolean;
   placeholder?: string;
-  popupMatchSelectWidth?: number | boolean;
+  dropdownMatchSelectWidth?: number | boolean;
 }
 export default (props: IProps) => {
   const {
     type = 'IDCardMapping',
     showSearch = true,
     autoWrite = false,
-    popupMatchSelectWidth = true,
+    dropdownMatchSelectWidth = true,
     placeholder,
     getPopupContainer = () => document.body,
     // style,
@@ -30,7 +28,7 @@ export default (props: IProps) => {
 
   if (autoWrite) {
     const autoParams = {
-      popupMatchSelectWidth,
+      dropdownMatchSelectWidth,
       placeholder,
       ...rest,
     };
@@ -52,7 +50,7 @@ export default (props: IProps) => {
       allowClear
       placeholder={placeholder || '请选择'}
       getPopupContainer={getPopupContainer}
-      popupMatchSelectWidth={popupMatchSelectWidth}
+      dropdownMatchSelectWidth={dropdownMatchSelectWidth}
       filterOption={(input, option) => {
         const filterData = get(option, 'children') || get(option, 'value');
         return filterData.toLowerCase().indexOf(input.toLowerCase()) >= 0;

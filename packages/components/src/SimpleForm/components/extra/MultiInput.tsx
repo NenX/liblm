@@ -1,6 +1,6 @@
 import { SelectProps, Radio } from "antd"
 import React from "react"
-import { LazyAntd } from "../../../LazyAntd"
+import { LazyAntd } from "src/LazyAntd"
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 

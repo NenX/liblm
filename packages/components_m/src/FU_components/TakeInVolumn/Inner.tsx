@@ -16,7 +16,7 @@ const TakeInVolumn: TCommonComponent<TakeInVolumnProps, any> = function TakeInVo
             // targetLabelCol={2}
             formDescriptions={[
                 // { inputType: 'MyAutoComplete', label: '类型', name: 'incomingType' },
-                { layout: '1/2', inputType: 'MyAutoComplete', label: '内容', name: 'incomingContent', inputProps: { uniqueKey: '入量s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
+                { layout: '1/2', inputType: 'MyAutoComplete', label: '内容', name: 'incomingContent', inputProps: { optionKey: '入量s', dropdownStyle: { zIndex: 9999 }, style: { paddingRight: 4 } } },
                 { layout: '1/2', inputType: 'input_number', label: 'ml', name: 'incomingML', inputProps: { style: { paddingRight: 4 } } },
             ]}
         />

@@ -1,11 +1,11 @@
-import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel';
-import commonjs from '@rollup/plugin-commonjs';
-import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
-import path from 'path';
+import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
+import path from 'path'
 // import { terser } from "@rollup/plugin-terser";
-import json from '@rollup/plugin-json';
+import json from '@rollup/plugin-json'
 
 /**
  * @type { import('rollup').RollupOptions }
@@ -13,14 +13,13 @@ import json from '@rollup/plugin-json';
 const sharedOptions = {
     input: 'src/index.ts',
     plugins: [
-
         nodeResolve(), // path resolve
         commonjs(), // convert CommonJS modules to ES6
         typescript({
             tsconfig: './tsconfig.json',
-            jsx: 'react',
+            jsx: 'preserve',
             declaration: true,
-            "noEmitOnError": false,
+            noEmitOnError: false,
             outputToFilesystem: false,
         }),
 
@@ -28,48 +27,58 @@ const sharedOptions = {
             presets: ['@babel/preset-react'],
             plugins: [
                 '@babel/plugin-transform-runtime',
-                // [
-                //     "import",
-                //     {
-                //         "libraryName": "antd",
-                //         "libraryDirectory": "es",
-                //         "style": true
-                //     }
-                // ]
+                'babel-plugin-lodash',
+                [
+                    'import',
+                    {
+                        libraryName: 'antd',
+                        libraryDirectory: 'es',
+                        style: true,
+                    },
+                ],
             ],
             babelHelpers: 'runtime',
-            extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx']
+            extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
         }),
         dynamicImportVars({
             // options
         }),
-        json()
+        json(),
     ],
-
 
     output: {
         dir: path.resolve(__dirname, 'dist'),
 
         exports: 'named',
-        format: 'cjs',
+        // format: 'cjs',
+        format: 'esm',
         externalLiveBindings: false,
         freeze: false,
         plugins: [
             getBabelOutputPlugin({
                 presets: ['@babel/preset-env'],
-                plugins: [
-                    '@babel/plugin-transform-runtime'
-                ]
-            })
-        ]
+                plugins: ['@babel/plugin-transform-runtime'],
+            }),
+        ],
     },
     external: [
-        'react', 'react-dom', 'axios', 'store', 'lodash', 'moment', '@ant-design/icons',
-        '@lm_fe/static', 'dayjs',
+        'react',
+        'react-dom',
+        'axios',
+        'antd',
+        'store',
+        'lodash',
+        'moment',
+        '@ant-design/icons',
+        '@lm_fe/static',
+        ,
+        'dayjs',
         ...Object.keys(require('./package.json').dependencies || {}),
         ...Object.keys(require('./package.json').peerDependencies || {}),
-        /react/, /antd/, /lodash/, /rc-/, /@ant-design/, /@noah-libjs/,
-    ]
+        /antd/,
+        /lodash/,
+        /rc-/,
+    ],
 }
 
 export function createSharedConfig(isDev = false) {
@@ -87,16 +96,4 @@ export function createSharedConfig(isDev = false) {
         // )
     }
     return isDev ? sharedOptions : sharedOptions
-}
-
-
-
-
-
-export function exclude(arr, excluded_value) {
-    if (!Array.isArray(arr)) return []
-    if (Array.isArray(excluded_value)) {
-        return arr.filter(_ => !excluded_value.includes(_))
-    }
-    return arr.filter(_ => _ !== excluded_value)
 }

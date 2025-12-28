@@ -4,17 +4,17 @@
  * @Descriptions : 用户列表管理 包含查询、新增、修改、删除功能
  */
 
-import { BaseListOld, MyIcon } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
-import { request } from '@lm_fe/utils';
-import { Button, Divider, Popconfirm, Switch } from 'antd';
 import React from 'react';
-import Query from './components/Query';
-import ResetPasswordModal from './components/ResetPasswordModal';
+import { Popconfirm, Switch, Button, message, Divider } from 'antd';
+import { EditOutlined, DeleteOutlined, RedoOutlined } from '@ant-design/icons';
 import Table from './components/Table';
+import Query from './components/Query';
 import UsersModal from './components/UsersModal';
-import { processFromApi, toApi } from './config/adapter';
+import ResetPasswordModal from './components/ResetPasswordModal';
 import { tableColumns } from './config/table';
+import { processFromApi, toApi } from './config/adapter';
+import { BaseListOld } from '@lm_fe/components_m';
+import { request } from '@lm_fe/utils';
 
 export default class UserList extends BaseListOld {
   static defaultProps = {
@@ -72,7 +72,7 @@ export default class UserList extends BaseListOld {
             <Button
               type="link"
               size="small"
-              icon={<MyIcon value='EditOutlined' className="global-table-action-icon" />}
+              icon={<EditOutlined className="global-table-action-icon" />}
               onClick={this.handleEdit(record)}
             >
               编辑
@@ -81,7 +81,7 @@ export default class UserList extends BaseListOld {
             <Button
               type="link"
               size="small"
-              icon={<MyIcon value='RedoOutlined' className="global-table-action-icon" />}
+              icon={<RedoOutlined className="global-table-action-icon" />}
               onClick={this.handleResetEdit(record)}
             >
               重置
@@ -93,7 +93,7 @@ export default class UserList extends BaseListOld {
               okText="确定"
               cancelText="取消"
             >
-              <Button type="link" size="small" icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />}>
+              <Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />}>
                 删除
               </Button>
             </Popconfirm>
@@ -139,7 +139,7 @@ export default class UserList extends BaseListOld {
           activated: !record.activated,
         }),
       );
-      mchcEnv.success('切换用户状态成功');
+      message.success('切换用户状态成功');
     } catch (error) {
       console.log(error);
     }
@@ -183,12 +183,12 @@ export default class UserList extends BaseListOld {
         method = 'post';
       }
       await request[method]('/api/users', data);
-      mchcEnv.success(tip);
+      message.success(tip);
       this.handleCancel();
       this.handleQuerySearch();
     } catch (error) {
       if (error.status === 400) {
-        mchcEnv.error('该用户名已存在，请重新输入');
+        message.error('该用户名已存在，请重新输入');
       }
     }
   };
@@ -196,7 +196,7 @@ export default class UserList extends BaseListOld {
   handleDelete = (record: any) => async () => {
     const { baseUrl, baseTitle } = this.props;
     await request.delete(`${baseUrl}/${record.login}`);
-    mchcEnv.success(`删除${baseTitle}成功`);
+    message.success(`删除${baseTitle}成功`);
     this.handleSearch();
   };
 }

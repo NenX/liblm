@@ -1,13 +1,15 @@
-import { formatTimeToDate, PDFPreview_View, Table_L } from '@lm_fe/components_m';
+import { formatTimeToDate, LazyAntd, PDFPreview_View } from '@lm_fe/components_m';
 import React, { useState } from 'react';
 
-import { Button, Col, Input, Modal, Pagination, Row } from 'antd';
+import { Button, Col, Input, Modal, Row } from 'antd';
 import { get } from 'lodash';
-
+// import aImg from '@/assets/imgs/images/a.jpg';
+// import bImg from '@/assets/imgs/images/b.png';
 import { mchcLogger } from '@lm_fe/env';
 import { mchcModal__ } from '@lm_fe/pages';
 import classnames from 'classnames';
 import './index.less';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 let hostUrl = process.env.NODE_ENV === 'production' ? '' : 'http://120.79.170.18:8975';
 interface IProps {
@@ -26,7 +28,7 @@ export default function Inner(props: IProps) {
   const [current, set_current] = useState(1)
   const [record, set_record] = useState({})
 
-  const { tableData } = props;
+  const {tableData } = props;
 
 
 
@@ -249,7 +251,7 @@ export default function Inner(props: IProps) {
 
   return (
     <div className="prenatal-visit-main_image">
-      <Table_L
+      <Table
         scroll={{ y: 620 }}
         size="small"
         className="prenatal-visit-main-table"

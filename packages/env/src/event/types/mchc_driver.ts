@@ -11,7 +11,7 @@ export const ReadCard_TPL = {
     "address": "",
     "agency": "",
     "expirestart": "",
-    "expireend": "",
+    "expireend": ""
 }
 export interface IReadCardData {
     name: string

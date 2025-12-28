@@ -1,4 +1,8 @@
-import { LazyAntd, MyIcon } from '@lm_fe/components';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusCircleOutlined
+} from '@ant-design/icons';
 import { request } from '@lm_fe/utils';
 import { Button, Col, Input, Modal, Row, Tooltip } from 'antd';
 import { concat, forEach, get, includes, isEmpty, isUndefined, map } from 'lodash';
@@ -11,6 +15,7 @@ const operationMapping = {
   edit: '编辑模板',
   delete: '请注意!',
 };
+import { LazyAntd } from '@lm_fe/components';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 export default class Index extends Component<IndexProps, IndexState> {
@@ -255,18 +260,18 @@ export default class Index extends Component<IndexProps, IndexState> {
         {pid === 0 ? (
           <div className={styles["handle-icon"]} onClick={() => this.handleTreeItem('add')}>
             <Tooltip placement="bottom" title="添加子模板">
-              <MyIcon value='PlusCircleOutlined' />
+              <PlusCircleOutlined />
             </Tooltip>
           </div>
         ) : null}
         <div className={styles["handle-icon"]} onClick={() => this.handleTreeItem('edit')}>
           <Tooltip placement="bottom" title="修改">
-            <MyIcon value='EditOutlined' />
+            <EditOutlined />
           </Tooltip>
         </div>
         <div className={styles["handle-icon"]} onClick={() => this.handleTreeItem('delete')}>
           <Tooltip placement="bottom" title="删除">
-            <MyIcon value='DeleteOutlined' />
+            <DeleteOutlined />
           </Tooltip>
         </div>
         {/* <div className={styles["handle-icon"]} onClick={() => this.handleTreeSort('DOWN')}>

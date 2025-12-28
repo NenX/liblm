@@ -1,7 +1,7 @@
-import { MyIcon } from '@lm_fe/components';
-import { Button, Col, Form, Row } from 'antd';
 import React from 'react';
 import BaseQuery from '../../../BaseQuery';
+import { Form, Button, Row, Col } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import { queryFormDescriptions } from '../config/form';
 export const queryValues = ['name', 'outpatientNO', 'idNO'];
 export default class Query extends BaseQuery {
@@ -9,7 +9,7 @@ export default class Query extends BaseQuery {
 
   renderBtn = () => (
     <Form.Item>
-      <Button type="primary" icon={<MyIcon value='SearchOutlined' />} htmlType="submit">
+      <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
         查询
       </Button>
     </Form.Item>

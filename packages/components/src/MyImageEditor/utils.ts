@@ -21,7 +21,7 @@ import { Canvas, ICanvasOptions, IEvent } from 'fabric/fabric-impl';
 import { mchcEnv } from '@lm_fe/env';
 
 
-export const real_fabric = () => (window.fabric) as unknown as RealType
+export const real_fabric = (_fabric.fabric ?? _fabric) as unknown as RealType
 
 
 export const default_legends = [

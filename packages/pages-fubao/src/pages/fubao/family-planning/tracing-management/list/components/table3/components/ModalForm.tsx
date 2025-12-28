@@ -1089,7 +1089,7 @@ class ModalForm extends Component {
           this.handleSubmit(0);
         }}
         wrapClassName="tracing-modal"
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         footer={[
           <Popconfirm

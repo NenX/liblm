@@ -1,13 +1,12 @@
 import { ARG_URS1_KEY, ARG_URS2_KEY } from "src/constant"
 import { AppEnv } from "./AppEnv"
-import { getSearchParamsValue, identity } from "@noah-libjs/utils"
-const h_key = '/happy'
+import { identity } from "lodash"
+import { getSearchParamsValue } from "@noah-libjs/utils"
+
 export function getHappyConfig(pathname = location.pathname) {
     const url = new URL(location.origin + pathname)
-    if (!pathname.includes(h_key)) return null
-    const h_idx = pathname.indexOf(h_key)
-    const real_path = pathname.substring(h_idx)
-    const arr = real_path.split('/').filter(_ => _)
+
+    const arr = pathname.split('/').filter(_ => _)
     const first = arr[0]
 
     if (first === 'happy' && arr.length > 2) {
@@ -22,7 +21,7 @@ export function getHappyConfig(pathname = location.pathname) {
 export function genHappyPath(path: string, arg: string[] = [], search = "") {
     const arr = path.split('/').filter(_ => _)
     let _search = search?.startsWith('?') ? search : `?${search}`
-    return `${h_key}/${arr.join('/')}/${arg.join(',')}${_search}`
+    return `/happy/${arr.join('/')}/${arg.join(',')}${_search}`
 }
 export function get_global_happy_arg(key: 'usr1' | 'usr2') {
     const happyConfig = getHappyConfig(location.pathname)

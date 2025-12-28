@@ -2,11 +2,11 @@ import { useObisDoctorWs } from "@lm_fe/components_m";
 import { mchcEvent, mchcLogger, mchcUtils } from "@lm_fe/env";
 import { useEffect, useRef } from "react";
 import ReconnectingWebSocket from "reconnecting-websocket";
-const single_id = mchcUtils.single_id
+const getDoctorEndId = mchcUtils.getDoctorEndId
 import React from "react";
 import { mchcModal__ } from "@lm_fe/pages";
 export function Ws() {
-    const pid = single_id()
+    const pid = getDoctorEndId()
     // const [receiveData, setReceiveData] = useState<any[]>([])
     const dataCache = useRef<any[]>([])
     const modalId = useRef(1)
@@ -39,7 +39,7 @@ export function Ws() {
                 makeSure(data: any) { ins.current?.send(JSON.stringify(data)) },
                 websocketDataSum: dataCache.current,
                 websocketData: dataCache.current,
-                id: single_id(),
+                id: getDoctorEndId(),
             },
 
         })

@@ -1,19 +1,13 @@
 // export * from './style'
-import './config'
 
-export * from '@noah-libjs/components'
+export * from './pack_components'
+export * from './GlobalModal'
+export * from './SimpleForm'
+export * from './Monaco'
+export * from './MyLazyComponent'
+export * from './PDF_Frame_View'
 export * from './hooks'
 export * from './utils'
 export * from './LazyAntd'
-export * from './pack_components'
-export * from './PDF_Frame_View'
-export * from './SimpleForm'
-export * from './CaseTempleteEdit'
-export * from './CaseTempleteEditEmr'
-
-
-export function get_echarat()
-{
-    return import('echarts');
-}
-(window as any).get_echarat = get_echarat;
+export * from './ContainerDimensions'
+export * from './QRCode'

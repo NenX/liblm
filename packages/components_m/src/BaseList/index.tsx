@@ -1,14 +1,17 @@
-import { MyIcon, validate_form } from '@lm_fe/components';
-import { formatDateTime, getMomentObj, isMoment, request } from '@lm_fe/utils';
-import { Button, Divider, Form, message, Popconfirm, TableProps } from 'antd';
+import React, { useEffect } from 'react';
+import { get, isFunction, map, set, isNil, pick, isArray, join, cloneDeep } from 'lodash';
+import { message, Popconfirm, Button, Form, Divider, TableProps } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import { ColumnType } from 'antd/lib/table';
-import { get, isArray, isFunction, isNil, map, pick, set } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
-import BaseFormComponent from '../BaseFormComponent';
+import { isMoment } from '@lm_fe/utils';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { BaseTable } from '../BaseTable';
-import './index.module.less';
+import { formatDateTime, getMomentObj, request } from '@lm_fe/utils';
+import BaseFormComponent from '../BaseFormComponent';
 import { getDataSource } from './methods';
+import './index.module.less';
+import { useState } from 'react';
+import { useRef } from 'react';
+import { ColumnType } from 'antd/lib/table';
 interface MyColumnType<T> extends ColumnType<T> {
   formType?: any
 
@@ -174,7 +177,7 @@ export function BaseList<T = any>(props: IProps<T>) {
       return (
         <>
           <Button type="link" size="small" onClick={handleEdit(rowData)}>
-            <MyIcon value='EditOutlined' className="global-table-action-icon global-table-action-view" />
+            <EditOutlined className="global-table-action-icon global-table-action-view" />
             编辑
           </Button>
           <Divider type="vertical" />
@@ -185,7 +188,7 @@ export function BaseList<T = any>(props: IProps<T>) {
             cancelText="取消"
           >
             <Button type="link" size="small">
-              <MyIcon value='DeleteOutlined' className="global-table-action-icon" />
+              <DeleteOutlined className="global-table-action-icon" />
               删除
             </Button>
           </Popconfirm>
@@ -213,11 +216,8 @@ export function BaseList<T = any>(props: IProps<T>) {
     const { baseUrl, baseTitle, toApi, needEditInTable, showAdd } = props;
 
     const form = formRef.current;
-
-
-    const formData = await validate_form(form!)
-
-    if (!formData) return
+    await form?.validateFields();
+    const formData = form?.getFieldsValue() ?? {};
     map(formData, (data, key) => {
       if (isMoment(data)) {
         formData[key] = formatDateTime(data);
@@ -247,8 +247,6 @@ export function BaseList<T = any>(props: IProps<T>) {
 
     message.success(title);
     await handleSearch();
-
-
   };
 
   const handleItemCancel = (rowData: any) => () => {

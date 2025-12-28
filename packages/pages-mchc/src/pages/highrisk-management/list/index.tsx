@@ -1,32 +1,34 @@
 import { HighriskGradeDisplay } from '@lm_fe/components_m'
-import { APP_CONFIG, rt_ctx } from "@lm_fe/env"
+import { APP_CONFIG } from "@lm_fe/env"
 import { BF_Wrap2, mchcModal__, MyBaseList } from '@lm_fe/pages'
 import { SLocal_History } from '@lm_fe/service'
 import { downloadFile, request } from "@lm_fe/utils"
 import { Button, Space, Tooltip } from "antd"
 import { isEmpty } from 'lodash'
 import React from "react"
+import { form_config } from './form_config'
 import { search_config } from './search_config'
-const ctx = rt_ctx
 export default function BreastCancerDataReport(prop: any) {
     const { config, Wrap } = BF_Wrap2({
         default_conf: {
             title: '高危孕产妇管理-高危统计',
-            tableColumns: () => import('./form_config'),
-            searchConfig: search_config,
-            initialSearchValue: () => ({ eventDate: ctx.utils.getMomentRange()['近一年'].map(ctx.utils.formatDate) }),
-            searchParams: () => ({ 'deleteFlag.equals': 0 }),
+            tableColumns: form_config,
+            searchConfig: search_config
         }
     })
     return <Wrap>
         <MyBaseList
             // apiPrefix="/fb/api"
             name="/api/highriskSummaryByPregnancy-query"
+            searchParams={{
+                // 'visitType.equals': 1,
+            }}
+            initialSearchValue={{
+            }}
+            searchConfig={config?.searchConfig}
 
-
-
-
-            bf_conf={config}
+            showAction={false}
+            showAdd={false}
             RenderBtns={(ctx) => {
                 return <Button.Group>
                     <Button onClick={async () => {
@@ -45,14 +47,13 @@ export default function BreastCancerDataReport(prop: any) {
                 title: '高危等级',
                 dataIndex: 'highriskGrade',
                 width: APP_CONFIG.CELL_WIDTH_SMALL,
-
                 fixed: 'right',
                 render: (value: any) => <HighriskGradeDisplay type="highriskGrade" data={value} />,
             },
             {
                 title: '传染病',
                 dataIndex: 'infectionNote',
-                width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+                width: APP_CONFIG.CELL_WIDTH_SMALL,
                 fixed: 'right',
                 render: (value: any) => <HighriskGradeDisplay type="contagion" data={value} />,
             },
@@ -60,12 +61,12 @@ export default function BreastCancerDataReport(prop: any) {
                 title: '操作',
                 align: 'center',
                 fixed: 'right',
-                width: 180,
+                width: 140,
                 render(rowData: any) {
                     return <Space size='small'>
                         <Button
                             size='small'
-                            // disabled={isEmpty(rowData.riskRecords)}
+                            disabled={isEmpty(rowData.riskRecords)}
                             onClick={
                                 () => {
                                     mchcModal__.open('高危因素管理', {
@@ -77,7 +78,7 @@ export default function BreastCancerDataReport(prop: any) {
                         </Button>
                         <Button
                             size='small'
-                            // disabled={isEmpty(rowData.riskRecords)}
+                            disabled={isEmpty(rowData.riskRecords)}
                             onClick={
                                 () => {
                                     mchcModal__.open('高危随访', {

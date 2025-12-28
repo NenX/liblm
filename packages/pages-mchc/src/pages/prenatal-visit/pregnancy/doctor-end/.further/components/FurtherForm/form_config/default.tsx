@@ -1,17 +1,11 @@
-import { mchcEnv, otherOptions, rt_ctx } from "@lm_fe/env";
+import { mchcEnv, otherOptions } from "@lm_fe/env";
 import { defineFormConfig } from "@lm_fe/service";
 import { 门诊_胎儿_form } from "src/pages/prenatal-visit/pregnancy/utils";
 import { diag_filter_map } from '../config'
-import { pressure_fd } from "@lm_fe/pages";
-const ctx = rt_ctx
 export default defineFormConfig(
     [
         {
             "key": "id",
-            form_hidden: true,
-        },
-        {
-            "key": "outEmrId",
             form_hidden: true,
         },
         {
@@ -28,26 +22,18 @@ export default defineFormConfig(
             "label": "孕周",
             "inputType": "input",
             required: true,
-            inputProps: {
-                onFocus(e) {
-                    ctx.mchcEvent.emit('my_form', {
-                        type: 'onFocus',
-                        name: 'gestationalWeek'
-                    })
-                }
-            },
             layout: '1/4',
         },
         {
 
             "key": "physicalExam.height",
             "label": "身高",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
             isActive: mchcEnv.in(['广州市八']),
 
             isNewRow: true,
-            "inputProps": { 'unit': 'cm' },
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
 
             layout: '1/4',
         },
@@ -55,9 +41,9 @@ export default defineFormConfig(
 
             "key": "physicalExam.weight",
             "label": "体重",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
-            "inputProps": { 'unit': 'kg' },
+            "inputProps": { 'type': 'number', 'unit': 'kg' },
 
             layout: '1/4',
         },
@@ -65,38 +51,48 @@ export default defineFormConfig(
 
             "key": "physicalExam.bmi",
             "label": "bmi",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
-            "inputProps": {},
+            "inputProps": { 'type': 'number', },
             isActive: mchcEnv.in(['广州市八']),
 
             layout: '1/4',
         },
+        {
 
+            "key": "physicalExam.MyPressure1__",
+            "inputProps": { marshal: 0 },
+            isNewRow: true,
+            "label": "血压-首测",
+            "inputType": "MyPressure",
+            required: true,
+            layout: '1/4',
+        },
+        {
 
-        pressure_fd(
-            { label: '血压首测', isNewRow: true, },
-            { name: 'physicalExam.systolic', required: true },
-            { name: 'physicalExam.diastolic', required: true }
-        ),
-        pressure_fd(
-            { label: '血压二测' },
-            { name: 'physicalExam.systolic2' },
-            { name: 'physicalExam.diastolic2' }
-        ),
-        pressure_fd(
-            { label: '血压三测' },
-            { name: 'physicalExam.systolic3' },
-            { name: 'physicalExam.diastolic3' }
-        ),
+            "key": "physicalExam.MyPressure2__",
+            "label": "血压-二测",
+            "inputProps": { marshal: 0 },
+            isActive: !mchcEnv.in(['广州市八']),
 
+            "inputType": "MyPressure",
+            layout: '1/4',
+        },
+        {
 
+            "key": "physicalExam.MyPressure3__",
+            "inputProps": { marshal: 0 },
+            "label": "血压-三测",
+            isActive: !mchcEnv.in(['广州市八']),
+            "inputType": "MyPressure",
+            layout: '1/4',
+        },
         {
 
             "key": "physicalExam.pulse",
             "label": "脉搏",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': '次/分', },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': '次/分', },
             layout: '1/4',
 
         },
@@ -115,8 +111,7 @@ export default defineFormConfig(
             },
             // "inputProps": { 'minRows': 2, 'maxRows': 5, 'title': '主诉模板', 'departmentTempalteType': 16, 'personalTempalteTType': 17, 'departmentId': 2 },
             layout: '1/2',
-        },
-        {
+        }, {
 
             "key": "phi",
             "label": "现病史",
@@ -129,21 +124,20 @@ export default defineFormConfig(
                 ]
             },
             layout: '1/2',
-        },
-        {
+        }, {
 
             "key": "gynExam.fundalHeight",
             "label": "宫高",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': 'cm' },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
             layout: '1/4',
             "isNewRow": 1,
         }, {
 
             "key": "gynExam.waistHip",
             "label": "腹围",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': 'cm' },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
             layout: '1/4',
         }, {
 
@@ -207,22 +201,22 @@ export default defineFormConfig(
 
                     "key": "gdm.fbg",
                     "label": "FBG",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'mmol/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'mmol/L' },
                     layout: '1/4',
                 }, {
 
                     "key": "gdm.pbg2",
                     "label": "P2BG",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'mmol/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'mmol/L' },
                     layout: '1/4',
                 }, {
 
                     "key": "gdm.hbalc",
                     "label": "HbA1C",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': '%' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': '%' },
                     layout: '1/4',
                 }, {
 
@@ -277,8 +271,8 @@ export default defineFormConfig(
 
                     "key": "cardiacDisease.heartrate",
                     "label": "心率",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': '次/分' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': '次/分' },
                     layout: '1/4',
                     "isNewRow": 1,
                 },
@@ -300,8 +294,8 @@ export default defineFormConfig(
 
                     "key": "icp.tba",
                     "label": "TBA",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'umol/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'umol/L' },
                     layout: '1/4',
                     "isNewRow": 1,
                 },
@@ -309,16 +303,16 @@ export default defineFormConfig(
 
                     "key": "icp.alt",
                     "label": "ALT",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'U/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'U/L' },
                     layout: '1/4',
                 },
                 {
 
                     "key": "icp.ast",
                     "label": "AST",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'U/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'U/L' },
                     layout: '1/4',
                 },
             ]
@@ -332,8 +326,8 @@ export default defineFormConfig(
 
                     "key": "hypothyroidism.tsh",
                     "label": "TSH",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'uIU/ml' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'uIU/ml' },
                     layout: '1/4',
                     "isNewRow": 1,
                 },
@@ -341,44 +335,28 @@ export default defineFormConfig(
 
                     "key": "hypothyroidism.t4",
                     "label": "游离T4",
-                    "inputType": "InputNumber",
-                    "inputProps": { 'unit': 'pmol/L' },
+                    "inputType": "input",
+                    "inputProps": { 'type': 'number', 'unit': 'pmol/L' },
                     layout: '1/4',
                 },
             ]
 
         },
-        // {
-
-        //     "key": "inspection",
-        //     "label": "检验检查",
-        //     "inputType": "textareaWithBtn",
-        //     isActive: !mchcEnv.in(['广州市八']),
-        //     "inputProps": { 'minRows': 2, 'maxRows': 5, 'disabled': false },
-        //     layout: '1/2',
-        //     "isNewRow": 1,
-        // }, 
         {
 
             "key": "inspection",
             "label": "检验检查",
-            "inputType": "textareaWithResult",
-            isActive: true,
-            "inputProps": {
-                'rows': 2,
-                TemplateTextarea_type: [{ title: '检验结果', url: '/api/getLabExamImportTree' }, { title: '超声结果', url: '/api/getImageExamImportTree' }],
-                gen_obj: function () {
-                    return { pregnancyId: ctx.utils.single_id() }
-                },
-            },
+            "inputType": "textareaWithBtn",
+            isActive: !mchcEnv.in(['广州市八']),
+            "inputProps": { 'minRows': 2, 'maxRows': 5, 'disabled': false },
             layout: '1/2',
             "isNewRow": 1,
-        },
-        {
+        }, {
 
             "key": "exam",
             "label": "辅助检查",
             "inputType": "textareaWithTemplate",
+            // "inputProps": { 'minRows': 2, 'maxRows': 5, 'title': '辅助检查模板', 'departmentTempalteType': 13, 'personalTempalteTType': 14, 'departmentId': 2 },
             inputProps: {
                 TemplateTextarea_type: [
                     { title: '个人', type: 14 },
@@ -386,8 +364,7 @@ export default defineFormConfig(
                 ]
             },
             layout: '1/2',
-        },
-        {
+        }, {
 
             "key": "prescription",
             "label": "处理措施",

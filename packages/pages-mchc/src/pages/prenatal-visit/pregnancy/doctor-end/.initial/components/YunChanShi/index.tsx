@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { FormSection, FormSectionForm } from '@lm_fe/components_m';
 import getConfig from './config';
 import { 孕产史_config } from '../../../../nurse-end/archival-information/form/孕产史';
@@ -8,9 +8,9 @@ import { useEffect } from 'react';
 import { mchcEvent, mchcUtils } from '@lm_fe/env';
 
 export default function JWS(props: IInitial_Tab_props) {
-  const { active, form, disabled_save } = props
+  const { active, form } = props
   const config = 孕产史_config()
-  const pregnancyId = mchcUtils.single_id()
+  const pregnancyId = mchcUtils.getDoctorEndId()
 
 
   useEffect(() => {
@@ -28,16 +28,16 @@ export default function JWS(props: IInitial_Tab_props) {
 
 
   return <FormSectionForm
-    disableAll={disabled_save}
-
     onValuesChange={(changedValues) => {
 
 
     }}
     onFinish={(v) => {
-      SMchc_Doctor.updatePregnacymh(v).then((data) => {
-        form.setFieldsValue(data)
-        mchcEvent.emit('outpatient', { type: '刷新头部', pregnancyId })
+      SMchc_Doctor.updatePregnacymh(v).then(() => {
+        mchcEvent.emit('outpatient', {
+          type: '刷新头部',
+          pregnancyId
+        })
       })
     }}
     formDescriptions={[...config.children!, { name: 'id', form_hidden: true }]} form={form} />

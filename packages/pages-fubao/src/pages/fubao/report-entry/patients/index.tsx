@@ -27,7 +27,7 @@ export default function Patients(props: {}) {
     }
     return <Wrap>
         <MyBaseList
-            ActionAddonBefore={ctx => {
+            RenderAction={ctx => {
                 return <Space>
                     <OkButton size='small' onClick={() => show_report(ctx.rowData as IPatientType)}>报告</OkButton>
                 </Space>
@@ -42,6 +42,7 @@ export default function Patients(props: {}) {
             }}
             searchConfig={config?.searchConfig}
 
+            showAdd={false}
             // RenderBtns={(ctx) => {
             //     const selectRows = ctx.getCheckRows()
             //     return <Button.Group>

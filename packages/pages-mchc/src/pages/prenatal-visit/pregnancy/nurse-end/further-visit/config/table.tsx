@@ -1,128 +1,141 @@
+import React from 'react';
 import { get } from 'lodash';
 import { APP_CONFIG, InputWithRange, PressureInput } from '@lm_fe/components_m';
-import { defineFormConfig } from '@lm_fe/service';
-import { rt_ctx } from '@lm_fe/env';
-const ctx = rt_ctx
-const React = ctx.React
-export default defineFormConfig(
-  [
-    {
-      title: '创建时间',
-      dataIndex: 'createDate',
-
-      rules: [{ required: true, message: '创建时间是必填项' }],
-      width: APP_CONFIG.CELL_WIDTH_MIDDLE,
-      inputType: 'single_date_picker',
+export const tableColumns = [
+  {
+    title: '创建时间',
+    dataIndex: 'createDate',
+    editable: true,
+    rules: [{ required: true, message: '创建时间是必填项' }],
+    width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+    inputType: 'single_date_picker',
+  },
+  // {
+  //   title: '孕周',
+  //   dataIndex: 'gestationalWeek',
+  //   editable: true,
+  //   inputType: 'input_with_label',
+  //   width: APP_CONFIG.CELL_WIDTH_SMALL,
+  //   render: (value: any) => value || '',
+  // },
+  {
+    title: () => (
+      <span>
+        血压-首测<em className="suffix">(mmHg)</em>
+      </span>
+    ),
+    dataIndex: 'bloodPressure',
+    editable: true,
+    inputType: 'pressure',
+    render: (value: any, rowData: any) => (
+      <PressureInput value={get(rowData, 'physicalExamMeasure')} hiddenIpt={true} />
+    ),
+    width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+  },
+  {
+    title: () => (
+      <span>
+        血压-二测<em className="suffix">(mmHg)</em>
+      </span>
+    ),
+    dataIndex: 'bloodPressure2',
+    editable: true,
+    inputType: 'pressure',
+    render: (value: any, rowData: any) => {
+      const pressure = {
+        systolic: get(rowData, 'physicalExamMeasure.systolic2'),
+        diastolic: get(rowData, 'physicalExamMeasure.diastolic2'),
+      };
+      return <PressureInput value={pressure} hiddenIpt={true} />;
     },
-    // {
-    //   title: '孕周',
-    //   dataIndex: 'gestationalWeek',
-    //   
-    //   inputType: 'input_with_label',
-    //   width: APP_CONFIG.CELL_WIDTH_SMALL,
-    //   render: (value: any) => value || '',
-    // },
-    {
-      title: '血压-首测',
-      dataIndex: 'bloodPressure',
-      children: [
-        {
-          inputType: 'input_number',
-          title: '收缩压',
-          dataIndex: 'physicalExamMeasure.systolic'
-        },
-        {
-          inputType: 'input_number',
-          title: '舒张压',
-          dataIndex: 'physicalExamMeasure.diastolic'
-        },
-      ],
-
+    width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+  },
+  {
+    title: () => (
+      <span>
+        血压-三测<em className="suffix">(mmHg)</em>
+      </span>
+    ),
+    dataIndex: 'bloodPressure3',
+    editable: true,
+    inputType: 'pressure',
+    render: (value: any, rowData: any) => {
+      const pressure = {
+        systolic: get(rowData, 'physicalExamMeasure.systolic3'),
+        diastolic: get(rowData, 'physicalExamMeasure.diastolic3'),
+      };
+      return <PressureInput value={pressure} hiddenIpt={true} />;
     },
-    {
-      title: '血压-二测',
-      dataIndex: 'bloodPressure',
-      children: [
-        {
-          inputType: 'input_number',
-          title: '收缩压',
-          dataIndex: 'physicalExamMeasure.systolic2'
-        },
-        {
-          inputType: 'input_number',
-          title: '舒张压',
-          dataIndex: 'physicalExamMeasure.diastolic2'
-        },
-      ],
-
+    width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+  },
+  {
+    title: () => (
+      <span>
+        脉搏<em className="suffix">(bpm)</em>
+      </span>
+    ),
+    dataIndex: ['physicalExamMeasure', 'pulse'],
+    editable: true,
+    inputType: 'input_with_range',
+    inputProps: { min: 60, max: 100, tip: '脉搏的正常范围值是60~100bpm' },
+    width: APP_CONFIG.CELL_WIDTH_SMALL,
+    render: (value: any) => <InputWithRange value={value} min={60} max={100} hiddenIpt={true} />,
+  },
+  {
+    title: () => (
+      <span>
+        体重<em className="suffix">(kg)</em>
+      </span>
+    ),
+    dataIndex: ['physicalExamMeasure', 'weight'],
+    editable: true,
+    inputType: 'input_with_label',
+    inputProps: { min: 0, type: 'number' },
+    width: APP_CONFIG.CELL_WIDTH_SMALL,
+    render: (value: any) => value || '',
+  },
+  {
+    title: () => (
+      <span>
+        宫高<em className="suffix">(cm)</em>
+      </span>
+    ),
+    dataIndex: ['gynecologicalExamMeasure', 'fundalHeight'],
+    editable: true,
+    inputType: 'input_with_label',
+    width: APP_CONFIG.CELL_WIDTH_SMALL,
+    render: (value: any) => value || '',
+  },
+  {
+    title: () => (
+      <span>
+        腹围<em className="suffix">(cm)</em>
+      </span>
+    ),
+    dataIndex: ['gynecologicalExamMeasure', 'waistHip'],
+    editable: true,
+    inputType: 'input_with_label',
+    inputProps: { min: 0, type: 'number' },
+    width: APP_CONFIG.CELL_WIDTH_SMALL,
+    render: (value: any) => value || '',
+  },
+  {
+    title: '备注',
+    dataIndex: 'remark',
+    editable: true,
+    inputType: 'input_with_label',
+    width: APP_CONFIG.CELL_WIDTH_SMALL,
+    render: (value: any) => value || '',
+  },
+  {
+    title: '创建人',
+    dataIndex: 'createUser',
+    editable: false,
+    inputType: 'input_with_label',
+    width: APP_CONFIG.CELL_WIDTH_MIDDLE,
+    render: (value: any) => value || '',
+    inputProps: {
+      disabled: true,
     },
-    {
-      title: '血压-三测',
-      dataIndex: 'bloodPressure',
-      children: [
-        {
-          inputType: 'input_number',
-          title: '收缩压',
-          dataIndex: 'physicalExamMeasure.systolic3'
-        },
-        {
-          inputType: 'input_number',
-          title: '舒张压',
-          dataIndex: 'physicalExamMeasure.diastolic3'
-        },
-      ],
-
-    },
-
-    {
-      title: '脉搏(bpm)',
-      dataIndex: ['physicalExamMeasure', 'pulse'],
-
-      inputType: 'MI',
-      inputProps: { min: 60, max: 100, tip: '脉搏的正常范围值是60~100bpm' },
-      width: APP_CONFIG.CELL_WIDTH_SMALL,
-    },
-    {
-      title: '体重(kg)',
-      dataIndex: ['physicalExamMeasure', 'weight'],
-
-      inputType: 'MI',
-      inputProps: { min: 0, type: 'number' },
-      width: APP_CONFIG.CELL_WIDTH_SMALL,
-    },
-    {
-      title: '宫高(cm)',
-      dataIndex: ['gynecologicalExamMeasure', 'fundalHeight'],
-
-      inputType: 'MI',
-      width: APP_CONFIG.CELL_WIDTH_SMALL,
-    },
-    {
-      title: '腹围(cm)',
-      dataIndex: ['gynecologicalExamMeasure', 'waistHip'],
-
-      inputType: 'MI',
-      inputProps: { min: 0, type: 'number' },
-      width: APP_CONFIG.CELL_WIDTH_SMALL,
-      render: (value: any) => value || '',
-    },
-    {
-      title: '备注',
-      dataIndex: 'remark',
-
-      inputType: 'MA',
-      width: APP_CONFIG.CELL_WIDTH_SMALL,
-    },
-    {
-      title: '创建人',
-      dataIndex: 'createUser',
-
-      inputType: 'MA',
-      width: APP_CONFIG.CELL_WIDTH_MIDDLE,
-      inputProps: {
-        disabled: true,
-      },
-    },
-  ]
-
-)
+  },
+];

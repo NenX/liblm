@@ -1,10 +1,10 @@
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { IMchc_FormDescriptions_Field } from '@lm_fe/service';
 import { uuid } from '@lm_fe/utils';
-import { Button, ButtonProps, Divider, FormInstance } from 'antd';
+import { Button, ButtonProps, Divider } from 'antd';
 import React, { useEffect, useRef } from 'react';
 // import FormSection, { IFormSectionProps } from '../../BaseModalForm/FormSection';
 // import { RenderEditItemStandalone, formatFormConfig } from '../../BaseModalForm/utils';
-import { MyIcon } from '@lm_fe/components';
 import { useMarshal } from '../../utils/useMarshal';
 import { MyFormSection } from '../FormSection';
 import { IFormSectionProps } from '../FormSection/types';
@@ -12,14 +12,10 @@ import { formatFormConfig, RenderEditItemStandalone } from '../FormSection/utils
 import { TCommonComponent } from '../types';
 interface IProps extends IFormSectionProps {
     tip?: string
+    defaultData?: any
     addBtnStyle?: ButtonProps
-    marshal?: 0 | 1
-    rowKey?: string
-
+    marshal?: boolean
     actionConfig?: IMchc_FormDescriptions_Field
-    genRowData?: (list: any[]) => any
-    on_row_value_change(data: any[], index: number, changed?: any, form?: FormInstance): void
-
 }
 const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
     const {
@@ -30,13 +26,10 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
         targetLabelCol = 4,
         span = 6,
         value,
-        form,
+        defaultData = {},
         onChange,
-        marshal = 1,
+        marshal = true,
         addBtnStyle = {},
-        on_row_value_change,
-        rowKey = '_key',
-        genRowData,
         ...others
     } = props
 
@@ -48,23 +41,20 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
 
     }, [])
     function genDefaultData() {
-        const userData = genRowData?.(safe_value) ?? {}
-
-        return { ...userData, [rowKey]: uuid() }
+        const _defaultData = defaultData ?? {}
+        return { ..._defaultData, key: uuid() }
     }
     function onDel(idx: number) {
         safe_value.splice(idx, 1)
         onChangeSafeValue?.([...safe_value])
     }
     function getKey(item: any) {
-        return item?.id ?? item?.[rowKey]
+        return item?.id ?? item?.key
     }
     function onChangeValue(idx: number, _key: any, _value: any) {
         const old = safe_value[idx]
         safe_value.splice(idx, 1, { ...old, [_key]: _value })
-        const new_data = [...safe_value]
-        onChangeSafeValue?.(new_data)
-        on_row_value_change?.(new_data, idx, { [_key]: _value }, form)
+        onChangeSafeValue?.([...safe_value])
     }
     return <div>
         {/* <Button disabled={disabled} onClick={() => onChangeSafeValue?.([...safe_value, genDefaultData()])}>新增</Button>
@@ -72,7 +62,7 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
 
         {
             safe_value.map((rowData, idx) => {
-                return <div key={getKey(rowData)}>
+                return <div key={idx + getKey(rowData)}>
                     {
                         tip
                             ? <Divider style={{ margin: '4px 0', fontSize: 12, color: '#ccc' }} > {tip}{idx + 1}</Divider>
@@ -105,7 +95,7 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
                             />
                         </div>
                         <div style={{ width: 32, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <MyIcon value='MinusCircleOutlined' style={{ color: 'red' }} rev={''} onClick={() => onDel(idx)} />
+                            <MinusCircleOutlined style={{ color: 'red' }} rev={''} onClick={() => onDel(idx)} />
                         </div>
 
                     </div>
@@ -113,7 +103,7 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
                 </div>
             })
         }
-        <Button disabled={disabled} style={{ marginTop: 6 }} type="dashed" block icon={<MyIcon value='PlusOutlined' rev={''} />} {...addBtnStyle} onClick={() => onChangeSafeValue([...safe_value, genDefaultData()])} >
+        <Button disabled={disabled} style={{ marginTop: 6 }} type="dashed" block icon={<PlusOutlined rev={''} />} {...addBtnStyle} onClick={() => onChangeSafeValue([...safe_value, genDefaultData()])} >
             新增{tip}
         </Button>
 

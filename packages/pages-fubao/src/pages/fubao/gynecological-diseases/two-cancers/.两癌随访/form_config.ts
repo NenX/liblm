@@ -109,7 +109,7 @@ export const form_config: IMchc_FormDescriptions_Field[] = [
                         { title: '癌症类型', dataIndex: 'cancerType', inputType: 'MS', inputProps: { options: '乳腺癌,宫颈癌', marshal: 0 } },
                         { title: '癌症内容', dataIndex: 'infectionContent', inputType: 'Input', },
                         { title: '随访内容', dataIndex: 'followupContent', inputType: 'Input', },
-                        { title: '随访状态', dataIndex: 'followupState', inputType: 'MS', inputProps: { uniqueKey: '随访状态', marshal: 0 } },
+                        { title: '随访状态', dataIndex: 'followupState', inputType: 'MS', inputProps: { optionKey: '随访状态', marshal: 0 } },
                     ]
                 },
                 layout: '1/1'

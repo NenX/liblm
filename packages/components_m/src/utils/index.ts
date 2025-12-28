@@ -1,4 +1,4 @@
-export { calEddByLmp, gen_id_form_item_config, GetAgeByBirthDay, getBMI, getDataSource, getDiffYears, getExpected, getGestationalDays, getGestationalWeekBySureEdd, getGesWeek, getOrderTime, menopauseWeek } from '@lm_fe/utils';
+export { calEddByLmp, gen_id_form_item_config, GetAgeByBirthDay, getBMI, getDataSource, getDays, getDiffYears, getExpected, getGestationalDays, getGestationalWeekBySureEdd, getGesWeek, getOrderTime, menopauseWeek } from '@lm_fe/utils';
 export { getDictionariesEnumerations } from './dictionary';
 export { dictionaryTranslator } from './dictionaryTranslator';
 export * from './EventEmitter';

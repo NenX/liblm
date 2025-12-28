@@ -8,6 +8,7 @@ import { IFormSectionProps } from '../FormSection/types';
 import { TCommonComponent } from '../types';
 interface IProps extends IFormSectionProps {
     tip?: string
+    defaultData?: any
     addBtnStyle?: ButtonProps
     marshal?: boolean
     actionConfig?: IMchc_FormDescriptions_Field

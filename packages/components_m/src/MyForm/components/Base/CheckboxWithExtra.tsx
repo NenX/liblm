@@ -5,7 +5,6 @@ import { Component } from 'react';
 import { FormConfig } from '../../interface';
 import MyComponent from '../index';
 import './CheckboxWithExtra.less';
-import React from 'react';
 interface CheckboxWithExtraProps {
   editors: Array<FormConfig>;
   checkboxValue: boolean;

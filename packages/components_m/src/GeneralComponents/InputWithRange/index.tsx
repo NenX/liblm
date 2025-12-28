@@ -1,7 +1,7 @@
-import { MyIcon } from '@lm_fe/components';
+import React, { useState, useEffect } from 'react';
 import { InputNumber, Tooltip } from 'antd';
 import classnames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import styles from './index.less';
 interface IProps {
   min?: number;
@@ -52,7 +52,7 @@ export default (props: IProps) => {
         {...others}
       />
       <Tooltip className={styles["input-with-range_tip"]} title={tip}>
-        <MyIcon value='QuestionCircleOutlined' />
+        <QuestionCircleOutlined />
       </Tooltip>
     </div>
   );

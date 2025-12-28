@@ -1,22 +1,31 @@
-import { formatDate, formatDateTime, formatDateTimeNoSecond } from '@lm_fe/utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { map } from 'lodash';
 export const momentDate = (date: any) => {
   if (date) return dayjs(date);
   return '';
 };
-export const formatTimeToStandard = (date: any) => {
-  return formatDateTime(date);
-
+export const formatTimeToStandard = (date: any, format = 'YYYY-MM-DD HH:mm:ss') => {
+  const formatedDate = dayjs(date).format(format);
+  if (date && formatedDate !== 'Invalid date') {
+    return formatedDate;
+  }
+  return '';
 };
 export const formatTimeToDate = (date: any) => {
-  return formatDate(date);
+  const formatedDate = dayjs(date).format('YYYY-MM-DD');
+  if (date && formatedDate !== 'Invalid date') {
+    return formatedDate;
+  }
+  return '';
 };
 export const formatTimeToYearMonth = (date: any) => {
-  return formatDateTimeNoSecond(date);
-
+  const formatedDate = dayjs(date).format('YYYY-MM-DD HH:mm');
+  if (date && formatedDate !== 'Invalid date') {
+    return formatedDate;
+  }
+  return '';
 };
-export const formatTimeToUTC = (date: any) => dayjs(date).toDate().toUTCString();
+export const formatTimeToUTC = (date: any) => dayjs(date).utc().format();
 export const formatTimeToApi = (date: Dayjs) => date.format();
 export const formatTimeToStandardApi = (date: Dayjs, format = 'YYYY-MM-DD HH:mm:ss') => {
   const formatedDate = dayjs(date).format(format);

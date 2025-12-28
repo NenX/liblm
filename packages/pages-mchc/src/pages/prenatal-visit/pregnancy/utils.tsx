@@ -22,11 +22,11 @@ export const 门诊_胎儿_form: IMchc_FormDescriptions_Field = {
             {
                 layout: '1/5', inputType: 'MA', label: '胎方位', name: 'fetalPosition',
                 inputProps: {
-                    // uniqueKey: '胎方位22s'
+                    // optionKey: '胎方位22s'
                     memorieskey: '胎方位',
                 }
             },
-            { layout: '1/5', inputType: 'MA', label: '先露', name: 'presentation', inputProps: { uniqueKey: '先露s' } },
+            { layout: '1/5', inputType: 'MA', label: '先露', name: 'presentation', inputProps: { optionKey: '先露s' } },
         ]
     },
     layout: '1/1',

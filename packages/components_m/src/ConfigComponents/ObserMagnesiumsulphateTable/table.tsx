@@ -46,7 +46,7 @@ export const tableColumns1 = [
     align: 'center',
     editable: true,
     inputType: 'MyAutoComplete',
-    inputProps: { uniqueKey: '膝反射s' },
+    inputProps: { optionKey: '膝反射s' },
     width: APP_CONFIG.CELL_WIDTH_SMALL,
   },
   {

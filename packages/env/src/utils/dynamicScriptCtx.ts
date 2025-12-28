@@ -1,24 +1,28 @@
-import { dyn_cb, safeGetFromFuncOrData } from "@lm_fe/utils";
+import { mchcLogger } from "../logger";
 import { gen_rt_ctx, IRTCtx } from "./runtime_ctx";
 
 
 
 
+export function dynamicScriptExecute(cb: (ctx: IRTCtx) => void, props?: any): boolean {
+    try {
+        cb(gen_rt_ctx('instance_ctx', props))
+        return false
+    } catch (error: any) {
+        mchcLogger.error('dynamicScriptExecute', { error })
+        return true
+    }
 
+}
 
-
-
-export function safe_get_symbol<T = any>(str: any, props?: any, default_v?: T) {
+export function getSymbolFromDynamicScript<T = any>(str: any, props?: any, default_v?: T) {
     let ret: T | undefined
     if (typeof str !== 'string') return ret
-    const is_err = dyn_cb((ctx) => { eval(str) }, () => gen_rt_ctx('instance_ctx', props),)
+    const is_err = dynamicScriptExecute((ctx) => {
+        eval(str)
+    }, props)
     if (is_err) {
         ret = default_v
     }
     return ret
-}
-
-export function safe_get_object_symbol(value: any, props?: any, default_v?: any,) {
-    let maybe_fn = safe_get_symbol(value, props, default_v)
-    return safeGetFromFuncOrData(maybe_fn, default_v)
 }

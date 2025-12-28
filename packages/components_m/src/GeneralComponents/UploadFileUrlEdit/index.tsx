@@ -1,8 +1,8 @@
-import { MyIcon } from '@lm_fe/components';
+import { UploadOutlined } from '@ant-design/icons';
 import { mchcEnv } from '@lm_fe/env';
 import { Button, Upload } from 'antd';
 import { get } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 export default (props: any) => {
   const { onChange, value, config } = props;
   const { url } = config;
@@ -38,7 +38,7 @@ export default (props: any) => {
         Authorization: mchcEnv.token!,
       }}
     >
-      <Button disabled={fileList.length > 0} icon={<MyIcon value='UploadOutlined' />}>
+      <Button disabled={fileList.length > 0} icon={<UploadOutlined />}>
         选择文件
       </Button>
     </Upload>

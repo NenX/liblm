@@ -1,13 +1,13 @@
 import { LazyAntd } from "@lm_fe/components";
 import { IMchc_LabExamReport_Detail } from "@lm_fe/service";
 import { EMPTY_PLACEHOLDER } from "@lm_fe/utils";
-import { Pagination, Tag } from "antd";
+import { Tag } from "antd";
 import { get } from "lodash";
 import React, { useEffect, useState } from "react";
 import { PDFPreview_View } from "src/PDFPreview";
 import './index.less';
 import { IProps } from "./types";
-const { Tree, TreeSelect, Select, Table, Dropdown } = LazyAntd
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 type TItem = IMchc_LabExamReport_Detail['examItems'][number]
 function check_normal(row: TItem): '正常' | '异常' | '-' {

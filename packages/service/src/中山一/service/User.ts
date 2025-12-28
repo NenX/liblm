@@ -7,7 +7,7 @@ import { IFuckPageResponse, IFuckResponse } from "src/types"
 
 export interface IZsy_CtgRecord {
     "id": 1,
-    "applyNo": "申请单号",
+    "applyNo": "申请单号.",
     "docNo": "档案流水号",
     "outpatientNo": "门诊号",
     "inpatientNo": "住院号",

@@ -14,9 +14,7 @@ export function getTimeSlice(hour = 24, isShowSecond = false) {
     }, [] as string[])
 }
 
-export function is_fuck_abnormal(conf?: { isNormal?: 'true' | 'false' | null }) {
-    return conf?.isNormal === 'false'
-}
+
 
 
 

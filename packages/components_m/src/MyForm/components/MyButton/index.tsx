@@ -13,7 +13,7 @@ interface MyButtonProps {
 
   onClick: Function;
 }
-export default function XButton(props: MyButtonProps) {
+export default function MyButton(props: MyButtonProps) {
   const handleClick = (item: string) => {
     props.onClick(item);
   };

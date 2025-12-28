@@ -26,12 +26,12 @@ export default defineFormConfig(
 
             "key": "physicalExam.height",
             "label": "身高",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
             isActive: mchcEnv.in(['广州市八']),
 
             isNewRow: true,
-            "inputProps": { 'unit': 'cm' },
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
 
             layout: '1/4',
         },
@@ -39,9 +39,9 @@ export default defineFormConfig(
 
             "key": "physicalExam.weight",
             "label": "体重",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
-            "inputProps": { 'unit': 'kg' },
+            "inputProps": { 'type': 'number', 'unit': 'kg' },
 
             layout: '1/4',
         },
@@ -49,9 +49,9 @@ export default defineFormConfig(
 
             "key": "physicalExam.bmi",
             "label": "bmi",
-            "inputType": "InputNumber",
+            "inputType": "input",
             required: true,
-            "inputProps": {},
+            "inputProps": { 'type': 'number', },
             isActive: mchcEnv.in(['广州市八']),
 
             layout: '1/4',
@@ -89,8 +89,8 @@ export default defineFormConfig(
 
             "key": "physicalExam.pulse",
             "label": "脉搏",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': '次/分', },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': '次/分', },
             layout: '1/4',
 
         },
@@ -126,16 +126,16 @@ export default defineFormConfig(
 
             "key": "gynExam.fundalHeight",
             "label": "宫高",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': 'cm' },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
             layout: '1/4',
             "isNewRow": 1,
         }, {
 
             "key": "gynExam.waistHip",
             "label": "腹围",
-            "inputType": "InputNumber",
-            "inputProps": { 'unit': 'cm' },
+            "inputType": "input",
+            "inputProps": { 'type': 'number', 'unit': 'cm' },
             layout: '1/4',
         }, {
 
@@ -166,8 +166,8 @@ export default defineFormConfig(
                     { layout: '1/5', inputType: 'MA', label: '胎动', name: 'fetalMovement', inputProps: { options: '正常,减少,增多' } },
                     { layout: '1/5', inputType: 'input_number', label: '胎心率', name: 'fetalHeartRate', inputProps: {} },
                     { layout: '1/5', inputType: 'MA', label: '位置', name: 'fetalPosition', inputProps: { options: mchcEnv.get_other_options('positonOptions') } },
-                    { layout: '1/5', inputType: 'MA', label: '胎方位', name: 'position', inputProps: { uniqueKey: '胎方位22s' } },
-                    { layout: '1/5', inputType: 'MA', label: '先露', name: 'presentation', inputProps: { uniqueKey: '先露s' } },
+                    { layout: '1/5', inputType: 'MA', label: '胎方位', name: 'position', inputProps: { optionKey: '胎方位22s' } },
+                    { layout: '1/5', inputType: 'MA', label: '先露', name: 'presentation', inputProps: { optionKey: '先露s' } },
                 ]
             },
             layout: '1/1',

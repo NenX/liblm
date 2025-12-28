@@ -2,13 +2,14 @@ import { BF_Wrap2, MyBaseList } from '@lm_fe/pages';
 import { formatDate } from '@lm_fe/utils';
 import { Form } from 'antd';
 import React from 'react';
+import { form_confg } from './bf_default';
 import { getPregnancyByOutpatientNO } from './methods';
 export default function Physical_sign_list(props: any) {
 
-  // const [search_form] = Form.useForm()
+  const [search_form] = Form.useForm()
   const { config, Wrap } = BF_Wrap2({
     default_conf: {
-      tableColumns: () => import('./bf_default'),
+      tableColumns: form_confg,
       title: '体征检查-列表',
       name: '/api/measures',
       searchConfig: [
@@ -20,12 +21,11 @@ export default function Physical_sign_list(props: any) {
 
   return <Wrap>
     <MyBaseList
-      // tableColumns={config?.tableColumns}
-      // searchConfig={config?.searchConfig}
-      // name={config?.name}
-      bf_conf={config}
+      tableColumns={config?.tableColumns}
+      searchConfig={config?.searchConfig}
+      name={config?.name}
       // {...config}
-      // searchForm={search_form}
+      searchForm={search_form}
       handleBeforePopup={function (values) {
         if (!values.createDate) {
           values.createDate = formatDate()

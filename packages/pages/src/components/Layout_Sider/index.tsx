@@ -1,13 +1,9 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 
 export const collapsedWidth = 50;
 export const width = 232;
 
-const Inner = lazy(() => import('./Inner'))
+const Layout_Sider = lazy(() => import('./Inner'))
 
-export function Layout_Sider(props: any) {
-
-
-    return <Inner {...props} />
-}
+export { Layout_Sider };
 

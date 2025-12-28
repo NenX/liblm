@@ -1,6 +1,7 @@
-import { formatTimeToDate, get_echarat, RangePicker_L } from '@lm_fe/components_m';
+import { formatTimeToDate, RangePicker_L } from '@lm_fe/components_m';
 import { IMchc_Pregnancy, SMchc_Pregnancy, TIdTypeCompatible } from '@lm_fe/service';
 import { Button, Checkbox, Modal, Radio, RadioChangeEvent } from 'antd';
+import * as echarts from 'echarts';
 import { get, map, set } from 'lodash';
 import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
@@ -16,7 +17,7 @@ export default function ExaminationItemCurve(props: IProps) {
 
 
   const { onClose, itemName, id } = props;
-  const [preg, set_preg] = useState<IMchc_Pregnancy>()
+  const [pregnancyData, setPregnancyData] = useState<IMchc_Pregnancy>()
   const itemCurve = useRef<any>(null)
   const itemCurveRef = useRef<any>(null)
 
@@ -60,7 +61,7 @@ export default function ExaminationItemCurve(props: IProps) {
   useEffect(() => {
 
     SMchc_Pregnancy.getOne(id).then(p => {
-      set_preg(p)
+      setPregnancyData(p)
       initializeData(p)
 
     })
@@ -69,14 +70,14 @@ export default function ExaminationItemCurve(props: IProps) {
   }, [])
 
 
-  function initializeData(p = preg) {
+  function initializeData(p = pregnancyData) {
     const startDate = get(p, 'lmp');
     const endDate = get(p, 'sureEdd') || get(p, 'edd');
     getItemData(startDate!, endDate!);
   };
 
   async function getItemData(startDate: string, endDate: string) {
-    const ee = await get_echarat()
+
 
     const itemData = await api.survey.getLisItemsGroupByItemname(itemName, startDate, endDate);
 
@@ -98,7 +99,7 @@ export default function ExaminationItemCurve(props: IProps) {
     set(option, 'series.0.data', valueArr);
 
     const _itemCurveRef = itemCurveRef.current;
-    itemCurve.current = ee.init(_itemCurveRef);
+    itemCurve.current = echarts.init(_itemCurveRef);
     itemCurve.current.setOption(option);
   };
 

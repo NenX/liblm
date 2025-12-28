@@ -7,7 +7,6 @@ import { fubaoRequest as request } from '@lm_fe/utils';
 import { message } from 'antd';
 import dayjs from 'dayjs';
 import { mchcModal__ } from '@lm_fe/pages';
-import { mchcEnv } from '@lm_fe/env';
 export default class AdmissionPanel extends BaseEditPanel {
   static defaultProps = {
     baseUrl: '/api/family/planning/addEarlyPregnancyCheckSurgicalType', request,
@@ -122,7 +121,7 @@ export default class AdmissionPanel extends BaseEditPanel {
     };
 
     if (!get(params, 'operationTimeEnd')) {
-      mchcEnv.error('手术起止时间是必填项');
+      message.error('手术起止时间是必填项');
       return;
     }
 
@@ -130,7 +129,7 @@ export default class AdmissionPanel extends BaseEditPanel {
       // 修改
       const res = (await request.put('/api/family/planning/updateEarlyPregnancyCheckSurgicalType', params)).data
       if (get(res, 'code') === 1) {
-        mchcEnv.success(get(res, 'msg'), 0.5).then(() => {
+        message.success(get(res, 'msg'), 0.5).then(() => {
           //点击打印按钮保存数据并打印
           if (get(values, 'isPrint')) {
             this._handlePrint(get(res, 'data.id'))
@@ -149,7 +148,7 @@ export default class AdmissionPanel extends BaseEditPanel {
       };
       const res = (await request.post(baseUrl, params)).data
       if (get(res, 'code') === 1) {
-        mchcEnv.success(get(res, 'msg'), 0.5).then(() => {
+        message.success(get(res, 'msg'), 0.5).then(() => {
           //点击打印按钮保存数据并打印
           if (get(values, 'isPrint')) {
             this._handlePrint(get(res, 'data.id'))

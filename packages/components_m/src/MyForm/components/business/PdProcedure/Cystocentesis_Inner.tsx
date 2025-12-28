@@ -1,11 +1,11 @@
 import { DatePicker_L, LazyAntd } from '@lm_fe/components';
-import { APP_CONFIG } from '@lm_fe/env';
 import { formatDate } from '@lm_fe/utils';
 import { Button, Col, Form, InputNumber, Row } from 'antd';
-import dayjs from 'dayjs';
 import { cloneDeep, filter, get, indexOf, isArray, isEmpty, isEqual, join, map, set } from 'lodash';
+import dayjs from 'dayjs';
 import React, { Component } from 'react';
 import BaseFormComponent from '../../../../BaseFormComponent';
+import { CELL_WIDTH_SMALL } from './config/common-table-item';
 import columnsConfig, { cystocentesisColumns, hemogramExamColumns } from './config/table';
 import './index.less';
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
@@ -102,7 +102,7 @@ export default class Cystocentesis extends Component {
       if (!isEmpty(children)) {
         return {
           ...column,
-          width: width || APP_CONFIG.CELL_WIDTH_SMALL,
+          width: width || CELL_WIDTH_SMALL,
           children: this.formatColumns(tableName)(children),
         };
       }

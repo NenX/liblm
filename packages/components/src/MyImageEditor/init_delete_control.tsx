@@ -7,12 +7,12 @@ export function init_delete_control() {
     var img = document.createElement('img');
     img.src = deleteIcon;
 
-    // real_fabric().Object.prototype.transparentCorners = false;
-    // real_fabric().Object.prototype.cornerColor = 'blue';
-    // real_fabric().Object.prototype.cornerStyle = 'circle';
+    // real_fabric.Object.prototype.transparentCorners = false;
+    // real_fabric.Object.prototype.cornerColor = 'blue';
+    // real_fabric.Object.prototype.cornerStyle = 'circle';
 
 
-    real_fabric().Object.prototype.controls.deleteControl = new (real_fabric()).Control({
+    real_fabric.Object.prototype.controls.deleteControl = new real_fabric.Control({
         x: 0.5,
         y: -0.5,
         offsetY: 16,
@@ -29,7 +29,7 @@ export function init_delete_control() {
             var size = 16;
             ctx.save();
             ctx.translate(left, top);
-            ctx.rotate(real_fabric().util.degreesToRadians(fabricObject.angle!));
+            ctx.rotate(real_fabric.util.degreesToRadians(fabricObject.angle!));
             ctx.drawImage(img, -size / 2, -size / 2, size, size);
             ctx.restore();
         },

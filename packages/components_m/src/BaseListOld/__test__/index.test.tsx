@@ -15,7 +15,7 @@ describe('src > components > BaseList', () => {
   const render = (props: {} = {}) => shallow(<TargetComponent {...defaultProps} {...props} />);
 
   describe('componentDidMount', () => {
-    it('should call initData & handleSearch', () => {
+    it('should call initData & handleSearch ', () => {
       const component = render();
       component.instance().initData = jest.fn();
       component.instance().handleSearch = jest.fn();

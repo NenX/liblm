@@ -36,12 +36,15 @@ export const tableColumns = [
   {
     title: '转诊类型',
     dataIndex: 'referralDirection',
-    inputType: 'MS',
-
-    inputProps: { marshal: 0, options: '平级,上级,下级' },
     width: 68,
-    layout: '1/3',
     align: 'center',
+    render: (value: number) => {
+      let text = '';
+      if (value === 1) text = '平级';
+      if (value === 2) text = '上级';
+      if (value === 3) text = '下级';
+      return text && <Tag style={{ marginRight: 0 }}>{text}</Tag>;
+    },
   },
   {
     title: '转出时间',

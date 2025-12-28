@@ -1,213 +1,189 @@
-import { rt_ctx } from "@lm_fe/env";
-import { conceiveMode, mlUltrasounds_fd } from "@lm_fe/pages";
-import { defineFormConfig } from '@lm_fe/service';
-const ctx = rt_ctx
-const React = ctx.React
-export default defineFormConfig([
-  {
-    key: 'id',
-    form_hidden: true,
-  },
-  {
-    key: 'sureEddModify',
-    inputType: 'MS',
-    label: '修改过预产期-B超',
-    form_hidden: true,
-    inputProps: { options: '否,是', marshal: 0 },
+import { FormConfig } from '@lm_fe/components_m';
+import { otherOptions as Options } from '@lm_fe/env';
 
-  },
-  {
-    "key": "lmp",
-    "label": "末次月经",
-    "inputType": "date",
-    layout: '1/6',
-    processLocal(lmp, f) {
-      if (lmp && f) {
-        var values = f.getFieldsValue()
-        var sureEddModify = values.sureEddModify
-        var ntExams = ctx.utils.expect_array<{ checkdate: string, menopause: string }>(values.ntExams)
-        var nfExams = ctx.utils.expect_array<{ checkdate: string, menopause: string }>(values.nfExams)
-        var conceiveMode = ctx.utils.safe_json_parse_arr(values.conceiveMode__)[0]?.value
-        const calc_edd = ctx.utils.cal_edd_by_lmp(lmp)
-
-        values.edd = calc_edd
-        if (conceiveMode !== 1 && !sureEddModify) {
-          values.sureEdd = calc_edd
-          ctx.utils.safeExec(ctx.props.fuck_sureEdd, calc_edd)
-        }
-        values.ntExams = ntExams.map(_ => {
-          return ctx.utils.set(_, 'menopause', _.checkdate ? ctx.utils.menopauseWeek(_.checkdate, lmp) : '')
-        })
-        values.nfExams = nfExams.map(_ => {
-          return ctx.utils.set(_, 'menopause', _.checkdate ? ctx.utils.menopauseWeek(_.checkdate, lmp) : '')
-        })
-        f.setFieldsValue(values)
-      }
-    }
-  }, {
-    "key": "edd",
-    "label": "预产期-日期",
-    "inputType": "date",
-    layout: '1/6',
-
-  }, {
-    "key": "sureEdd",
-    "label": "预产期-B超",
-    "inputType": "date",
-    processLocal(v, f) {
-      if (!f) return
-      f.setFieldValue('sureEddModify', 1)
-      ctx.utils.safeExec(ctx.props.fuck_sureEdd, v)
-    },
-    required: true,
-    layout: '1/6',
-
-  },
-  {
-    "key": "fetalcount",
-    "label": "胎数",
-    "inputType": "select",
-    "inputProps": { 'marshal': 0, 'options': '1,2,3,4,5,6' },
-
-    layout: '1/6',
-
-  },
+const config: Array<FormConfig> = [
+  { name: 'lmp', key: '.lmp', label: '末次月经', input_type: 'date', span: 5, rules: [{ required: true }] },
+  { name: 'edd', key: '.edd', label: '预产期-日期', input_type: 'date', span: 5 },
+  { name: 'sureEdd', key: '.sureEdd', label: '预产期-B超', input_type: 'date', span: 5, rules: [{ required: true }] },
 
   {
-
-    "key": "sac",
-    "label": "孕囊",
-
-    "inputType": "input",
-
-    isActive: !ctx.mchcEnv.in(['广三']),
-    "inputProps": { 'type': 'number', 'unit': '个' },
-    layout: '1/6',
-
-
-  },
-  {
-    isActive: !ctx.mchcEnv.in(['广三']),
-
-    "key": "yolksac",
-    "label": "卵黄囊",
-
-    "inputType": "input",
-
-
-    "inputProps": { 'type': 'number', 'unit': '个' },
-    layout: '1/6',
-
-
-  },
-  conceiveMode({
-    "key": "conceiveMode__",
-    processLocal(v, f) {
-      ctx.utils.safeExec(ctx.props.fuck_conceive, v)
-
-    }
-  }),
-  {
-    "key": "chiefcomplaint",
-    "label": "主诉",
-    "inputType": "textareaWithTemplate",
-    isNewRow: 1,
-    "inputProps": {
-      rows: 2,
-      "TemplateTextarea_type": [
+    name: 'conceiveMode',
+    key: '.personalProfile.conceiveMode(Note)',
+    label: '受孕方式',
+    input_type: 'checkbox',
+    span: 9,
+    rules: [{ required: true }],
+    input_props: {
+      type: 'custom',
+      renderData: [
         {
-          "title": "科室",
-          "type": 16,
-          depid: 2
+          key: 'conceiveMode',
+          label: '',
+          options: Options.conceiveModeOptions,
+          extraEditors: [
+            {
+              key: 1,
+              editors: [{ name: '', key: '', label: '', input_type: 'input' }],
+            },
+            {
+              key: 3,
+              editors: [{ name: '', key: '', label: '', input_type: 'input' }],
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  {
+    name: 'sac',
+    key: '.sac',
+    label: '孕囊',
+    input_type: 'input',
+    unit: '个',
+    span: 5,
+    input_props: { type: 'number' },
+  },
+  {
+    name: 'yolksac',
+    key: '.yolksac',
+    label: ' 卵黄囊',
+    input_type: 'input',
+    unit: '个',
+    span: 5,
+    input_props: { type: 'number' },
+  },
+
+  {
+    name: 'ntUltrasounds',
+    key: '.ntUltrasounds',
+    label: '',
+    input_type: 'array-custom',
+    is_new_row: true,
+    input_props: {
+      array_title: 'NT检查',
+      config: [
+        { name: 'id', key: '.id', label: 'id', input_type: 'input', hidden: true, span: 5 },
+        { name: 'checkdate', key: '.checkdate', label: '检查时间', input_type: 'date', span: 5 },
+        { name: 'menopause', key: '.menopause', label: '停经', input_type: 'input', span: 5, unit: '周' },
+        {
+          name: 'crl',
+          key: '.crl',
+          label: 'CRL',
+          input_type: 'input',
+          span: 5,
+          unit: 'mm',
+          input_props: { type: 'number' },
         },
         {
-          "title": "个人",
-          "type": 17
-        }
-      ]
+          name: 'nt',
+          key: '.nt',
+          label: 'NT',
+          className: 'label-width4',
+          input_type: 'input',
+          span: 4,
+          unit: 'mm',
+          rules: [{ type: 'rang', min: 0, max: 3 }],
+          input_props: { type: 'number' },
+        },
+        { name: 'gestationalWeek', key: '.gestationalWeek', label: '如孕', input_type: 'input', span: 5, unit: '周' },
+      ],
     },
-    layout: '1/2',
+  },
 
-  }, {
-    "key": "presentmhNote",
-    "label": "现病史",
-    "inputType": "textareaWithTemplate",
-    "inputProps": {
-      rows: 2,
-      "TemplateTextarea_type": [
+  {
+    name: 'midNiptUltrasounds',
+    key: '.midNiptUltrasounds',
+    span: 24,
+    label: '中晚孕超声',
+    input_type: 'table',
+    input_props: {
+      editable: true,
+      tableColumns: [
         {
-          "title": "科室",
-          "type": 8,
-          depid: 2
+          key: 'gestationalWeek',
+          title: '孕周',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
         },
         {
-          "title": "个人",
-          "type": 9
-        }
-      ]
+          key: 'fetal',
+          title: '胎儿',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'bpd',
+          title: 'BPD',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'hc',
+          title: 'HC',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'ac',
+          title: 'AC',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'fl',
+          title: 'FL',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'afv',
+          title: 'AFV',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'ubf',
+          title: '脐血流',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+        {
+          key: 'note',
+          title: '其他异常描述',
+          editor: {
+            key: '',
+            name: '',
+            input_type: 'input',
+          },
+        },
+      ],
     },
-    layout: '1/2',
-
   },
-  { inputType: 'title', title: 'NT检查' },
-  {
-    "key": "ntExams",
-    inputType: 'ArrayPanel',
-    processRemote(v, f) { return ctx.utils.isEmpty(v) ? [{}] : v },
+];
 
-    inputProps: {
-      on_row_value_change(arr, idx, changed, form) {
-        if (!form) return
-        var checkdate = ctx.utils.get<string>(changed, 'checkdate')
-        var lmp = form.getFieldValue('lmp')
-        if (lmp && checkdate) {
-          arr[idx] = ctx.utils.set(arr[idx], 'menopause', ctx.utils.menopauseWeek(checkdate, lmp))
-          form.setFieldValue('ntExams', arr)
-        }
-
-      },
-      marshal: 0,
-      targetLabelCol: 2,
-      formDescriptions: [
-        { label: '检查日期', name: 'checkdate', inputType: 'DatePicker', props: {}, layout: '1/6' },
-        { label: '停经', name: 'menopause', inputType: 'MA', props: { unit: '周' }, layout: '1/6' },
-        { label: 'CRL', name: 'crl', inputType: 'input_number', props: { unit: 'mm' }, layout: '1/6' },
-        { label: 'NT', name: 'nt', inputType: 'input_number', props: { unit: 'mm' }, layout: '1/6' },
-        { label: '如孕', name: 'gestationalWeek', inputType: 'MA', props: { unit: '周' }, layout: '1/6' },
-
-      ]
-
-    },
-    layout: '1/1',
-
-  },
-  { inputType: 'title', title: 'NF检查' },
-
-  {
-    "key": "nfExams",
-    inputType: 'ArrayPanel',
-    processRemote(v, f) { return ctx.utils.isEmpty(v) ? [{}] : v },
-    inputProps: {
-      marshal: 0,
-      targetLabelCol: 2,
-      on_row_value_change(arr, idx, changed, form) {
-        if (!form) return
-        var checkdate = ctx.utils.get<string>(changed, 'checkdate')
-        var lmp = form.getFieldValue('lmp')
-        if (lmp && checkdate) {
-          arr[idx] = ctx.utils.set(arr[idx], 'menopause', ctx.utils.menopauseWeek(checkdate, lmp))
-          form.setFieldValue('nfExams', arr)
-        }
-      },
-      formDescriptions: [
-        { label: '检查日期', name: 'checkdate', inputType: 'DatePicker', props: {}, layout: '1/6' },
-        { label: '停经', name: 'menopause', inputType: 'MA', props: { unit: '周' }, layout: '1/6' },
-        { label: 'BPD', name: 'bpd', inputType: 'input_number', props: { unit: 'mm' }, layout: '1/6' },
-        { label: 'NF', name: 'nf', inputType: 'input_number', props: { unit: 'mm' }, layout: '1/6' },
-        { label: '如孕', name: 'gestationalWeek', inputType: 'MA', props: { unit: '周' }, layout: '1/6' },
-
-      ]
-    },
-  },
-  mlUltrasounds_fd()
-]);
+export default config;

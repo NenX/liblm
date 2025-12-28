@@ -1,5 +1,5 @@
 import React from 'react';
-import { PanelTitle, PanelWithChild } from '@lm_fe/components_m';
+import { PanelWithChild } from '@lm_fe/components_m';
 import PhysicalExam from '../../public-exam/PhysicalExam';
 import MaritalHistory from '../../public-exam/MaritalHistory';
 import MenstrualHistory from '../../public-exam/MenstrualHistory';
@@ -74,16 +74,25 @@ export class Panel extends PanelWithChild {
 
   renderHeader = () => {
     const { data } = this.state;
-    const h = [
-      { title: '姓名', value: get(data, 'gynecologicalPatient.name') },
-      { title: '年龄', value: get(data, 'gynecologicalPatient.age') },
-      { title: '门诊号', value: get(data, 'gynecologicalPatient.outpatientNO') },
-
-    ]
+    console.log(data);
     return (
-      <PanelTitle headerItems={h} />
+      <div className={PanelWithChild.styles["panel-with-child_header"]}>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>姓名:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'gynecologicalPatient.name')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>年龄:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'gynecologicalPatient.age')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-label"]}>门诊号:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-value"]}>
+            {get(data, 'gynecologicalPatient.outpatientNO')}
+          </span>
+        </div>
+      </div>
     );
- 
   };
 
   renderTabs = () => {

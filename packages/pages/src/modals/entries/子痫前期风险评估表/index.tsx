@@ -2,15 +2,14 @@ import { IGlobalModalProps } from '@lm_fe/components';
 import { IMchc_Doctor_OutpatientHeaderInfo, IMchc_Doctor_PreRiskAssessmentInfo, IMchc_TemplateTree_Item, SMchc_Doctor, SMchc_TemplateTrees } from '@lm_fe/service';
 import { getSearchParamsValue } from '@lm_fe/utils';
 import { Button, Col, Modal, Row, Space } from 'antd';
-import dayjs from 'dayjs';
 import { filter, floor, forEach, get, includes, isEmpty, last, orderBy, split } from 'lodash';
+import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import styles from './index.module.less';
 
-import { LazyAntd } from '@lm_fe/components';
 import { mchcEnv } from '@lm_fe/env';
-import { fuck_sign_doctor, fuck_sign_user, fuck_user_info } from './utils';
+import { LazyAntd } from '@lm_fe/components';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
@@ -68,7 +67,7 @@ export default function Preeclampsia(props: IGlobalModalProps<IProps>) {
     const _pregnancyData = data;
     const _diagnosesList = _pregnancyData.diagnoses // || diagnosesList;
     /**自动勾选项判断*/
-    const pregnancyHistories: any[] = orderBy(get(_pregnancyData, 'pregnancymh'), ['gravidityindex'], ['asc']) || [];
+    const pregnancyHistories = orderBy(get(_pregnancyData, 'pregnancymh'), ['gravidityindex'], ['asc']) || [];
     const gravidity = get(_pregnancyData, 'gravidity');
     const bmi = get(_pregnancyData, 'bmi');
     const familyHistoryOtherNote = get(_pregnancyData, 'familyHistoryOrderNote') || '';
@@ -317,13 +316,7 @@ export default function Preeclampsia(props: IGlobalModalProps<IProps>) {
     const treeData: any = [];
     forEach(data, (item: any) => {
       if (item.pid === pid) {
-        if (item.pid === 0) {
-          item.className = styles['tree-title']
-        } else {
-          if (item.categoryName)
-            item.className = styles['fuck-border']
-
-        }
+        if (item.pid === 0) item.className = styles['tree-title'];
         item.title = item.val;
         item.key = String(item.id);
         item.children = transferTemplateData(data, item.id);
@@ -344,10 +337,10 @@ export default function Preeclampsia(props: IGlobalModalProps<IProps>) {
   const treeGuideNodes = transferTemplateData(treeGuide);
   const footer = [
     <>
-      {/* <p className={styles["footer-tips"]}>
-
-        {mchcEnv.is('郫都') ? '参考指南：第十版《妇产科学》' : '参考指南：2018美国妇产科医师协会“妊娠期低剂量阿司匹林的应用”'}
-      </p> */}
+      <p className={styles["footer-tips"]}>
+        {/* 目前产科的评估表用的这个 */}
+        {mchcEnv.is('郫都') ? '参考指南：子痫前期的预防及预测指南(2025)' : '参考指南：2018美国妇产科医师协会“妊娠期低剂量阿司匹林的应用”'}
+      </p>
       <Space style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Button onClick={() => close?.()}>取消</Button>
         <Button type="primary" onClick={handleOk}>
@@ -401,11 +394,9 @@ export default function Preeclampsia(props: IGlobalModalProps<IProps>) {
           />
         </Col>
       </Row>
-
       <div style={{ display: 'none' }}>
         <div style={{ marginTop: '28px' }} ref={printTableRef} className={styles["printPreeclampsia"]}>
           <h2 style={{ textAlign: 'center' }}>子痫前期风险评估表</h2>
-          {fuck_user_info(headerInfo)}
           <Row>
             <Col span={12} className={styles["tree-left"]}>
               <Tree
@@ -426,23 +417,9 @@ export default function Preeclampsia(props: IGlobalModalProps<IProps>) {
               />
             </Col>
           </Row>
-          <div style={{ display: mchcEnv.in(['越秀妇幼']) ? 'block' : 'none', lineHeight: 2.6, pageBreakBefore: 'always', padding: '48px 24px' }}>
-            <div>患者知情选择</div>
-            <div>1.医生已告知我关于疾病的介绍、目前孕产妇的病情、所需采取的各种治疗措施及其可能存在的风险。</div>
-            <div>2.我同意医生根据产妇病情需要而采取各种治疗措施。</div>
-            <div>3.我并未得到百分之百成功的许诺。</div>
-            <div>4.我已详细阅读以上内容，对医师详细告知的各种风险表示完全理解，经慎重考虑，我同意进行治疗。</div>
-            {
-              fuck_sign_user()
-            }
-            <div>我已告知患者病情、所需采取的各种治疗措施及其可能存在的风险、可能存在的其他治疗方法并且解答了患者关于该治疗的相关问题。</div>
-            {
-              fuck_sign_doctor()
-            }
-          </div>
         </div>
       </div>
-    </Modal >
+    </Modal>
   );
 }
 

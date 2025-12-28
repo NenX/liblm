@@ -7,7 +7,7 @@ import React from 'react';
 import Query from './components/Query';
 import Table from './components/Table';
 import { tableColumns } from './config/table';
-import { Follow_up_btn_两癌 } from './.两癌随访';
+import { Follow_up_btn } from './.两癌随访';
 
 
 
@@ -45,7 +45,7 @@ class List extends BaseList {
       render: (value: any, rowData: any, index: number) => {
         return (
           <>
-            <Follow_up_btn_两癌 handleSearch={() => { }} rowData={rowData} />
+            <Follow_up_btn handleSearch={() => { }} rowData={rowData} />
 
             <Divider type="vertical" />
 

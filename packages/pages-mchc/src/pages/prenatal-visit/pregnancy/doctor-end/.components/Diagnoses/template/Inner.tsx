@@ -1,8 +1,8 @@
-import { formatTimeToStandard, HighRiskGradeSelect, MyIcon } from '@lm_fe/components_m';
+import { CustomIcon, formatTimeToStandard, HighRiskGradeSelect } from '@lm_fe/components_m';
 import { mchcEnv } from '@lm_fe/env';
-import { IMchc_Doctor_Diagnoses, SLocal_State } from '@lm_fe/service';
+import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo, SLocal_State } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { Button, Col, Input, Modal, Row, Space, Spin, Tabs } from 'antd';
+import { Button, Col, Input, message, Modal, Row, Spin, Tabs } from 'antd';
 import { cloneDeep, filter, find, findIndex, get, isString, map, set, size, throttle } from 'lodash';
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import { api } from '../../../.api';
@@ -11,15 +11,29 @@ import DoctorEnd_TemplateTree from '../../TemplateTree';
 import DiagnosesItem from './../diagnoses-item/diagnoses-item';
 import DiagnosesWeek from './../diagnoses-week/diagnoses-week';
 import './index.less';
-import { IDiagnosesTemplate } from './types';
-function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
+interface IProps {
+  diagnosesWord: string
+  diagnosesList: IMchc_Doctor_Diagnoses[]
+  addDiag(v: any): void,
+  headerInfo: IMchc_Doctor_OutpatientHeaderInfo
+  closeTemplate(): void
+
+  isShowDiagnosesTemplate: boolean
+
+  getHighriskDiagnosis(id: any): void,
+  setDiagnosesList(v: IMchc_Doctor_Diagnoses[]): void
+  saveHeaderInfo(h: IMchc_Doctor_OutpatientHeaderInfo): void
+}
+function DiagnosesTemplateOld(props: IProps) {
 
   const {
     isShowDiagnosesTemplate,
 
+    diagnosesWord,
     diagnosesList,
     headerInfo,
     saveHeaderInfo,
+    getHighriskDiagnosis,
     setDiagnosesList,
     closeTemplate,
     addDiag,
@@ -40,8 +54,8 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
   useEffect(() => {
 
 
-    getDiagnosesTemplate('');
-  }, [])
+    getDiagnosesTemplate(diagnosesWord);
+  }, [diagnosesWord])
 
   const scrollHandler = throttle((e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     if (loading.current || empty.current) return
@@ -157,7 +171,7 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
       set(item, 'userid', userid);
     }
     await api.components.addTemplateTree(item);
-    mchcEnv.info(`${get(item, `val`)}同步到${type == 2 ? '科室' : '个人'}`);
+    message.info(`${get(item, `val`)}同步到${type == 2 ? '科室' : '个人'}`);
   };
 
   //#region  右边诊断操作
@@ -181,9 +195,10 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
     const newList = cloneDeep(diagnosesList);
     const delArr = newList.splice(i, 1);
     await requestMethods_further.deleteDiagnosis(get(delArr, `[0].id`));
-    mchcEnv.info('删除成功！');
+    message.info('删除成功！');
     setDiagnosesList(newList);
     changeHeaderInfo();
+    // getHighriskDiagnosis(pregnancyId);
   };
 
 
@@ -214,7 +229,12 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
   return (
     <Modal
       centered
-      title={'诊断管理页'}
+      title={
+        <div>
+          <CustomIcon type={'icon-doctor'} style={{ color: '#150F55', fontSize: '24px', marginRight: '10px' }} />
+          <span style={{ color: '#150F55', fontSize: '16px', fontWeight: 500 }}>诊断管理页</span>
+        </div>
+      }
       className="diag-template"
       footer={null}
       visible={isShowDiagnosesTemplate}
@@ -223,42 +243,39 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
       <Row>
         <Col span={14}>
 
-          <Space.Compact >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <Input.Search
               placeholder="请输入诊断信息"
               enterButton="添加诊断"
-              defaultValue={''}
+              defaultValue={diagnosesWord}
               onChange={(e) => handleChange(e.target.value)}
               onSearch={handleSearch}
             />
             {!mchcEnv.is('郫都') && <HighRiskGradeSelect headerInfo={headerInfo} />}
-          </Space.Compact>
+          </div>
           <Tabs activeKey={activeKey} onChange={handleChangeTab}>
             <Tabs.TabPane
               tab={
-                <Button className="list-btn">
+                <Button className="list-btn" icon={<CustomIcon type="icon-all" style={style} />}>
                   全部
                 </Button>
               }
               key="1"
             >
-              <div onScroll={scrollHandler} style={{ height: '100%', overflowY: 'auto', }}>
+              <div onScroll={scrollHandler} style={{ height: '100%', overflowY: 'scroll', }}>
                 {map(filterDiagnosesTemplate, (item) => (
                   <p className="diag-item">
                     <span onClick={() => handleSearch(item)}>
                       {get(item, 'code') ? '（icd）' : null}
                       {get(item, 'val')}
                     </span>
-                    <MyIcon
-                      value='EnterOutlined'
+                    <CustomIcon
                       className="diag-icon"
                       title="同步到科室诊断"
                       onClick={() => handleAddIcon(item, 2)}
                       type="icon-department"
                     />
-                    <MyIcon
-                      value='EnterOutlined'
-
+                    <CustomIcon
                       className="diag-icon"
                       title="同步到个人诊断"
                       onClick={() => handleAddIcon(item, 3)}
@@ -271,7 +288,7 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
             (
             <Tabs.TabPane
               tab={
-                <Button className="list-btn" >
+                <Button className="list-btn" icon={<CustomIcon style={style} type="icon-department" />}>
                   科室
                 </Button>
               }
@@ -292,7 +309,7 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
             ) (
             <Tabs.TabPane
               tab={
-                <Button className="list-btn" >
+                <Button className="list-btn" icon={<CustomIcon style={style} type="icon-individual1" />}>
                   个人
                 </Button>
               }
@@ -340,7 +357,7 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
           </div>
         </Col>
       </Row>
-    </Modal >
+    </Modal>
   );
 }
 export default DiagnosesTemplateOld

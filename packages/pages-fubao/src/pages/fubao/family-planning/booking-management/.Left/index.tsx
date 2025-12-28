@@ -56,7 +56,7 @@ export default function WorkFlow(props: IProps) {
                     colorList.map((_, i) => <span style={{ color: '#000', background: _.backgroundColor, display: 'inline-block', padding: '4px 6px', marginRight: 4 }}>{_.operationName || '无'}</span>)
                 }
             </div> */}
-      <div style={{ overflowY: 'auto' }}>
+      <div style={{ overflowY: 'scroll' }}>
         {leftList.length > 0 ? (
           <>
             <ul style={{ padding: '0 12px' }}>

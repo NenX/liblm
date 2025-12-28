@@ -1,9 +1,9 @@
 // 角色选择
-import { MyCheckbox } from '@lm_fe/components'
 import { ICommonOption, mchcLogger } from '@lm_fe/env'
 import { IMchc_Group } from '@lm_fe/service'
 import { PartialAll, request, safe_json_parse_arr } from '@lm_fe/utils'
 import React, { useEffect, useState } from 'react'
+import MyCheckbox from '../../../GeneralComponents/CheckboxWithInput_gold'
 
 type IFuck_Group = (PartialAll<IMchc_Group> & { groupRankList: PartialAll<IMchc_Group['groupRanks']> })
 

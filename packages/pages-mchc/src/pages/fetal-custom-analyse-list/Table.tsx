@@ -1,12 +1,12 @@
 import { LazyAntd, SimpleForm } from '@lm_fe/components';
 import { event, asRequest as request } from '@lm_fe/utils';
-import { Button, Checkbox, Form, Input, InputNumber, Modal } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Modal, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import strategies from './strategies';
 import { AnalyseType, tableData } from './tableData';
 import { IPv } from './types';
 import useSign from './useSign';
-const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
+// const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 interface IProps {
     name: string

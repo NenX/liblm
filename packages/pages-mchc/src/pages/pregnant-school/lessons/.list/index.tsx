@@ -1,4 +1,5 @@
-import { MyIcon, QRCode_L } from '@lm_fe/components';
+import { QrcodeOutlined } from '@ant-design/icons';
+import { QRCode } from '@lm_fe/components';
 import { mchcEnv, mchcEvent } from '@lm_fe/env';
 import { BF_Wrap2, mchcModal__, MyBaseList } from '@lm_fe/pages';
 import { request } from '@lm_fe/utils';
@@ -45,15 +46,14 @@ export default function List(props: { which_type: WhichType }) {
 
   return <Wrap>
     <MyBaseList
-      bf_conf={config}
-      // name={config?.name}
-      // searchParams={config?.searchParams}
-      // searchConfig={config?.searchConfig}
-
+      name={config?.name}
+      searchParams={config?.searchParams}
       useListSourceCount
+      initialSearchValue={{}}
       showCopy
       beforeSubmit={v => ({ ...v, type })}
-      ActionAddonBefore={(ctx) => <Button size='small' onClick={() => { handleQrcodeView(ctx.rowData) }} icon={<MyIcon value='QrcodeOutlined' />} />}
+      searchConfig={config?.searchConfig}
+      ActionAddonBefore={(ctx) => <Button size='small' onClick={() => { handleQrcodeView(ctx.rowData) }} icon={<QrcodeOutlined />} />}
       genColumns={ctx => {
         return [
           ...(config?.tableColumns ?? []),
@@ -90,10 +90,10 @@ function handleQrcodeView(rowData: any) {
 
   mchcModal__.open('test', {
     title: '患者手机端-首页-扫一扫-进行扫码签到',
-    width: 440,
-    // bodyStyle: { height: 400 },
+    width: 400,
+    bodyStyle: { height: 400 },
     modal_data: {
-      content: <QRCode_L
+      content: <QRCode
         value={`courseid~${rowData.id}~${rowData.name}`}
         size={380}
       />

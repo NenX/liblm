@@ -63,7 +63,7 @@ export default function ReaultModal({ visible, title, defaultValue, onOk, onCanc
     <Modal
       centered
       destroyOnClose
-      open={visible}
+      visible={visible}
       title={title}
       width={750}
       onOk={handleOk}

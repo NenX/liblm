@@ -1,5 +1,6 @@
 // import store from 'store';
 // import { get, reduce, concat, keyBy, pick, values, uniqBy, isEqual, sortBy, cloneDeep } from 'lodash';
+// import { initDictionary } from '@/actions/dictionaries';
 // import { initFormDescriptions, getSystemConfig } from '@/actions/system';
 // import { omitRoutes } from '@/routes';
 // import { Modal } from 'antd';
@@ -16,6 +17,7 @@
 //       // 初始化用户信息
 //       await initUser(username)(dispatch);
 //       // 获取字典
+//       await initDictionary()(dispatch);
 //       return {
 //         token,
 //         username,
@@ -30,6 +32,7 @@
 //   store.set(APP_CONFIG.AUTH_NAME, emp_id);
 //   store.set(APP_CONFIG.LOGIN_TIME, new Date().getTime());
 //   await initUser(emp_id)(dispatch);
+//   await initDictionary()(dispatch);
 //   const systemConfig = await getSystemConfig()(dispatch);
 //   if (systemConfig.systemMode === 'production') {
 //     await initFormDescriptions()(dispatch);

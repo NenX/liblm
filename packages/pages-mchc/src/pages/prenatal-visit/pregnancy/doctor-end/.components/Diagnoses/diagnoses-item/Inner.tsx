@@ -1,5 +1,6 @@
 
-import { formatTimeToStandard, MyIcon } from '@lm_fe/components_m';
+import { DeleteOutlined } from '@ant-design/icons';
+import { formatTimeToStandard } from '@lm_fe/components_m';
 import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
 import { Input, Popconfirm, Popover } from 'antd';
@@ -229,7 +230,7 @@ export default function DiagnosesItem({
         okText="确定"
         cancelText="取消"
       >
-        <MyIcon value='DeleteOutlined' size={6} className="delBtn" type="icon-cacncel" />
+        <DeleteOutlined size={6} className="delBtn" type="icon-cacncel" />
       </Popconfirm>
     </div>
     // </Tooltip>

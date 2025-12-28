@@ -1,10 +1,11 @@
+
 @primary-color: #0e318d;
 
 .my-tab-btn {
   position: relative;
   height: 36px;
   padding: 4px 8px;
-  // background-color: #fff;
+  background-color: #fff;
   color: #666;
   display: inline-flex;
   justify-content: center;
@@ -22,7 +23,7 @@
     background-color: #ddd;
   }
 
-  .after {
+  &::after {
     content: '';
     display: inline-block !important;
     position: absolute;
@@ -30,13 +31,13 @@
     bottom: 0;
     width: 0;
     height: 2px;
-    // background-color: @primary-color;
+    background-color: @primary-color;
     left: 50%;
   }
 
   &:hover {
-    color: #666;
-    // background-color: #666;
+    color: @primary-color;
+    background-color: #eceef5;
     cursor: pointer;
 
     .my-tab-btn-close {
@@ -44,21 +45,20 @@
 
 
     }
-    
   }
 }
 
 .my-tab-btn-icon-active,
 .my-tab-btn-active {
   position: relative;
-  // background-color: #dfe2eb;
-  // color: @primary-color;
+  background-color: #dfe2eb;
+  color: @primary-color;
 
   &:before {
     background: transparent;
   }
 
-  .after {
+  &::after {
     transition: all .2s ease-out;
     left: 0px;
     width: calc(100%);
@@ -104,10 +104,8 @@
     font-size: 10px;
     color: #999;
   }
-
   &:hover {
     background-color: #fff;
-
     :global(.anticon) {
       color: #222;
     }

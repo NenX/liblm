@@ -9,20 +9,21 @@ import { displayBlock, multipleOptions, singleOptions } from './config';
 import { getDefaultResultBaseOnInfo } from './utils'
 import React from 'react';
 import { CheckboxWithValue } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
-import { IThrombusProps } from '../types';
-import { fuck_user_info } from '../../子痫前期风险评估表/utils';
+interface IProos {
+  pregnancyId: TIdTypeCompatible
 
+
+}
 const text = '《2015RCOG降低妊娠及产褥期静脉血栓栓塞的风险》附录3,Obstetric thromboprophylaxis risk assessment and management'
 export function getDiffYears(date: string, preDate: string) {
   return dayjs(date).diff(dayjs(preDate), 'years', true);
 }
 const title = '深静脉血栓高危因素孕期用药筛查表'
 type TItem = Partial<IMchc_Doctor_VteAssessForm<"广三">>
-export function ThrombusGysy(props: IThrombusProps) {
+export function ThrombusGysy(props: IGlobalModalProps<IProos>) {
 
   const { modal_data, close, ...others } = props;
-  const { headerInfo } = modal_data;
+  const { pregnancyId, } = modal_data;
   const [form] = Form.useForm()
 
   const [score, setScore] = useState(0)
@@ -52,9 +53,9 @@ export function ThrombusGysy(props: IThrombusProps) {
 
 
   async function init() {
-    const data = await SMchc_Doctor.getVteAssessForm<'mchc'>(headerInfo.id)
+    const data = await SMchc_Doctor.getVteAssessForm<'mchc'>(pregnancyId)
 
-    const info = await SMchc_Doctor.getPreRiskAssessmentInfo(headerInfo.id)
+    const info = await SMchc_Doctor.getPreRiskAssessmentInfo(pregnancyId)
 
     const isFirstTime = countAndSetScore(data) === 0
 
@@ -80,7 +81,7 @@ export function ThrombusGysy(props: IThrombusProps) {
     const values = form.getFieldsValue()
     console.log('gg', form.getFieldsValue())
     await SMchc_Doctor.updateVteAssessForm({ ...values, })
-    mchcEnv.success('操作成功！')
+    message.success('操作成功！')
     close?.(true);
   };
 
@@ -88,7 +89,7 @@ export function ThrombusGysy(props: IThrombusProps) {
 
   const footer = [
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      {/* <p >{text}</p> */}
+      <p >{text}</p>
       <Space>
         <Button onClick={handleCancel}>取消</Button>
         <Button type="primary" onClick={handleOk}>
@@ -182,7 +183,7 @@ export function ThrombusGysy(props: IThrombusProps) {
       {...others}
       title={title}
       width={"80vw"}
-      bodyStyle={{ height: '80vh', overflowY: 'auto' }}
+      bodyStyle={{ height: '80vh', overflowY: 'scroll' }}
       onCancel={handleCancel}
       footer={footer}
       maskClosable={false}
@@ -191,7 +192,6 @@ export function ThrombusGysy(props: IThrombusProps) {
       <div style={{ display: 'none' }}>
         <div style={{ marginTop: '12px' }} ref={printTableRef} >
           <h3 style={{ textAlign: 'center' }}>{title}</h3>
-          {fuck_user_info(headerInfo)}
           {el}
         </div>
       </div>

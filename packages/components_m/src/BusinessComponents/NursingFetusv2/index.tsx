@@ -1,12 +1,14 @@
-import { MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, FormInstance, Row, Tabs } from 'antd';
-import classnames from 'classnames';
 import { get, map } from 'lodash';
-import React, { Component } from 'react';
-import styles from '../../BaseEditPanel/less/base-edit-panel-form.module.less';
+import { Component } from 'react';
 import BaseFormComponent from '../../BaseFormComponent';
-import { HourMinuteInput } from '../../FU_components';
 import FetusForm from './components';
+import styles from '../../BaseEditPanel/less/base-edit-panel-form.module.less'
+import classnames from 'classnames';
+import { ArrayInput, HourMinuteInput } from '../../FU_components';
+import { mchcEnv } from '@lm_fe/env';
+import React from 'react'
 const TITLE = '胎儿';
 export default class NursingFetus extends Component {
   state = {
@@ -85,8 +87,8 @@ export default class NursingFetus extends Component {
       tabs: newPanes,
 
     });
-
-    this.setActiveKey(activeKey)
+    
+      this.setActiveKey(activeKey)
   };
 
   remove = (targetKey: any) => {
@@ -112,7 +114,7 @@ export default class NursingFetus extends Component {
       tabs: newPanes,
     });
     this.setActiveKey(
-      newActiveKey
+       newActiveKey
     )
   };
 
@@ -165,14 +167,12 @@ export default class NursingFetus extends Component {
 
                   </Form.Item>
                 </Col>
-                <MyIcon
-                  value='PlusCircleOutlined'
+                <PlusCircleOutlined
                   style={{ display: 'block', marginLeft: 16, cursor: 'pointer' }}
                   onClick={this.add}
                 />
                 {tabs.length > 1 && index > 0 && (
-                  <MyIcon
-                    value='DeleteOutlined'
+                  <DeleteOutlined
                     style={{ display: 'block', marginLeft: 16, cursor: 'pointer' }}
                     onClick={this.handleDelete(tab)}
                   />
@@ -198,7 +198,7 @@ export default class NursingFetus extends Component {
               onChange={this.setActiveKey}
               addIcon={
                 <div>
-                  <MyIcon value='PlusOutlined' />
+                  <PlusOutlined />
                   增加{TITLE}
                 </div>
               }

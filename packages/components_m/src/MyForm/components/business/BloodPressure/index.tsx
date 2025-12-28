@@ -1,7 +1,7 @@
-import { MyIcon } from '@lm_fe/components';
-import { Input, InputNumber, Tooltip } from 'antd';
-import { get } from 'lodash';
 import React, { Component } from 'react';
+import { Input, InputNumber, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { isEmpty, get } from 'lodash';
 import './index.less';
 interface BloodPressureProps {
   input_props: any;
@@ -77,7 +77,7 @@ class BloodPressure extends Component<BloodPressureProps> {
           onChange={(val: any) => changeVal(val, 'dia')}
         />
         <Tooltip className="blood-pressure_tip" title={`收缩压的正常范围值是90~130mmHg，舒张压的正常范围值是60~90mmHg`}>
-          <MyIcon value='QuestionCircleOutlined' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </Input.Group>
     );

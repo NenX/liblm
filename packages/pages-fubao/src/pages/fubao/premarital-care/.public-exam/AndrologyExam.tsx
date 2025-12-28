@@ -4,7 +4,6 @@ import { message } from 'antd';
 import { get } from 'lodash';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
 import { fubaoRequest as request } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 interface IProps extends BaseEditPanelIProps {
   data?: any;
   type: 'wife' | 'husband';
@@ -53,10 +52,10 @@ export default class GynecologicalExam extends BaseEditPanel<IProps> {
     if (type === 'wife' || type === 'husband') {
       if (get(params, 'id')) {
         await (await request.put(baseUrl, params)).data;
-        mchcEnv.success(`修改${title}成功`);
+        message.success(`修改${title}成功`);
       } else {
         await (await request.post(baseUrl, params)).data;
-        mchcEnv.success(`新增${title}成功`);
+        message.success(`新增${title}成功`);
       }
     }
   };

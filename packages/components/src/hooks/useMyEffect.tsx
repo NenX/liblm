@@ -1,14 +1,13 @@
 import { mchcEnv } from "@lm_fe/env";
 import { useEffect } from "react";
-// const useMyEffect = mchcEnv.isSp ? useEffect : MyKeepAlive.useKeepAliveEffect
-const useMyEffect = useEffect
+import { useKeepAliveEffect } from "react-keep-alive-pro";
+const useMyEffect = mchcEnv.isSp ? useEffect : useKeepAliveEffect
 
 const useMyEffectSafe = (props: any) => {
     if (mchcEnv.is_single || props.is_modal) {
         return useEffect
     }
-    return useEffect
-    // return mchcEnv.isSp ? useEffect : MyKeepAlive.useKeepAliveEffect
+    return mchcEnv.isSp ? useEffect : useKeepAliveEffect
 }
 
 

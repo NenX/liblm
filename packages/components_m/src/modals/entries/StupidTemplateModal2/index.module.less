@@ -1,0 +1,66 @@
+.textarea-with-template {
+  position: relative;
+
+  .template-textarea {
+    width: 100%;
+  }
+  &__action {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 0;
+    height: 0;
+    border-width: 20px 20px 20px 20px;
+    border-color: transparent #d8dce6 #d8dce6 transparent;
+    border-style: solid;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+
+    span {
+      position: relative;
+      // left: -5px;
+      bottom: 1px;
+      word-break: keep-all;
+      color: #000;
+      font-size: 12px;
+    }
+  }
+  &__action_disabled {
+    color: rgba(0, 0, 0, 0.25);
+  }
+  &__modal {
+
+    &-body {
+      margin: 10px 0;
+      .ant-tree-treenode {
+        .template-list-item__actions {
+          display: none;
+        }
+        &:hover {
+          .template-list-item__actions {
+            display: inline-block;
+          }
+        }
+      }
+      .template-list-item {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        .template-list-item__actions-icon {
+          font-size: 14px;
+          opacity: 0.8;
+          cursor: pointer;
+          margin-left: 10px;
+        }
+      }
+    }
+    .ant-modal-content {
+      .ant-modal-header,
+      .ant-modal-body,
+      .ant-modal-footer {
+        padding: 10px;
+      }
+    }
+  }
+}

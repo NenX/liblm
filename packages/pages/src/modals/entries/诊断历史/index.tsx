@@ -100,12 +100,12 @@ export default function Test({ modal_data, visible, onCancel, ...others }: IGlob
         <Modal
             {...others}
 
-            open={visible}
+            visible={visible}
             width={'80%'}
             footer={buttons}
             onCancel={onCancel}
             style={{ top: '20px' }}
-            bodyStyle={{ height: '80vh', overflowY: 'auto' }}
+            bodyStyle={{ height: '80vh', overflowY: 'scroll' }}
             destroyOnClose
             className="diag-record-modal"
 

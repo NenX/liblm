@@ -46,7 +46,7 @@ export default function FileManagementList(props: any) {
 
       }
     })
-    // mchcEnv.info('暂未开放此功能，敬请期待；');
+    // message.info('暂未开放此功能，敬请期待；');
   };
 
 

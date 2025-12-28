@@ -1,7 +1,7 @@
 import { mchcStore } from "@lm_fe/env"
 import { IMchc_HighriskGradeConfig } from "@lm_fe/service"
 import React, { useState, useEffect } from "react"
-export function HighriskGradeColorSpan(props: { color: string }) {
+export function HighriskGradeColorSpan(props: { level: string }) {
 
     const [gradeOptions, set_gradeOptions] = useState<IMchc_HighriskGradeConfig[]>([])
 
@@ -20,7 +20,7 @@ export function HighriskGradeColorSpan(props: { color: string }) {
     };
     return <span
         style={{
-            background: props.color,
+            background: getGradeColor(props.level),
             display: 'inline-block',
             width: '12px',
             height: '12px',

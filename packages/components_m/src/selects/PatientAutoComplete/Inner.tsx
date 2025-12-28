@@ -1,12 +1,9 @@
-import { AutoComplete_L } from '@lm_fe/components';
 import { mchcEvent } from '@lm_fe/env';
 import { request } from '@lm_fe/utils';
-import { AutoCompleteProps, Col, FormInstance, Row } from 'antd';
-import { debounce, get, map } from 'lodash';
+import { AutoComplete, AutoCompleteProps, Col, FormInstance, Row } from 'antd';
+import { debounce, get, map, throttle } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { getInputStyle } from '@lm_fe/components';
-
-
+import { getInputStyle } from 'src/utils';
 interface IProps extends Omit<AutoCompleteProps, 'onChange'> {
   name?: string,
   PatientAutoComplete_url?: string,
@@ -100,13 +97,13 @@ export default function PatientAutoComplete(props: IProps) {
   };
 
   return (
-    <AutoComplete_L
+    <AutoComplete
       // bordered={false}
       allowClear
       style={_style}
       {...inputProps}
       value={value}
-      popupMatchSelectWidth={get(inputProps, 'popupMatchSelectWidth') || 350}
+      dropdownMatchSelectWidth={get(inputProps, 'dropdownMatchSelectWidth') || 350}
       onChange={value => {
         setData(value);
         onChange?.(value);
@@ -121,7 +118,7 @@ export default function PatientAutoComplete(props: IProps) {
           const _name = get(option, k1)
           const _telephone = get(option, k2)
           return (
-            <AutoComplete_L.Option key={`${option.id}`} value={_value}>
+            <AutoComplete.Option key={`${option.id}`} value={_value}>
               <Row>
                 <Col span={6}>{_name}</Col>
                 <Col span={9} offset={1}>
@@ -131,9 +128,9 @@ export default function PatientAutoComplete(props: IProps) {
                   {_telephone}
                 </Col>
               </Row>
-            </AutoComplete_L.Option>
+            </AutoComplete.Option>
           );
         })}
-    </AutoComplete_L>
+    </AutoComplete>
   );
 }

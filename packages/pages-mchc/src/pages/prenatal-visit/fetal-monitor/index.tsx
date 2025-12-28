@@ -63,13 +63,11 @@ export default function List(props: {}) {
 
   return <Wrap>
     <MyBaseList
-      bf_conf={config}
-      // name={config?.name}
-      // searchParams={config?.searchParams}
-      // searchConfig={config?.searchConfig}
-      // handleBeforePopup={config?.handleBeforePopup}
+      name={config?.name}
+      searchParams={config?.searchParams}
       useListSourceCount
-      // initialSearchValue={{}}
+      initialSearchValue={{}}
+      searchConfig={config?.searchConfig}
       // showRowPrintBtn
       handleDoubleClickRow={(rowData, ctx) => {
         const { enterTime, pregnancyId, id } = rowData
@@ -95,7 +93,7 @@ export default function List(props: {}) {
 
         </Space>
       }}
-      // tableColumns={__DEV__ ? () => import('./form_config') : config?.tableColumns}
+      tableColumns={__DEV__ ? () => import('./form_config') : config?.tableColumns}
     // tableColumns={() => import('./form_config')}
     />
   </Wrap >

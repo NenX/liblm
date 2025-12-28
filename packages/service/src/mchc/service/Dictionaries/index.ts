@@ -10,10 +10,10 @@ export interface IMchc_Dictionaries {
     enumerations: IMchc_Dictionaries_Enumeration[]
 }
 export interface IMchc_Dictionaries_Enumeration {
-    id?: number
-    label?: string
-    note?: string
-    value?: number
+    id: number
+    label: string
+    note: string
+    value: number
 }
 
 

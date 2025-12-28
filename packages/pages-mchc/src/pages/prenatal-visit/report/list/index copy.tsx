@@ -1,13 +1,14 @@
 
-import { BaseListOld, LazyAntd, MyIcon, PDFPreview_View } from '@lm_fe/components_m';
-import { Button, Divider, Modal, Pagination, Popconfirm } from 'antd';
+import { DeleteOutlined, EyeOutlined, LoadingOutlined } from '@ant-design/icons';
+import { BaseListOld, LazyAntd, PDFPreview_View } from '@lm_fe/components_m';
+import { Button, Divider, Modal, Popconfirm } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import Query from './components/Query';
 import ATable from './components/Table';
 import { tableColumns } from './config/table';
 import './index.less';
-const { Tree, TreeSelect, Select, Table, Dropdown } = LazyAntd
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const errorMessage = Modal.error;
 
@@ -72,9 +73,9 @@ class List extends BaseListOld {
               disabled={base64loading}
               icon={
                 base64loading && rowData.id === id ? (
-                  <MyIcon value='LoadingOutlined' className="global-table-action-icon" />
+                  <LoadingOutlined className="global-table-action-icon" />
                 ) : (
-                  <MyIcon value='EyeOutlined' className="global-table-action-icon" />
+                  <EyeOutlined className="global-table-action-icon" />
                 )
               }
               onClick={() => this.handleView(value)}
@@ -89,7 +90,7 @@ class List extends BaseListOld {
               okText="确定"
               cancelText="取消"
             >
-              <Button type="link" size="small" icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />}>
+              <Button type="link" size="small" icon={<DeleteOutlined className="global-table-action-icon" />}>
                 删除
               </Button>
             </Popconfirm>
@@ -137,7 +138,7 @@ class List extends BaseListOld {
           destroyOnClose
           title="影像图片"
           footer={null}
-          open={visible}
+          visible={visible}
           className="custom-outercourt-modal"
           onCancel={this.handleCancel}
         >

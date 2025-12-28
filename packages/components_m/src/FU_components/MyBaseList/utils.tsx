@@ -10,10 +10,10 @@ export function formatProps(props: MyBaseListProps) {
   return _props
 }
 
-export function tranformQueryData(values: AnyObject, fds: IMchc_FormDescriptions_Field_Nullable[] = [], searchSchema: any[] = [], isFuck = false) {
+export function tranformQueryData(values: AnyObject, searchConfig: IMchc_FormDescriptions_Field_Nullable[] = [], searchSchema: any[] = [], isFuck = false) {
   const newValues = { ...values }
 
-  const kvArr = fds
+  const kvArr = searchConfig
     .filter(_ => _)
     .map(_ => {
       const k = _?.name!
@@ -23,12 +23,12 @@ export function tranformQueryData(values: AnyObject, fds: IMchc_FormDescriptions
   return kvArr.reduce((sum, [k, v]) => {
 
     if (isFuck) return { ...sum, [k]: v }
-    return { ...sum, ...calcKey(k, v, fds, searchSchema) }
+    return { ...sum, ...calcKey(k, v, searchConfig, searchSchema) }
   }, {})
 
 }
-function calcKey(k: string, v: any, fds: IMchc_FormDescriptions_Field_Nullable[] = [], searchSchema: any[] = [],) {
-  const config = fds?.find(_ => _?.name === k)
+function calcKey(k: string, v: any, searchConfig: IMchc_FormDescriptions_Field_Nullable[] = [], searchSchema: any[] = [],) {
+  const config = searchConfig?.find(_ => _?.name === k)
   if (config) {
     return calcKeyByType(k, v, config.inputType!, config.filterType?.split?.(',') ?? [])
   }

@@ -3,7 +3,6 @@ import { GlobalModal, IGlobalModalProps, TGlobalModalMeta } from './utils';
 import { MyLazyComponent } from 'src/MyLazyComponent';
 export * from './utils';
 
-export { IGlobalModalProps }
 
 export function MountGlobalModal(props: { meta: TGlobalModalMeta, globalModal: GlobalModal<any> }) {
     const { meta, globalModal } = props

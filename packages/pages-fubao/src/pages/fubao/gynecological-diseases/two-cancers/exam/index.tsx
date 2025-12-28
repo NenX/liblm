@@ -65,7 +65,7 @@ export default function TowCancerExam(props: any) {
     }
 
     if (__DEV__) {
-      await sleep(2 * 1000)
+      await sleep(2)
       return null
     }
 
@@ -91,7 +91,7 @@ export default function TowCancerExam(props: any) {
 
   const empty_node = loading ? <LoadingPlaceholder /> : <Result status="warning" title="请先建档" extra={null} />
 
-  return data ? <div style={{ height: '100%', }}>
+  return data ? <div style={{ height: '100%', overflowY: 'scroll' }}>
 
 
     {

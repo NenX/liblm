@@ -1,4 +1,4 @@
-import  React from 'react';
+import * as React from 'react';
 import config from './config';
 export default class Index extends React.Component {
   static Title = '其他病史';

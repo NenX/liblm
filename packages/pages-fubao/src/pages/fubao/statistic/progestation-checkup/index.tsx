@@ -4,7 +4,7 @@ import { formatDate, getMomentRange, request } from "@lm_fe/utils"
 import { Button } from "antd"
 import React from "react"
 import { defineFormConfig } from '@lm_fe/service'
-import { Follow_up_btn_孕前 } from "./.孕检随访"
+import { Follow_up_btn } from "./.孕检随访"
 export default function BreastCancerDataReport(prop: any) {
 
     const { config, Wrap } = BF_Wrap2({
@@ -57,7 +57,7 @@ export default function BreastCancerDataReport(prop: any) {
                     ...(config?.tableColumns ?? []),
                     {
                         title: '操作', dataIndex: 'pathologyResult', render(a, rowData) {
-                            return <Follow_up_btn_孕前 handleSearch={handleSearch} rowData={rowData} />
+                            return <Follow_up_btn handleSearch={handleSearch} rowData={rowData} />
                         }
                     },
 

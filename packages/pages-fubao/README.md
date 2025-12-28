@@ -1,4 +1,4 @@
-# @lm_fe/pages-mchc +4+
+# @lm_fe/pages-mchc
 
 
 mchc 页面级模块
@@ -52,9 +52,7 @@ mchc 页面级模块
 | /fubao/premarital-care/wife-v2/wife-exam | 缺省 |
 | /fubao/report-entry/patients | 报告录入-患者列表 |
 | /fubao/report-entry/reports | 报告录入-报告列表 |
-| /fubao/statistic/abnormal-breast-cancer | 两癌筛查-乳腺癌异常统计 |
-| /fubao/statistic/abnormal-cervical-cancer | 两癌筛查-宫颈癌异常统计 |
-| /fubao/statistic/breast-cancer | 两癌筛查-乳腺癌统计 |
-| /fubao/statistic/cervical-cancer | 两癌筛查-宫颈癌统计 |
+| /fubao/statistic/breast-cancer | 乳腺癌统计 |
+| /fubao/statistic/cervical-cancer | 宫颈癌统计 |
 | /fubao/statistic/premarital-checkup | 婚前检查-统计 |
 | /fubao/statistic/progestation-checkup | 孕前检查统计 |

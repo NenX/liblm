@@ -1,8 +1,9 @@
-import { BaseQuery, formatTimeToDate, MyIcon } from '@lm_fe/components_m';
-import { Button, Space } from 'antd';
-import { identity, pickBy } from 'lodash';
 import React from 'react';
+import { Button, Space } from 'antd';
+import { SearchOutlined, RedoOutlined } from '@ant-design/icons';
 import { queryFormDescriptions } from '../config/form';
+import { pickBy, identity } from 'lodash';
+import { BaseQuery, formatTimeToDate } from '@lm_fe/components_m';
 
 export default class Query extends BaseQuery {
   state = { queryFormDescriptions };
@@ -72,22 +73,22 @@ export default class Query extends BaseQuery {
 
   renderBtn = () => (
     <React.Fragment>
-      <Button icon={<MyIcon value='RedoOutlined' />} onClick={this.handleReset}>
+      <Button icon={<RedoOutlined />} onClick={this.handleReset}>
         重置
       </Button>
       <Space>
-        <Button type="primary" icon={<MyIcon value='SearchOutlined' />} style={{ borderRadius: '0px 4px 4px 0' }} htmlType="submit">
+        <Button type="primary" icon={<SearchOutlined />} style={{ borderRadius: '0px 4px 4px 0' }} htmlType="submit">
           查询
         </Button>
         {/* <Button
           type="primary"
-          icon={<MyIcon value='SearchOutlined' />}
+          icon={<SearchOutlined />}
           style={{ marginLeft: 1, borderRadius: 4 }}
           onClick={this.handleFirstView}
         >
           查询首测
         </Button>
-        <Button type="primary" icon={<MyIcon value='SearchOutlined' />} style={{ borderRadius: 4 }} onClick={this.handleReview}>
+        <Button type="primary" icon={<SearchOutlined />} style={{ borderRadius: 4 }} onClick={this.handleReview}>
           查询复测
         </Button> */}
       </Space>

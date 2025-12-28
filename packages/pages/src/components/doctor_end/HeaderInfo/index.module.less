@@ -8,29 +8,34 @@
   word-break: break-all;
 }
 
-
-
-.outpatientNO {
-  :global(.ant-select) {
-    overflow: hidden;
-
-
-  }
-
-  :global(.ant-select-selector) {
-    border: 2px solid rgba(255, 255, 255, .4) !important;
-    background: rgba(255, 255, 255, .3) !important;
-
-
-  }
+.levelBgc0 {
+  background-color: #fff;
 }
 
+.levelBgc1 {
+  background-color: #cbf5d1;
+}
 
+.levelBgc2 {
+  background-color: #f7edd6;
+}
+
+.levelBgc3 {
+  background-color: #fad9b1;
+}
+
+.levelBgc4 {
+  background-color: #fce5e5;
+}
+
+.levelBgc5 {
+  background-color: #f0baba;
+}
 
 .header-info-wrapper {
   display: flex;
-  // height: 84px;
-  padding: 6px;
+  height: 84px;
+  padding: 8px 12px;
 
   .header-info-content {
     display: flex;
@@ -79,8 +84,9 @@
     margin-bottom: 8px;
 
     .msg-item {
-      font-size: 18px;
-      margin-right: 10px;
+      margin-right: 24px;
+      color: #150f55;
+      font-size: 16px;
       .textOverflow;
 
       .value {
@@ -90,9 +96,9 @@
     }
 
     .small-item {
-      max-width: 190px;
+      margin-right: 12px;
+      color: #5a6676;
       font-size: 14px;
-      margin-right: 10px;
       .textOverflow;
 
       .value {
@@ -116,13 +122,14 @@
       }
     }
 
-
+    .msg-infection {
+      margin-right: 6px;
+    }
 
     .msg-highrisk {
-      max-width: 480px;
+      width: 700px;
       overflow: hidden;
-      margin-right: 6px;
-      // color: #932c3f;
+      color: #932c3f;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -229,8 +236,4 @@
     writing-mode: vertical-lr;
     writing-mode: tb-lr;
   }
-}
-
-.label {
-  color: #666;
 }

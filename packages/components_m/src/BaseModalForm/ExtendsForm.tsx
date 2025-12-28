@@ -4,7 +4,6 @@ import { isFunction } from 'lodash';
 import DynamicForm from '../BaseModalForm/DynamicForm';
 import { request } from '@lm_fe/utils';
 import FormSection from './FormSection';
-import { validate_form } from '@lm_fe/components';
 export default class ExtendsForm extends DynamicForm {
   constructor(props: any) {
     super(props);
@@ -55,13 +54,11 @@ export default class ExtendsForm extends DynamicForm {
     let tip = '';
     let method = '';
 
-    const formData = await validate_form(this.form)
-
-    if (!formData) return
-    // console.log(formData);return;
+    await this.form.validateFields();
+    // console.log(this.form.getFieldsValue());return;
     const values = isFunction(toApi)
-      ? toApi({ ...data, ...formData, id })
-      : { ...data, ...formData, id };
+      ? toApi({ ...data, ...this.form.getFieldsValue(), id })
+      : { ...data, ...this.form.getFieldsValue(), id };
     if (id) {
       tip = `修改${title}成功`;
       method = 'put';
@@ -97,7 +94,7 @@ export default class ExtendsForm extends DynamicForm {
     return (
       <Modal
         centered
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         onOk={this.handleSubmit}
         title={id ? `修改${title}` : `添加${title}`}

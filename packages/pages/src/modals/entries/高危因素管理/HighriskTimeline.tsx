@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.less';
 interface IProps {
   id?: TIdTypeCompatible
-  gradeOptions?: IMchc_HighriskGradeConfig[]
+  gradeOptions: IMchc_HighriskGradeConfig[]
   contagionColor?: string
 }
 export function HighriskTimeline_高危因素管理(props: IProps) {
@@ -56,13 +56,13 @@ export function HighriskTimeline_高危因素管理(props: IProps) {
 
   function getGradeColor(grade: any) {
     grade = grade ?? 'I';
-    const target = gradeOptions?.find(_ => _.label === grade)
-    return target?.color;
+    const target = gradeOptions.find(_ => _.label === grade)
+    return target?.note;
   };
 
   function getGradeColorText(grade: any) {
     grade = grade ?? 'I';
-    const target = gradeOptions?.find(_ => _.label === grade)
+    const target = gradeOptions.find(_ => _.label === grade)
     return target?.colorText;
   };
 
@@ -90,7 +90,7 @@ export function HighriskTimeline_高危因素管理(props: IProps) {
               <div className={styles["record-week"]}>{item.gestationalWeek ? `孕${item.gestationalWeek}周` : ''}</div>
             </div>
             <div className={styles["record-right"]}>
-              <div className={classNames(styles['record-item'],)}>
+              <div className={classNames(styles['record-item'], { [styles['infectionNote-item']]: !!item.infectionNote })}>
                 <div className={styles["item-label"]} style={{ background: !!item.infectionNote ? contagionColor : '' }}>
                   传染病：
                 </div>

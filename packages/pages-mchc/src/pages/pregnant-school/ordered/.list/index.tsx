@@ -11,7 +11,7 @@ export default function List(props: { which_type: WhichType }) {
   const { which_type } = props
   const type = which_type === '孕妇学校' ? 1 : 2
   const is_midwifery = which_type === '助产士'
-
+  
   const load_form = () => is_midwifery ? import('./form_config_midwifery') : import('./form_config')
   const { Wrap, config } = BF_Wrap2({
     default_conf: {
@@ -72,17 +72,17 @@ export default function List(props: { which_type: WhichType }) {
 
   return <Wrap>
     <MyBaseList
-      bf_conf={config}
       showAdd={false}
-      // name={config?.name}
-      // searchParams={config?.searchParams}
+      name={config?.name}
+      searchParams={config?.searchParams}
       useListSourceCount
       showRowEditBtn={false}
+      initialSearchValue={{}}
       beforeSubmit={v => ({ ...v, type })}
       showPrint
-      // showRowDelBtn={false}
+      showRowDelBtn={false}
       printDefaultConfig={{ method: 'GET' }}
-      // searchConfig={config?.searchConfig}
+      searchConfig={config?.searchConfig}
       ActionAddonBefore={({ rowData, handleSearch }) => {
 
         const { id, course } = rowData
@@ -91,7 +91,7 @@ export default function List(props: { which_type: WhichType }) {
         return < OkButton size='small' danger={is签到} onClick={() => { fn(course?.id, id).then(() => handleSearch()) }}  >{is签到 ? '取消' : '签到'}</OkButton>
 
       }}
-      // tableColumns={__DEV__ ? load_form : config?.tableColumns}
+      tableColumns={__DEV__ ? load_form : config?.tableColumns}
     />
   </Wrap >
 }

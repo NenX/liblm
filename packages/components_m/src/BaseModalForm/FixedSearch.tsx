@@ -1,12 +1,12 @@
-import observePatientData from '@/utils/observePatientData';
-import { MyIcon } from '@lm_fe/components';
-import { Button, Drawer, Tooltip } from 'antd';
-import classnames from 'classnames';
-import dayjs from 'dayjs';
-import { get, omit } from 'lodash';
 import React, { useState } from 'react';
-import './index.less';
+import { Drawer, Button, Tooltip } from 'antd';
+import dayjs from 'dayjs';
+import classnames from 'classnames';
+import { omit, get } from 'lodash';
+import { SearchOutlined } from '@ant-design/icons';
 import PatientList from './PatientList';
+import observePatientData from '@/utils/observePatientData';
+import './index.less';
 export default (props: any) => {
   const [showPanel, setShowPanel] = useState(false);
 
@@ -43,7 +43,7 @@ export default (props: any) => {
           <Button
             type={props.type}
             shape={props.shape || 'circle'}
-            icon={props.icon || <MyIcon value='SearchOutlined' />}
+            icon={props.icon || <SearchOutlined />}
             size={props.size || 'middle'}
             ghost={props.ghost}
             onClick={handleVisible}

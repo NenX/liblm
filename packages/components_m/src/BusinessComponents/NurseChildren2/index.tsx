@@ -1,9 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { safe_json_parse } from '@lm_fe/utils';
 import { Col, Row, Space } from 'antd';
 import { get, isEmpty, map, set } from 'lodash';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import BaseFormComponent from '../../BaseFormComponent';
 import styles from './index.less';
+import React from 'react';
 export default class NurseChildren extends Component {
   state = {
     childrens: [{}],
@@ -103,8 +105,8 @@ export default class NurseChildren extends Component {
           <span>胎儿{index + 1}：</span>
           <Space>
 
-            <MyIcon value='PlusCircleOutlined' onClick={this.handleAdd} />
-            <MyIcon value='MinusCircleOutlined' onClick={() => this.handleRm(index)} />
+            <PlusCircleOutlined onClick={this.handleAdd} />
+            <MinusCircleOutlined onClick={() => this.handleRm(index)} />
           </Space>
         </div>
         <Row>
@@ -132,7 +134,7 @@ export default class NurseChildren extends Component {
               label: '胎方位',
               inputType: 'MySelect',
               inputProps: {
-                uniqueKey: '胎方位22',
+                optionKey: '胎方位22',
                 // marshal:false
               },
             })}

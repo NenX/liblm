@@ -71,7 +71,7 @@ export default function TowCancerFollowup(props: { id?: TIdTypeCompatible }) {
                         // { title: '疾病', dataIndex: 'infectionContent' },
                         { title: '癌症类型', dataIndex: 'cancerType', inputType: 'MS', props: { options: '乳腺癌,宫颈癌', marshal: 0 } },
                         { title: '随访内容', dataIndex: 'followupContent' },
-                        { title: '随访状态', dataIndex: 'followupState', inputType: 'MS', props: { uniqueKey: '随访状态', marshal: 0 } },
+                        { title: '随访状态', dataIndex: 'followupState', inputType: 'MS', props: { optionKey: '随访状态', marshal: 0 } },
                         // {
                         //     title: '操作',
                         //     render(a, record) {

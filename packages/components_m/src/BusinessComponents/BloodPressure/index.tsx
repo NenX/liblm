@@ -1,9 +1,8 @@
-import { MyIcon } from '@lm_fe/components';
-import { safe_json_parse } from '@lm_fe/utils';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { InputNumber, Tooltip } from 'antd';
-import classnames from 'classnames';
 import { get } from 'lodash';
-import React from 'react';
+import classnames from 'classnames';
+import { safe_json_parse } from '@lm_fe/utils';
 import styles from './index.module.less';
 export default function BloodPressure(props: any) {
   const { value, onChange, config, ...rest } = props;
@@ -56,7 +55,7 @@ export default function BloodPressure(props: any) {
         className={styles["blood-pressure__tip"]}
         title={`收缩压在${systolicMin}～${systolicMax}mmHg之间，舒张压${diastolicMin}～${diastolicMax}mmHg`}
       >
-        <MyIcon value='QuestionCircleOutlined' />
+        <QuestionCircleOutlined />
       </Tooltip>
     </div>
   );

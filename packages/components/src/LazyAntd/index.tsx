@@ -1,9 +1,22 @@
-import { Dropdown_L, Pagination_L, Select_L, Table_L, Tree_L, TreeSelect_L, TreeNodeProps } from "@noah-libjs/components";
+// import { DatePicker_L, RangePicker_L, TimePicker_L } from "./DatePicker";
+export * from './DatePicker'
+export * from './AutoComplete'
+import { Dropdown } from "./Dropdown";
+import { Form } from "./Form";
+import { Modal } from "./Modal";
+import { Pagination } from "./Pagination";
+import { Select } from "./Select";
+import { Table } from "./Table";
+import { Tree } from "./Tree";
+import { TreeSelect } from "./TreeSelect";
 export const LazyAntd = {
-    Tree: Tree_L,
-    TreeSelect: TreeSelect_L,
-    Select: Select_L,
-    Table: Table_L,
-    Dropdown: Dropdown_L,
-    Pagination: Pagination_L
+    Table,
+    Tree,
+    TreeSelect,
+    Select,
+    Dropdown,
+    Pagination,
+    Modal,
+    Form,
 }
+

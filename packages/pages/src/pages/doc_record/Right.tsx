@@ -1,6 +1,7 @@
 
-import { MyIcon, PDFPreview_View } from '@lm_fe/components_m';
+import { PDFPreview_View } from '@lm_fe/components_m';
 
+import { PrinterOutlined } from '@ant-design/icons';
 import { IMchc_Admission_DocumentListItem, TIdTypeCompatible } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
 import { Button, Spin } from 'antd';
@@ -61,7 +62,7 @@ export default function Right(props: { activeItem: Partial<IMchc_Admission_Docum
         <Button
           type="primary"
           size="large"
-          icon={<MyIcon value='PrinterOutlined' />}
+          icon={<PrinterOutlined />}
           onClick={() => {
             mchcModal__.open('print_modal', {
               modal_data: {

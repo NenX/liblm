@@ -67,7 +67,7 @@ export default function TowCancerFollowup(props: { id?: TIdTypeCompatible }) {
                     tableColumns={[
                         { title: '疾病', dataIndex: 'infectionContent' },
                         { title: '随访内容', dataIndex: 'followupContent' },
-                        { title: '随访状态', inputType: 'MS', dataIndex: 'followupContent', props: { uniqueKey: '随访状态' } },
+                        { title: '随访状态', inputType: 'MS', dataIndex: 'followupContent', props: { optionKey: '随访状态' } },
                         // {
                         //     title: '操作',
                         //     render(a, record) {

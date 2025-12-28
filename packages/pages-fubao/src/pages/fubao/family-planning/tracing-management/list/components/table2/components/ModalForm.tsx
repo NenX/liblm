@@ -146,7 +146,7 @@ export class ModalForm extends Component {
         width={1200}
         onOk={this.handleSubmit}
         wrapClassName="tracing-modal"
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         footer={[
           <Button key="cancel" onClick={onCancel}>

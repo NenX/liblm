@@ -13,7 +13,7 @@ import { fubaoRequest as request } from '@lm_fe/utils';
 import classnames from 'classnames';
 import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './index.less';
-import { fubaoHistoryPush, OkButton, PanelTitle } from '@lm_fe/components_m';
+import { fubaoHistoryPush } from '@lm_fe/components_m';
 import { PanelWithChild } from '@lm_fe/components_m';
 import { getSearchParamsValue } from '@lm_fe/utils';
 import { DoctorEnd_ImageReport, DoctorEnd_SurveyReport } from '@lm_fe/pages-mchc';
@@ -50,14 +50,14 @@ export default class panel extends PanelWithChild {
           key: 'GuidanceEvaluation',
           title: '指导/评估',
         },
-        // {
-        //   key: 'SurveyReport',
-        //   title: '检验报告',
-        // },
-        // {
-        //   key: 'ImageReport',
-        //   title: '影像报告',
-        // },
+        {
+          key: 'SurveyReport',
+          title: '检验报告',
+        },
+        {
+          key: 'ImageReport',
+          title: '影像报告',
+        },
         {
           key: 'ReportEntry',
           title: '报告查看',
@@ -98,21 +98,42 @@ export default class panel extends PanelWithChild {
 
   renderHeader = () => {
     const { data } = this.state;
-    const f_vm = get(data, 'manProgestationCheckArchivesDetailVM')
-    const h = [
-      { title: '姓名', value: get(data, 'womanName') },
-      { title: '性别', value: '女' },
-      { title: '年龄', value: get(data, 'womanAge') },
-      { title: '门诊号', value: get(data, 'womanOutpatientNo') },
-      { title: '男方姓名', value: get(data, 'manName') },
-      f_vm && {
-        title: '男方病历', value: <OkButton type="primary" onClick={() => { this.handleClickButton(); }} btn_text='打开' />
-      },
-    ]
     return (
-      <PanelTitle headerItems={h} />
+      <div className={PanelWithChild.styles["panel-with-child_header"]}>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>姓名:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'womanName')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>性别:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>女</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>年龄:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'womanAge')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-label"]}>门诊号:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-value"]}>{get(data, 'womanOutpatientNo')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-label"]}>配偶姓名:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-value"]}>{get(data, 'manName')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          {get(data, 'manProgestationCheckArchivesDetailVM') && (
+            <Button
+              type="primary"
+              onClick={() => {
+                this.handleClickButton();
+              }}
+            >
+              打开配偶病历
+            </Button>
+          )}
+        </div>
+      </div>
     );
-
   };
 
   handleJump = () => {

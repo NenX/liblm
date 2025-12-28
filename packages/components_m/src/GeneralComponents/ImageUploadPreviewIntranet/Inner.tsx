@@ -72,6 +72,7 @@ export default ({ onChange, value, form, actionApi, outputParamType }: IProps) =
     return (
         <ImgCrop rotate aspect={1.5} minZoom={0.2} maxZoom={4}>
             <Upload
+                // action="/api/uploadImage"
                 action={actionApi}
                 listType="picture-card"
                 fileList={fileList}

@@ -1,7 +1,7 @@
 import { BF_Wrap2, MyBaseList } from '@lm_fe/pages'
 import { formatDate, getMomentRange } from "@lm_fe/utils"
 import React from "react"
-import { Follow_up_btn_婚前 } from "./.婚检随访"
+import { Follow_up_btn } from "./.婚检随访"
 import { defineFormConfig } from '@lm_fe/service'
 
 
@@ -35,11 +35,11 @@ export default function BreastCancerDataReport(prop: any) {
                 { label: '梅毒', name: 'syphilis', inputType: 'MS', inputProps: { options: '阴性,阳性' } },
                 { label: 'HIV', name: 'hiv', inputType: 'MS', inputProps: { options: '阴性,阳性' } },
                 { label: '淋球菌', name: 'gonococcus', inputType: 'MS', inputProps: { options: '阴性,阳性' } },
-                { label: '档案类型', name: 'fileType', inputType: 'MS', inputProps: { uniqueKey: '性别2' } },
+                { label: '档案类型', name: 'fileType', inputType: 'MS', inputProps: { optionKey: '性别2' } },
             ]),
             tableColumns: defineFormConfig(
                 [
-                    { title: '档案类型', dataIndex: 'fileType', inputType: 'MS', inputProps: { uniqueKey: '性别2' } },
+                    { title: '档案类型', dataIndex: 'fileType', inputType: 'MS', inputProps: { optionKey: '性别2' } },
                     { title: '门诊号', dataIndex: 'outpatientNO' },
 
                     { title: '姓名', dataIndex: 'name' },
@@ -81,7 +81,7 @@ export default function BreastCancerDataReport(prop: any) {
                     ...(config?.tableColumns ?? []),
                     {
                         title: '操作', dataIndex: 'pathologyResult', render(a, rowData) {
-                            return <Follow_up_btn_婚前 handleSearch={handleSearch} rowData={rowData} />
+                            return <Follow_up_btn handleSearch={handleSearch} rowData={rowData} />
                         }
                     },
 

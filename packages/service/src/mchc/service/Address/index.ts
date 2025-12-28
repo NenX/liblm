@@ -29,14 +29,14 @@ export const SMchc_Address = {
     },
     async getAddressByDetail(addressDetail?: string) {
         try {
-            await sleep(1 * 1000)
+            await sleep(1)
             const res = await request.get<IMchc_AddressItemType[]>('/api/address/getAddressByDetail', { params: { addressDetail }, unboxing: true })
             return expect_array(res.data)
         } catch (error) {
             return []
         }
     },
-    async _addr_front() {
+    async getAddressFront() {
         return request.get<IMchc_AddressItemType[]>(`/api/address/front/getAddress`, { params: {}, unboxing: true })
             .then(res => expect_array(res.data))
     },
@@ -44,25 +44,37 @@ export const SMchc_Address = {
         return request.get<IMchc_AddressItemType[]>(`/api/address/back/getAddress`, { params: { code: item?.code, addressDetail }, unboxing: true })
             .then(res => expect_array(res.data))
     },
-    async tc<T>(p: Promise<T[]>) {
+    // async getAddressFirst() {
+    //     if (firstPcdAddrCache) return firstPcdAddrCache
+    //     if (firstPcdAddrCachePromise) return firstPcdAddrCachePromise
+    //     firstPcdAddrCachePromise = SMchc_Address.getAddressFront().then(r => firstPcdAddrCache = expect_array(r))
+    //     return firstPcdAddrCachePromise
+    // },
+    // async getAddressListFirst() {
+    //     if (firstAddrCache) return firstAddrCache
+    //     if (firstAddrCachePromise) return firstAddrCachePromise
+    //     firstAddrCachePromise = SMchc_Address.getAddressList().then(r => firstAddrCache = expect_array(r))
+    //     return firstAddrCachePromise
+    // }
+    async getAddressFirst() {
         try {
-            const res = await p
+            await sleep(1)
+            const res = await cache_fetch('getAddressFirst', () => SMchc_Address.getAddressFront());
             return expect_array(res)
         } catch (error) {
             return []
         }
     },
-    getAddressFirst() {
-        return this.tc(cache_fetch(this._addr_front.name, this._addr_front, true))
-        // try {
-        //     const res = await cache_fetch('getAddressFirst', SMchc_Address.getAddressFront, true);
-        //     return expect_array(res)
-        // } catch (error) {
-        //     return []
-        // }
-    },
-    getAddressListFirst() {
-        return this.tc(cache_fetch(this.getAddressList.name, this.getAddressList))
+    async getAddressListFirst() {
+
+        try {
+            await sleep(1)
+            const res = await cache_fetch('getAddressListFirst', () => SMchc_Address.getAddressList());
+            return expect_array(res)
+        } catch (error) {
+            return []
+        }
+
     }
 
 

@@ -1,27 +1,106 @@
-import { mchcEvent } from '@lm_fe/env';
-import { IMchc_FormDescriptions_Field_Nullable, SMchc_FormDescriptions } from '@lm_fe/service';
-import { AnyObject, expect_array } from '@lm_fe/utils';
-import { FormInstance, Segmented, Tabs, message } from 'antd';
+import { mchcEvent, mchcLogger } from '@lm_fe/env';
+import { IMchc_FormDescriptions_Field, IMchc_FormDescriptions_Field_Nullable, IMchc_FormDescriptions_MIX, SMchc_FormDescriptions } from '@lm_fe/service';
+import { expect_array, request, safe_json_parse } from '@lm_fe/utils';
+import { FormInstance, Tabs, message } from 'antd';
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
+import { isArray, isEmpty, isFunction, isObject, isString } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 
 
-import { MyIcon } from '@lm_fe/components';
-import { use_provoke } from '@lm_fe/provoke';
 import styles from '../../BaseEditPanel/less/base-edit-panel-form.module.less';
-import { useReadIdNO } from '../IdNOButton';
 import { IFormSectionProps, } from './types';
+import { useReadIdNO } from '../IdNOButton';
+
+
+
+export function getFormItemControl(getFieldValue: FormInstance, config: IMchc_FormDescriptions_Field) {
+    const dependency = config?.inputProps?.dependency
+
+    if (dependency) {
+        return getFormItemControlByDependency(getFieldValue, config)
+    } else {
+        return getFormItemControlByNew(getFieldValue, config)
+    }
+
+}
+
+function getFormItemControlByNew(form_ins: FormInstance, config: IMchc_FormDescriptions_Field) {
+
+    const showDeps = config?.showDeps
+    const requiredDeps = config?.requiredDeps
+    const disabledDeps = config?.disabledDeps
+
+    const res = {
+        isShow: compute_dep_status(form_ins, showDeps, !showDeps),
+        isRequired: compute_dep_status(form_ins, requiredDeps),
+        isDisabled: compute_dep_status(form_ins, disabledDeps,),
+    }
+    return res
+}
+function compute_dep_status(form_ins: FormInstance, dep_config: IMchc_FormDescriptions_Field['showDeps'], default_status = false) {
+    if (isFunction(dep_config)) {
+        return dep_config(form_ins)
+    }
+    const config_obj = dep_config ?? {}
+    const dep_keys = Object.keys(config_obj)
+
+    return dep_keys.reduce((state, k) => state || getDepStatus(form_ins, k, config_obj[k]), default_status)
+}
+function getFormItemControlByDependency(form_ins: FormInstance, config: IMchc_FormDescriptions_Field) {
+    const dependency = config?.inputProps?.dependency
+
+    return {
+        isShow: getDepStatus(form_ins, dependency?.show?.key, dependency?.show?.value),
+        isDisabled: getDepStatus(form_ins, dependency?.disabled?.key, dependency?.disabled?.value),
+        isRequired: getDepStatus(form_ins, dependency?.required?.key, dependency?.required?.value),
+    }
+}
+
+function getDepStatus(form_ins: FormInstance, depKey: string | string[] = '', depValue: any[] | ((v: any) => boolean) = []) {
 
 
 
 
 
+    //key值有.的情况下showKey处理
+    if (isString(depKey) && depKey.includes('.')) {
+        depKey = depKey.split('.')
+    }
+    const __showVal = form_ins.getFieldValue(depKey)
+    const targetShowVal = getUglyValue(__showVal)
 
+    if (isFunction(depValue))
+        return depValue(targetShowVal)
 
+    return depValue.includes(targetShowVal)
+}
 
-export function RenderTab(props: { fds: IMchc_FormDescriptions_Field_Nullable[], renderContent(arr?: IMchc_FormDescriptions_Field_Nullable[]): any, form?: FormInstance }) {
-    const sys_theme = use_provoke(s => s.sys_theme)
+function getUglyValue(v: any) {
+    const __value = safe_json_parse(v, v)
+
+    let checkedValue = __value
+    if (isArray(__value)) {
+        return getUglyArrValue(__value)
+    }
+    if (isObject(__value)) {
+        // [todo]:如果是多选的情况 如何处理
+        return getUglyObjValue(__value)
+    }
+    return checkedValue
+}
+
+function getUglyArrValue(__arr: any) {
+    if (!isArray(__arr)) return __arr
+    if (__arr.length > 1) {
+        return __arr.map(getUglyObjValue).join(',')
+    }
+    return getUglyObjValue(__arr[0])
+}
+function getUglyObjValue(__obj: any) {
+    return __obj?.value ?? __obj?.key ?? __obj?.checkedValues?.[0]
+}
+
+export function RenderTab(props: { fds: IMchc_FormDescriptions_Field_Nullable[], renderContent(arr: IMchc_FormDescriptions_Field_Nullable[]): any, form?: FormInstance }) {
     const { fds, renderContent, form } = props
 
     const configArr = expect_array(fds)
@@ -42,12 +121,9 @@ export function RenderTab(props: { fds: IMchc_FormDescriptions_Field_Nullable[],
 
     return <Tabs
         size='small'
-        tabBarStyle={{ marginBottom: 6 }}
+        tabBarStyle={{ marginBottom: 4 }}
         activeKey={activeKey}
-        // tabPosition='right'
         onChange={k => {
-            return changeActiveKey(k)
-
             const items = configArr.find(_ => {
                 const title = SMchc_FormDescriptions.get_form_item_title_or_Name(_)
                 return title === activeKey
@@ -86,7 +162,7 @@ export function RenderTab(props: { fds: IMchc_FormDescriptions_Field_Nullable[],
                 const tabConfig = _?.children ?? []
 
 
-                return <Tabs.TabPane forceRender={!_?.fd_lazy} tabKey={title} key={title} tab={<span style={{ textDecorationLine: _?.remote_filter_key ? 'underline' : 'unset' }}>{title}</span>}>
+                return <Tabs.TabPane tabKey={title} key={title} tab={<span style={{ textDecorationLine: _?.remote_filter_key ? 'underline' : 'unset' }}>{title}</span>}>
 
                     {isEmpty(tabConfig) ? `请配置${title}的 children` : renderContent(tabConfig)}
 
@@ -96,75 +172,12 @@ export function RenderTab(props: { fds: IMchc_FormDescriptions_Field_Nullable[],
         }
     </Tabs >
 };
-export function RenderSegs(props: { fds: IMchc_FormDescriptions_Field_Nullable[], renderContent(arr?: IMchc_FormDescriptions_Field_Nullable[]): any, form?: FormInstance }) {
-    const sys_theme = use_provoke(s => s.sys_theme)
-    const { fds, renderContent, form } = props
-
-    const configArr = expect_array(fds)
-    const firstTab = configArr[0]
-    const FirstTitle = SMchc_FormDescriptions.get_form_item_title_or_Name(firstTab)
-
-    const [activeKey, setActiveKey] = useState(FirstTitle)
-
-    function changeActiveKey(k: string) {
-        setActiveKey(k)
-        mchcEvent.emit('my_form', {
-            type: 'onTabChange',
-            activeKey: k,
-            oldKey: activeKey,
-            form,
-        })
-    }
-    return <div style={{ margin: '6px 0', border: `1px solid ${sys_theme.colors?.light[0]}` }}>
-
-        <Segmented<string>
-            style={{ border: 0, padding: 0, bottom: '0 0 6px 0' }}
-            block
-            value={activeKey}
-            options={
-                [
-                    ...configArr.map(_ => {
-                        const title = SMchc_FormDescriptions.get_form_item_title_or_Name(_)
-                        return title
-                    }),
-                    '全部'
-                ]
-            }
-            onChange={(k) => {
-                changeActiveKey(k)
-            }}
-        />
-        <div style={{ padding: 12 }}>
-            {
-                configArr.map(_ => {
-                    const title = SMchc_FormDescriptions.get_form_item_title_or_Name(_)
-                    const is全部 = activeKey === '全部'
-
-                    if (is全部)
-                        return <RenderSection key={title} renderContent={renderContent} fd={{ ..._, containerType: 'plain' }} />
-
-                    const is_show = activeKey === title
-                    if (is_show)
-                        return <div key={title} hidden>{renderContent(_?.children)}</div>
-                    return _?.fd_lazy
-                        ? null
-                        : <div key={title} hidden>{renderContent(_?.children)}</div>
-
-                })
-            }
-        </div>
-    </div>
-
-};
 
 
 
 export function RenderSection(props: { fd: IMchc_FormDescriptions_Field_Nullable, renderContent(arr: IMchc_FormDescriptions_Field_Nullable[]): React.JSX.Element, form?: FormInstance }) {
     const { fd, renderContent, } = props
-    const sys_theme = use_provoke(s => s.sys_theme)
     if (!fd) return null
-    // const bg = '#eee'
-    const bg = sys_theme.colors?.light[0]
     const { containerType = 'section(default)', children = [], collapsed } = fd
     if (isEmpty(children)) return null
     const title = SMchc_FormDescriptions.get_form_item_title_or_Name(fd)
@@ -175,19 +188,20 @@ export function RenderSection(props: { fd: IMchc_FormDescriptions_Field_Nullable
         return (
             <>
                 {/* {this.renderItem({ ...withTitle, inputType: 'title' })} */}
-                <div hidden={!title} style={{ padding: '4px 0', fontWeight: 'bold', fontSize: 20, color: sys_theme.colorPrimary, margin: '6px 0 12px 0', textIndent: 12 }}>
-                    {title}:
+                <div hidden={!title} style={{ padding: '4px 0', fontWeight: 'bold', fontSize: 20, color: '#150f55', borderBottom: '1px dashed #150f55', margin: '6px 0 12px 0', textIndent: 12 }}>
+                    {title}
                 </div>
                 {node}
             </>
         )
 
 
+
     return title
-        ? <div className={classnames(styles['base-edit-panel-form_section'], { [styles['border']]: true })} style={{ border: `1px solid ${bg}`, borderRadius: 4 }} >
-            <span className={styles["base-edit-panel-form_section_title"]} style={{ cursor: 'pointer', color: sys_theme.colorPrimary, background: sys_theme.bg_color }} onClick={() => setHidden(!hidden)}>
-                {<MyIcon value={hidden ? 'RightOutlined' : 'DownOutlined'} style={{ fontSize: 14, marginRight: 6 }} />}
-                <span style={{ userSelect: 'none', }}>{title}</span>
+        ? <div className={classnames(styles['base-edit-panel-form_section'], { [styles['border']]: true })} >
+            <span className={styles["base-edit-panel-form_section_title"]} style={{ cursor: 'pointer' }} onClick={() => setHidden(!hidden)}>
+                {hidden ? '▶ ' : '▼ '}
+                <span style={{ textDecorationLine: fd?.remote_filter_key ? 'underline' : 'unset' }}>{title}</span>
             </span>
             {node}
         </div>
@@ -198,18 +212,9 @@ export function RenderSection(props: { fd: IMchc_FormDescriptions_Field_Nullable
 
 
 export function use_form_config(props: IFormSectionProps) {
-    const { formDescriptions, bf_config, initialValues } = props
+    const { formDescriptions } = props
     const form = props.form as FormInstance & { setFieldsValue_old: FormInstance['setFieldsValue'] }
-    const value_cache = useRef<AnyObject>()
-
-    function assign_cache(value: any) {
-        if (!value) return
-        if (!value_cache.current) {
-            value_cache.current = {}
-        }
-        Object.assign(value_cache.current, value)
-    }
-    const is_init = useRef(false)
+    const value_cache = useRef()
 
     const { id_NO_msg } = useReadIdNO()
 
@@ -222,48 +227,38 @@ export function use_form_config(props: IFormSectionProps) {
         }
 
         form.setFieldsValue = (value: any,) => {
-            // mchcLogger.log('setFieldsValue 00', form, value_cache.current, value, form_config)
-
             if (!form_config) {
-                assign_cache(value)
+                value_cache.current = value
             } else {
                 form.setFieldsValue_old?.(value)
             }
         };
     }
     useEffect(() => {
-        if (!is_init.current && initialValues) {
-            is_init.current = true
-            assign_cache(initialValues)
-
-        }
         return () => {
 
         }
-    }, [initialValues])
+    }, [])
 
     useEffect(() => {
-        const fd_config = formDescriptions ?? bf_config?.tableColumns
-        fd_config && SMchc_FormDescriptions.filter_form_config(fd_config)
+
+        formDescriptions && SMchc_FormDescriptions.filter_form_config(formDescriptions)
             .then(f => {
                 setForm_config(f)
-                // mchcLogger.log('setFieldsValue 11 0', form, value_cache.current, value_cache)
-                setTimeout(() => {
+                if (value_cache.current) {
 
-                    if (value_cache.current) {
-                        // mchcLogger.log('setFieldsValue 11 1', form, value_cache.current)
+                    setTimeout(() => {
 
                         form?.setFieldsValue(value_cache.current,)
                         value_cache.current = undefined
-                    }
-                }, 500);
-
+                    }, 400);
+                }
             })
 
         return () => {
 
         }
-    }, [formDescriptions, bf_config])
+    }, [formDescriptions])
 
     useEffect(() => {
 

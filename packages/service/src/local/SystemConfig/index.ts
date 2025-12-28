@@ -19,5 +19,8 @@ export const SLocal_SystemConfig = {
   },
   getAll() {
     return mchcConfig.getAll()
+    // const state = mchcStore.state
+    // const config: ISystemConfig | undefined = state?.system?.config
+    // return config
   }
 }

@@ -1,31 +1,31 @@
+import { SaveOutlined } from '@ant-design/icons';
 import {
   BaseEditPanelFormFC,
-  handle_form_error,
-  MyIcon
+  formatTimeToDate
 } from '@lm_fe/components_m';
 
-import { mchcEnv } from '@lm_fe/env';
-import { BF_Wrap2 } from '@lm_fe/pages';
 import { IMchc_Doctor_OutpatientHeaderInfo, IMchc_PregnancyBaseInfoOfOutpatient, SMchc_Doctor } from '@lm_fe/service';
-import { getSearchParamsValue } from '@lm_fe/utils';
-import { Button, Form } from 'antd';
+import { getSearchParamsValue, isMoment } from '@lm_fe/utils';
+import { Button, Form, message } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import { get } from 'lodash';
+import { get, map, set } from 'lodash';
 import React, { useEffect, useState } from 'react';
-
+import { form_config } from './form_config';
+function transformDate(pregnancyData: any) {
+  map(pregnancyData, (value, key) => {
+    if (isMoment(value)) {
+      set(pregnancyData, key, formatTimeToDate(value));
+    }
+  });
+  return pregnancyData;
+}
 interface IProps {
   isSingle?: boolean
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
   form?: FormInstance
 }
 export function PregnancyBase({ headerInfo, isSingle, form = Form.useForm()[0] }: IProps) {
-  const { config, Wrap } = BF_Wrap2({
-    default_conf: {
-      tableColumns: () => import('./form_config'),
-      title: '孕册管理-孕妇信息',
-    },
 
-  })
 
   const [data, setData] = useState<IMchc_PregnancyBaseInfoOfOutpatient>()
 
@@ -55,7 +55,7 @@ export function PregnancyBase({ headerInfo, isSingle, form = Form.useForm()[0] }
       <Button
         size="large"
         type="primary"
-        icon={<MyIcon value='SaveOutlined' />}
+        icon={<SaveOutlined />}
         htmlType="submit"
         onClick={handleFinish}
       >
@@ -73,7 +73,7 @@ export function PregnancyBase({ headerInfo, isSingle, form = Form.useForm()[0] }
           id: get(data, 'id'),
         };
         const newData = await SMchc_Doctor.updatePregnancyBaseInfoOfOutpatient(params);
-        mchcEnv.success(`修改成功`);
+        message.success(`修改成功`);
         setData(newData)
 
 
@@ -81,10 +81,8 @@ export function PregnancyBase({ headerInfo, isSingle, form = Form.useForm()[0] }
 
       })
       .catch((error) => {
-        const first_err = handle_form_error(error, form)
-        if (first_err?.text) {
-          mchcEnv.warning(first_err.text)
-        }
+        message.error(get(error, 'errorFields.0.errors.0'));
+        form.scrollToField(get(error, 'errorFields.0.name.0'));
       });
   };
 
@@ -95,17 +93,14 @@ export function PregnancyBase({ headerInfo, isSingle, form = Form.useForm()[0] }
   // return <FormSectionForm form={form} formDescriptions={form_config()} onValuesChange={(a, b) => {
   //   console.log('onValuesChange', { a, b })
   // }} />
-  return <Wrap>
+  return <BaseEditPanelFormFC form={form} formDescriptions={form_config()}
+    renderBtns={form => {
+      return <>
+        {renderSubmitBtn()}
+      </>
+    }}
 
-    <BaseEditPanelFormFC form={form} formDescriptions={config?.tableColumns}
-      renderBtns={form => {
-        return <>
-          {renderSubmitBtn()}
-        </>
-      }}
-
-    />
-  </Wrap>
+  />
 
 }
 export default PregnancyBase

@@ -1,6 +1,6 @@
-import { MyIcon } from '@lm_fe/components';
+import React, { useRef } from 'react';
 import classnames from 'classnames';
-import React from 'react';
+import { CloseOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
 
 interface IProps {
@@ -29,7 +29,7 @@ export default function TabButton_Inner(props: IProps) {
       <div className={styles['my-tab-btn-title']}>{title}</div>
       {closable && (
         <div onClick={handleCloseTab} className={styles['my-tab-btn-close']} title='关闭'>
-          <MyIcon value='CloseOutlined' />
+          <CloseOutlined />
         </div>
       )}
     </div>

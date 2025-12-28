@@ -118,7 +118,7 @@ export default function PdfFrameView_Inner(props: IPdfFrameView_Props) {
 
       {
         (!pdfdata)
-          ? <Spin style={{ width: '100%', marginTop: 240 }} size="large" />
+          ? <Spin style={{ width: '100%', marginTop: 230 }} size="large" />
           : <iframe
             style={{ border: 'none', padding: 0, margin: 0 }}
             onLoad={(e) => {

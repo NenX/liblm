@@ -1,7 +1,7 @@
-import { MyIcon } from '@lm_fe/components';
+import { CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Input, InputNumber } from 'antd';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './index.less';
 import Modal from './Modal';
 const DATA = {
@@ -59,7 +59,7 @@ export default function DiagnosisList({ value = DATA, user, onChange }: any) {
   return (
     <div className={styles["diagnosis-wrapper"]}>
       <div className={styles["diagnosis-action"]}>
-        <Button icon={<MyIcon value='PlusOutlined' />} onClick={handleShow}>
+        <Button icon={<PlusOutlined />} onClick={handleShow}>
           添加诊断
         </Button>
       </div>
@@ -122,14 +122,14 @@ export default function DiagnosisList({ value = DATA, user, onChange }: any) {
                 <span className={styles["diagnosis-list-item-extra"]}>
                   <span className={styles["date"]}>{_.createDate}</span>
                   <Button type="text" onClick={() => handleDel(i)}>
-                    <MyIcon value='CloseCircleOutlined' />
+                    <CloseCircleOutlined />
                   </Button>
                 </span>
               </li>
             );
           })}
       </ul>
-      {visible && <Modal open={visible} onCancel={onCancel} onSelect={handleSelect} />}
+      {visible && <Modal visible={visible} onCancel={onCancel} onSelect={handleSelect} />}
     </div>
   );
 }

@@ -50,7 +50,7 @@ export const InformedConsentTable = ({ data, onChange, disabled }: IProps) => {
               //     url="document-templates?moduleType.equals=1&page=0&size=9999"
               //     labelKey="title"
               //     valueKey="title"
-              //     popupMatchSelectWidth={350}
+              //     dropdownMatchSelectWidth={350}
               //     // value={b.id}
               //     onChange={title => b.consentName = title}
               // />

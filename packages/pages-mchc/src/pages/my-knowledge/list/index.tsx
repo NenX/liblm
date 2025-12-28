@@ -10,7 +10,7 @@ import { departmentScope } from './../config/contants';
 import requestMethods from '../request';
 import { BaseListOld, CustomIcon } from '@lm_fe/components_m';
 import './index.less';
-import { APP_CONFIG, mchcEnv } from '@lm_fe/env';
+import { APP_CONFIG } from '@lm_fe/env';
 import React from 'react';
 
 export default class List extends BaseListOld {
@@ -146,7 +146,7 @@ export default class List extends BaseListOld {
     };
     await requestMethods.medicalTop(postData);
     this.handleSearch();
-    mchcEnv.success(`${checked ? '开启' : '关闭'}置顶`);
+    message.success(`${checked ? '开启' : '关闭'}置顶`);
   }
   handleTitleClick(rowData: any) {
     this.changeState('visible', true);

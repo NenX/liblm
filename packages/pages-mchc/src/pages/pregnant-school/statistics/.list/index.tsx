@@ -1,10 +1,11 @@
-import { BaseListOld, MyIcon } from '@lm_fe/components_m';
-import { Popconfirm } from 'antd';
-import { get } from 'lodash';
 import React from 'react';
-import Query from './components/Query';
 import Table from './components/Table';
+import Query from './components/Query';
 import { tableColumns } from './config/table';
+import { get } from 'lodash';
+import { Button, Popconfirm } from 'antd';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { BaseListOld } from '@lm_fe/components_m';
 
 export default class List extends BaseListOld {
   static defaultProps = {
@@ -34,12 +35,12 @@ export default class List extends BaseListOld {
       render: (value: any, rowData: any, index: number) => {
         return (
           <>
-            <MyIcon value='EyeOutlined'
+            <EyeOutlined
               className="global-table-action-icon global-table-action-view"
               title="查看"
               onClick={this.handleView(rowData)}
             />
-            <MyIcon value='EditOutlined'
+            <EditOutlined
               className="global-table-action-icon global-table-action-view"
               title="编辑"
               onClick={this.handleEdit(rowData)}
@@ -50,7 +51,7 @@ export default class List extends BaseListOld {
               okText="确定"
               cancelText="取消"
             >
-              <MyIcon value='DeleteOutlined' className="global-table-action-icon global-table-action-delete" title="删除" />
+              <DeleteOutlined className="global-table-action-icon global-table-action-delete" title="删除" />
             </Popconfirm>
           </>
         );

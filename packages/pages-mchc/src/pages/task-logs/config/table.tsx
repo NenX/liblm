@@ -62,7 +62,7 @@ export const tableColumns = [
     width: APP_CONFIG.CELL_WIDTH_MIDDLE,
     // render: (value) => <GeneralComponents_DictionarySelect_Display uniqueKey="Task.runStatus" value={value} />,
     inputProps: {
-      uniqueKey: '推送状态'
+      optionKey: '推送状态'
     }
   },
   {

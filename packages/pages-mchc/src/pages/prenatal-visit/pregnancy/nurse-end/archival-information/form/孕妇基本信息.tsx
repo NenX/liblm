@@ -27,7 +27,7 @@ export const 孕妇基本信息_config = () => {
                     "rules": [{ "required": true, "message": "就诊卡号是必填项" }],
                     layout: '1/3',
                 }
-                : { isActive: 0 },
+                : null,
             {
                 "key": "baseInfo.name",
                 "label": "姓名",
@@ -74,7 +74,7 @@ export const 孕妇基本信息_config = () => {
                 "inputType": "MS",
                 required: true,
 
-                "inputProps": { uniqueKey: '证件类型', marshal: 0 },
+                "inputProps": { optionKey: '证件类型', marshal: 0 },
                 layout: '1/3',
             }, {
                 "key": "baseInfo.idNO",
@@ -168,7 +168,7 @@ export const 孕妇基本信息_config = () => {
                 "inputType": "MS",
                 required: true,
 
-                "inputProps": { "uniqueKey": '省份s', marshal: 0 },
+                "inputProps": { "optionKey": '省份s', marshal: 0 },
                 layout: '1/3',
 
                 // "inputType": "normal_select",
@@ -191,7 +191,7 @@ export const 孕妇基本信息_config = () => {
                 "label": "民族",
                 required: true,
                 "inputType": "MS",
-                "inputProps": { "uniqueKey": "民族s", marshal: 0 },
+                "inputProps": { "optionKey": "民族s", marshal: 0 },
                 // required: mchcEnv.in(['南医增城', '越秀妇幼']),
                 // "inputType": "normal_select",
                 // "specialConfig": { "type": "ethnicMapping", "showSearch": true },
@@ -203,7 +203,7 @@ export const 孕妇基本信息_config = () => {
                 // required: mchcEnv.in(['南医增城', '越秀妇幼']),
                 required: true,
 
-                "inputProps": { uniqueKey: '职业s', marshal: 0 },
+                "inputProps": { optionKey: '职业s', marshal: 0 },
                 layout: '1/3',
             }, {
                 "key": "baseInfo.firstRecord",
@@ -226,7 +226,7 @@ export const 孕妇基本信息_config = () => {
                 "label": "婚姻状况",
                 "inputType": "MS",
 
-                "inputProps": { uniqueKey: '婚姻', marshal: 0 },
+                "inputProps": { optionKey: '婚姻', marshal: 0 },
                 layout: '1/3',
             }, {
                 "key": "baseInfo.education",
@@ -235,7 +235,7 @@ export const 孕妇基本信息_config = () => {
                 // required: mchcEnv.in(['广三']),
                 required: true,
 
-                "inputProps": { uniqueKey: '文化程度s', marshal: 0 },
+                "inputProps": { optionKey: '文化程度s', marshal: 0 },
                 layout: '1/3',
             }, {
                 "key": "baseInfo.spinsterhoodName",

@@ -7,7 +7,7 @@ export const 其他_config = () => {
             {
                 "key": "recordstate",
                 "label": "档案状态",
-                "inputProps": { "marshal": 0, uniqueKey: '档案状态', disabled: true },
+                "inputProps": { "marshal": 0, optionKey: '档案状态', disabled: true },
                 "inputType": "MS",
 
                 layout: '1/3',

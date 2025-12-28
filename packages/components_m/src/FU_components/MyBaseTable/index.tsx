@@ -1,11 +1,11 @@
 import { LazyAntd } from '@lm_fe/components';
 import { Browser } from '@lm_fe/utils';
-import { Pagination, Space } from 'antd';
+import { Space } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { get, map } from 'lodash';
 import React, { FC, useEffect, useState } from 'react';
 import './index.less';
-const { Tree, TreeSelect, Select, Table, Dropdown } = LazyAntd
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
 // 不限定默认格子宽度

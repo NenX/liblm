@@ -1,12 +1,13 @@
-import { BaseEditPanelForm, MyIcon } from '@lm_fe/components_m';
-import { mchcModal__ } from '@lm_fe/pages';
+import { get, size, set } from 'lodash';
+import { message, Button, FormInstance } from 'antd';
+import { PrinterOutlined } from '@ant-design/icons';
+import { getPregnancyByOutpatientNO } from '../methods';
+import store from 'store';
+import { BaseEditPanelForm } from '@lm_fe/components_m';
+import React from 'react';
 import { SLocal_History } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { Button, FormInstance, message } from 'antd';
-import { get, set, size } from 'lodash';
-import React from 'react';
-import store from 'store';
-import { getPregnancyByOutpatientNO } from '../methods';
+import { mchcModal__ } from '@lm_fe/pages';
 export default class AdmissionForm extends BaseEditPanelForm {
   pregnancy = {};
 
@@ -58,7 +59,7 @@ export default class AdmissionForm extends BaseEditPanelForm {
       <Button
         type="primary"
         size="large"
-        icon={<MyIcon value='PrinterOutlined' />}
+        icon={<PrinterOutlined />}
         onClick={() => {
 
           mchcModal__.open('print_modal', {

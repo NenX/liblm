@@ -35,28 +35,28 @@ export const DATA = [
             pid: 222542,
             title: '妊娠相关蛋白A(PAPP-A) 1700 mU/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259489,
             pid: 222542,
             title: '游离-β基-促绒毛膜激素(Freeβ-hCG) 55.4 ng/mL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 7586103429,
@@ -73,28 +73,28 @@ export const DATA = [
             pid: 222541,
             title: '孕酮(PROGEST) 17.87 ng/mL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259487,
             pid: 222541,
             title: 'β人绒毛膜促性腺激素(β-HCG) 73627.72 mIU/ml',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 3457906281,
@@ -111,37 +111,37 @@ export const DATA = [
             pid: 222540,
             title: '促甲状腺素(TSH) 1.847 mIU/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259484,
             pid: 222540,
             title: '游离三碘甲状腺原氨酸(FT3) 4.76 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259485,
             pid: 222540,
             title: '游离甲状腺素(FT4) 11.13 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 4920581637,
@@ -158,32 +158,32 @@ export const DATA = [
             pid: 222538,
             title: '丙氨酸氨基转换酶(ALT) 13 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259459,
             pid: 222538,
             title: '门冬氨酸氨基转换酶(AST) 20 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259460,
             pid: 222538,
             title: 'γ_谷氨酰基转移酶(γ_GT) 7 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
       {
         id: 222539,
@@ -195,217 +195,217 @@ export const DATA = [
             pid: 222539,
             title: '嗜碱性细胞百分比 0.99 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259463,
             pid: 222539,
             title: '嗜酸性细胞绝对值 0.10 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259461,
             pid: 222539,
             title: '嗜碱性细胞绝对值 0.05 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259466,
             pid: 222539,
             title: '血红蛋白HGB 134.20 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259467,
             pid: 222539,
             title: '淋巴细胞绝对值 1.83 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259464,
             pid: 222539,
             title: '嗜酸性细胞百分比 2.26 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259465,
             pid: 222539,
             title: '红细胞压积HCT 39.38 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259470,
             pid: 222539,
             title: '红细胞平均血红蛋白浓度 340.80 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259471,
             pid: 222539,
             title: '平均红细胞体积 94.56 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259468,
             pid: 222539,
             title: '淋巴细胞百分比 39.84 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259469,
             pid: 222539,
             title: '红细胞平均血红蛋白含量 32.22 pg',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259474,
             pid: 222539,
             title: '平均血小板体积 8.84 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259475,
             pid: 222539,
             title: '嗜中性粒细胞绝对值 2.19 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259472,
             pid: 222539,
             title: '单核细胞绝对值 0.42 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259473,
             pid: 222539,
             title: '单核细胞百分比 9.25 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259478,
             pid: 222539,
             title: '有核红细胞计数 0.002 *10^9 /L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259479,
             pid: 222539,
             title: '血小板计数PLT 206.30 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259476,
             pid: 222539,
             title: '嗜中性粒细胞百分比 47.66 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259477,
             pid: 222539,
             title: '有核红细胞百分比 0.05 /100WBC',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259482,
             pid: 222539,
             title: '红细胞分布宽度(SD) 42.44 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259483,
             pid: 222539,
             title: '白细胞计数WBC 4.59 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259480,
             pid: 222539,
             title: '红细胞计数RBC 4.16 X10^12/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259481,
             pid: 222539,
             title: '红细胞分布宽度 13.00 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 2806715493,
@@ -422,32 +422,32 @@ export const DATA = [
             pid: 222535,
             title: '门冬氨酸氨基转换酶(AST) 19 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259431,
             pid: 222535,
             title: 'γ_谷氨酰基转移酶(γ_GT) 8 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259429,
             pid: 222535,
             title: '丙氨酸氨基转换酶(ALT) 16 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
       {
         id: 222536,
@@ -459,212 +459,212 @@ export const DATA = [
             pid: 222536,
             title: '嗜酸性细胞绝对值 0.23 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259435,
             pid: 222536,
             title: '嗜酸性细胞百分比 3.28 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259432,
             pid: 222536,
             title: '嗜碱性细胞绝对值 0.06 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259433,
             pid: 222536,
             title: '嗜碱性细胞百分比 0.87 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259438,
             pid: 222536,
             title: '淋巴细胞绝对值 2.57 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259439,
             pid: 222536,
             title: '淋巴细胞百分比 37.23 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259436,
             pid: 222536,
             title: '红细胞压积HCT 39.65 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259437,
             pid: 222536,
             title: '血红蛋白HGB 135.20 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259442,
             pid: 222536,
             title: '平均红细胞体积 95.49 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259443,
             pid: 222536,
             title: '单核细胞绝对值 0.52 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259440,
             pid: 222536,
             title: '红细胞平均血红蛋白含量 32.57 pg',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259441,
             pid: 222536,
             title: '红细胞平均血红蛋白浓度 341.10 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259446,
             pid: 222536,
             title: '嗜中性粒细胞绝对值 3.53 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259447,
             pid: 222536,
             title: '嗜中性粒细胞百分比 51.04 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259444,
             pid: 222536,
             title: '单核细胞百分比 7.58 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259445,
             pid: 222536,
             title: '平均血小板体积 8.97 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259450,
             pid: 222536,
             title: '血小板计数PLT 192.80 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259451,
             pid: 222536,
             title: '红细胞计数RBC 4.15 X10^12/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259448,
             pid: 222536,
             title: '有核红细胞百分比 0.01 /100WBC',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259449,
             pid: 222536,
             title: '有核红细胞计数 0.001 *10^9 /L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259454,
             pid: 222536,
             title: '白细胞计数WBC 6.91 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259452,
             pid: 222536,
             title: '红细胞分布宽度 12.98 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259453,
             pid: 222536,
             title: '红细胞分布宽度(SD) 42.44 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
       {
         id: 222537,
@@ -676,37 +676,37 @@ export const DATA = [
             pid: 222537,
             title: '游离甲状腺素(FT4) 11.46 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259457,
             pid: 222537,
             title: '促甲状腺素(TSH) 1.43 mIU/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259455,
             pid: 222537,
             title: '游离三碘甲状腺原氨酸(FT3) 5.16 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 7240351968,
@@ -723,32 +723,32 @@ export const DATA = [
             pid: 222532,
             title: 'γ_谷氨酰基转移酶(γ_GT) 7 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259400,
             pid: 222532,
             title: '丙氨酸氨基转换酶(ALT) 16 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259401,
             pid: 222532,
             title: '门冬氨酸氨基转换酶(AST) 16 U/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
       {
         id: 222533,
@@ -760,212 +760,212 @@ export const DATA = [
             pid: 222533,
             title: '红细胞分布宽度(SD) 40.25 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259425,
             pid: 222533,
             title: '白细胞计数WBC 5.75 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259403,
             pid: 222533,
             title: '嗜碱性细胞绝对值 0.01 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259406,
             pid: 222533,
             title: '嗜酸性细胞百分比 1.55 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259407,
             pid: 222533,
             title: '红细胞压积HCT 38.15 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259404,
             pid: 222533,
             title: '嗜碱性细胞百分比 0.22 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259405,
             pid: 222533,
             title: '嗜酸性细胞绝对值 0.09 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259410,
             pid: 222533,
             title: '淋巴细胞百分比 25.62 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259411,
             pid: 222533,
             title: '红细胞平均血红蛋白含量 32.21 pg',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259408,
             pid: 222533,
             title: '血红蛋白HGB 133.70 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259409,
             pid: 222533,
             title: '淋巴细胞绝对值 1.47 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259414,
             pid: 222533,
             title: '单核细胞绝对值 0.48 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259415,
             pid: 222533,
             title: '单核细胞百分比 8.44 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259412,
             pid: 222533,
             title: '红细胞平均血红蛋白浓度 350.30 g/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259413,
             pid: 222533,
             title: '平均红细胞体积 91.95 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259418,
             pid: 222533,
             title: '嗜中性粒细胞百分比 64.17 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259419,
             pid: 222533,
             title: '有核红细胞百分比 0.06 /100WBC',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259416,
             pid: 222533,
             title: '平均血小板体积 8.42 fL',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259417,
             pid: 222533,
             title: '嗜中性粒细胞绝对值 3.69 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259422,
             pid: 222533,
             title: '红细胞计数RBC 4.15 X10^12/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259423,
             pid: 222533,
             title: '红细胞分布宽度 12.78 %',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259420,
             pid: 222533,
             title: '有核红细胞计数 0.004 *10^9 /L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259421,
             pid: 222533,
             title: '血小板计数PLT 189.70 X10^9/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
       {
         id: 222534,
@@ -977,37 +977,37 @@ export const DATA = [
             pid: 222534,
             title: '游离三碘甲状腺原氨酸(FT3) 5.26 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259427,
             pid: 222534,
             title: '游离甲状腺素(FT4) 12.19 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259428,
             pid: 222534,
             title: '促甲状腺素(TSH) 0 mIU/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
   {
     id: 3174205869,
@@ -1024,36 +1024,36 @@ export const DATA = [
             pid: 222531,
             title: '游离甲状腺素(FT4) 11.35 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259399,
             pid: 222531,
             title: '促甲状腺素(TSH) 0.05 mIU/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
           {
             id: 2259397,
             pid: 222531,
             title: '游离三碘甲状腺原氨酸(FT3) 5 pmol/L',
             items: [],
-
-
-
+            labExamTypeEnum: null,
+            unusual: null,
+            unusualDesc: null,
           },
         ],
         labExamTypeEnum: 'inner',
-
-
+        unusual: null,
+        unusualDesc: null,
       },
     ],
-
-
-
+    labExamTypeEnum: null,
+    unusual: null,
+    unusualDesc: null,
   },
 ];

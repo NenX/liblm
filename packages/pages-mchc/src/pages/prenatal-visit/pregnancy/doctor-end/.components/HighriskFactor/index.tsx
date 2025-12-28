@@ -3,7 +3,7 @@ import { levelOptionsobj } from '@/pages/highrisk-management/configuration/conta
 import { api } from '@/pages/prenatal-visit/pregnancy/doctor-end/api';
 import { formatTimeToDate } from '@/utils/format';
 import { size } from '@antv/util';
-import { mchcConfig, mchcEnv, mchcUtils } from '@lm_fe/env';
+import { mchcConfig, mchcUtils } from '@lm_fe/env';
 import { Button, Col, Form, Input, message, Modal, Row, Tabs, Timeline } from 'antd';
 import classNames from 'classnames';
 import {
@@ -216,7 +216,7 @@ class Index extends Component<IProps, IndexState> {
     }
     const res = await request.put('/api/doctor/assessHighRisk', post);
     // const ress = await request.get('/api/doctor/getOutpatientHeaderInfo?id=' + get(data, `id`));
-    mchcEnv.success('信息保存成功');
+    message.success('信息保存成功');
     // saveHeaderInfo({
     //   ...this.props.data,
     //   ...pick(post, ['infectionNote', 'highriskNote']),
@@ -521,7 +521,7 @@ class Index extends Component<IProps, IndexState> {
     return (
       <Modal
         className="highrisk-pop"
-        open={visible}
+        visible={visible}
         width={1000}
         onCancel={this.handleClose}
         onOk={this.handleSubmit}

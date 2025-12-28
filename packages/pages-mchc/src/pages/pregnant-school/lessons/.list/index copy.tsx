@@ -1,16 +1,17 @@
-import { MyIcon, QRCode_L } from '@lm_fe/components';
-import { BaseListOld } from '@lm_fe/components_m';
-import { mchcEnv } from '@lm_fe/env';
-import { mchcModal__ } from '@lm_fe/pages';
-import { request } from '@lm_fe/utils';
-import { Button, Divider, Popconfirm, Switch } from 'antd';
-import { concat, findIndex, get } from 'lodash';
-import CopyModalForm from './components/CopyModalForm';
-import ModalForm from './components/ModalForm';
-import Query from './components/Query';
-import ReserveModal from './components/reserve-modal';
+import React from 'react';
 import Table from './components/Table';
+import Query from './components/Query';
+import ModalForm from './components/ModalForm';
+import CopyModalForm from './components/CopyModalForm';
+import ReserveModal from './components/reserve-modal';
 import { tableColumns } from './config/table';
+import { get, concat, findIndex } from 'lodash';
+import { Button, Divider, message, Modal, Popconfirm, Switch, Spin } from 'antd';
+import { EditOutlined, DeleteOutlined, QrcodeOutlined, CopyOutlined } from '@ant-design/icons';
+import { request } from '@lm_fe/utils';
+import { BaseListOld } from '@lm_fe/components_m';
+import { QRCode } from '@lm_fe/components';
+import { mchcModal__ } from '@lm_fe/pages';
 
 export default class List extends BaseListOld {
   timer: any = null;
@@ -83,18 +84,18 @@ export default class List extends BaseListOld {
           return (
             <>
               <Button type="link" size="small" onClick={this.handleQrcodeView(rowData)}>
-                <MyIcon value='QrcodeOutlined' />
+                <QrcodeOutlined />
                 二维码
               </Button>
               <Divider type="vertical" />
               <Button type="link" size="small" onClick={this.handleEdit(rowData)}>
-                <MyIcon value='EditOutlined' />
+                <EditOutlined />
                 编辑
               </Button>
               <Divider type="vertical" />
               <br></br>
               <Button type="link" size="small" onClick={this.handleCopy(rowData)}>
-                <MyIcon value='CopyOutlined' />
+                <CopyOutlined />
                 复制课程
               </Button>
               <Divider type="vertical" />
@@ -105,7 +106,7 @@ export default class List extends BaseListOld {
                 cancelText="取消"
               >
                 <Button type="link" size="small">
-                  <MyIcon value='DeleteOutlined' />
+                  <DeleteOutlined   />
                   删除
                 </Button>
               </Popconfirm>
@@ -139,7 +140,7 @@ export default class List extends BaseListOld {
       width: 400,
       bodyStyle: { height: 400 },
       modal_data: {
-        content: <QRCode_L
+        content: <QRCode
           value={`courseid~${get(rowData, 'id')}~${get(rowData, 'name')}`}
           size={380}
         />
@@ -167,7 +168,7 @@ export default class List extends BaseListOld {
         status: false,
       });
     }
-    mchcEnv.success('操作成功'); // TODO: 即使已经返回，但接口数据仍未更新，刷新还是旧数据
+    message.success('操作成功'); // TODO: 即使已经返回，但接口数据仍未更新，刷新还是旧数据
     setTimeout(() => {
       this.handleSearch();
     }, 100);

@@ -1,17 +1,14 @@
-import { AnyObject, expect_array, get, getSearchParamsValue, MyLog, safe_json_parse, simple_decrypt, simple_encrypt } from "@noah-libjs/utils";
+import { AnyObject, expect_array, getSearchParamsValue, MyLog, safe_json_parse } from "@noah-libjs/utils";
 import { TOKEN_KEY } from "../constant";
 const tokenPrefix = ['Bearer', 'captcha']
 
 function isStartWithTokenPrefix(token?: string) {
-    if (!token?.startsWith) return false
+    if (!token) return false
     return tokenPrefix.some(_ => token.startsWith(`${_} `))
 }
 export class AppEnv<T = string> {
     static get singleton(): AppEnv {
         return window.mchc_env ?? appEnv
-    }
-    static get client_mode() {
-        return !!get(window, 'client_mode')
     }
     _appName?: T;
     _globalCache: { [x: string]: any; } = {};
@@ -46,24 +43,15 @@ export class AppEnv<T = string> {
     public is(type: T) {
         return this.appName === type;
     }
-    public not(type: T) {
-        return this.appName !== type;
-    }
     public in(types: T[]) {
         return types.includes(this.appName!);
     }
     public get isSp() {
-        const sp = getSearchParamsValue('sp') || getSearchParamsValue('SP') || this.is_single
+        const sp = getSearchParamsValue('sp') ?? getSearchParamsValue('SP') ?? location.pathname.startsWith('/view') ?? location.pathname.startsWith('/single')
         return !!sp
     }
-    get is_single() {
-        return location.pathname.includes('/single') || location.pathname.includes('/view')
-    }
-    get is_new() {
-        return [location.pathname, location.pathname.includes('/single'), location.pathname.includes('/view')]
-    }
     public get isDev() {
-        return this._isDev ?? false;
+        return this._isDev || false;
     }
     public set isDev(value: boolean) {
         this._isDev = value
@@ -88,15 +76,17 @@ export class AppEnv<T = string> {
     constructor(appName?: T,) {
         this.appName = appName
     }
-    get loginRemember() {
-        return simple_decrypt(this.store.get(this.loginRememberKey))
+    get loginRemember(): AnyObject | undefined | null {
+        const str = expect_array<number[]>(this.store.get(this.loginRememberKey)).map((_) => String.fromCharCode(~_)).join('')
+        return safe_json_parse(str)
     }
     set loginRemember(value) {
         if (!value) {
             this.store.set(this.loginRememberKey, null)
             return
         }
-        const str = simple_encrypt(value)
+
+        const str = JSON.stringify(value).split('').map(_ => ~_.charCodeAt(0))
         this.store.set(this.loginRememberKey, str)
     }
     get token(): string | null {
@@ -116,9 +106,9 @@ export class AppEnv<T = string> {
         if (!value) return ''
         return isStartWithTokenPrefix(value) ? value.split(' ').slice(-1) : value
     }
-    reload(path?: string | URL) {
+    reload(path?: string) {
         if (path) {
-            window.location.href = path.toString()
+            window.location.href = path
         } else {
             location.reload()
         }
@@ -126,13 +116,13 @@ export class AppEnv<T = string> {
     open(url?: string | URL, target?: string, features?: string) {
         return window.open(url, target, features)
     }
-    logout(path?: string | URL) {
+    logout(path?: string) {
         const login_cache = this.loginRemember
         this.store.clearAll()
         this.loginRemember = login_cache
         this.reload(path)
     }
-    logout_clean(path?: string | URL) {
+    logout_clean(path?: string) {
         this.store.clearAll()
         this.reload(path)
     }

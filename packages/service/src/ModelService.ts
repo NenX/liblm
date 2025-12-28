@@ -343,7 +343,6 @@ export class ModelService<T extends { id?: TIdTypeCompatible } = any> extends Ev
     // config.url = `${this.preFix}${this.prePath}${config.url}`
     config.ignore_usr = config.ignore_usr ?? this.ignore_usr
     config.ignore_env = config.ignore_env ?? this.ignore_env
-
     let res = await request.ins(config);
     let resData: IResponseDataType<T> = res?.data
     const headers = res.headers ?? {}

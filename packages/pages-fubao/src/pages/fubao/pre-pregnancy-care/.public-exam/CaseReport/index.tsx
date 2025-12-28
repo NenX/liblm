@@ -17,7 +17,6 @@ import classnames from 'classnames';
 import dayjs from 'dayjs';
 import { getTemplateById } from '@lm_fe/components_m';
 import './index.less';
-import { mchcEnv } from '@lm_fe/env';
 const signStates = [
   { label: '已报', value: '1' },
   { label: '未报', value: '2' },
@@ -101,7 +100,7 @@ export class CaseReport extends Component {
     } else {
       informedConsent = await createInformedConsent(data);
     }
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
     this.setState({
       informedConsent,
     });
@@ -286,7 +285,7 @@ export class CaseReport extends Component {
                       url="document-templates?moduleType.equals=5&page=0&size=9999"
                       labelKey="title"
                       valueKey="id"
-                      popupMatchSelectWidth={350}
+                      dropdownMatchSelectWidth={350}
                       onChange={this.handleConsentChange}
                       value={get(informedConsent, 'documentTemplate.id')}
                     />
@@ -305,8 +304,8 @@ export class CaseReport extends Component {
               <CaseTempleteEdit
                 key={get(informedConsent, 'id') || Math.random()}
                 containerProps={{ ...containerProps, height: containerProps.height - 10 }}
-                value={get(informedConsent, 'content')}
-                onChange={this.handleSave}
+                content={get(informedConsent, 'content')}
+                onSave={this.handleSave}
                 toolbars={false}
                 mode="STRICT"
               />

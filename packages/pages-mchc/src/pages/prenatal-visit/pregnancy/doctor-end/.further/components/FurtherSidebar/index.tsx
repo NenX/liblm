@@ -1,9 +1,9 @@
-import { GestationalWeekProjectTree, MyLazyComponent, OkButton } from '@lm_fe/components_m';
+import { SettingOutlined } from '@ant-design/icons';
+import { CustomIcon, GestationalWeekProjectTree, MyLazyComponent } from '@lm_fe/components_m';
 import { mchcConfig, mchcEnv, mchcUtils } from '@lm_fe/env';
-import { use_provoke } from '@lm_fe/provoke';
 import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo, IMchc_Doctor_RvisitInfoOfOutpatient, TIdTypeCompatible } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { Card, Collapse, Timeline } from 'antd';
+import { Button, Collapse, Timeline } from 'antd';
 import classnames from 'classnames';
 import { get, isEmpty, join, map, size, slice } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -19,17 +19,21 @@ interface IProps {
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
   id: TIdTypeCompatible
 
+  changeScreening(b: boolean): void
+  changeSyphilis(b: boolean): void
 
   diagnosesList: IMchc_Doctor_Diagnoses[]
   furtherRefresh(): void
+  diagnosesWord: string
+  getHighriskDiagnosis(id: TIdTypeCompatible): void
   serialNo: string
 
   saveHeaderInfo(h: IMchc_Doctor_OutpatientHeaderInfo): void,
   setDiagnosesList(list: any[]): void,
+  setDiagnosesWord(t: string): void,
 
 }
 export default function FurtherSidebar(props: IProps) {
-  const sys_theme = use_provoke(s => s.sys_theme)
 
 
   const {
@@ -37,10 +41,15 @@ export default function FurtherSidebar(props: IProps) {
     id,
     visitsData,
 
+    changeScreening,
+    changeSyphilis,
     diagnosesList,
     furtherRefresh,
+    diagnosesWord,
+    getHighriskDiagnosis,
     saveHeaderInfo,
     setDiagnosesList,
+    setDiagnosesWord,
     serialNo,
   } = props;
 
@@ -68,21 +77,11 @@ export default function FurtherSidebar(props: IProps) {
   useEffect(() => {
 
     getLackReports();
-
+    getPlanData();
     return () => {
 
     }
   }, [])
-  useEffect(() => {
-
-    const planData = get(visitsData, `visitPlans`, []);
-
-    set_recentPlanData(slice(planData, 0, 2))
-
-    return () => {
-
-    }
-  }, [visitsData])
 
 
 
@@ -95,6 +94,11 @@ export default function FurtherSidebar(props: IProps) {
 
 
 
+  async function getPlanData(visitsData = props.visitsData) {
+    const planData = get(visitsData, `visitPlans`, []);
+
+    set_recentPlanData(slice(planData, 0, 2))
+  };
 
   async function getLackReports(visitsData = props.visitsData) {
     const lackReports = get(visitsData, `lackReports`, []);
@@ -140,7 +144,7 @@ export default function FurtherSidebar(props: IProps) {
         <div className="main-content">
           {sidebarTab == 1 && (
             <div className="prenatal-visit-main_return-sidebar">
-              <Collapse destroyOnHidden size='small' defaultActiveKey={collapseActiveKey} bordered={false}>
+              <Collapse defaultActiveKey={collapseActiveKey}>
                 <Collapse.Panel
                   header={
                     <span style={{ marginLeft: '10px' }}>
@@ -156,41 +160,52 @@ export default function FurtherSidebar(props: IProps) {
                 >
                   <Diagnoses
                     serialNo={serialNo}
+                    diagnosesWord={diagnosesWord}
+                    getHighriskDiagnosis={getHighriskDiagnosis}
+                    changeScreening={changeScreening}
+                    changeSyphilis={changeSyphilis}
                     saveHeaderInfo={saveHeaderInfo}
                     setDiagnosesList={setDiagnosesList}
+                    setDiagnosesWord={setDiagnosesWord}
                     headerInfo={headerInfo}
                     diagnosesList={diagnosesList}
+                    isShowDiagnosesTemplate={false}
+                    noshowlist={false}
+                    isShowDiagnosesTemplatets={false}
                     isAllPregnancies={false}
 
+                    getDiagnosesList={() => { }}
 
                     page="return"
                   />
                 </Collapse.Panel>
 
                 <Collapse.Panel
-                  header={!!lackReports ? '缺少检验报告' : '必查检验检查'}
-                  extra={
-                    <OkButton
-                      type='dashed'
-                      size='small'
-                      onClick={(e) => {
-                        set_isShowListModal(true)
+                  header={
+                    <span style={{ marginLeft: '10px' }}>
+                      {!!lackReports ? '缺少检验报告' : '必查检验检查'}
+                      <Button
+                        className="header-btn"
+                        icon={<CustomIcon type={'icon-batch'} />}
+                        onClick={(e) => {
+                          set_isShowListModal(true)
 
-                        // mchcModal__.open('bf_form', {
-                        //   modal_data: {
-                        //     title: '必查清单-检验检查',
-                        //     history_args: { relationId: getSearchParamsValue('id')! }
-                        //   }
-                        // })
-                      }}
-                    >
-                      必查清单
-                    </OkButton>
+                          // mchcModal__.open('bf_form', {
+                          //   modal_data: {
+                          //     title: '必查清单-检验检查',
+                          //     history_args: { relationId: getSearchParamsValue('id')! }
+                          //   }
+                          // })
+                        }}
+                      >
+                        必查清单
+                      </Button>
+                    </span>
                   }
                   key="2"
                   id="further-check-item"
                 >
-                  <GestationalWeekProjectTree pregnancyId={mchcUtils.single_id()} />
+                  <GestationalWeekProjectTree pregnancyId={mchcUtils.getDoctorEndId()} />
                 </Collapse.Panel>
 
                 {/* <Collapse.Panel header="产前筛查与诊断" key="3">
@@ -198,15 +213,17 @@ export default function FurtherSidebar(props: IProps) {
 
                 {
                   mchcEnv.is('广三') || <Collapse.Panel
-                    header={'产检计划'}
-                    extra={
-                      <OkButton
-                        type='dashed'
-                        size='small'
-                        onClick={(e) => handleBtnClick(e, 'manageBtn')}
-                      >
-                        产检管理
-                      </OkButton>
+                    header={
+                      <span style={{ marginLeft: '10px' }}>
+                        产检计划
+                        <Button
+                          className="header-btn"
+                          icon={<SettingOutlined />}
+                          onClick={(e) => handleBtnClick(e, 'manageBtn')}
+                        >
+                          产检管理
+                        </Button>
+                      </span>
                     }
                     key="4"
                   >
@@ -238,18 +255,15 @@ export default function FurtherSidebar(props: IProps) {
             </div>
           )} */}
         </div>
-        <div className="tab-content" style={{ background: sys_theme.bg_color }}>
+        <div className="tab-content">
           <div
-            style={{ color: sidebarTab == 1 ? sys_theme.colorPrimary : '' }}
-            className={classnames('tab-item',)}
+            className={classnames('tab-item', { active: sidebarTab == 1 })}
             onClick={handleTabClick.bind(this, 1)}
           >
             诊断
           </div>
           <div
-            style={{ color: sidebarTab == 2 ? sys_theme.colorPrimary : '' }}
-
-            className={classnames('tab-item',)}
+            className={classnames('tab-item', { active: sidebarTab == 2 })}
             onClick={handleTabClick.bind(this, 2)}
           >
             产检树
@@ -330,7 +344,7 @@ export default function FurtherSidebar(props: IProps) {
 
 
   return (
-    <Card size='small' styles={{ body: { padding: 0 } }} style={{ width: 260, height: '100%', marginRight: 8, overflow: 'auto' }}>
+    <div style={{ width: 280, height: '100%', padding: 4, marginRight: 8, background: '#fff', }}>
 
       <MyLazyComponent size='middle'>
         {renderSiderBar()}
@@ -363,6 +377,6 @@ export default function FurtherSidebar(props: IProps) {
         )}
 
       </MyLazyComponent>
-    </Card>
+    </div>
   );
 }

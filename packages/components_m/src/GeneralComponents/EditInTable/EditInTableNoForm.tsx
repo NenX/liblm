@@ -19,7 +19,8 @@ import {
 import React, { Component } from 'react';
 import BaseTable from './BaseTable';
 import dayjs from 'dayjs';
-import { formatDate, isMoment } from '@lm_fe/utils';
+import { formatTimeToDate } from '@/utils/format';
+import { isMoment } from '@lm_fe/utils';
 export const tableColumnsSpecialInputType = ['select_tag_with_options', 'tree_select_v2', 'tree_select'];
 export default ({ tableColumns, changeImmediate = true }) => {
   class EditInTable extends Component {
@@ -189,7 +190,7 @@ export default ({ tableColumns, changeImmediate = true }) => {
         const names = split(key, '-');
         let tempValue = value;
         if (isMoment(tempValue)) {
-          tempValue = formatDate(tempValue);
+          tempValue = formatTimeToDate(tempValue);
         }
         set(dataSourceObj, `${names[0]}.${names[1]}`, tempValue);
       });

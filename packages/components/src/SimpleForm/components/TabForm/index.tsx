@@ -1,7 +1,6 @@
 import { Button, Form, Tabs, TabsProps } from "antd";
-import { SimpleForm } from '../..'
-import React from "react";
-import { SimpleFormProps } from "src/SimpleForm/types";
+import { PlusCircleOutlined } from '@ant-design/icons'
+import { SimpleFormProps, SimpleForm } from '../..'
 interface IItem {
     _id: number
     [x: string]: any

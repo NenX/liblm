@@ -132,7 +132,7 @@ export default class ModalForm extends Component<any, any> {
         wrapperCol={{ span: 20 }}
         onValuesChange={this.handleChange}
       >
-        <Modal title="编辑预约信息" width={800} onOk={this.handleSubmit} open={visible} onCancel={onCancel}>
+        <Modal title="编辑预约信息" width={800} onOk={this.handleSubmit} visible={visible} onCancel={onCancel}>
           <Form.Item name="appointmentDate" label="预约日期">
             <DatePicker_L disabledDate={this.disabledDate} />
           </Form.Item>

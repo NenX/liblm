@@ -58,7 +58,7 @@ export default function (type: TType) {
                 layout: '1/2',
                 dataIndex: 'gender',
                 inputType: 'MC',
-                inputProps: { uniqueKey: '性别2', marshal: 0 },
+                inputProps: { optionKey: '性别2', marshal: 0 },
                 width: 50,
             },
             {

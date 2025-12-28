@@ -4,7 +4,7 @@ import { defineFormConfig } from "@lm_fe/service";
 
 const ctx = rt_ctx
 const React = rt_ctx.React
-export default defineFormConfig(
+export const form_config = defineFormConfig(
     [
         {
             title: '就诊卡号',

@@ -1,4 +1,4 @@
-import { PanelTitle, PanelWithChild } from '@lm_fe/components_m';
+import { PanelWithChild } from '@lm_fe/components_m';
 import { SLocal_State } from '@lm_fe/service';
 import { getSearchParamsValue, fubaoRequest as request } from '@lm_fe/utils';
 import { Space } from 'antd';
@@ -88,19 +88,26 @@ export default class FamilyPlanning_FileManagement_DoctorDesk extends PanelWithC
 
   renderHeader = () => {
     const { data } = this.state;
-
-    const h = [
-      { title: '姓名', value: get(data, 'name') },
-      { title: '性别', value: '女' },
-      { title: '年龄', value: get(data, 'age') },
-      { title: '门诊号', value: get(data, 'outpatientNo') },
-
-    ]
     return (
-      <PanelTitle headerItems={h} />
+      <div className={PanelWithChild.styles["panel-with-child_header"]}>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>姓名:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'name')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>性别:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>女</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-label"]}>年龄:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-item-value"]}>{get(data, 'age')}</span>
+        </div>
+        <div className={PanelWithChild.styles["panel-with-child_header-secend-item"]}>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-label"]}>门诊号:</span>
+          <span className={PanelWithChild.styles["panel-with-child_header-secend-item-value"]}>{get(data, 'outpatientNo')}</span>
+        </div>
+      </div>
     );
-
-
   };
 
   handleClickTab = (activeKey: any) => async () => {

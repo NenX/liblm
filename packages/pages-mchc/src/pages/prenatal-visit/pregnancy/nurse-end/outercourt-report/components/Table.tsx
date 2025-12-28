@@ -1,9 +1,10 @@
-import { APP_CONFIG, BaseTableOld, MyIcon } from '@lm_fe/components_m';
-import { SLocal_State } from '@lm_fe/service';
-import { getSearchParamsValue } from '@lm_fe/utils';
-import { Button } from 'antd';
 import React from 'react';
+import { Button } from 'antd';
 import store from 'store';
+import { PlusOutlined } from '@ant-design/icons';
+import { APP_CONFIG, BaseTableOld } from '@lm_fe/components_m';
+import { getSearchParamsValue } from '@lm_fe/utils';
+import { SLocal_State } from '@lm_fe/service';
 class ProductsTable extends BaseTableOld {
   readSnap = () => {
     const user = SLocal_State.getUserData()
@@ -23,7 +24,7 @@ class ProductsTable extends BaseTableOld {
 
   renderAdd = () => {
     return (
-      <Button type="primary" icon={<MyIcon value='PlusOutlined' />} onClick={this.readSnap}>
+      <Button type="primary" icon={<PlusOutlined />} onClick={this.readSnap}>
         报告附加
       </Button>
     );

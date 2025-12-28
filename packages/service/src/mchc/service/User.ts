@@ -10,7 +10,7 @@ export interface IMchc_Permission {
     name: string
     parentid: number
     sort: number
-    type: "menu" | "route" | "function"
+    type: "menu" | "route"
 
 }
 
@@ -40,7 +40,6 @@ export interface IMchc_User {
     email: string
     firstName: string
     groups: IMchc_Group[]
-    groupRanks: { "id": 3, "name": "护士长", "administrator": 1, "rankSort": 0, "groupId": 3 }[]
     id: number
     imageUrl: null
     langKey: string

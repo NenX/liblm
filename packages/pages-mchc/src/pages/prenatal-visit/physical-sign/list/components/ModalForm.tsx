@@ -8,7 +8,6 @@ import { getPregnancyByOutpatientNO, getPrenatalVisits, getMeasuresByDate } from
 import styles from '../index.module.less';
 import { DynamicForm, FormSection, formatTimeToDate } from '@lm_fe/components_m';
 import { request } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 
 const url = '/api/measures';
 const title = '体格检查';
@@ -133,19 +132,20 @@ export default class BaseModalForm extends DynamicForm {
         if (!get(values, 'id')) {
           const measureData = await getMeasuresByDate(get(values, 'outpatientNO'), get(values, 'createDate'));
           if (size(measureData) > 0) {
-            mchcEnv.warning('此用户当天已记录体征数据，请搜索对应的记录编辑。');
+            message.destroy();
+            message.warning('此用户当天已记录体征数据，请搜索对应的记录编辑。');
             return;
           }
         }
 
         await request[method](`${url}`, values);
-        mchcEnv.success(tip);
+        message.success(tip);
         onCancel();
         onSearch();
       })
       .catch((error: any) => {
         const errors = get(error, 'errorFields.0.errors.0');
-        mchcEnv.error(errors);
+        message.error(errors);
       });
   };
 
@@ -160,7 +160,7 @@ export default class BaseModalForm extends DynamicForm {
       <Modal
         {...modalProps}
         centered
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         onOk={this.handleSubmit}
         title={id ? `修改${title}` : `添加${title}`}

@@ -1,5 +1,5 @@
 import { IGlobalModalProps } from '@lm_fe/components';
-import { IMchc_Doctor_OutpatientHeaderInfo, IMchc_TemplateTree_Item, SMchc_TemplateTrees, TIdTypeCompatible } from '@lm_fe/service';
+import { IMchc_TemplateTree_Item, SMchc_TemplateTrees, TIdTypeCompatible } from '@lm_fe/service';
 import { Button, Modal, Space } from 'antd';
 import { DataNode } from 'antd/lib/tree';
 import { forEach, isEmpty } from 'lodash';
@@ -9,23 +9,21 @@ import styles from './index.module.less';
 
 import { LazyAntd } from '@lm_fe/components';
 import React from 'react';
-import { mchcEnv } from '@lm_fe/env';
-import { fuck_sign_doctor, fuck_sign_user, fuck_user_info } from '../子痫前期风险评估表/utils';
 
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 
 const TYPE = 33
 
-function Index(props: IGlobalModalProps<{ headerInfo: IMchc_Doctor_OutpatientHeaderInfo }>) {
+function Index(props: IGlobalModalProps<{ pregnancyId: TIdTypeCompatible, }>) {
 
   const { modal_data, close, ...others } = props
-  const { headerInfo, } = modal_data
+  const { pregnancyId, } = modal_data
   const [treeToalc, setTreeToalc] = useState<IMchc_TemplateTree_Item[]>([]);
   const [toalcKeys, setToalcKeys] = useState<string[]>([]);
 
   const printTableRef = useRef<HTMLDivElement>(null)
-  const pregnancyId = headerInfo.id
+
   useEffect(() => {
 
     (async () => {
@@ -148,26 +146,9 @@ function Index(props: IGlobalModalProps<{ headerInfo: IMchc_Doctor_OutpatientHea
       <div style={{ display: 'none' }}>
         <div style={{ marginTop: '28px' }} ref={printTableRef} className={styles['printtoalc']}>
           <h2 style={{ textAlign: 'center' }}>瘢痕子宫阴道试产表</h2>
-          {fuck_user_info(headerInfo)}
           {!!treeToalc.length && (
             <Tree checkable defaultExpandAll checkedKeys={toalcKeys} treeData={treeData} onCheck={handleCheck} />
           )}
-          <div style={{ display: mchcEnv.in(['越秀妇幼']) ? 'block' : 'none', lineHeight: 2.6, pageBreakBefore: 'always', padding: '48px 24px' }}>
-            <div>患者知情选择</div>
-            <div>1、医生已告知我关于癜痕子宫的介绍、目前孕产妇的情况及可采取的分娩方式。</div>
-            <div>2、我同意医生根据孕产妇情况而要采取的分娩方式。</div>
-            <div>3、我并未得到百分之百成功的许诺。</div>
-            <div>4.我已详细阅读以上内容，对医师详细告知的各种风险表示完全理解。</div>
-
-
-            {
-              fuck_sign_user()
-            }
-            <div>我已告知孕产妇及孕产妇亲属或授权关系人关于癜痕子宫的介绍，目前孕产妇的情况及可采取的分娩方式。</div>
-            {
-              fuck_sign_doctor()
-            }
-          </div>
         </div>
       </div>
     </Modal>

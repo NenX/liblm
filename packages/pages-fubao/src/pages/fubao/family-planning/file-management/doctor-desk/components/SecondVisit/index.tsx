@@ -1,29 +1,28 @@
-import { CalendarOutlined, DeleteOutlined, PlusCircleOutlined, PrinterOutlined, SaveOutlined } from '@ant-design/icons';
 import {
-  calEddByLmp,
   createResources,
   deleteResourcesByID,
   getResources,
   getResourcesByID,
   transferDataByDate,
-  updateResources
+  updateResources,
+  calEddByLmp
 } from '@lm_fe/components_m';
+import { fubaoRequest as request } from '@lm_fe/utils'
+import { CalendarOutlined, DeleteOutlined, PlusCircleOutlined, PrinterOutlined, SaveOutlined } from '@ant-design/icons';
 import { SelectTip } from '@lm_fe/pages';
-import { fubaoRequest as request } from '@lm_fe/utils';
 
-import { mchcEnv } from '@lm_fe/env';
-import { mchcModal__ } from '@lm_fe/pages';
-import { Button, Card, Col, Collapse, Form, List, Modal, Popconfirm, Row, Tooltip } from 'antd';
+import { Button, Card, Col, Collapse, Form, List, Modal, Popconfirm, Row, Tooltip, message } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import classnames from 'classnames';
-import dayjs from 'dayjs';
 import { debounce, first, get, isEmpty, keys, last, map, set, values } from 'lodash';
+import dayjs from 'dayjs';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MedicalRecord from '../../../../../.others/MedicalRecord';
 import { visitTypeMapping } from './config';
 import { fromApi, toApi } from './config/adapter';
 import './index.less';
+import { mchcModal__ } from '@lm_fe/pages';
 const BASE_URL = '/api/prenatal-diagnoses';
 export class SecondVisit extends Component {
   state = {
@@ -149,7 +148,7 @@ export class SecondVisit extends Component {
       },
     );
     await this.initData();
-    mchcEnv.success('操作成功');
+    message.success('操作成功');
   };
 
   handleDelete = (item) => async () => {

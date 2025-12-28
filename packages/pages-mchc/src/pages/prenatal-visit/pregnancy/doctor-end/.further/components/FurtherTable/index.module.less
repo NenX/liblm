@@ -3,19 +3,21 @@
 @color-deep: #8fb9f0;
 
 .FurtherTable {
+  margin-bottom: 8px !important;
+  padding: 2px;
+  position: relative;
+  background-color: #fff;
 
-  // background-color: #fff;
 
 
+  .selected-row {
+    background: @color-deep !important;
+  }
 
-  // .selected-row {
-  //   background: @color-deep !important;
-  // }
-
-  // :global(.ant-table-tbody > tr.ant-table-row:hover > td) {
-  //   background: @color!important;
-  //   cursor: pointer;
-  // }
+  :global(.ant-table-tbody > tr.ant-table-row:hover > td) {
+    background: @color!important;
+    cursor: pointer;
+  }
 
   :global(.ant-table .ant-table-thead th) {
     font-weight: bold;

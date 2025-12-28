@@ -1,19 +1,18 @@
-import { mchcEnv } from '@lm_fe/env';
 import { IMchc_AddressItemType, SMchc_Address } from '@lm_fe/service';
-import { copyText } from '@lm_fe/utils';
-import { MyIcon } from '@noah-libjs/components';
-import { Button, Cascader, Input, Space, Tooltip } from 'antd';
+import { Button, Cascader, Input, message, Tooltip } from 'antd';
 import { get, isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { IMyAddressProps } from './type';
 import { checkFetchAddrOptionsNeed, parseValue } from './utils';
+import { CopyOutlined } from '@ant-design/icons';
+import { copyText } from '@lm_fe/utils';
 
 
 
 
 
 
-export default function MyAddressNew_Inner(props: IMyAddressProps) {
+export default function MyAddressNew(props: IMyAddressProps) {
   const {
     id, value, form, disabled, onChange,
 
@@ -156,62 +155,61 @@ export default function MyAddressNew_Inner(props: IMyAddressProps) {
   };
   function copy() {
     copyText(txt ?? '')
-    mchcEnv.success('复制成功')
+    message.success('复制成功')
   }
   if (loading) {
     return <span>数据加载中....</span>
   }
 
   const txt = value?.replace?.(/,|&/g, '')
-  const node = <Space.Compact style={{ display: 'flex' }}>
-    {/* <Space.Compact style={{ flex: 1 }}> */}
-    <Cascader
-      changeOnSelect
-      allowClear
-      size={size}
-      bordered={bordered}
-      disabled={disabled}
-      options={cascaderOptions}
-      onChange={handlePcasvChange}
-      loadData={(arr) => {
-        if (arr) {
-          const item = arr[arr.length - 1] as unknown as IMchc_AddressItemType
-          if (item && isEmpty(item.children)) {
-            item.loading = true
-            SMchc_Address.getAddressList(item)
-              .then(async r => {
-                // await sleep(.2 * 1000)
-                item.loading = false
-                item.children = r
-                __setCascaderOptions([...cascaderOptions])
-              })
+  const node = <Input.Group compact style={{ display: 'flex' }}>
+    <Input.Group style={{ flex: 1 }}>
+      <Cascader
+        changeOnSelect
+        allowClear
+        size={size}
+        bordered={bordered}
+        disabled={disabled}
+        options={cascaderOptions}
+        onChange={handlePcasvChange}
+        loadData={(arr) => {
+          if (arr) {
+            const item = arr[arr.length - 1] as unknown as IMchc_AddressItemType
+            if (item && isEmpty(item.children)) {
+              item.loading = true
+              SMchc_Address.getAddressList(item)
+                .then(async r => {
+                  // await sleep(.2)
+                  item.loading = false
+                  item.children = r
+                  __setCascaderOptions([...cascaderOptions])
+                })
+            }
           }
-        }
 
-      }}
-      // showSearch={{ filter }}
-      placeholder="请选择地区"
-      value={cascaderValue}
-      style={{ width: '50%' }}
-      getPopupContainer={getPopupContainer}
-    />
-    <Input
-      // title={txt}
-      size={size}
-      disabled={disabled}
-      bordered={bordered}
-      placeholder="请输入详细地址，如门牌号、小区、楼栋号、单元室"
-      onChange={handleDetails}
-      allowClear
-      value={detail}
-      style={{ width: '50%' }}
-    />
-    {/* </Space.Compact> */}
+        }}
+        // showSearch={{ filter }}
+        placeholder="请选择地区"
+        value={cascaderValue}
+        style={{ width: '50%' }}
+        getPopupContainer={getPopupContainer}
+      />
+      <Input
+        // title={txt}
+        size={size}
+        disabled={disabled}
+        bordered={bordered}
+        placeholder="请输入详细地址，如门牌号、小区、楼栋号、单元室"
+        onChange={handleDetails}
+        allowClear
+        value={detail}
+        style={{ width: '50%' }}
+      />
+    </Input.Group>
 
     {
       addressBtns.map(({ label, name, props = {} }) => {
         return <Button
-          key={name}
           ghost
           type="primary"
           {...props}
@@ -222,7 +220,7 @@ export default function MyAddressNew_Inner(props: IMyAddressProps) {
       })
     }
 
-  </Space.Compact>
+  </Input.Group>
   return (
     <Tooltip
       id={id}
@@ -230,7 +228,7 @@ export default function MyAddressNew_Inner(props: IMyAddressProps) {
       title={
         <div>
           <span>{txt} </span>
-          <Button size='small' onClick={copy} type='primary' icon={<MyIcon value='CopyOutlined' />} />
+          <span onClick={copy} style={{ cursor: 'pointer', outline: '2px solid #fff', wordBreak: 'keep-all' }}>点击复制</span>
         </ div>
       }
     >

@@ -4,7 +4,6 @@ import { message } from 'antd';
 import { BaseEditPanel, BaseEditPanelForm, BaseEditPanelIProps, formDescriptionsWithoutSectionApi } from '@lm_fe/components_m';
 import { SMchc_FormDescriptions } from '@lm_fe/service';
 import { fubaoRequest as request } from '@lm_fe/utils';
-import { mchcEnv } from '@lm_fe/env';
 interface IProps extends BaseEditPanelIProps {
   data?: any;
   type: 'wife' | 'husband';
@@ -14,7 +13,7 @@ export default class PhysicalExam extends BaseEditPanel<IProps> {
     baseUrl: '/api/premarital-visits', request,
     moduleName: 'wife-premarital-care-physical-examination',
     title: '体格检查',
-    Form: BaseEditPanelForm,
+    Form:BaseEditPanelForm,
   };
 
   async componentDidMount() {
@@ -51,10 +50,10 @@ export default class PhysicalExam extends BaseEditPanel<IProps> {
     if (type === 'wife' || type === 'husband') {
       if (get(params, 'id')) {
         await request.put(baseUrl, params);
-        mchcEnv.success(`修改${title}成功`);
+        message.success(`修改${title}成功`);
       } else {
         (await request.post(baseUrl, params)).data
-        mchcEnv.success(`新增${title}成功`);
+        message.success(`新增${title}成功`);
       }
     }
   };

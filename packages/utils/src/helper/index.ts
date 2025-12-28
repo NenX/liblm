@@ -13,5 +13,4 @@ export * from './happyParse'
 export * from './protocolCheck'
 export * from './temp_reander'
 
-export * from './date_calculator'
 

@@ -38,7 +38,7 @@ export default function ArticleModal({ sureRead, articleData, onCancle, visible,
       className="article-modal-container"
       width={600}
       style={{ top: '50px' }}
-      open={visible}
+      visible={visible}
       footer={footer()}
       onCancel={handleCancle}
     >

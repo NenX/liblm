@@ -1,11 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
-import { EMPTY_PLACEHOLDER } from '@lm_fe/utils';
-import { Input, InputNumber, Tooltip } from 'antd';
-import classnames from 'classnames';
-import { get } from 'lodash';
 import React from 'react';
-import { TCommonComponent } from 'src/FU_components/types';
+import { Input, InputNumber, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { get } from 'lodash';
+import classnames from 'classnames';
 import styles from './index.module.less';
+import { AnyObject, EMPTY_PLACEHOLDER } from '@lm_fe/utils';
+import { TCommonComponent } from 'src/FU_components/types';
 interface ValueType {
   "id": 274,
   "height": null,
@@ -95,7 +95,7 @@ const PressureInput: TCommonComponent<IProps, Partial<ValueType>> = function Pre
         onChange={handleChange(pressure_key2)}
       />
       <Tooltip className={styles["pressure-input_tip"]} title={`收缩压的正常范围值是90~130mmHg，舒张压的正常范围值是60~90mmHg`}>
-        <MyIcon value='QuestionCircleOutlined' />
+        <QuestionCircleOutlined />
       </Tooltip>
     </Input.Group>
   );

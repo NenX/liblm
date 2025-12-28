@@ -1,11 +1,11 @@
-import { MyIcon } from '@lm_fe/components';
-import { Tabs } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import { cloneDeep, get, keys, map, set } from 'lodash';
 import React, { Component } from 'react';
-import { getTreatmentProgramDict } from '../utils';
 import ProgramForm from './components/index';
+import { Tabs } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { map, get, set, keys, cloneDeep } from 'lodash';
+import { FormInstance } from 'antd/lib/form';
 import { toApi, valueToApi } from './config/adapter';
+import { getTreatmentProgramDict } from '../utils';
 const TITLE = '治疗项目';
 export default class NursingFetus extends Component {
   state = {
@@ -129,7 +129,7 @@ export default class NursingFetus extends Component {
         onChange={this.onChange}
         addIcon={
           <div>
-            <MyIcon value='PlusOutlined' />
+            <PlusOutlined />
             添加{TITLE}
           </div>
         }

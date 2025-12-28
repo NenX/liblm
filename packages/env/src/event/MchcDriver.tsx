@@ -1,7 +1,7 @@
 import { BaseWsService } from "@lm_fe/utils";
 import { message } from "antd";
 import { get, isObject, isString } from "lodash";
-import { mchcEnv } from "../env";
+import { mchcEnv } from "src/env";
 import { TDirver_Event, check_is_readcard, parse_readcard_data } from "./types/mchc_driver";
 export * from './types/mchc_driver'
 

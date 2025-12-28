@@ -17,8 +17,11 @@ export default function Archive(props: any) {
     })
     return <Wrap>
         <MyBaseList
-            bf_conf={config}
-
+            showAdd={!!config?.showAdd}
+            showAction={!!config?.showAction}
+            name={config?.name}
+            tableColumns={__DEV__ ? () => import('./table_config') : config?.tableColumns}
+            searchConfig={config?.searchConfig}
             RenderBtns={ctx => {
                 return <OkButton
                     onClick={async e => {

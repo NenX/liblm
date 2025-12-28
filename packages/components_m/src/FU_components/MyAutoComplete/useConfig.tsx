@@ -10,7 +10,7 @@ const defaultOptions: ICommonOption[] = []
 export function useConfig_MyAutoComplete(props: MyAutoCompleteProps) {
 
     const {
-        uniqueKey,
+        optionKey,
         options = defaultOptions,
         searchKey,
         value,
@@ -36,7 +36,7 @@ export function useConfig_MyAutoComplete(props: MyAutoCompleteProps) {
         init()
 
         return () => { }
-    }, [uniqueKey, options, searchKey])
+    }, [optionKey, options, searchKey])
     useEffect(() => {
         // if (!init_value && value) {
         //     setInit_value(value)
@@ -53,7 +53,7 @@ export function useConfig_MyAutoComplete(props: MyAutoCompleteProps) {
 
     function init() {
 
-        const preOptions = uniqueKey ? getPresetOptions(uniqueKey as any) : null
+        const preOptions = optionKey ? getPresetOptions(optionKey as any) : null
         const searchValue = searchKey ? getSearchParamsValue(searchKey) : null
 
         const _options = preOptions ?? (typeof options === 'string' ? getSameOptions(options) : options.map(o => typeof o === 'string' ? { value: o, label: o } : o))

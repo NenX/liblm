@@ -1,4 +1,3 @@
-import { merge_preset_options } from '@lm_fe/utils';
 import { mchcEnv } from '../env';
 import { checkbox_options } from './checkbox_options';
 import { 国家, 国家s } from './country';
@@ -684,7 +683,32 @@ const amyExamGestation = () => [
 ];
 
 
-
+// const 胎方位22: () => ICommonOption[] = () => [
+//     { "label": "未定", "value": 0, },
+//     { "label": "左枕前(LOA)", "value": 1, },
+//     { "label": "左枕横(LOT)", "value": 2, },
+//     { "label": "左枕后(LOP)", "value": 3, },
+//     { "label": "右枕前(ROA)", "value": 4, },
+//     { "label": "右枕横(ROT)", "value": 5, },
+//     { "label": "右枕后(ROP)", "value": 6, },
+//     { "label": "左骶前(LSA)", "value": 7, },
+//     { "label": "左骶横(LST)", "value": 8, },
+//     { "label": "左骶后(LSP)", "value": 9, },
+//     { "label": "右骶前(RSA)", "value": 10, },
+//     { "label": "右骶横(RST)", "value": 11, },
+//     { "label": "右骶后(RSP)", "value": 12, },
+//     { "label": "左颏前(LMA)", "value": 13, },
+//     { "label": "左颏横(LMT)", "value": 14, },
+//     { "label": "左颏后(LMP)", "value": 15, },
+//     { "label": "右颏前(RMA)", "value": 16, },
+//     { "label": "右颏横(RMT)", "value": 17, },
+//     { "label": "右颏后(RMP)", "value": 18, },
+//     { "label": "左肩前(LScA)", "value": 19, },
+//     { "label": "左肩后(LScP)", "value": 20, },
+//     { "label": "右肩前(RScA)", "value": 21, },
+//     { "label": "右肩后(RScP)", "value": 22, },
+//     { "label": "正枕后(OP)", "value": 23, },
+// ]
 const [胎方位22, 胎方位22s] = getDualModeOptions(() =>
   `未定,左枕前(LOA),左枕横(LOT),左枕后(LOP),右枕前(ROA),右枕横(ROT),右枕后(ROP),左骶前(LSA),左骶横(LST),左骶后(LSP),右骶前(RSA),右骶横(RST),右骶后(RSP),左颏前(LMA),左颏横(LMT),左颏后(LMP),右颏前(RMA),右颏横(RMT),右颏后(RMP),左肩前(LScA),左肩后(LScP),右肩前(RScA),右肩后(RScP),正枕后(OP)`,
   { start: 0 }
@@ -777,31 +801,6 @@ export const AddresstypeMapping = () => [
 
 export const pre_option_map = {
   ...checkbox_options,
-
-  // add
-  乳房情况,
-  出量,
-  入量,
-  颜色,
-  膝反射,
-  面色,
-  反应,
-  哭声,
-  吸吮力,
-  脐带,
-  臀部,
-  大便,
-  小便,
-  喂养,
-  头颈,
-  腹部,
-  生殖器,
-  四肢,
-  意识,
-  宫缩,
-  先露高低,
-  //add 
-
   abo血型: aboMapping,
   rh血型: rhTypeMapping,
   乳房情况s,
@@ -958,7 +957,7 @@ export const selectOptionMap: { [x: string]: () => ICommonOption[] } = {
   hbsagMapping: 阴阳,
   amyExamGestation,
 };
-merge_preset_options(selectOptionMap)
+
 
 export function merge_preset_options_inner(ops: Partial<typeof pre_option_map>) {
   Object.assign(selectOptionMap, ops)

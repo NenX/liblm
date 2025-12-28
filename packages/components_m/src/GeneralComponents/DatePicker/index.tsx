@@ -1,6 +1,6 @@
 import { FC, lazy } from 'react';
 import { DisplayFC } from './Display';
-export { ICusDatePickerProps } from './utils';
+export { ICusDatePickerProps, UNKNOWN_TIME_SYMBOL } from './utils';
 const _MyDatePicker = lazy(() => import('./Inner'))
 type TMyDatePicker = typeof _MyDatePicker & { DisplayFC: FC<any> }
 

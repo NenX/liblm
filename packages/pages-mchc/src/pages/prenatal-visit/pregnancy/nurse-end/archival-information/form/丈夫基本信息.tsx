@@ -1,7 +1,6 @@
 import { mchcEnv } from "@lm_fe/env";
 import { IMchc_FormDescriptions_Field_Nullable } from "@lm_fe/service";
 import { marry_deps } from "./common";
-import { not_yes_input } from "@lm_fe/pages";
 
 
 
@@ -19,8 +18,7 @@ export const 丈夫基本信息_config = () => {
             },
 
             layout: '1/3',
-        },
-        {
+        }, {
             "key": "partnerInfo.partnerTelephone",
             "label": "手机号码",
             "inputType": "input",
@@ -30,8 +28,7 @@ export const 丈夫基本信息_config = () => {
             },
 
             layout: '1/3',
-        },
-        {
+        }, {
             "key": "partnerInfo.partnerPatientNO",
             "label": "就诊卡号",
             "inputType": "input",
@@ -129,53 +126,34 @@ export const 丈夫基本信息_config = () => {
             isActive: mchcEnv.is('广三'),
             layout: '1/3',
         },
-        not_yes_input('partnerInfo.smoke', '吸烟', {},
-            {
-                inputProps: {
-                    addonAfter: '支/天'
-                }
-            }
-        ),
-        not_yes_input('partnerInfo.alcohol', '饮酒', {},
-            {
-                inputProps: {
-                    addonAfter: 'ml'
-                }
-            }
-        ),
-        not_yes_input('partnerInfo.disease', '疾病史',),
-
-        // {
-        //     "key": "partnerInfo.smoke__",
-        //     "label": "吸烟",
-        //     "inputType": "MyCheckbox",
-
-        //     "inputProps": { marshal: 1, options: [{ value: false, label: '无' }, { value: true, label: '有', warning: true, inputType: 'Input', sufix: '支/天' }] },
-        //     layout: '1/3',
-        // },
-        // {
-        //     "key": "partnerInfo.alcohol__",
-        //     "label": "饮酒",
-        //     "inputType": "MyCheckbox",
-        //     "inputProps": { marshal: 1, options: [{ value: false, label: '无' }, { value: true, label: '有', warning: true, inputType: 'Input', sufix: 'ml' }] },
-
-        //     layout: '1/3',
-        // },
-        // {
-        //     "key": "partnerInfo.disease__",
-        //     "label": "疾病史",
-        //     "inputType": "MyCheckbox",
-        //     "inputProps": {
-        //         marshal: 1,
-        //         options: [
-        //             { value: false, label: '无' },
-        //             { value: true, label: '有', warning: true, inputType: 'Input', }
-        //         ]
-        //     },
-
-        //     layout: '1/3',
-        // },
         {
+            "key": "partnerInfo.smoke__",
+            "label": "吸烟",
+            "inputType": "MyCheckbox",
+
+            "inputProps": { marshal: 1, options: [{ value: false, label: '无' }, { value: true, label: '有', warning: true, inputType: 'Input', sufix: '支/天' }] },
+            layout: '1/3',
+        }, {
+            "key": "partnerInfo.alcohol__",
+            "label": "饮酒",
+            "inputType": "MyCheckbox",
+            "inputProps": { marshal: 1, options: [{ value: false, label: '无' }, { value: true, label: '有', warning: true, inputType: 'Input', sufix: 'ml' }] },
+
+            layout: '1/3',
+        }, {
+            "key": "partnerInfo.disease__",
+            "label": "疾病史",
+            "inputType": "MyCheckbox",
+            "inputProps": {
+                marshal: 1,
+                options: [
+                    { value: false, label: '无' },
+                    { value: true, label: '有', warning: true, inputType: 'Input', }
+                ]
+            },
+
+            layout: '1/3',
+        }, {
             "key": "partnerInfo.partnerPermanentResidenceAddress",
             "label": "男方身份证地址",
             "inputType": "MyAddress",

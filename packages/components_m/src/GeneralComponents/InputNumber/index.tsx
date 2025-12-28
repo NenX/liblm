@@ -1,12 +1,10 @@
 import { Checkbox, InputNumber, Input, InputNumberProps, InputProps } from 'antd';
+import './index.less';
 import React from 'react';
-import { getInputStyle } from '@lm_fe/components';
-
-
+import { getInputStyle } from '../../utils';
 // .ant-input-affix-wrapper-borderless
 const UNKNOWN_NUMBER_SYMBOL = 2147483647
-type IProps = InputNumberProps
-function MyInputNumber(props: Omit<IProps, 'onChange'> & { unknown?: boolean, warn?: boolean, onChange?: (v: any) => void }) {
+function MyInputNumber(props: Omit<InputProps, 'onChange'> & { unknown?: boolean, warn?: boolean, onChange?: (v: any) => void }) {
   const { unknown, value, onChange, placeholder, warn, disabled, ...others } = props
   const _style = getInputStyle(props)
   const isUnkown = !!unknown && value === UNKNOWN_NUMBER_SYMBOL
@@ -16,8 +14,8 @@ function MyInputNumber(props: Omit<IProps, 'onChange'> & { unknown?: boolean, wa
   if (warn) {
     _style.color = 'red';
   }
-  // const node = <Input disabled={disabled} {...others} placeholder={placeholder ?? '请输入数值'} allowClear style={_style} type='number' value={isUnkown ? undefined : value!} onChange={e => onChange?.(e.target.value)} />
-  const node = <InputNumber {...others} placeholder={placeholder ?? '请输入'} style={{ width: '100%', ..._style }} value={isUnkown ? undefined : value} onChange={onChange} />
+  const node = <Input disabled={disabled} {...others} placeholder={placeholder ?? '请输入数值'} style={_style} type='number' value={isUnkown ? undefined : value!} onChange={e => onChange?.(e.target.value)} />
+  // const node = <InputNumber {...others} placeholder={placeholder ?? '请输入数值'} style={_style} controls={false} value={isUnkown ? undefined : value} onChange={onChange} />
 
   return unknown ? <span style={{ display: 'flex', alignItems: 'center' }}>
     {node}
@@ -36,7 +34,7 @@ function MyInputNumber(props: Omit<IProps, 'onChange'> & { unknown?: boolean, wa
     </span>
   </span> : node
 }
-function DisplayFC(props: Omit<IProps, 'onChange'> & { unknown?: boolean, warn?: boolean, onChange?: (v: any) => void }) {
+function DisplayFC(props: Omit<InputProps, 'onChange'> & { unknown?: boolean, warn?: boolean, onChange?: (v: any) => void }) {
   const { unknown, value, onChange, placeholder, warn, disabled, ...others } = props
   const _style = getInputStyle(props)
   const isUnkown = !!unknown && value === UNKNOWN_NUMBER_SYMBOL

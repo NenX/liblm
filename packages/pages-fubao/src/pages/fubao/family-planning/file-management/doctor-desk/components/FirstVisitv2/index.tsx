@@ -227,12 +227,12 @@ export default function ZKBL(props: any) {
 
   return (
     <Row style={{ height: '100%' }}>
-      <Col style={{ height: '100%', width: 290, overflow: 'auto', backgroundColor: '#fff' }}>
+      <Col style={{ height: '100%', width: 290, overflow: 'scroll', backgroundColor: '#fff' }}>
         {renderSider()}
       </Col>
-      <Col style={{ height: '100%', width: 'calc(100% - 290px)', overflow: 'auto' }}>{renderContent()}</Col>
+      <Col style={{ height: '100%', width: 'calc(100% - 290px)', overflow: 'scroll' }}>{renderContent()}</Col>
       <Modal
-        open={visible}
+        visible={visible}
         onCancel={() => {
           set_visible(false)
         }}

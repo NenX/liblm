@@ -22,7 +22,7 @@ interface IProps {
 }
 function SurverList(props: IProps) {
   const { isShowListModal, isAllPregnancies, headerInfo, closeModal, furtherRefresh } = props;
-  const { forms } = useFormTabs(3)
+  const [forms] = useFormTabs(3)
   const [cloneData, set_cloneData] = useState({})
   const [surveyFormConfig, set_surveyFormConfig] = useState([])
   const [ultrasoundConfig, set_ultrasoundConfig] = useState([])
@@ -94,6 +94,8 @@ function SurverList(props: IProps) {
       }
 
 
+    } else {
+      closeModal();
     }
   };
 
@@ -130,13 +132,11 @@ function SurverList(props: IProps) {
       centered
       footer={isAllPregnancies ? null : buttons}
       title={null}
-      styles={{
-        body: { height: '86vh' }
-      }}
-      open={isShowListModal}
+      bodyStyle={{ height: '90vh' }}
+      visible={isShowListModal}
       onCancel={() => closeModal()}
     >
-      <Tabs destroyOnHidden size='small' activeKey={activeKey} onChange={handleTabChange.bind(this)}>
+      <Tabs size='small' activeKey={activeKey} onChange={handleTabChange.bind(this)}>
         <Tabs.TabPane className="survey-form label-width6" tab="检验检查" key="1">
 
           <DoctorEnd_检验检查_History form={forms[0]} pregnancyId={headerInfo?.id} />
@@ -152,7 +152,7 @@ function SurverList(props: IProps) {
         </Tabs.TabPane>
 
         <Tabs.TabPane className="check-items-wrapper" tab="孕期必查项目" key="3">
-          <GestationalWeekProjectTree pregnancyId={mchcUtils.single_id()} />
+          <GestationalWeekProjectTree pregnancyId={mchcUtils.getDoctorEndId()} />
         </Tabs.TabPane>
       </Tabs>
     </Modal>

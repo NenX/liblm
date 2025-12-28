@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/generator-lm",
-    "version": "0.2.5",
+    "version": "0.1.105",
     "description": "",
     "main": "generators/app/index.js",
     "scripts": {
@@ -26,5 +26,5 @@
     "devDependencies": {
         "rollup": "^2.70.2"
     },
-    "gitHead": "9e8eab8af4aa2675ed973be51fe85cf2e3c2ed27"
+    "gitHead": "4c4a114807f0704b2413001e7725cd5bbd66de1a"
 }

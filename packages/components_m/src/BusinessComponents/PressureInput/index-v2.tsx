@@ -1,6 +1,6 @@
-import { MyIcon } from '@lm_fe/components';
-import { Form, Input, InputNumber, Tooltip } from 'antd';
 import React from 'react';
+import { Input, InputNumber, Tooltip, Form } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
 // name --> adPhysicalExam.systolic+diastolic
 export default ({ name }: any) => {
@@ -39,7 +39,7 @@ export default ({ name }: any) => {
       </Form.Item>
 
       <Tooltip className={styles["pressure-input_tip"]} title={`收缩压的正常范围值是90~130mmHg，舒张压的正常范围值是60~90mmHg`}>
-        <MyIcon value='QuestionCircleOutlined' />
+        <QuestionCircleOutlined />
       </Tooltip>
     </Input.Group>
   );

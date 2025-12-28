@@ -4,7 +4,7 @@ import { getSearchParamsValue, fubaoRequest as request } from '@lm_fe/utils';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import form_config from './form_config';
-import { mchcLogger, mchcUtils } from '@lm_fe/env';
+import { mchcUtils } from '@lm_fe/env';
 import { Form } from 'antd';
 interface IProps {
   type: 'husband' | 'wife'
@@ -56,8 +56,6 @@ export default function MedicalHistory(props: IProps) {
     }
 
 
-    mchcLogger.log('setFieldsValue xx', form, data)
-    
     form.setFieldsValue(data)
     setdata(data)
   };

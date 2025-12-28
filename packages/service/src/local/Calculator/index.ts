@@ -23,7 +23,13 @@ export const SLocal_Calculator = {
         const { data } = await request.get<string>(`/api/pregnancyCalc-calcEddByLmp?lmp=${lmp}`);
         return formatDate(data) //2023-11-12
     },
+    // 根据IVF计算预产期B超
+    async calcEddBasedOnIVF(移植时间: string, 天数: number) {
+        const 孕0 = dayjs(移植时间).subtract(14 + 天数, 'days')
+        const 预产期B超时间 = 孕0.add(280, 'days')
 
+        return formatDate(预产期B超时间)
+    },
 
     // 末次月经开始算
     calGestationalWeekByLmp(lmp: Dayjs, defaultDate = dayjs().endOf('day')) {

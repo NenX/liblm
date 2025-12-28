@@ -1,13 +1,21 @@
-import { MyIcon, validate_form } from '@lm_fe/components';
-import { mchcEvent } from '@lm_fe/env';
-import { Button, Form, Modal, Space } from 'antd';
+import {
+  PrinterOutlined,
+  RedoOutlined,
+  SaveOutlined,
+  SolutionOutlined,
+} from '@ant-design/icons';
+import { mchcEvent, mchcLogger } from '@lm_fe/env';
+import { Button, Form, Modal, Space, message } from 'antd';
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import { FormInstance } from 'antd/lib/form';
-import { debounce, get, isFunction } from 'lodash';
+import classnames from 'classnames';
+import { debounce, get, isFunction, map } from 'lodash';
 import React from 'react';
-import { MyFormSection } from 'src/FU_components/FormSection';
 import DynamicForm from '../BaseModalForm/DynamicForm';
+import { mchcModal } from '../modals';
 import styles from './less/base-edit-panel-form.module.less';
+import { MyFormSection } from 'src/FU_components/FormSection';
+import { LazyAntd } from '@lm_fe/components';
 
 
 export const formItemLayout = {
@@ -84,15 +92,21 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
   handleFinish = async () => {
     const form = this.form as unknown as FormInstance;
     const { onFinish, data } = this.props;
-    const values = await validate_form(form)
-    if (values) {
-      const params = {
-        ...values,
-        id: get(data, 'id'),
-      };
-      onFinish && onFinish(params);
-    }
-
+    form &&
+      form
+        .validateFields()
+        .then(() => {
+          const params = {
+            ...form.getFieldsValue(),
+            id: get(data, 'id'),
+          };
+          onFinish && onFinish(params);
+        })
+        .catch((error) => {
+          console.log('error', error)
+          message.error(get(error, 'errorFields.0.errors.0'));
+          form.scrollToField(get(error, 'errorFields.0.name.0'));
+        });
   };
 
   handleFill = () => ({});
@@ -176,7 +190,7 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
 
   renderResetBtn = () => {
     return (
-      <Button hidden={!this.props.showReset} size="large" htmlType="reset" icon={<MyIcon value='RedoOutlined' />} onClick={this.handleReset}>
+      <Button hidden={!this.props.showReset} size="large" htmlType="reset" icon={<RedoOutlined />} onClick={this.handleReset}>
         重置
       </Button>
     );
@@ -187,7 +201,7 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
       <Button
         size="large"
         type="primary"
-        icon={<MyIcon value='SaveOutlined' />}
+        icon={<SaveOutlined />}
         htmlType="submit"
         disabled={this.props.disabledSubmit}
         onClick={debounce(this.handleFinish)}
@@ -205,11 +219,11 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
       <Button
         type="primary"
         size="large"
-        icon={<MyIcon value='PrinterOutlined' />}
+        icon={<PrinterOutlined />}
         disabled={!printId}
         onClick={() => {
 
-          window.mchc_modal.open('print_modal', {
+          mchcModal.open('print_modal', {
             modal_data: {
               requestData: {
                 url: printUrl,
@@ -252,7 +266,7 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
       <Button
         type="primary"
         htmlType="button"
-        icon={<MyIcon value='SolutionOutlined' />}
+        icon={<SolutionOutlined />}
         onClick={() => {
           this.setState({
             importModalVisible: true,
@@ -272,7 +286,7 @@ export default class BaseEditPanelForm extends DynamicForm<IProps, IState> {
       <Modal
         title="导入信息"
         width="680"
-        open={importModalVisible}
+        visible={importModalVisible}
         onOk={this.handleOk}
         onCancel={this.handleCancel}
       >

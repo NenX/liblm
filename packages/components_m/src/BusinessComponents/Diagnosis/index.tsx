@@ -1,6 +1,6 @@
-import { MyIcon } from '@lm_fe/components';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row } from 'antd';
-import { filter, get, isArray, isEmpty, isNil, map, size, slice } from 'lodash';
+import { filter, get, isEmpty, isNil, map, isArray, size, slice } from 'lodash';
 import React, { Component } from 'react';
 import DiagnosisAutoComplete from '../../selects/DiagnosisAutoComplete';
 import { TemplateModal } from '../TemplateTextarea/TemplateModal';
@@ -142,8 +142,8 @@ export default class Diagnosis extends Component {
                 <Input value={get(item, 'note')} onChange={this.handleNoteChange(item)} placeholder="请输入备注" />
               </Col>
               <Col span={2} className={styles["diagnosis-container__actions"]}>
-                <MyIcon value='PlusCircleOutlined' onClick={this.handleAdd} />
-                {index !== 0 && <MyIcon value='DeleteOutlined' onClick={this.handleDelete(item)} />}
+                <PlusCircleOutlined onClick={this.handleAdd} />
+                {index !== 0 && <DeleteOutlined onClick={this.handleDelete(item)} />}
               </Col>
             </Row>
           );

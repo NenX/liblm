@@ -1,6 +1,6 @@
-import { MonthPicker_L, pack_components, Select_L, TimePicker_L } from '@lm_fe/components';
+import { LazyAntd, MonthPicker_L, pack_components, TimePicker_L } from '@lm_fe/components';
 import { mchcLogger } from '@lm_fe/env';
-import { AutoComplete, Radio } from 'antd';
+import { AutoComplete, Checkbox, Radio } from 'antd';
 import { get } from 'lodash';
 import React, { useCallback } from 'react';
 import { TakeInVolumn } from 'src/FU_components/TakeInVolumn';
@@ -13,13 +13,16 @@ import { CheckboxWithInput_lm as CheckboxWithInput } from '../ConfigComponents/C
 import DictionarySelectInTable from '../ConfigComponents/DictionarySelectInTable';
 import MultipleInputWithLabel from '../ConfigComponents/MultipleInputWithLabel';
 import PureCheckbox from '../ConfigComponents/PureCheckbox';
-import { ArrayPanel, CheckboxWithValue, FormTabs, HourMinuteInput, MyEditTable, TemplateTextarea } from '../FU_components';
+import { ArrayInput, CheckboxWithValue, FormTabs, HourMinuteInput, MyAutoComplete, MyEditTable, TemplateTextarea } from '../FU_components';
+import ArrayPanel from '../FU_components/ArrayPanel/Inner';
 import { DateTimeInput } from '../FU_components/DateTimeInput';
-// import { MySelect } from '../FU_components/MySelect';
+import { MySelect } from '../FU_components/MySelect';
 import { MyPressure } from '../FU_components/PressureInput';
+import MyCheckbox from '../GeneralComponents/CheckboxWithInput_gold';
 import CustomTreeSelect from '../GeneralComponents/CustomTreeSelect';
-// import DatePicker from '../GeneralComponents/DatePicker';
+import DatePicker from '../GeneralComponents/DatePicker';
 import DictionarySelect from '../GeneralComponents/DictionarySelect';
+import MyInputNumber from '../GeneralComponents/InputNumber';
 import GeneralComponents_InputWithLabel from '../GeneralComponents/InputWithLabel';
 import InputWithRange from '../GeneralComponents/InputWithRange';
 import MyTreeSelect from '../MyForm/components/MyTreeSelect';
@@ -30,13 +33,15 @@ import SelectTagWithOptions from '../selects/SelectTagWithOptions';
 import SelectWithNo from '../selects/SelectWithNo';
 import SelectWithOptionsFromApi from '../selects/SelectWithOptionsFromApi';
 import SelectWithOptionsOrInput from '../selects/SelectWithOptionsOrInput';
+const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
 
 const Radio_Group = Radio.Group
 export const componentMap = {
+  ...pack_components,
   FormTabs,
   'text_area': TemplateTextarea,
   TextArea: TemplateTextarea,
-  // InputNumber: MyInputNumber,
+  InputNumber: MyInputNumber,
   TakeInVolumn,
   DateTimeInput,
   TakeOutVolumn,
@@ -44,29 +49,29 @@ export const componentMap = {
   'input_with_label': GeneralComponents_InputWithLabel,
   'input_with_range': InputWithRange,
   'month_picker': MonthPicker_L,
-  // 'single_date_picker': DatePicker,
-  // DatePicker,
-  // MyDatePicker: DatePicker,
+  'single_date_picker': DatePicker,
+  DatePicker,
+  MyDatePicker: DatePicker,
   'single_time_picker': TimePicker_L,
   'date_picker_auto_accept': TimePickerAutoaccept,
-  // 'checkbox': Checkbox,
+  'checkbox': Checkbox,
   'CheckboxWithValue': CheckboxWithValue,
-  // MyCheckbox,
-  // MC: MyCheckbox,
+  MyCheckbox,
+  MC: MyCheckbox,
   'dictionary_select': DictionarySelect,
   'pure_checkbox': PureCheckbox,
   'dictionary_select_in_table': DictionarySelectInTable,
   'radio_group': Radio_Group,
-  // 'select': SelectTagWithOptions,
+  'select': SelectTagWithOptions,
   'select_tag_with_options': SelectTagWithOptions,
   'normal_select': NormalSelect,
   'tree_select': MyTreeSelect,
   'tree_select_v2': CustomTreeSelect,
-  // 'input_number': MyInputNumber,
+  'input_number': MyInputNumber,
   'select_with_no': SelectWithNo,
-  'select_with_options': Select_L,
-  // 'MA': MyAutoComplete,
-  // 'MyAutoComplete': MyAutoComplete,
+  'select_with_options': Select,
+  'MA': MyAutoComplete,
+  'MyAutoComplete': MyAutoComplete,
   'select_with_options_or_input': SelectWithOptionsOrInput,
   'data_select_with_options_or_input': DataSelectWithOptionsOrInput,
   'select_with_options_from_api': SelectWithOptionsFromApi,
@@ -80,14 +85,12 @@ export const componentMap = {
   TemplateTextarea,
   MyTemplateTextarea: TemplateTextarea,
   'multiple_input_with_label': MultipleInputWithLabel,
-  // MySelect,
-  // Select: MySelect,
-  // MS: MySelect,
-  // ArrayInput,
+  MySelect,
+  Select: MySelect,
+  MS: MySelect,
+  ArrayInput,
   ArrayPanel,
-  MyEditTable,
-  ...pack_components,
-
+  MyEditTable
 
 }
 

@@ -69,7 +69,7 @@ export default function Test(props: IProps) {
 
         style={{
             padding: 12,
-            overflowY: 'auto',
+            overflowY: 'scroll',
             background: '#fff'
         }}
     >

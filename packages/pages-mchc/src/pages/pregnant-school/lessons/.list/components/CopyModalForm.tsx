@@ -7,7 +7,6 @@ import React from 'react';
 import { fromApi, toApi } from '../config/adapter';
 import { modalFormDescriptions as formDescriptions } from '../config/form';
 import './modalForm.less';
-import { mchcEnv } from '@lm_fe/env';
 
 export default class BaseModalForm extends DynamicForm<any, any> {
   static defaultProps = {
@@ -152,20 +151,20 @@ export default class BaseModalForm extends DynamicForm<any, any> {
         tip = `添加成功`;
         delete values['id'];
         if (get(values, 'datetime.date') == '' || get(values, 'datetime.time') == null) {
-          mchcEnv.error('开课日期是必填项');
+          message.error('开课日期是必填项');
           return;
         }
         await request[method](`${this.props.url}`, {
           ...values,
           ...fixedFormParams,
         });
-        mchcEnv.success(tip);
+        message.success(tip);
         onCancel();
         onSearch();
       })
       .catch((error: any) => {
         const errors = get(error, 'errorFields.0.errors.0');
-        mchcEnv.error(errors);
+        message.error(errors);
       });
   }
 
@@ -213,7 +212,7 @@ export default class BaseModalForm extends DynamicForm<any, any> {
       <Modal
         centered
         {...modalProps}
-        open={visible}
+        visible={visible}
         onCancel={onCancel}
         onOk={this.handleSubmit}
         title={`添加${title}`}

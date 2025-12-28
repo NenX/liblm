@@ -78,9 +78,14 @@ async function updateDiagnosisOutpatient(data: any) {
 }
 
 /**一次获得全部首检信息 */
-const allFirstVisitInfo = SMchc_Doctor.getFirstVisitInfoOfOutpatient;
-const updateAllfirstVisitInfo = SMchc_Doctor.updateFirstVisitInfoOfOutpatient;
-
+async function allFirstVisitInfo(id: string) {
+  const res = await request.get('/api/doctor/getFirstVisitInfoOfOutpatient?id=' + id);
+  return res.data
+}
+async function updateAllfirstVisitInfo(data: any) {
+  const res = await request.put('/api/doctor/updateFirstVisitInfoOfOutpatient', data);
+  return res.data
+}
 
 /**每一个tab对应的请求方法 */
 export const getTabMethods = {

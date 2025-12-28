@@ -25,7 +25,7 @@ export default function BreastCancerDataReport(prop: any) {
             { label: '分娩日期', name: 'labourDate', inputType: 'rangeDate' },
             { label: '就诊卡号', name: 'outpatientNO', inputType: 'Input' },
             { label: '姓名', name: 'name', inputType: 'Input' },
-            { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { uniqueKey: '上报状态' } },
+            { label: '上报状态', name: 'uploadState', inputType: 'MS', inputProps: { optionKey: '上报状态' } },
         ]}
         showAction={false}
         showAdd={false}
@@ -136,7 +136,7 @@ export default function BreastCancerDataReport(prop: any) {
                         width: 100,
                         inputType: 'MS',
                         inputProps: {
-                            uniqueKey: '分娩方式'
+                            optionKey: '分娩方式'
                         },
                     },
                     {
@@ -151,7 +151,7 @@ export default function BreastCancerDataReport(prop: any) {
                     },
                 ],
             },
-            { title: '上报状态', dataIndex: 'uploadState', inputType: 'MS', inputProps: { uniqueKey: '上报状态', marshal: 0 } },
+            { title: '上报状态', dataIndex: 'uploadState', inputType: 'MS', inputProps: { optionKey: '上报状态', marshal: 0 } },
             // { title: '手册编号', dataIndex: 'ycfbsh', },
 
             { title: '上报说明', dataIndex: 'uploadMsg', },

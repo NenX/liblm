@@ -10,7 +10,7 @@ interface MyButtonProps {
   onClick: Function;
   disabled?:boolean
 }
-export default function NMyButton(props: MyButtonProps) {
+export default function MyButton(props: MyButtonProps) {
   const [words, setWords] = useState('全部正常');
   const handleClick = (item: string) => {
     props.onClick(item);

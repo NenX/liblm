@@ -1,7 +1,7 @@
 
 
 import { formatDate, formatDateTimeNoSecond } from '@lm_fe/utils';
-import { UNKNOWN_TIME_SYMBOL } from '@lm_fe/components'
+import { PickerDateProps } from 'antd/es/date-picker/generatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 export const defaultGetPopupContainer = () => document.body
 
@@ -15,6 +15,7 @@ export function areEqual(prevProps: any, nextProps: any) {
     return true
 
 }
+export const UNKNOWN_TIME_SYMBOL = '1970-01-01 00:00:00'
 export type ICusDatePickerProps = {
     time_only?: boolean,
     value?: any

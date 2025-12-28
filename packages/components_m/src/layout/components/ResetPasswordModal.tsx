@@ -71,7 +71,7 @@ export default class ResetPasswordModal extends DynamicForm<IProps> {
   render() {
     const { visible, onCancel } = this.props;
     return (
-      <Modal width={400} open={visible} onCancel={onCancel} onOk={this.handleSubmit} title="修改密码">
+      <Modal width={400} visible={visible} onCancel={onCancel} onOk={this.handleSubmit} title="修改密码">
         <Form autoComplete="off" ref={this.formRef} {...formItemLayout}>
           {this.renderEditContent()}
         </Form>

@@ -5,9 +5,9 @@ name: Node.js Package
 
 on:
   workflow_dispatch: # 添加手动触发支持
-  push:
-    branches:
-      - legacy
+  # push:
+  #   branches:
+  #     - legacy
 
 
 jobs:

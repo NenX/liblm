@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/components",
-    "version": "0.1.204",
+    "version": "0.1.205",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -30,11 +30,11 @@
         "less": "^4.1.2"
     },
     "dependencies": {
-        "@lm_fe/env": "^0.1.204",
+        "@lm_fe/env": "^0.1.205",
         "@lm_fe/scripts": "0.1.201",
-        "@lm_fe/service": "^0.1.204",
+        "@lm_fe/service": "^0.1.205",
         "@lm_fe/static": "0.1.201",
-        "@lm_fe/utils": "^0.1.204",
+        "@lm_fe/utils": "^0.1.205",
         "@monaco-editor/react": "^4.5.1",
         "antd-img-crop": "*",
         "classnames": "*",

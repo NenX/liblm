@@ -34,9 +34,9 @@
     },
     "dependencies": {
         "@lm_fe/env": "^0.1.203",
-        "@lm_fe/scripts": "0.1.102",
+        "@lm_fe/scripts": "0.1.201",
         "@lm_fe/service": "^0.1.203",
-        "@lm_fe/static": "*",
+        "@lm_fe/static": "0.1.201",
         "@lm_fe/utils": "^0.1.203",
         "@monaco-editor/react": "^4.5.1",
         "antd-img-crop": "*",

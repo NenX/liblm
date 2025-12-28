@@ -34,9 +34,9 @@
         "@lm_fe/pages": "^0.1.203",
         "@lm_fe/pages-fubao": "^0.1.203",
         "@lm_fe/pages-mchc": "^0.1.203",
-        "@lm_fe/scripts": "0.1.102",
+        "@lm_fe/scripts": "0.1.201",
         "@lm_fe/service": "^0.1.203",
-        "@lm_fe/static": "*",
+        "@lm_fe/static": "0.1.201",
         "@lm_fe/utils": "^0.1.203"
     },
     "gitHead": "4b4f8e475bb35ea8c44bd441d239583e45e75981"

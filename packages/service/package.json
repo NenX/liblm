@@ -24,7 +24,7 @@
     "license": "MIT",
     "dependencies": {
         "@lm_fe/env": "^0.1.203",
-        "@lm_fe/static": "*",
+        "@lm_fe/static": "0.1.201",
         "@lm_fe/utils": "^0.1.203"
     },
     "devDependencies": {

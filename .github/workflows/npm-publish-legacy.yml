@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # 添加手动触发支持
   push:
     branches:
-      - release
+      - legacy
 
 
 jobs:

@@ -5,7 +5,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "rollup -c rollup.config.js",
-        "build:watch": "rm -f ./dist/index.d.ts && rollup -c rollup.config.js --watch",
+        "build:watch": "rollup -c rollup.config.js --watch",
         "clean": "rimraf dist",
         "gen-modals": "gen-routes --source=./src/modals/entries --target=./src/modals/meta.ts --underline",
         "prebuild:watch": "pnpm gen-modals",
@@ -24,9 +24,7 @@
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
         "acorn-jsx": "^5.3.2",
-        "less": "^4.1.2",
-        "rollup": "^2.70.2",
-        "rollup-plugin-postcss": "^4.0.2"
+        "less": "^4.1.2"
     },
     "dependencies": {
         "@lm_fe/components": "^0.1.203",

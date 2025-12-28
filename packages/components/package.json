@@ -27,10 +27,7 @@
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.16.7",
         "acorn-jsx": "^5.3.2",
-        "less": "^4.1.2",
-        "rollup": "^2.70.2",
-        "rollup-plugin-monaco-editor": "^0.2.1",
-        "rollup-plugin-postcss": "^4.0.2"
+        "less": "^4.1.2"
     },
     "dependencies": {
         "@lm_fe/env": "^0.1.203",

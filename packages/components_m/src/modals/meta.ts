@@ -5,9 +5,9 @@ import { FC, lazy, LazyExoticComponent, ComponentType } from 'react'; //
 export type TC = LazyExoticComponent<ComponentType> | FC
 
 export const routesData = {
-    "stupidtemplatemodal2":lazy(() => import("./entries/StupidTemplateModal2/index")),
     "modal_form":lazy(() => import("./entries/modal_form/index")),
     "print_modal":lazy(() => import("./entries/print_modal/index")),
+    "stupidtemplatemodal2":lazy(() => import("./entries/StupidTemplateModal2/index")),
     "template_modal3":lazy(() => import("./entries/template_modal3/index")),
     "test":lazy(() => import("./entries/test/index")),
     "text_search":lazy(() => import("./entries/text_search/index")),

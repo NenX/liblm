@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/utils",
-    "version": "0.1.203",
+    "version": "0.1.204",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

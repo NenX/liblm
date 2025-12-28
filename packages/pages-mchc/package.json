@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/pages-mchc",
-    "version": "0.1.203",
+    "version": "0.1.204",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -25,14 +25,14 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@lm_fe/components": "^0.1.203",
-        "@lm_fe/components_m": "^0.1.203",
-        "@lm_fe/env": "^0.1.203",
-        "@lm_fe/pages": "^0.1.203",
+        "@lm_fe/components": "^0.1.204",
+        "@lm_fe/components_m": "^0.1.204",
+        "@lm_fe/env": "^0.1.204",
+        "@lm_fe/pages": "^0.1.204",
         "@lm_fe/scripts": "0.1.201",
-        "@lm_fe/service": "^0.1.203",
+        "@lm_fe/service": "^0.1.204",
         "@lm_fe/static": "0.1.201",
-        "@lm_fe/utils": "^0.1.203",
+        "@lm_fe/utils": "^0.1.204",
         "classnames": "*",
         "history": "^4.9.0",
         "qrcode.react": "^1.0.0",

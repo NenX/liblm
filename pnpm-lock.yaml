@@ -192,13 +192,13 @@ importers:
     packages/components:
         dependencies:
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -280,16 +280,16 @@ importers:
     packages/components_m:
         dependencies:
             '@lm_fe/components':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -341,28 +341,28 @@ importers:
     packages/core:
         dependencies:
             '@lm_fe/components':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components
             '@lm_fe/components_m':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components_m
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/pages':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages
             '@lm_fe/pages-fubao':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages-fubao
             '@lm_fe/pages-mchc':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages-mchc
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -425,19 +425,19 @@ importers:
     packages/pages:
         dependencies:
             '@lm_fe/components':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components
             '@lm_fe/components_m':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components_m
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -471,25 +471,25 @@ importers:
     packages/pages-fubao:
         dependencies:
             '@lm_fe/components':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components
             '@lm_fe/components_m':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components_m
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/pages':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages
             '@lm_fe/pages-mchc':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages-mchc
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -520,22 +520,22 @@ importers:
     packages/pages-mchc:
         dependencies:
             '@lm_fe/components':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components
             '@lm_fe/components_m':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../components_m
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/pages':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../pages
             '@lm_fe/scripts':
                 specifier: 0.1.201
                 version: 0.1.201
             '@lm_fe/service':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../service
             '@lm_fe/static':
                 specifier: 0.1.201
@@ -563,7 +563,7 @@ importers:
     packages/service:
         dependencies:
             '@lm_fe/env':
-                specifier: ^0.1.207
+                specifier: ^0.1.208
                 version: link:../env
             '@lm_fe/static':
                 specifier: 0.1.201

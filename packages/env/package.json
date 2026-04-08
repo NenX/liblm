@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/env",
-    "version": "0.1.207",
+    "version": "0.1.208",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/generator-lm",
-    "version": "0.1.206",
+    "version": "0.1.209",
     "description": "",
     "main": "generators/app/index.js",
     "scripts": {

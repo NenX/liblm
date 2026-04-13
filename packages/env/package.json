@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/env",
-    "version": "0.1.208",
+    "version": "0.1.209",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,7 +24,7 @@
     "license": "MIT",
     "dependencies": {
         "@lm_fe/static": "0.1.201",
-        "@lm_fe/utils": "^0.1.207"
+        "@lm_fe/utils": "^0.1.209"
     },
     "devDependencies": {
         "rollup": "^2.70.2"

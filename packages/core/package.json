@@ -34,7 +34,7 @@
         "@lm_fe/pages": "^0.1.209",
         "@lm_fe/pages-fubao": "^0.1.209",
         "@lm_fe/pages-mchc": "^0.1.209",
-        "@lm_fe/scripts": "0.1.201",
+        "@lm_fe/scripts": "latest",
         "@lm_fe/service": "^0.1.209",
         "@lm_fe/static": "0.1.201",
         "@lm_fe/utils": "^0.1.209"

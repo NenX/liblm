@@ -21,7 +21,7 @@
         "access": "public"
     },
     "devDependencies": {
-        "@noah-libjs/utils": "^0.0.7",
+        "@noah-libjs/utils": "latest",
         "rollup": "^2.70.2"
     },
     "dependencies": {

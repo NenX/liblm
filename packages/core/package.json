@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/core",
-    "version": "0.1.211",
+    "version": "0.1.212",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,8 +32,8 @@
         "@lm_fe/components_m": "^0.1.211",
         "@lm_fe/env": "^0.1.211",
         "@lm_fe/pages": "^0.1.211",
-        "@lm_fe/pages-fubao": "^0.1.211",
-        "@lm_fe/pages-mchc": "^0.1.211",
+        "@lm_fe/pages-fubao": "^0.1.212",
+        "@lm_fe/pages-mchc": "^0.1.212",
         "@lm_fe/scripts": "latest",
         "@lm_fe/service": "^0.1.211",
         "@lm_fe/static": "0.1.201",

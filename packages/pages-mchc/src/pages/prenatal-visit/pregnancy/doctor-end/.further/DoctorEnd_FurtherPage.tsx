@@ -13,7 +13,7 @@ import { filter_diagnoses } from '../.utils'
 import { HighRiskTableEntry } from '@lm_fe/pages';
 const getDoctorEndId = mchcUtils.getDoctorEndId
 export interface IDoctorEnd_FurtherProps {
-  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>) => React.ReactNode
+  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, refresh?: () => void) => React.ReactNode
   before_submit?: (submit: (values: any) => Promise<void>, data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, form?: FormInstance, sync?: Boolean) => Promise<void>
   refreshData?(): void
   setDiagnosesList(v: IMchc_Doctor_Diagnoses[]): void

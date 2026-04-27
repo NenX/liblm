@@ -337,6 +337,7 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
           isShowPreventPreeclampsia={isShowPreventPreeclampsia}
           formChange={formChange}
           canSave={canSave}
+          furtherRefresh={furtherRefresh}
         />
       </div>
     </div>

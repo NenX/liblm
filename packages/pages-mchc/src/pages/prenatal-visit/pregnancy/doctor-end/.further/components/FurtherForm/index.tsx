@@ -18,7 +18,7 @@ import styles from './index.module.less';
 import classNames from 'classnames';
 // 弹窗枚举
 interface IProps {
-  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>) => React.ReactNode
+  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, refresh?: () => Promise<void>) => React.ReactNode
   before_submit?: (submit: (values: any) => Promise<void>, data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, form?: FormInstance, sync?: Boolean) => Promise<void>
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo,
   visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient
@@ -33,6 +33,7 @@ interface IProps {
 
   getLastRecord(): void,
   getVisitsData(): Promise<void>,
+  furtherRefresh(): Promise<void>,
 
 
 
@@ -301,7 +302,7 @@ function FurtherForm(props: IProps) {
         {!isAllPregnancies && (
           <Space className={classNames(styles['return-btns'], mchcConfig.get('医生端_复诊按钮浮动') ? styles['fixed'] : null)}>
             {
-              addon_btns?.(formData)
+              addon_btns?.(formData, props.furtherRefresh)
             }
             <OkButton hidden={!mchcEnv.is('广州市八')} onClick={initial_preview}>首诊预览</OkButton>
             <OkButton hidden={!form_id} onClick={showpdf}>打印</OkButton>

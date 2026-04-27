@@ -21,8 +21,8 @@ pub enum Commands {
     /// 打包本地项目并压缩
     Build,
     Start,
-    /// 取颜色
-    PickColor,
+    // /// 取颜色
+    // PickColor,
     /// 更新本地 GitHub Host，加快访问速度
     FastGithub,
     /// 监听静态资源(并代理)，例如 serve-at dist -p http://192.168.124.53:3351/api
@@ -40,7 +40,7 @@ pub enum CommandsPlain {
     ServeAt,
     ProxyLocal,
     Help,
-    PickColor
+    // PickColor
 }
 impl CommandsPlain {
     pub fn to_vec() -> Vec<Self> {
@@ -52,7 +52,7 @@ impl CommandsPlain {
             CommandsPlain::ServeAt,
             CommandsPlain::ProxyLocal,
             CommandsPlain::Help,
-            CommandsPlain::PickColor,
+            // CommandsPlain::PickColor,
         ]
     }
 }
@@ -66,7 +66,7 @@ impl Display for CommandsPlain {
             CommandsPlain::ServeAt => write!(f, "serveat(监听静态资源)"),
             CommandsPlain::ProxyLocal => write!(f, "proxylocal(代理本地端口)"),
             CommandsPlain::Help => write!(f, "help(帮助)"),
-            CommandsPlain::PickColor =>  write!(f, "pickcolor(取颜色)"),
+            // CommandsPlain::PickColor =>  write!(f, "pickcolor(取颜色)"),
         }
     }
 }

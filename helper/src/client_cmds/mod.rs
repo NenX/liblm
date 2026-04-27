@@ -2,7 +2,7 @@ pub mod build;
 pub mod commands;
 pub mod fresh;
 pub mod install;
-pub mod pick_color;
+// pub mod pick_color;
 pub mod proxy_local;
 pub mod serve_at;
 pub mod start;
@@ -30,7 +30,7 @@ pub async fn client_serve_cmds() -> DynErr<()> {
             Commands::ServeAt(args) => serve_at(args).await,
             Commands::ProxyLocal(args) => proxy_local(args).await,
             Commands::Start => do_start().await?,
-            Commands::PickColor => pick_color::pick_color().unwrap(),
+            // Commands::PickColor => pick_color::pick_color().unwrap(),
         },
         Err(e) => {
             // let _ = e.print();
@@ -70,7 +70,7 @@ pub async fn client_serve_cmds() -> DynErr<()> {
                     }
                     CommandsPlain::ProxyLocal => {}
                     CommandsPlain::Help => e.print().expect("print error"),
-                    CommandsPlain::PickColor => pick_color::pick_color().unwrap(),
+                    // CommandsPlain::PickColor => pick_color::pick_color().unwrap(),
                 }
             }
         }

@@ -18,7 +18,7 @@ import styles from './index.module.less';
 import classNames from 'classnames';
 // 弹窗枚举
 interface IProps {
-  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, refresh?: () => Promise<void>) => React.ReactNode
+  addon_btns?: (data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, refresh?: () => void) => React.ReactNode
   before_submit?: (submit: (values: any) => Promise<void>, data?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>, form?: FormInstance, sync?: Boolean) => Promise<void>
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo,
   visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient
@@ -33,7 +33,7 @@ interface IProps {
 
   getLastRecord(): void,
   getVisitsData(): Promise<void>,
-  furtherRefresh(): Promise<void>,
+  furtherRefresh(): void
 
 
 

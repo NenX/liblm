@@ -21,7 +21,7 @@ import { api } from '../../../.api';
 import { IInitial_Tab_props } from '../../types';
 import { FormInstance } from 'antd/es/form/Form';
 interface IProps {
-  diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient) => React.ReactNode
+  diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, refresh?: () => void) => React.ReactNode
   diagnosis_before_submit?: (submit: (values: any) => Promise<void>, data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, form?: FormInstance, sync?: Boolean) => Promise<void>
   canSave: boolean
   noShowBtn: boolean
@@ -286,7 +286,7 @@ function Index(props: IProps & IInitial_Tab_props) {
         {!noShowBtn && (
           <Space className="prenatal-visit-main_initial-btns">
             {
-              diagnosis_addon_btns?.(visitData)
+              diagnosis_addon_btns?.(visitData, initData)
             }
             <Button size="large" onClick={() => handlePrint('prenatalVisit')} icon={<PrinterOutlined />}>
               打印档案

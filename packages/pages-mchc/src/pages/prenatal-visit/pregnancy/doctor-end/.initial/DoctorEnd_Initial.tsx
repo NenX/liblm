@@ -34,7 +34,7 @@ import requestMethods, { getTabMethods, updateTabMethods } from './methods/reque
 const getDoctorEndId = mchcUtils.getDoctorEndId
 const tabContents = [YCQ, YBBS, QTBS, YCS, TGJC, ZKJC, JYJC, ZDCL];
 export interface IDoctorEnd_InitialProps {
-  diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient) => React.ReactNode
+  diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, refresh?: () => void) => React.ReactNode
   diagnosis_before_submit?: (submit: (values: any) => Promise<void>, data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, form?: FormInstance, sync?: Boolean) => Promise<void>
 
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo

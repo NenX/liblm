@@ -353,10 +353,10 @@ importers:
                 specifier: ^0.1.211
                 version: link:../pages
             '@lm_fe/pages-fubao':
-                specifier: ^0.1.212
+                specifier: ^0.1.213
                 version: link:../pages-fubao
             '@lm_fe/pages-mchc':
-                specifier: ^0.1.212
+                specifier: ^0.1.213
                 version: link:../pages-mchc
             '@lm_fe/scripts':
                 specifier: latest
@@ -483,7 +483,7 @@ importers:
                 specifier: ^0.1.211
                 version: link:../pages
             '@lm_fe/pages-mchc':
-                specifier: ^0.1.212
+                specifier: ^0.1.213
                 version: link:../pages-mchc
             '@lm_fe/scripts':
                 specifier: latest

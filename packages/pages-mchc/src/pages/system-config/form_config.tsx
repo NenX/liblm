@@ -311,6 +311,13 @@ export default defineFormConfig(
                             layout: '1/3',
                         },
                         {
+                            label: '又一个预警提醒',
+                            name: '医生端_又一个预警提醒',
+                            inputType: 'MySwitch',
+                            inputProps: {},
+                            layout: '1/3',
+                        },
+                        {
                             label: '复诊编辑控制',
                             name: '医生端_复诊编辑控制',
                             inputType: 'MS',

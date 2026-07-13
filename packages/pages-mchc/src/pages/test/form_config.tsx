@@ -243,10 +243,11 @@ export default defineFormConfig([
   {
     label: '其他联动',
     children: [
+
       { title: '隐藏显示联动(联合)', inputType: 'title' },
       {
         label: '吃饭了吗',
-        layout: '1/2',
+        layout: '1/1',
         inputProps: { size: 'small' },
 
         inputType: 'straw',
@@ -255,7 +256,6 @@ export default defineFormConfig([
             name: 'show0',
             inputType: 'MC',
             inputProps: {
-              vertical: true,
               options: [{ value: 0, label: '还没' }, { value: 1, label: '拉了' },],
               marshal: 0,
             },
@@ -277,34 +277,7 @@ export default defineFormConfig([
           },
         ]
       },
-      {
-        label: '联动',
-        layout: '1/2',
 
-
-        inputType: 'straw',
-        children: [
-          {
-            name: 'show0',
-            inputType: 'MSW',
-            inputProps: {
-              checked_value: 1,
-              unchecked_value: 0,
-            },
-          },
-          {
-            name: 'show0Note',
-            inputType: 'MA',
-            inputProps: { placeholder: '请输入备注', width: 120 },
-            layout: '1/1',
-
-            showDeps: {
-              show0(v) { return v === 1 }
-            }
-
-          },
-        ]
-      },
       { title: '隐藏显示联动(普通)', inputType: 'title' },
       {
         name: 'show0',
@@ -481,6 +454,20 @@ export default defineFormConfig([
               type: 'multiple',
               options: [
                 { label: '无', value: '000', exclusive: true, },
+                { label: '选项1', value: 'aaa', },
+                { label: '选项2', value: 'bbb', },
+                { label: '选项3', value: 'ccc', },
+              ]
+            }
+          },
+          {
+            label: '自定义下拉宽度',
+            name: 'ms9',
+            layout: layout,
+            inputType: 'MS',
+            inputProps: {
+              popupMatchSelectWidth: 240,
+              options: [
                 { label: '选项1', value: 'aaa', },
                 { label: '选项2', value: 'bbb', },
                 { label: '选项3', value: 'ccc', },
@@ -1140,6 +1127,38 @@ export default defineFormConfig([
         inputProps: {
           status: 'error'
         }
+      },
+      { title: '自定义警告', inputType: 'title' },
+      {
+        label: '血压大于120报警',
+        layout: '1/1',
+
+
+        inputType: 'straw',
+        children: [
+          {
+            name: 'show9',
+            inputType: 'input_number',
+            inputProps: {
+              checked_value: 1,
+              unchecked_value: 0,
+            },
+          },
+          {
+            name: 'show9',
+            inputType: 'component',
+            inputProps: {
+              component(v) {
+                const is_big = v.value > 120
+                return ctx.ui.render_btn(is_big ? '大于120' : '小于120', () => { }, { danger: is_big })
+              }
+            },
+            layout: '1/1',
+
+
+
+          },
+        ]
       },
     ]
   },

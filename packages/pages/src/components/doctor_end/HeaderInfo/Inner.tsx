@@ -304,12 +304,18 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                                     </span>
                                 </span>
                             )}
+
+                            {showSpan('eclampsiaLable') && (
+                                <div
+                                    // className={styles['preeclampsia-btn']}
+
+                                    className={classnames(styles['signs-btn'], styles['zx'])}
+                                    onClick={open子痫前期风险评估表}>
+                                    子痫
+                                </div>
+                            )}
                         </div>
-                        {showSpan('eclampsiaLable') && (
-                            <div className={styles['preeclampsia-btn']} onClick={open子痫前期风险评估表}>
-                                子痫
-                            </div>
-                        )}
+
                     </div>
 
                     <div className={styles['wrapper-msg']}>

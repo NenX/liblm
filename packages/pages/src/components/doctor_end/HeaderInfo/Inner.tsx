@@ -31,10 +31,13 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
     const {
         头部信息拓展,
         专案拓展 = [],
+        量表拓展 = [],
         护士端_禁止编辑高危因素_传染病,
         highriskType,
         标签管理,
     } = use_provoke((s) => s.config)
+
+
     const pregnancyId = mchcUtils.single_id(props)
 
     const [headerInfo, setHeaderInfo] = useState<IMchc_Doctor_OutpatientHeaderInfo>()
@@ -101,18 +104,38 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
         return rm
     }, [])
     function open瘢痕子宫阴道试产表() {
+
+        const ext = 量表拓展.find(e => e.label?.includes('疤痕'))
+        if (ext) {
+            mchcModal__.open('拓展量表', { modal_data: { headerInfo, ext } })
+            return
+        }
+
         mchcModal__.openOne(randomIds.current + 1, '瘢痕子宫阴道试产表', {
             modal_data: { headerInfo: headerInfoCache.current! },
             onClose: fetchHeaderInfo,
         })
     }
     function open子痫前期风险评估表() {
+        const ext = 量表拓展.find(e => e.label?.includes('子痫'))
+        if (ext) {
+            mchcModal__.open('拓展量表', { modal_data: { headerInfo, ext } })
+            return
+        }
+
         mchcModal__.openOne(randomIds.current + 2, '子痫前期风险评估表', {
             modal_data: { headerInfo: headerInfoCache.current! },
             onClose: fetchHeaderInfo,
         })
     }
     function open深静脉血栓高危因素孕期用药筛查表() {
+        const ext = 量表拓展.find(e => e.label?.includes('VTE'))
+        if (ext) {
+            mchcModal__.open('拓展量表', { modal_data: { headerInfo, ext } })
+            return
+        }
+
+
         mchcModal__.openOne(randomIds.current + 3, '深静脉血栓高危因素孕期用药筛查表', {
             modal_data: { headerInfo: headerInfoCache.current! },
             onClose: fetchHeaderInfo,

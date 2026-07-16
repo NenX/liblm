@@ -12,7 +12,7 @@ import './index.less';
 import ManagementPlan from './management-plan';
 import PrenatalTree from './prenatal-tree';
 import SurveyList from './survey-list';
-
+import WeightGainWarningTips from "./WeightGainWarningTips"
 interface IProps {
   visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
@@ -29,9 +29,9 @@ interface IProps {
 
 }
 export default function FurtherSidebar(props: IProps) {
-  const sys_theme = use_provoke(s => s.sys_theme)
+  const { sys_theme, config } = use_provoke('sys_theme', 'config')
 
-
+  const { 医生端_又一个预警提醒 } = config
   const {
     headerInfo,
     id,
@@ -62,7 +62,6 @@ export default function FurtherSidebar(props: IProps) {
     gestationalWeek: any
     remind: any
   }[]>([])
-  const [collapseActiveKey, set_collapseActiveKey] = useState(['1', '2', '4'])
 
   useEffect(() => {
 
@@ -133,7 +132,7 @@ export default function FurtherSidebar(props: IProps) {
         <div className="main-content">
           {sidebarTab == 1 && (
             <div className="prenatal-visit-main_return-sidebar">
-              <Collapse destroyOnHidden size='small' defaultActiveKey={collapseActiveKey} bordered={false}>
+              <Collapse destroyOnHidden size='small' defaultActiveKey={['1', '2', '4', '5']} bordered={false}>
                 <Collapse.Panel
                   header={
                     <span style={{ marginLeft: '10px' }}>
@@ -156,6 +155,21 @@ export default function FurtherSidebar(props: IProps) {
                     page="return"
                   />
                 </Collapse.Panel>
+
+                {
+                  医生端_又一个预警提醒
+                    ? <Collapse.Panel
+                      header={
+                        <span >
+                          预警提醒
+                        </span>
+                      }
+                      key="5"
+                    >
+                      <WeightGainWarningTips visitsData={visitsData} />
+                    </Collapse.Panel>
+                    : null
+                }
 
                 <Collapse.Panel
                   header={!!lackReports ? '缺少检验报告' : '必查检验检查'}
@@ -183,8 +197,6 @@ export default function FurtherSidebar(props: IProps) {
                   <GestationalWeekProjectTree pregnancyId={mchcUtils.single_id()} />
                 </Collapse.Panel>
 
-                {/* <Collapse.Panel header="产前筛查与诊断" key="3">
-        </Collapse.Panel> */}
 
                 {
                   mchcEnv.is('广三') || <Collapse.Panel
@@ -232,7 +244,7 @@ export default function FurtherSidebar(props: IProps) {
           <div
             style={{ color: sidebarTab == 1 ? sys_theme.colorPrimary : '' }}
             className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(this, 1)}
+            onClick={handleTabClick.bind(null, 1)}
           >
             诊断
           </div>
@@ -240,16 +252,11 @@ export default function FurtherSidebar(props: IProps) {
             style={{ color: sidebarTab == 2 ? sys_theme.colorPrimary : '' }}
 
             className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(this, 2)}
+            onClick={handleTabClick.bind(null, 2)}
           >
             产检树
           </div>
-          {/* <div
-            className={classnames('tab-item', { active: sidebarTab == 3 })}
-            onClick={handleTabClick.bind(this, 3)}
-          >
-            模板
-          </div> */}
+
         </div>
       </div>
     )

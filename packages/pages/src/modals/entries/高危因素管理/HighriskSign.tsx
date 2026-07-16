@@ -1,5 +1,5 @@
 import { HighRiskGradeSelectPure } from '@lm_fe/components_m'
-import { ICommonOption, mchcConfig, mchcEnv } from '@lm_fe/env'
+import { ICommonOption, mchcConfig, mchcEnv, mchcLogger } from '@lm_fe/env'
 import {
     IMchc_Doctor_OutpatientHeaderInfo,
     IMchc_HighriskGradeConfig,
@@ -15,6 +15,7 @@ import styles from './index.module.less'
 import { MySelect, Tree_L } from '@lm_fe/components'
 import { use_provoke } from '@lm_fe/provoke'
 import { ColorSpan, transfer_to_treeNode } from './utils'
+import { ROMAN_NUMERALS } from '@lm_fe/utils'
 
 const boundSymbol = ':'
 interface IProps {
@@ -206,7 +207,9 @@ export function HighriskSign_高危因素管理(props: IProps) {
         }
     }
     function calAndSetData(tree_items: IMchc_TemplateTree_Item[], tag_arr: string[]) {
-        let __highriskGrade = isEmpty(tree_items) ? initData?.highriskGrade! : ''
+        // let __highriskGrade = isEmpty(tree_items) ? initData?.highriskGrade! : ''
+        let __highriskGrade = isEmpty(tree_items) ? ROMAN_NUMERALS[1] : ''
+
         tree_items.forEach((_) => {
             let code = _.code
 
@@ -214,6 +217,7 @@ export function HighriskSign_高危因素管理(props: IProps) {
                 __highriskGrade = code
             }
         })
+        mchcLogger.log('__highriskGrade', tree_items, __highriskGrade, initData?.highriskGrade, initData?.infectionNote)
         assign_initData({
             highriskGrade: __highriskGrade,
             highriskNote: tag_arr.join(','),
@@ -241,19 +245,6 @@ export function HighriskSign_高危因素管理(props: IProps) {
         return target?.color
     }
 
-    function renderColorSpan(label: string) {
-        return (
-            <span
-                style={{
-                    background: getGradeColor(label),
-                    display: 'inline-block',
-                    width: '12px',
-                    height: '12px',
-                    margin: '0 10px',
-                }}
-            ></span>
-        )
-    }
 
     function renderTree({ treeData, expandedKeys }: { treeData?: DataNode[]; expandedKeys: string[] }) {
         return (

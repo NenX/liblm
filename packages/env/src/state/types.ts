@@ -51,6 +51,7 @@ export type ISystemConfig = Partial<{
     模板编辑器?: 'SDE' | 'XEMR'
     医生端_检验检查时间轴隐藏?: boolean
     医生端_复诊按钮浮动?: boolean
+    医生端_又一个预警提醒?: boolean
     医生端_复诊左侧隐藏?: boolean
     医生端_复诊编辑控制?: boolean
     医生端_开启_危险_复诊同步记录?: boolean

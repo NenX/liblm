@@ -19,7 +19,6 @@ import { use_doctor_sign } from '../../../.utils/use_doctor_sign';
 interface IProps {
   diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient) => React.ReactNode
   diagnosis_before_submit?: (submit: (values: any) => Promise<void>, data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, form?: FormInstance) => Promise<void>
-  disabled_save: boolean
   serialNo: string
 
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo,
@@ -37,7 +36,6 @@ function Index(props: IProps & IInitial_Tab_props) {
   const { serialNo,
     // diagnosesList,
     handlePrint: _handlePrint,
-    disabled_save,
 
 
     headerInfo,
@@ -56,6 +54,7 @@ function Index(props: IProps & IInitial_Tab_props) {
 
   const [isShowModifyRecord, set_isShowModifyRecord] = useState(false)
   const [isShowManageModal, set_isShowManageModal] = useState(false)
+  const [disabled_save, set_disabled_save] = useState<boolean>()
 
   const [recordData, set_recordData] = useState([])
   const [visitData, setVisitData] = useState<IMchc_Doctor_FirstVisitDiagnosisOutpatient>()
@@ -98,6 +97,7 @@ function Index(props: IProps & IInitial_Tab_props) {
     SMchc_Doctor.getFirstVisitDiagnosisOutpatient(preg_id).then(v => {
       setVisitData(v)
       setDiagnosesList(v.diagnoses)
+      set_disabled_save(v.isBanned)
       form.setFieldsValue(v)
     })
   }

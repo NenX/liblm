@@ -30,11 +30,8 @@ export default function FurtherTable(props: IProps) {
 
 
 
-	const [selectKeys, set_selectKeys] = useState<any[]>([])
-	const [selectRows, set_selectRows] = useState<any[]>([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
-	const printTableRef = useRef<HTMLDivElement>(null)
 	const { config, Wrap } = BF_Wrap2(
 		{ default_conf: { title: '复诊-产检记录表格', tableColumns: () => import('./config') } },
 		{ delete: () => { console.log('233') } } // 传递进来的方法
@@ -122,11 +119,11 @@ export default function FurtherTable(props: IProps) {
 						{reverseRvisit.map((data) => {
 							return (
 								<Row className={styles['further-table-row']}>
-									<Col span={2}>
+									<Col span={3}>
 										<span>{data.visitDate}</span>
 										<span style={{ marginLeft: 8 }}>{data.gestationalWeek}周</span>
 									</Col>
-									<Col span={18}>
+									<Col span={17}>
 										{renderContent(data)}
 									</Col>
 								</Row>
@@ -221,8 +218,6 @@ export default function FurtherTable(props: IProps) {
 					return {
 						style: { background, cursor, color },
 						onClick(event) {
-							set_selectKeys([record.id])
-							set_selectRows([record])
 
 						},
 						onDoubleClick() {

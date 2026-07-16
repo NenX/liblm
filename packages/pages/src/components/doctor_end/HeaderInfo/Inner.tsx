@@ -242,7 +242,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
         return (
             <div
                 className={classnames(styles['header-info-wrapper'])}
-                onDoubleClick={(e) => {}}
+                onDoubleClick={(e) => { }}
                 style={{ background: color_conf.高危背景 }}
             >
                 <div className={styles['header-info-content']}>
@@ -517,8 +517,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                                     })}
                                 </>
                             )}
-                            {/*  mchcEnv.user_data */}
-                            {some(mchcEnv.user_data.groups, (item) => item.name.toUpperCase() === 'ADMIN') && (
+                            {mchcEnv.isAdmin && (
                                 <Tag
                                     icon={<MyIcon value="PlusOutlined" />}
                                     style={{ cursor: 'pointer' }}

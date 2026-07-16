@@ -3,7 +3,7 @@ import { IMchc_Doctor_OutpatientHeaderInfo, SMchc_Doctor } from '@lm_fe/service'
 import { EMPTY_PLACEHOLDER, expect_array, ICommonOption, setSearchParamsValue } from '@lm_fe/utils'
 import { Button, ButtonProps, Space, Tag, Tooltip } from 'antd'
 import classnames from 'classnames'
-import { get } from 'lodash'
+import { get, map, some } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { MyIcon, PatientSelect } from '@lm_fe/components'
@@ -42,7 +42,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
     const color_conf = use_headinfo_color(highriskLable)
 
     const info_addon = 头部信息拓展 ?? []
-    const caseManages = expect_array(headerInfo?.caseManages).filter(_ => _.code && _.name)
+    const caseManages = expect_array(headerInfo?.caseManages).filter((_) => _.code && _.name)
 
     const infectionNoteLabels = handleFuckinginfectionNoteLabel(headerInfo?.infectionNote)
 
@@ -219,7 +219,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
         return (
             <div
                 className={classnames(styles['header-info-wrapper'])}
-                onDoubleClick={(e) => { }}
+                onDoubleClick={(e) => {}}
                 style={{ background: color_conf.高危背景 }}
             >
                 <div className={styles['header-info-content']}>
@@ -256,7 +256,8 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                                         <span
                                             key={_.key}
                                             onClick={() => {
-                                                if (_.type === '梅'
+                                                if (
+                                                    _.type === '梅'
                                                     // || _.type === '传染病'
                                                 ) {
                                                     open梅毒管理()
@@ -367,12 +368,11 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                             })}
                         </div>
                         <div className={styles['msg-bottom']}>
-                            <Space.Compact >
+                            <Space.Compact>
                                 {caseManages.map((ext) => {
                                     // const show = __DEV__ ? true : is_show_专案(ext, headerInfo)
                                     // if (!show) return null
                                     return (
-
                                         <Tag
                                             style={{ cursor: 'pointer' }}
                                             color={ext.color}
@@ -381,7 +381,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                                                 mchcModal__.open('拓展专案', {
                                                     modal_data: {
                                                         headerInfo,
-                                                        ...ext
+                                                        ...ext,
                                                     },
                                                 })
                                             }}
@@ -479,21 +479,24 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                             {/* 标签管理 */}
                             {标签管理 && (
                                 <>
-                                    {headerInfo?.labels.map((tag, i) => {
+                                    {map(headerInfo?.labels, (tag, i) => {
                                         return (
                                             <Tag key={tag.id} color={tag?.color}>
                                                 {tag.name}
                                             </Tag>
                                         )
                                     })}
-                                    <Tag
-                                        icon={<MyIcon value="PlusOutlined" />}
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={open标签管理}
-                                    >
-                                        标签
-                                    </Tag>
                                 </>
+                            )}
+                            {/*  mchcEnv.user_data */}
+                            {some(mchcEnv.user_data.groups, (item) => item.name.toUpperCase() === 'ADMIN') && (
+                                <Tag
+                                    icon={<MyIcon value="PlusOutlined" />}
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={open标签管理}
+                                >
+                                    标签
+                                </Tag>
                             )}
                         </div>
                     </div>

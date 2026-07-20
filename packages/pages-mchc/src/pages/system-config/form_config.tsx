@@ -354,12 +354,8 @@ export default defineFormConfig(
                             name: 'fetalMonitor',
                             inputType: 'Input',
                             inputProps: { options: switchOptions, marshal: 0 },
-
                             layout: '1/3',
                         },
-
-
-
                         {
                             label: 'VTE预防用药筛查表',
                             name: 'VTE预防用药筛查表',
@@ -448,6 +444,13 @@ export default defineFormConfig(
                             name: '医生端_开启_危险_复诊同步记录',
                             inputType: 'MSW',
                             inputProps: {},
+                            layout: '1/3',
+                        },
+                        {
+                            label: 'OB_WIN_AGENT_APP_SOCKET_测试',
+                            name: 'OB_WIN_AGENT_SOCKET',
+                            inputType: 'Input',
+                            inputProps: { marshal: 0 },
                             layout: '1/3',
                         },
                         {

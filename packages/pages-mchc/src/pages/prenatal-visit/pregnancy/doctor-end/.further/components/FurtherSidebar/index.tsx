@@ -75,7 +75,8 @@ export default function FurtherSidebar(props: IProps) {
 
     const planData = get(visitsData, `visitPlans`, []);
 
-    set_recentPlanData(slice(planData, 0, 2))
+    // set_recentPlanData(slice(planData, 0, 2))
+    set_recentPlanData(planData)
 
     return () => {
 

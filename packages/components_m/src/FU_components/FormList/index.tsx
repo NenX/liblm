@@ -1,6 +1,6 @@
 import { Button, Form } from 'antd';
 import React, { useEffect } from 'react';
-import { useMarshal } from '../../utils/useMarshal';
+import { use_arr_marshal } from '../../utils/useMarshal';
 // import FormSection, { IFormSectionProps } from '../../BaseModalForm/FormSection';
 import { IMchc_FormDescriptions_Field, SMchc_FormDescriptions } from '@lm_fe/service';
 import { cloneDeep } from 'lodash';
@@ -87,7 +87,7 @@ MyFormList_必须搭配Form使用.DisplayFC = (props) => {
     } = props
 
 
-    const { safe_value = [], set_safe_value, onChangeSafeValue } = useMarshal<any[]>(marshal, value ?? [], onChange)
+    const { safe_value = [], set_safe_value, onChangeSafeValue } = use_arr_marshal<any>(marshal, value ?? [], onChange)
 
     return <div>
 

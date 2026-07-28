@@ -26,7 +26,7 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
         tip,
         disabled,
         actionConfig = {},
-        formDescriptions = [],
+        fds: formDescriptions = [],
         targetLabelCol = 4,
         span = 6,
         value,
@@ -84,7 +84,7 @@ const ArrayPanel: TCommonComponent<IProps, string | any[]> = (props) => {
                         <div style={{ flex: 1 }}>
                             <MyFormSection disableAll={disabled} key={getKey(rowData)}
                                 renderEditItemInner={RenderEditItemStandalone}
-                                targetLabelCol={targetLabelCol} span={span} {...others} formDescriptions={[
+                                targetLabelCol={targetLabelCol} span={span} {...others} fds={[
                                     ...formDescriptions.map(_fd => {
                                         if (!_fd) return _fd!
                                         const fd = formatFormConfig(_fd, targetLabelCol)

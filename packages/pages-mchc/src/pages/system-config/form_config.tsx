@@ -400,16 +400,9 @@ export default defineFormConfig(
 
 
                         {
-                            label: '首检信息病历风格',
-                            name: 'pregnancyInitial',
-                            inputType: 'MS',
-                            inputProps: {
-                                options: [
-                                    { value: 'tab', label: 'TAB风格' },
-                                    { value: 'vertical', label: '垂直风格' },
-                                ],
-                                marshal: 0,
-                            },
+                            label: '首检病历垂直风格',
+                            name: '医生端_首检病历垂直风格',
+                            inputType: 'MSW',
                             layout: '1/3',
                         },
 

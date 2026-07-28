@@ -23,6 +23,7 @@ export type ISystemConfig = Partial<{
     InformedConsent: boolean
     pregnancyInitial: 'tab' | 'vertical'
     isOpenDiabetes: boolean
+    医生端_首检病历垂直风格: boolean
     diagnosisStyle: 'tab'
     diagnosisFollowUpRecord: boolean
     diagnosisLaboratoryReport: boolean

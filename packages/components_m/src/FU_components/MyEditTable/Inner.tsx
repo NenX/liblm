@@ -6,7 +6,7 @@ import { Button, Space, TableProps } from 'antd';
 import { cloneDeep, identity, indexOf, isArray, isEmpty, isEqual, join, set } from 'lodash';
 import React, { lazy, useEffect, useRef, useState } from 'react';
 import { MyLazyComponent } from '../../MyLazyComponent';
-import { useMarshal } from '../../utils/useMarshal';
+import { use_arr_marshal } from '../../utils/useMarshal';
 import { TCommonComponent } from '../types';
 import styles from './index.module.less';
 import { IMyEditTableProps } from './types';
@@ -19,7 +19,7 @@ const MyEditTable: TCommonComponent<IMyEditTableProps, string | any[]> = (props)
   const hideAction = props.hideAction || disabled
   const defaultValue = useRef<any[]>([])
 
-  const { safe_value = [], set_safe_value, onChangeSafeValue } = useMarshal<any>(marshal, value ?? defaultValue.current, onChange, 'MyEditTable')
+  const { safe_value = [], set_safe_value, onChangeSafeValue } = use_arr_marshal<any>(marshal, value ?? defaultValue.current, onChange, 'MyEditTable')
   const columns = useRef<IMchc_FormDescriptions_Field_Nullable[]>([])
   columns.current = formDescriptions ?? []
   const [dataSource, set_dataSource] = useState<any[]>([])

@@ -9,6 +9,9 @@ interface I_刷新头部 extends IBaseType<'刷新头部'> { }
 interface I_添加修改诊断 extends IBaseType<'添加修改诊断'> {
     diagnoses: any
 }
+interface I_切换医生Tab extends IBaseType<'切换医生Tab'> {
+    key: string
+}
 
 
 interface I_其他事件 extends IBaseType<'其他事件'> {
@@ -18,4 +21,4 @@ interface I_其他事件 extends IBaseType<'其他事件'> {
     }
 }
 
-export type IOutpatient_Event = [I_弹窗 | I_其他事件 | I_刷新头部 | I_添加修改诊断]
+export type IOutpatient_Event = [I_弹窗 | I_其他事件 | I_刷新头部 | I_添加修改诊断 | I_切换医生Tab]

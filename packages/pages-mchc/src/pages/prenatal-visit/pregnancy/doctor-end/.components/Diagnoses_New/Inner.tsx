@@ -22,7 +22,6 @@ function Diagnoses(props: IDiagnosesprops) {
     isAllPregnancies,
     diagnosesList = [],
     headerInfo,
-    saveHeaderInfo,
     setDiagnosesList,
     page,
     serialNo,
@@ -43,10 +42,6 @@ function Diagnoses(props: IDiagnosesprops) {
     return _.prenatalVisitId === pv_id_for_diagnose
   })
 
-  async function changeHeaderInfo() {
-    const res = await request.get('/api/doctor/getOutpatientHeaderInfo?id=' + get(headerInfo, `id`));
-    saveHeaderInfo(res.data);
-  }
 
 
 
@@ -56,7 +51,7 @@ function Diagnoses(props: IDiagnosesprops) {
     await SMchc_Doctor.del_diagnosis(item);
     mchcEnv.success('删除成功！');
     setDiagnosesList(newList);
-    changeHeaderInfo();
+    mchcEvent.emit('outpatient', { type: '刷新头部' })
   };
 
 
@@ -89,7 +84,6 @@ function Diagnoses(props: IDiagnosesprops) {
       mchcEnv.success('添加成功！');
       const data = res || diagnosisObj;
       setDiagnosesList([...diagnosesList, data]);
-      changeHeaderInfo();
       // if (diag.indexOf('梅毒') > -1) {
       //   mchcEvent.emit('outpatient', { type: '弹窗', modal_name: '梅毒管理', })
       // }
@@ -172,7 +166,6 @@ function Diagnoses(props: IDiagnosesprops) {
                   do_del_diagnose_item={del_diagnose_item}
                   headerInfo={headerInfo}
                   diagnosesList={diagnosesList}
-                  saveHeaderInfo={saveHeaderInfo}
                   setDiagnosesList={setDiagnosesList}
                   isShowDiagnosesTemplate={false}
                 />
@@ -198,7 +191,6 @@ function Diagnoses(props: IDiagnosesprops) {
           diagnosesList={diagnosesList}
           filter_diagnoses_list={filter_diagnoses_list}
           setDiagnosesList={setDiagnosesList}
-          saveHeaderInfo={saveHeaderInfo}
 
         />
       )}

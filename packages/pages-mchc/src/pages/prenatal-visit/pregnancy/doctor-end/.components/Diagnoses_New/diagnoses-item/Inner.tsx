@@ -9,13 +9,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import requestMethods_further from '../../../.further/methods/request';
 import './index.less';
 import { IDiagnosesItem_Props } from './types';
+import { mchcEvent } from '@lm_fe/env';
 export default function DiagnosesItem({
   do_del_diagnose_item,
   diagnose,
   index,
   edit,
   headerInfo,
-  saveHeaderInfo,
   diagnosesList,
   setDiagnosesList,
   isShowDiagnosesTemplate,
@@ -68,10 +68,7 @@ export default function DiagnosesItem({
     //   </div>
     // );
   }, [diagnose]);
-  async function changeHeaderInfo() {
-    const res = await request.get('/api/doctor/getOutpatientHeaderInfo?id=' + get(headerInfo, `id`));
-    saveHeaderInfo(res.data);
-  }
+
   function handleVisibleChange(visible: boolean, i: number) {
     const newList = cloneDeep(diagnosesList);
     const item = newList[i];
@@ -91,7 +88,7 @@ export default function DiagnosesItem({
       const postData = newList[i];
       await SMchc_Doctor.new_Diagnosis(postData);
       setDiagnosesList(newList);
-      changeHeaderInfo();
+      mchcEvent.emit('outpatient', { type: '刷新头部' })
     };
 
     const handleSortChange = async (n: number) => {

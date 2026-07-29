@@ -7,7 +7,6 @@ export interface IDiagnosesItem_Props {
   diagnose: IMchc_Doctor_Diagnoses;
   do_del_diagnose_item?: (item: IMchc_Doctor_Diagnoses,) => Promise<void>
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
-  saveHeaderInfo(H: IMchc_Doctor_OutpatientHeaderInfo): void
   diagnosesList: IMchc_Doctor_Diagnoses[]
   setDiagnosesList(l: IMchc_Doctor_Diagnoses[]): void
   isShowDiagnosesTemplate: boolean

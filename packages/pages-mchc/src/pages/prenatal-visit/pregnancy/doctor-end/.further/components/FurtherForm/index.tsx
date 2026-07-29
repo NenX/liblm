@@ -308,8 +308,9 @@ function FurtherForm(props: IProps) {
                     diagnosesList={diagnosesList ?? []}
                     headerInfo={headerInfo}
                 />
-
-                <HighRiskTableEntry headerInfo={headerInfo} data={visitsData} style={{ margin: '0 128px 64px 0' }} />
+                <div style={{ margin: '0 128px 64px 0' }}>
+                    <HighRiskTableEntry headerInfo={headerInfo} data={visitsData} />
+                </div>
                 {!isAllPregnancies && (
                     <Space.Compact
                         className={classNames(

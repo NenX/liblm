@@ -35,7 +35,6 @@ export interface IDoctorEnd_InitialProps {
 
   id?: TIdType
 
-  saveHeaderInfo(v: IMchc_Doctor_OutpatientHeaderInfo): void
 
 
 }
@@ -50,7 +49,6 @@ function DoctorEnd_Initial(props: IDoctorEnd_InitialProps) {
   const {
     headerInfo,
     id,
-    saveHeaderInfo,
 
 
   } = props;
@@ -251,7 +249,6 @@ function DoctorEnd_Initial(props: IDoctorEnd_InitialProps) {
               form={forms.current[idx]}
               handlePrint={handlePrint}
               headerInfo={headerInfo}
-              saveHeaderInfo={saveHeaderInfo}
 
             />
           ) : null

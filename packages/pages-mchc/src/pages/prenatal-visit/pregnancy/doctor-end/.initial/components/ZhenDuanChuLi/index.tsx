@@ -3,7 +3,7 @@ import { FormSectionForm, OkButton } from '@lm_fe/components_m';
 import { mchcEnv, mchcEvent, mchcUtils } from '@lm_fe/env';
 import { IMchc_Doctor_Diagnoses, IMchc_Doctor_FirstVisitDiagnosisOutpatient, IMchc_Doctor_OutpatientHeaderInfo, SMchc_Doctor, TIdType } from '@lm_fe/service';
 import { getFutureDate } from '@lm_fe/utils';
-import { Col, message, Modal, Row, Space } from 'antd';
+import { Col, Divider, message, Modal, Row, Space } from 'antd';
 import { forEach, get, isNil } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Diagnoses from '../../../.components/Diagnoses_New';
@@ -25,7 +25,6 @@ interface IProps {
   // diagnosesList: IMchc_Doctor_Diagnoses[]
   handlePrint?(resource: string, id?: TIdType): void
   // setDiagnosesList(l: IMchc_Doctor_Diagnoses[]): void
-  saveHeaderInfo(v: IMchc_Doctor_OutpatientHeaderInfo): void
 
 }
 
@@ -40,7 +39,6 @@ function Index(props: IProps & IInitial_Tab_props) {
 
     headerInfo,
     // setDiagnosesList,
-    saveHeaderInfo,
     active,
     diagnosis_before_submit,
     diagnosis_addon_btns,
@@ -220,7 +218,6 @@ function Index(props: IProps & IInitial_Tab_props) {
     <Row gutter={16} className="zhen-duan label-width5">
       <Col span="8">
         <Diagnoses
-          saveHeaderInfo={saveHeaderInfo}
           setDiagnosesList={setDiagnosesList}
           headerInfo={headerInfo}
           diagnosesList={diagnosesList}
@@ -231,6 +228,24 @@ function Index(props: IProps & IInitial_Tab_props) {
 
           page={''}
         />
+        <Divider size='small' />
+        <HighRiskTableEntry headerInfo={headerInfo} data={visitData} />
+        <OkButton hidden className="his-btn" type="dashed" icon={<MyIcon value='TableOutlined' />} onClick={handleRecordBtn}>
+          首检信息历史修改记录
+        </OkButton>
+        <OkButton
+          hidden={mchcEnv.is('广三')}
+          className="his-btn"
+          type="dashed"
+          icon={<MyIcon value='TableOutlined' />}
+          onClick={() => set_isShowManageModal(true)}
+        >
+          产检计划
+        </OkButton>
+
+        <OkButton icon={<MyIcon value='SyncOutlined' />} onClick={initData} style={{ marginLeft: 12 }}>
+          刷新
+        </OkButton>
       </Col>
       <Col span="16">
         <div className="form-wrapper">
@@ -253,23 +268,6 @@ function Index(props: IProps & IInitial_Tab_props) {
           </Wrap>
 
 
-          <HighRiskTableEntry headerInfo={headerInfo} data={visitData} />
-          <OkButton hidden className="his-btn" type="dashed" icon={<MyIcon value='TableOutlined' />} onClick={handleRecordBtn}>
-            首检信息历史修改记录
-          </OkButton>
-          <OkButton
-            hidden={mchcEnv.is('广三')}
-            className="his-btn"
-            type="dashed"
-            icon={<MyIcon value='TableOutlined' />}
-            onClick={() => set_isShowManageModal(true)}
-          >
-            产检计划
-          </OkButton>
-
-          <OkButton icon={<MyIcon value='SyncOutlined' />} onClick={initData} style={{ marginLeft: 12 }}>
-            刷新
-          </OkButton>
         </div>
         <Space className="prenatal-visit-main_initial-btns">
           {

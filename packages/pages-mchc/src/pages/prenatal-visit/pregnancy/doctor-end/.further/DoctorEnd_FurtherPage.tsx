@@ -24,13 +24,11 @@ export interface IDoctorEnd_FurtherProps {
   formChange(b: boolean): void,
 
 
-  saveHeaderInfo(h: IMchc_Doctor_OutpatientHeaderInfo): void,
 }
 
 function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
 
   const {
-    saveHeaderInfo,
     // setDiagnosesList,
     headerInfo,
     id,
@@ -257,7 +255,6 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
           ? null
           : <FurtherSidebar
             serialNo={formData?.serialNo!}
-            saveHeaderInfo={saveHeaderInfo}
             setDiagnosesList={setDiagnosesList}
             diagnosesList={diagnosesList}
             formData={formData}

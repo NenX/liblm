@@ -19,7 +19,6 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
     diagnosesList,
     filter_diagnoses_list,
     headerInfo,
-    saveHeaderInfo,
     setDiagnosesList,
     closeTemplate,
     add_diag_inner,
@@ -153,12 +152,6 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
     mchcEnv.info(`${get(item, `val`)}同步到${type == 2 ? '科室' : '个人'}`);
   };
 
-  //#region  右边诊断操作
-  async function changeHeaderInfo() {
-
-    const res = (await request.get('/api/doctor/getOutpatientHeaderInfo?id=' + get(headerInfo, `id`))).data;
-    saveHeaderInfo(res);
-  }
 
 
 
@@ -286,7 +279,6 @@ function DiagnosesTemplateOld(props: IDiagnosesTemplate) {
                   do_del_diagnose_item={del_diagnose_item_inner}
                   edit={true}
                   headerInfo={headerInfo}
-                  saveHeaderInfo={saveHeaderInfo}
                   diagnosesList={diagnosesList}
                   setDiagnosesList={setDiagnosesList}
                   isShowDiagnosesTemplate={true}

@@ -23,7 +23,6 @@ interface IProps {
   furtherRefresh(): void
   serialNo: string
 
-  saveHeaderInfo(h: IMchc_Doctor_OutpatientHeaderInfo): void,
   setDiagnosesList(list: any[]): void,
   formData?: Partial<IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit>,
 
@@ -39,7 +38,6 @@ export default function FurtherSidebar(props: IProps) {
     formData,
     diagnosesList,
     furtherRefresh,
-    saveHeaderInfo,
     setDiagnosesList,
     serialNo,
   } = props;
@@ -146,7 +144,6 @@ export default function FurtherSidebar(props: IProps) {
                   <Diagnoses
                     pv_id_for_diagnose={formData?.id}
                     serialNo={serialNo}
-                    saveHeaderInfo={saveHeaderInfo}
                     setDiagnosesList={setDiagnosesList}
                     headerInfo={headerInfo}
                     diagnosesList={diagnosesList}

@@ -1,21 +1,17 @@
-import { handle_form_error, LazyAntd, MyIcon, useMyEffectSafe } from '@lm_fe/components';
+import { handle_form_error, MyIcon, useMyEffectSafe } from '@lm_fe/components';
 import { FormSectionForm, OkButton } from '@lm_fe/components_m';
 import { mchcEnv, mchcEvent, mchcUtils } from '@lm_fe/env';
-import { IMchc_Doctor_Diagnoses, IMchc_Doctor_FirstVisitDiagnosisOutpatient, IMchc_Doctor_OutpatientHeaderInfo, SMchc_Doctor, TIdType } from '@lm_fe/service';
-import { getFutureDate } from '@lm_fe/utils';
-import { Col, Divider, message, Modal, Row, Space } from 'antd';
-import { forEach, get, isNil } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import Diagnoses from '../../../.components/Diagnoses_New';
-import ManagementPlan from '../../../.further/components/FurtherSidebar/management-plan';
-import './index.less';
-const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
-
 import { BF_Wrap2, HighRiskTableEntry } from '@lm_fe/pages';
+import { IMchc_Doctor_Diagnoses, IMchc_Doctor_FirstVisitDiagnosisOutpatient, IMchc_Doctor_OutpatientHeaderInfo, SMchc_Doctor, TIdType } from '@lm_fe/service';
+import { AnyObject, getFutureDate } from '@lm_fe/utils';
+import { Col, message, Row, Space } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import { api } from '../../../.api';
-import { IInitial_Tab_props } from '../../types';
+import { get, isNil } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { use_doctor_sign } from '../../../.utils/use_doctor_sign';
+import { IInitial_Tab_props } from '../../types';
+import './index.less';
+import { 诊断处理_Tools } from './诊断处理_Tools';
 interface IProps {
   diagnosis_addon_btns?: (data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient) => React.ReactNode
   diagnosis_before_submit?: (submit: (values: any) => Promise<void>, data?: IMchc_Doctor_FirstVisitDiagnosisOutpatient, form?: FormInstance) => Promise<void>
@@ -50,11 +46,8 @@ function Index(props: IProps & IInitial_Tab_props) {
 
   const [diagnosesList, setDiagnosesList] = useState<IMchc_Doctor_Diagnoses[]>([])
 
-  const [isShowModifyRecord, set_isShowModifyRecord] = useState(false)
-  const [isShowManageModal, set_isShowManageModal] = useState(false)
   const [disabled_save, set_disabled_save] = useState<boolean>()
 
-  const [recordData, set_recordData] = useState([])
   const [visitData, setVisitData] = useState<IMchc_Doctor_FirstVisitDiagnosisOutpatient>()
   const v_id = get(visitData, `advice.id`);
 
@@ -76,9 +69,7 @@ function Index(props: IProps & IInitial_Tab_props) {
       // mchcEnv.logger.log('event receive', { e, })
       if (e.type === 'onChange' && e.name === 'advice') {
 
-        const values = e.values;
         const value = e.value;
-        const key = e.name
 
         if (!isNil(value.appointmentCycle)) {
           e.setValue?.('advice', { appointmentDate: getFutureDate(value.appointmentCycle) })
@@ -92,7 +83,7 @@ function Index(props: IProps & IInitial_Tab_props) {
 
   function initData() {
 
-    SMchc_Doctor.getFirstVisitDiagnosisOutpatient(preg_id).then(v => {
+    return SMchc_Doctor.getFirstVisitDiagnosisOutpatient(preg_id).then(v => {
       setVisitData(v)
       setDiagnosesList(v.diagnoses)
       set_disabled_save(v.isBanned)
@@ -125,7 +116,7 @@ function Index(props: IProps & IInitial_Tab_props) {
     get_form_data().then(handleSubmit)
 
   }
-  async function handleSubmit(values) {
+  async function handleSubmit(values: AnyObject) {
     const re = await SMchc_Doctor.updateFirstVisitDiagnosisOutpatient({
       currentGestationalWeek: get(headerInfo, 'curgesweek')
         ? get(headerInfo, 'curgesweek')
@@ -140,16 +131,7 @@ function Index(props: IProps & IInitial_Tab_props) {
   };
 
 
-  function closeModal(type: 'isShowModifyRecord' | 'isShowManageModal', items?: any, key?: any) {
 
-    if (type === 'isShowManageModal') {
-      set_isShowManageModal(false)
-
-    } else if (type === 'isShowModifyRecord') {
-      set_isShowModifyRecord(false)
-
-    }
-  };
 
   function print(type: 'prenatalVisit1' | 'prenatalVisit') {
     if (type == 'prenatalVisit1') {
@@ -163,53 +145,9 @@ function Index(props: IProps & IInitial_Tab_props) {
     }
   }
 
-  async function handleRecordBtn() {
-    const { headerInfo } = props;
-    const pregnancyId = headerInfo?.id
-    const recordData = await api.initial.findFirstVisitOperatingRecord(pregnancyId);
 
-    set_recordData(recordData)
-    set_isShowModifyRecord(true)
-  };
 
-  function renderModifyRecord() {
-    const columns = [
-      {
-        title: '编号',
-        dataIndex: 'items',
-        key: 'items',
-        render: (text: any, record: any, index: any) => index + 1,
-        width: 30,
-      },
-      { title: '时间', dataIndex: 'operateDate', key: 'operateDate', width: 50 },
-      { title: '修改人', dataIndex: 'operator', key: 'operator', width: 50 },
-      {
-        title: '修改字段',
-        dataIndex: 'content',
-        key: 'content',
-        render: (text: any) => {
-          let str = '';
-          forEach(text, (item) => {
-            str += `${get(item, 'operatingDescription')}；`;
-          });
-          return str;
-        },
-        width: 200,
-      },
-    ];
 
-    return (
-      <Modal
-        open={isShowModifyRecord}
-        title="历史首检记录"
-        footer={null}
-        width="80%"
-        onCancel={() => set_isShowModifyRecord(false)}
-      >
-        <Table className="prenatal-visit-main-table" columns={columns} dataSource={recordData} pagination={false} />
-      </Modal>
-    );
-  }
 
 
 
@@ -217,35 +155,7 @@ function Index(props: IProps & IInitial_Tab_props) {
   return (
     <Row gutter={16} className="zhen-duan label-width5">
       <Col span="8">
-        <Diagnoses
-          setDiagnosesList={setDiagnosesList}
-          headerInfo={headerInfo}
-          diagnosesList={diagnosesList}
-          isAllPregnancies={false}
-          pv_id_for_diagnose={v_id}
-
-          serialNo={serialNo}
-
-          page={''}
-        />
-        <Divider size='small' />
-        <HighRiskTableEntry headerInfo={headerInfo} data={visitData} />
-        <OkButton hidden className="his-btn" type="dashed" icon={<MyIcon value='TableOutlined' />} onClick={handleRecordBtn}>
-          首检信息历史修改记录
-        </OkButton>
-        <OkButton
-          hidden={mchcEnv.is('广三')}
-          className="his-btn"
-          type="dashed"
-          icon={<MyIcon value='TableOutlined' />}
-          onClick={() => set_isShowManageModal(true)}
-        >
-          产检计划
-        </OkButton>
-
-        <OkButton icon={<MyIcon value='SyncOutlined' />} onClick={initData} style={{ marginLeft: 12 }}>
-          刷新
-        </OkButton>
+        <诊断处理_Tools diagnosesList={diagnosesList} setDiagnosesList={setDiagnosesList} headerInfo={headerInfo} onRefresh={initData} visitData={visitData} />
       </Col>
       <Col span="16">
         <div className="form-wrapper">
@@ -293,10 +203,7 @@ function Index(props: IProps & IInitial_Tab_props) {
         </Space>
       </Col>
 
-      {isShowManageModal && (
-        <ManagementPlan isShowManageModal={isShowManageModal} closeModal={closeModal} headerInfo={headerInfo} />
-      )}
-      {renderModifyRecord()}
+
     </Row>
   );
 }

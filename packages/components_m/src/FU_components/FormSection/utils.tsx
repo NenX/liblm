@@ -48,7 +48,7 @@ function setFormItemLayout(config: IMchc_FormDescriptions_Field, targetLabelCol:
     pull = _config.pull ?? formItemLayout.pull ?? (inputProps as any).pull
 
 
-    config.span = config.form_hidden ? 0 : span
+    config.span = safe_form_hidden(config.form_hidden) ? 0 : span
     config.offset = offset
     config.push = push
     config.pull = pull
@@ -77,6 +77,10 @@ function setInputProps(config: IMchc_FormDescriptions_Field) {
 
 
     return _config
+}
+export function safe_form_hidden(fh_conf: any) {
+    const flag: boolean = safeExec(fh_conf) ?? fh_conf
+    return flag
 }
 export function formatFormConfig(__config: IMchc_FormDescriptions_Field, targetLabelCol?: number | string, defaultConfig: IMchc_FormDescriptions_Field_Nullable = {}) {
     const config = { ...__config }
@@ -126,7 +130,7 @@ export function RenderEditItem(config: any, ReactNode: React.ReactNode, defaultO
     const cal_rules = required ? [{ required: true, message: placeholder ?? ('请填写' + (label ?? '')) }] : []
     return (
         <Form.Item
-            hidden={safeExec(_config.form_hidden as any) || _config.form_hidden}
+            hidden={safe_form_hidden(_config.form_hidden)}
             {...o}
             style={{ ...s }}
             labelAlign={labelAlign}
@@ -154,7 +158,7 @@ export function RenderEditItemStandalone(config: any, ReactNode: React.ReactNode
     const wrapperCol: any = _config.formItemLayout?.wrapperCol ?? defaultOptions.wrapperCol ?? {}
     return (
         <Row
-            hidden={safeExec(_config.form_hidden as any) || _config.form_hidden}
+            hidden={safe_form_hidden(_config.form_hidden)}
             style={{ ...s, marginBottom: 6 }}
 
             key={key}

@@ -136,7 +136,6 @@ import ImageUploadPreview from '../../GeneralComponents/ImageUploadPreview';
 import ImageUploadPreviewIntranet from '../../GeneralComponents/ImageUploadPreviewIntranet';
 // import { safe_json_parse } from '@lm_fe/utils';
 import { IMchc_FormDescriptions_Field_Nullable, MyImageEditor } from '@lm_fe/components';
-import { mchcEvent } from '@lm_fe/env';
 import { IMchc_FormDescriptions_Field } from '@lm_fe/service';
 import { IMchc_FormDescriptions_FormItemLayout } from '@lm_fe/service/dist/mchc/service/FormDescriptions/types/FormItemLayout';
 import { InterceptComponent } from 'src/utils/InterceptComponent';
@@ -243,6 +242,7 @@ function RenderFormSectionComponent(props: IProps) {
                                     // c.styles = { width: c.inputProps?.width ?? '100%' } // 必须设置 100%，否则一些输入框长度有问题
                                     // c.styles = { width: c.inputProps?.width ?? 'auto' } // 必须设置 100%，否则一些输入框长度有问题
                                     return <RenderFormSectionComponent
+                                        form={form}
                                         // style={{ margin: 0 }}
                                         disableAll={disableAll}
                                         renderEditItem={renderEditItem} formDescription={c} />

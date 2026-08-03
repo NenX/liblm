@@ -1467,10 +1467,10 @@ const 检验检查_conf = defineFormConfig(
 );
 const 诊断处理_conf = defineFormConfig(
   [
-    { key: 'id', form_hidden: true },
-    { key: 'serialNo', form_hidden: true },
+    { key: 'diagnosisAndAdvice.id', form_hidden: true },
+    { key: 'diagnosisAndAdvice.serialNo', form_hidden: true },
     {
-      "key": "advice.disclosure",
+      "key": "diagnosisAndAdvice.advice.disclosure",
       "label": "病情告知",
       "inputType": "textareaWithTemplate",
       "isActive": mchcEnv.is('广州市八'),
@@ -1494,7 +1494,7 @@ const 诊断处理_conf = defineFormConfig(
     // },
 
     {
-      "key": "advice.prescription",
+      "key": "diagnosisAndAdvice.advice.prescription",
       "label": "处理措施",
       "inputType": "textareaWithTemplate",
       layout: '1/1',
@@ -1508,7 +1508,7 @@ const 诊断处理_conf = defineFormConfig(
     },
 
     {
-      "key": "advice.exam",
+      "key": "diagnosisAndAdvice.advice.exam",
       "label": "辅助检查",
       "inputType": "textareaWithTemplate",
       // "inputProps": { 'minRows': 2, 'maxRows': 5, 'title': '辅助检查模板', 'departmentTempalteType': 13, 'personalTempalteTType': 14, 'departmentId': 2 },
@@ -1529,24 +1529,24 @@ const 诊断处理_conf = defineFormConfig(
       "inputType": "straw",
       "children": [
         {
-          "key": "advice.appointmentType",
+          "key": "diagnosisAndAdvice.advice.appointmentType",
           "inputType": "MS",
           "isActive": !mchcEnv.is('广州市八'),
           'required': true,
           "inputProps": { 'uniqueKey': 'PrenatalVisit.appointmentType', marshal: 0 },
         },
         {
-          "key": "advice.appointmentCycle",
+          "key": "diagnosisAndAdvice.advice.appointmentCycle",
 
           "inputType": "MS",
           "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentCycleOptions'), marshal: 0 },
         },
         {
-          "key": "advice.appointmentDate",
+          "key": "diagnosisAndAdvice.advice.appointmentDate",
           "inputType": "date",
         },
         {
-          "key": "advice.appointmentPeriod",
+          "key": "diagnosisAndAdvice.advice.appointmentPeriod",
           "inputType": "MS",
           "isActive": !mchcEnv.is('广州市八'),
           "inputProps": { 'options': ctx.mchcEnv.get_other_options('appointmentPeriodOptions'), marshal: 0 },
@@ -1556,14 +1556,14 @@ const 诊断处理_conf = defineFormConfig(
 
 
     {
-      "key": "advice.visitDate",
+      "key": "diagnosisAndAdvice.advice.visitDate",
       "label": "初诊日期",
       "inputType": "date",
       "isNewRow": 1,
       layout: '1/3',
     },
     {
-      "key": "advice.doctorName",
+      "key": "diagnosisAndAdvice.advice.doctorName",
       "label": "初诊医生",
       "inputType": "input",
       showDeps(f) {

@@ -1,14 +1,13 @@
-import { ICommonOption } from '@lm_fe/env'
 import {
     IMchc_Doctor_OutpatientHeaderInfo,
     IMchc_HighriskGradeConfig,
     IMchc_TemplateTree_Item,
-    SMchc_Common,
-    SMchc_TemplateTrees,
+    SMchc_TemplateTrees
 } from '@lm_fe/service'
-import { Button, Col, Row, Empty } from 'antd'
+import { get, isEmpty, } from '@lm_fe/utils'
+import { Col, Empty, Row } from 'antd'
 import { DataNode } from 'antd/lib/tree'
-import { get, isEmpty, keyBy, keys, map, split } from 'lodash'
+import { keyBy, map, split } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 
@@ -19,28 +18,27 @@ import { ColorSpan, transfer_to_treeNode } from './utils'
 const boundSymbol = ':'
 interface IProps {
     headerInfo?: IMchc_Doctor_OutpatientHeaderInfo
-    gradeOptions?: IMchc_HighriskGradeConfig[]
     initData?: IMchc_Doctor_OutpatientHeaderInfo
     assign_initData(v?: Partial<IMchc_Doctor_OutpatientHeaderInfo>): void
 }
-const KEY = 'tags'
+const KEY = 'highriskScreening'
 // const KEY = 'highRiskDiagnosis'
-export function HighriskSign_Tag(props: IProps) {
+export function HighriskSign_高危筛查(props: IProps) {
     const { config } = use_provoke('config')
 
-    const { headerInfo, gradeOptions, initData, assign_initData } = props
+    const { headerInfo, initData, assign_initData } = props
     const highRiskTreeDataMapping = useRef<{ [x: string]: IMchc_TemplateTree_Item }>({})
 
     const [currentTreeData, set_currentTreeData] = useState<IMchc_TemplateTree_Item[]>([])
 
     const [expandedKeys, set_expandedKeys] = useState<string[]>([])
     const [selectTree, set_selectTree] = useState<IMchc_TemplateTree_Item[]>([])
-    const multiple = config.病人标签多选
+    const multiple = true
 
     useEffect(() => {
         ; (async () => {
             if (headerInfo) {
-                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 9527 })
+                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 24 })
                 // const highriskTreeData = await SMchc_Common.getHighriskTree()
 
                 highRiskTreeDataMapping.current = keyBy(highriskTreeData, 'id')
@@ -164,7 +162,7 @@ export function HighriskSign_Tag(props: IProps) {
         <div className={styles['highrisk-sign']}>
             <div className={styles['highrisk-sign-header']}>
                 <Row gutter={8}>
-                    <Col span={2}>标签:</Col>
+                    <Col span={2}>高危筛查:</Col>
                     <Col span={21}>
                         <MySelect
                             mode="tags"

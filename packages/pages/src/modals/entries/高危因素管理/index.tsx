@@ -9,8 +9,9 @@ import {
 import { get, request, ROMAN_NUMERALS } from '@lm_fe/utils'
 import { message, Modal, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { 高危时间轴 } from '../高危时间轴/HighriskTimeline'
+import { HighriskSign_高危筛查 } from './HighriskFuck'
 import { HighriskSign_高危因素管理 } from './HighriskSign'
-import { HighriskTimeline_高危因素管理 } from './HighriskTimeline'
 import styles from './index.module.less'
 const boundSymbol = ':'
 interface IProps {
@@ -20,16 +21,14 @@ interface IProps {
     onFinish?(v: IMchc_Doctor_OutpatientHeaderInfo): void
     handleSubmit?(): void
 
-    hide高危标记?: boolean
-    hide高危时间轴?: boolean
 }
 export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
     const { modal_data, close, ...others } = props
-    const { data, onFinish, handleSubmit, pregnancyId, hide高危时间轴, hide高危标记 } = modal_data
+    const { data, onFinish, handleSubmit, pregnancyId, } = modal_data
 
-    const { 可选高危等级, 可选传染病 } = use_provoke('可选高危等级', '可选传染病')
+    const { 可选高危等级, 可选传染病, config } = use_provoke('可选高危等级', '可选传染病', 'config')
 
-    const [activeTabKey, set_activeTabKey] = useState(hide高危标记 ? (hide高危时间轴 ? '' : '2') : '1')
+    const [activeTabKey, set_activeTabKey] = useState('1')
 
     const [initData, set_initData] = useState<IMchc_Doctor_OutpatientHeaderInfo>()
 
@@ -44,14 +43,11 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
             SMchc_Doctor.getOutpatientHeaderInfo(pregnancyId).then(setHeaderInfo)
         }
 
-        return () => {}
+        return () => { }
     }, [])
 
     async function onOk() {
-        if (hide高危标记) {
-            close?.(true)
-            return
-        }
+
         if (!initData?.infectionNote) {
             return message.info('请选择传染病!')
         }
@@ -127,23 +123,31 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
             onOk={onOk}
         >
             <Tabs activeKey={activeTabKey} onChange={handleTabChange}>
-                {hide高危标记 ? null : (
-                    <Tabs.TabPane tab="高危标记" key="1">
-                        <HighriskSign_高危因素管理
-                            initData={initData}
-                            assign_initData={assign_initData}
-                            gradeOptions={可选高危等级}
-                            contagionOptions={可选传染病?.options}
-                            headerInfo={headerInfo}
-                        />
-                    </Tabs.TabPane>
-                )}
-                {/* 暂时屏蔽 */}
-                {hide高危时间轴 ? null : (
-                    <Tabs.TabPane tab="高危时间轴" key="2">
-                        <HighriskTimeline_高危因素管理 id={pregnancyId ?? headerInfo?.id} gradeOptions={可选高危等级} />
-                    </Tabs.TabPane>
-                )}
+                <Tabs.TabPane tab="高危标记" key="1">
+                    <HighriskSign_高危因素管理
+                        initData={initData}
+                        assign_initData={assign_initData}
+                        gradeOptions={可选高危等级}
+                        contagionOptions={可选传染病?.options}
+                        headerInfo={headerInfo}
+                    />
+                </Tabs.TabPane>
+                {
+                    config.高危管理_隐藏高危筛查
+                        ? null
+                        : <Tabs.TabPane tab="高危筛查" key="3">
+                            <HighriskSign_高危筛查
+                                initData={initData}
+                                assign_initData={assign_initData}
+                                gradeOptions={可选高危等级}
+                                headerInfo={headerInfo}
+                            />
+                        </Tabs.TabPane>
+                }
+
+                <Tabs.TabPane tab="高危时间轴" key="2">
+                    <高危时间轴 id={pregnancyId ?? headerInfo?.id} gradeOptions={可选高危等级} />
+                </Tabs.TabPane>
 
             </Tabs>
         </Modal>

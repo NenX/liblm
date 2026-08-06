@@ -13,6 +13,7 @@ import ManagementPlan from './management-plan';
 import PrenatalTree from './prenatal-tree';
 import SurveyList from './survey-list';
 import WeightGainWarningTips from "./WeightGainWarningTips"
+import { FurtherHistory } from '../FurtherTable/FurtherHistory';
 interface IProps {
   visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
@@ -85,10 +86,6 @@ export default function FurtherSidebar(props: IProps) {
 
 
 
-  async function changeState(value: any) {
-    await initTemplateData();
-    set_sidebarTab(value)
-  }
 
 
 
@@ -232,11 +229,10 @@ export default function FurtherSidebar(props: IProps) {
               <PrenatalTree id={getId()} treeData={prenatalTreeData}></PrenatalTree>
             </div>
           )}
-          {/* {sidebarTab == 3 && (
-            <div className="prenatal-tree-content">
-              <Template templateData={templateData} />
-            </div>
-          )} */}
+          {sidebarTab == 3 && (
+
+            <FurtherHistory visitsData={visitsData} />
+          )}
         </div>
         <div className="tab-content" style={{ background: sys_theme.bg_color }}>
           <div
@@ -254,6 +250,14 @@ export default function FurtherSidebar(props: IProps) {
           >
             产检树
           </div>
+          <div
+            style={{ color: sidebarTab == 3 ? sys_theme.colorPrimary : '' }}
+
+            className={classnames('tab-item',)}
+            onClick={handleTabClick.bind(null, 3)}
+          >
+            历史
+          </div>
 
         </div>
       </div>
@@ -264,7 +268,6 @@ export default function FurtherSidebar(props: IProps) {
       initTreeData();
     }
     if (value == 3) {
-      initTemplateData();
     }
     set_sidebarTab(value)
   }
@@ -294,34 +297,7 @@ export default function FurtherSidebar(props: IProps) {
     return treeData;
   };
 
-  async function initTemplateData() {
-    if (templateData) return;
-    let res, res2, res3;
-    if (size(get(templateData, `doctorTemplate`, [])) == 0)
-      //医生模板
-      res = (await request.get(`/api/template-trees?type.equals=6&depid.equals=2&page=0&size=500`)).data;
-    if (size(get(templateData, `personalTemplate`, [])) == 0)
-      //个人模板
-      res2 = (await request.get(
-        `/api/template-trees?type.equals=7&userid.equals=${get(props, `basicInfo.id`)}&page=0&size=500`,
-      )).data;
-    if (size(get(templateData, `adviseTemplate`, [])) == 0)
-      //建议模板
-      res3 = (await request.get(
-        `/api/template-trees?type.equals=10&depid.equals=2&pregnancyid.equals=${getId()}&page=0&size=500`,
-      )).data;
 
-
-
-
-    set_templateData(
-      {
-        adviseTemplate: transferTemplateData(res3),
-        doctorTemplate: transferTemplateData(res),
-        personalTemplate: transferTemplateData(res2),
-      }
-    )
-  }
 
 
   return (

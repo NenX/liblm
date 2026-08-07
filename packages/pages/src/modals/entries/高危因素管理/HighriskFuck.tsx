@@ -14,6 +14,7 @@ import styles from './index.module.less'
 import { MySelect, Tree_L } from '@lm_fe/components'
 import { use_provoke } from '@lm_fe/provoke'
 import { ColorSpan, transfer_to_treeNode } from './utils'
+import { mchcLogger } from '@lm_fe/env'
 
 const boundSymbol = ':'
 interface IProps {
@@ -37,13 +38,16 @@ export function HighriskSign_高危筛查(props: IProps) {
 
     useEffect(() => {
         ; (async () => {
+
             if (headerInfo) {
                 const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 24 })
                 // const highriskTreeData = await SMchc_Common.getHighriskTree()
 
                 highRiskTreeDataMapping.current = keyBy(highriskTreeData, 'id')
                 const data = get(headerInfo, KEY)
+
                 const highriskNote_ = data?.split?.(',')?.filter((_) => _) ?? []
+
                 let _selectTree: IMchc_TemplateTree_Item[] = []
                 highriskNote_.map((item) => {
                     map(highRiskTreeDataMapping.current, (v, i) => {
@@ -53,7 +57,6 @@ export function HighriskSign_高危筛查(props: IProps) {
                         }
                     })
                 })
-
                 set_selectTree(_selectTree)
                 set_expandedKeys(Object.keys(highRiskTreeDataMapping.current))
                 assign_initData(headerInfo)
@@ -65,6 +68,7 @@ export function HighriskSign_高危筛查(props: IProps) {
     }, [headerInfo])
 
     function handle_select_change(_value: string) {
+
         const tag_arr = split(_value, ',')
 
         const tree_items: IMchc_TemplateTree_Item[] = []
@@ -76,11 +80,13 @@ export function HighriskSign_高危筛查(props: IProps) {
                 }
             })
         })
+        mchcLogger.log('handle_select_change', tree_items, tag_arr)
         calAndSetData(tree_items, tag_arr)
     }
 
     function handle_tree_select(ids: string[], e: any) {
-        const custom_tags = get(initData, KEY)
+        const aa = get(initData, KEY)
+        const custom_tags = aa
             ?.split(',')
             .filter((_) => !_.includes(':')) ?? []
         let tree_items: IMchc_TemplateTree_Item[] = []
@@ -152,7 +158,7 @@ export function HighriskSign_高危筛查(props: IProps) {
         return renderTree({ treeData: treeData__, expandedKeys })
     }
     function getTargetNote(v: IMchc_TemplateTree_Item) {
-        const p = get(highRiskTreeDataMapping.current, v.pid)
+        const p = get(highRiskTreeDataMapping.current, v.pid?.toString())
         const addNote = `${p?.val}${boundSymbol}${v?.val}`
         if (!v?.wb) return addNote
         return `${addNote}${boundSymbol}${v?.wb}`

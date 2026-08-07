@@ -1,5 +1,5 @@
 import { IGlobalModalProps } from '@lm_fe/components'
-import { mchcEnv } from '@lm_fe/env'
+import { mchcEnv, mchcLogger } from '@lm_fe/env'
 import { use_provoke } from '@lm_fe/provoke'
 import {
     IMchc_Doctor_OutpatientHeaderInfo,
@@ -64,7 +64,7 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
                 return
             }
         }
-        console.log('initData', { initData })
+        mchcLogger.log('initData', { initData })
         if (onFinish) {
             // 新建孕册
             if (headerInfo) {
@@ -83,11 +83,12 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
     async function updateRiskRecords() {
         const postData = {
             outEmrId: get(headerInfo, 'id'),
-            infectionNote: initData?.infectionNote,
-            tags: initData?.tags,
-            highriskNote: initData?.highriskNote,
-            highriskGrade: initData?.highriskGrade,
-            gestationalWeek: get(headerInfo, `gesweek`),
+            // infectionNote: initData?.infectionNote,
+            // tags: initData?.tags,
+            // highriskNote: initData?.highriskNote,
+            // highriskGrade: initData?.highriskGrade,
+            // gestationalWeek: get(headerInfo, `gesweek`),
+            ...initData
         }
 
         const res = await request.put('/api/doctor/assessHighRisk', postData)

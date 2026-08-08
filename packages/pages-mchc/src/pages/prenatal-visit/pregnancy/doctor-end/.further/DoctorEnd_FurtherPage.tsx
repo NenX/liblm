@@ -38,7 +38,7 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
   } = props;
   const [diagnosesList, setDiagnosesList] = useState<IMchc_Doctor_Diagnoses[]>([])
 
-  const serialNo_q = getSearchParamsValue('serialNo')
+  const serialNo_q = getSearchParamsValue('serialNo')|| getSearchParamsValue('serialNO')
 
   const [visitsData, _setVisitsData] = useState<IMchc_Doctor_RvisitInfoOfOutpatient>()
 
@@ -165,16 +165,16 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
     const serialNo = __serialNo ?? formData?.serialNo!
 
     if (mchcEnv.is('越秀妇幼')) {
-      const xxxa = diagnosesList.map(_ => ({
-        ..._,
-        serialNo,
-        outEmrId
+      const xxxa = diagnosesList.map((_) => ({
+          ..._,
+          serialNo,
+          outEmrId,
       }))
 
       SMchc_Doctor.new_diagnosis_list(xxxa).then(setDiagnosesList)
     }
 
-    var set_data = assign(newData, { outEmrId, serialNo })
+    var set_data = assign(newData, { outEmrId, serialNO: serialNo })
     const redata = await SMchc_Doctor.updateRvisitInfoOfOutpatient(set_data);
     after_save(redata);
 
@@ -254,7 +254,7 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
         fuck
           ? null
           : <FurtherSidebar
-            serialNo={formData?.serialNo!}
+            serialNo={formData?.serialNo || serialNo_q}
             setDiagnosesList={setDiagnosesList}
             diagnosesList={diagnosesList}
             formData={formData}
@@ -292,6 +292,7 @@ function DoctorEnd_Further(props: IDoctorEnd_FurtherProps) {
           getLastRecord={getLastRecord}
           headerInfo={headerInfo}
           diagnosesList={diagnosesList}
+          setDiagnosesList={setDiagnosesList}
           isAllPregnancies={false}
           formChange={formChange}
         />

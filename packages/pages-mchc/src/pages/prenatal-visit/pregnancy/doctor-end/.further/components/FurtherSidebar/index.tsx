@@ -14,6 +14,7 @@ import PrenatalTree from './prenatal-tree';
 import SurveyList from './survey-list';
 import WeightGainWarningTips from "./WeightGainWarningTips"
 import { FurtherHistory } from '../FurtherTable/FurtherHistory';
+import { SideTemplate } from './SideTemplate'
 interface IProps {
   visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient
   headerInfo: IMchc_Doctor_OutpatientHeaderInfo
@@ -233,6 +234,10 @@ export default function FurtherSidebar(props: IProps) {
 
             <FurtherHistory visitsData={visitsData} />
           )}
+          {sidebarTab == 4 && (
+
+            <SideTemplate />
+          )}
         </div>
         <div className="tab-content" style={{ background: sys_theme.bg_color }}>
           <div
@@ -257,6 +262,14 @@ export default function FurtherSidebar(props: IProps) {
             onClick={handleTabClick.bind(null, 3)}
           >
             历史
+          </div>
+          <div
+            style={{ color: sidebarTab == 4 ? sys_theme.colorPrimary : '' }}
+
+            className={classnames('tab-item',)}
+            onClick={handleTabClick.bind(null, 4)}
+          >
+            模板
           </div>
 
         </div>

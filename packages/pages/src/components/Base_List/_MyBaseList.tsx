@@ -715,11 +715,13 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
 
     const mergedColumns = format_columns(cal_columns);
-    const rowSelection: TableRowSelection<T> = {
-        // type: 'checkbox',
-        onChange: handleRowSelected,
-        selectedRowKeys: checkRows.map(_ => _.id as any)
-    }
+    const row_selection: TableRowSelection<T> | undefined = needChecked
+        ? {
+            type: needChecked === 2 ? 'radio' : 'checkbox',
+            onChange: handleRowSelected,
+            selectedRowKeys: checkRows.map(_ => _.id as any)
+        }
+        : undefined
     const __pagination: TablePaginationConfig | boolean = needPagination ? {
         position: ['bottomCenter'],
         total,
@@ -900,7 +902,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                         columns={mergedColumns}
 
                         rowSelection={
-                            needChecked ? rowSelection : undefined
+                            row_selection
                         }
 
                         onRow={(record: T) => {

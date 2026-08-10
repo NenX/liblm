@@ -1,0 +1,83 @@
+import React, { useEffect, useState, useCallback } from 'react';
+import { get, isEmpty, map, size } from 'lodash';
+import { Button, Collapse } from 'antd';
+import { Empty } from 'antd';
+import { EventEmitter_Old, IMultiTemplate_item, IMultiTemplate_remote, IMultiTemplate_type, IMultiTemplateProps, MyCheckbox, OkButton } from '@lm_fe/components_m';
+import { BF_Wrap2 } from '@lm_fe/pages';
+import { mchcEvent, mchcLogger } from '@lm_fe/env';
+import { AnyObject, expect_array, request, set } from '@lm_fe/utils';
+interface Iprops {
+  on_select(item?: IMultiTemplate_item): void,
+  type?: IMultiTemplate_type,
+  templates_props: IMultiTemplateProps | null
+}
+export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
+
+  const [templates, set_templates] = useState<IMultiTemplate_remote>()
+  const [open_keys, set_open_keys] = useState<string[]>([])
+  useEffect(() => {
+    fetch_data(type)
+
+    return () => {
+
+    }
+  }, [type])
+  if (!templates_props) return <div>配置异常</div>
+
+  function fetch_data(t?: IMultiTemplate_type) {
+    if (t) {
+      request
+        // .get<IRemoteTemplates[]>(url, { params: { 'type.equals': item?.params?.type } })
+        .get<IMultiTemplate_remote[]>(templates_props?.url!, { params: t?.params })
+        .then(res => {
+          const res_data = res.data[0]
+          set_templates(res_data)
+          set_open_keys(res_data.data.map(_ => _.title))
+        })
+    }
+  }
+  const fds = expect_array(templates_props.fds)
+
+  function run_one(action: '覆' | '插', data: AnyObject, ks?: string[]) {
+    const isOk = action === '插' || confirm('确定覆？')
+    if (!isOk) return
+    mchcEvent.emit('outpatient', { type: '复诊表单走一个', action, data, keys: ks ? ks : fds.map(_ => _.name!) })
+  }
+  if (!templates) return <Empty />
+  return (
+    <div>
+      <Collapse size='small' activeKey={open_keys} onChange={set_open_keys} >
+
+        {
+          expect_array(templates?.data).map(obj => {
+            return <Collapse.Panel
+              key={obj.title}
+              header={
+                <span>
+                  {obj.title}
+                  <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
+                  <OkButton primary size='small' onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
+                </span>
+              }>
+              {
+                fds.map(f => {
+                  const item_name = f.name!
+                  const v = get(obj, item_name)
+                  if (!v) return null
+                  return <div style={{ marginBottom: 6 }}>
+                    <span style={{ fontWeight: 'bold' }}>{f.label}：</span>
+                    <span>{v}</span>
+                    <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
+                    <OkButton primary size='small' onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />
+                  </div>
+                })
+              }
+
+            </Collapse.Panel>
+          })
+        }
+      </Collapse>
+
+    </div >
+  );
+}

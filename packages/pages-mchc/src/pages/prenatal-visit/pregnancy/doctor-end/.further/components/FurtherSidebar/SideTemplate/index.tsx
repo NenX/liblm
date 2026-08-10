@@ -29,12 +29,17 @@ export function SideTemplate({ ...props }: Iprops) {
     return () => {
 
     }
-  }, [all_types, select_type])
+  }, [all_types])
   function open_setting() {
     if (!templates_props) return
+    const old_type = select_type
+    set_select_type(undefined)
     mchcModal__.open('box', {
       width: 1400,
       title: '模板',
+      onClose(status) {
+        set_select_type(old_type)
+      },
       modal_data: {
         content: <MultiTemplateTemplateGroup on_select={() => { }} {...templates_props} maintain_mode />
       },

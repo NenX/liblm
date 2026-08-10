@@ -43,41 +43,39 @@ export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
     if (!isOk) return
     mchcEvent.emit('outpatient', { type: '复诊表单走一个', action, data, keys: ks ? ks : fds.map(_ => _.name!) })
   }
-  if (!templates) return <Empty />
+  if (!type || !templates) return <Empty />
   return (
-    <div>
-      <Collapse size='small' activeKey={open_keys} onChange={set_open_keys} >
+    <Collapse size='small' activeKey={open_keys} onChange={set_open_keys} >
 
-        {
-          expect_array(templates?.data).map(obj => {
-            return <Collapse.Panel
-              key={obj.title}
-              header={
-                <span>
-                  {obj.title}
-                  <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
-                  <OkButton primary size='small' onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
-                </span>
-              }>
-              {
-                fds.map(f => {
-                  const item_name = f.name!
-                  const v = get(obj, item_name)
-                  if (!v) return null
-                  return <div style={{ marginBottom: 6 }}>
-                    <span style={{ fontWeight: 'bold' }}>{f.label}：</span>
-                    <span>{v}</span>
-                    <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
-                    <OkButton primary size='small' onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />
-                  </div>
-                })
-              }
+      {
+        expect_array(templates?.data).map(obj => {
+          return <Collapse.Panel
+            key={obj.title}
+            header={
+              <span>
+                {obj.title}
+                <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
+                <OkButton primary size='small' onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
+              </span>
+            }>
+            {
+              fds.map(f => {
+                const item_name = f.name!
+                const v = get(obj, item_name)
+                if (!v) return null
+                return <div style={{ marginBottom: 12 }}>
+                  <span style={{ fontWeight: 'bold' }}>{f.label}：</span>
+                  <span>{v}</span>
+                  <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
+                  <OkButton primary size='small' onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />
+                </div>
+              })
+            }
 
-            </Collapse.Panel>
-          })
-        }
-      </Collapse>
+          </Collapse.Panel>
+        })
+      }
+    </Collapse>
 
-    </div >
   );
 }

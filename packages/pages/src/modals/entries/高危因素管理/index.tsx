@@ -30,17 +30,16 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
 
     const [activeTabKey, set_activeTabKey] = useState('1')
 
-    const [initData, set_initData] = useState<IMchc_Doctor_OutpatientHeaderInfo>()
+    const [initData, set_initData] = useState<Partial<IMchc_Doctor_OutpatientHeaderInfo>>({})
 
-    const [headerInfo, setHeaderInfo] = useState<IMchc_Doctor_OutpatientHeaderInfo>()
     function assign_initData(part: Partial<IMchc_Doctor_OutpatientHeaderInfo> = {}) {
         set_initData(Object.assign({}, initData, part))
     }
     useEffect(() => {
         if (data) {
-            setHeaderInfo(data)
+            assign_initData(data)
         } else {
-            SMchc_Doctor.getOutpatientHeaderInfo(pregnancyId).then(setHeaderInfo)
+            SMchc_Doctor.getOutpatientHeaderInfo(pregnancyId).then(assign_initData)
         }
 
         return () => { }
@@ -52,14 +51,14 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
             return message.info('请选择传染病!')
         }
 
-        if (initData.highriskGrade && initData.highriskGrade !== ROMAN_NUMERALS[1]) {
+        if (initData.highriskLable && initData.highriskLable !== ROMAN_NUMERALS[1]) {
             if (!initData.highriskNote) {
                 message.error('请填写高危因素!')
                 return
             }
         }
         if (initData.highriskNote) {
-            if (!initData.highriskGrade) {
+            if (!initData.highriskLable) {
                 message.error('请填写高危等级!')
                 return
             }
@@ -67,12 +66,10 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
         mchcLogger.log('initData', { initData })
         if (onFinish) {
             // 新建孕册
-            if (headerInfo) {
-                onFinish({
-                    ...headerInfo,
-                    ...initData,
-                })
-            }
+            onFinish({
+                highriskGrade: initData.highriskLable,
+                ...initData as IMchc_Doctor_OutpatientHeaderInfo
+            })
         } else {
             await updateRiskRecords()
             handleSubmit?.()
@@ -82,11 +79,11 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
 
     async function updateRiskRecords() {
         const postData = {
-            outEmrId: get(headerInfo, 'id'),
+            outEmrId: get(initData, 'id'),
             // infectionNote: initData?.infectionNote,
             // tags: initData?.tags,
             // highriskNote: initData?.highriskNote,
-            // highriskGrade: initData?.highriskGrade,
+            highriskGrade: initData?.highriskLable,
             // gestationalWeek: get(headerInfo, `gesweek`),
             ...initData
         }
@@ -96,7 +93,7 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
         // saveHeaderInfo({
         //   ...props.data,
         //   ...pick(post, ['infectionNote', 'highriskNote']),
-        //   highriskLable: get(post, `highriskGrade`),
+        //   highriskLable: get(post, `highriskLable`),
         // });
         // saveHeaderInfo(ress);
     }
@@ -130,7 +127,6 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
                         assign_initData={assign_initData}
                         gradeOptions={可选高危等级}
                         contagionOptions={可选传染病?.options}
-                        headerInfo={headerInfo}
                     />
                 </Tabs.TabPane>
                 {
@@ -140,14 +136,12 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
                             <HighriskSign_高危筛查
                                 initData={initData}
                                 assign_initData={assign_initData}
-                                gradeOptions={可选高危等级}
-                                headerInfo={headerInfo}
                             />
                         </Tabs.TabPane>
                 }
 
                 <Tabs.TabPane tab="高危时间轴" key="2">
-                    <高危时间轴 id={pregnancyId ?? headerInfo?.id} gradeOptions={可选高危等级} />
+                    <高危时间轴 id={pregnancyId ?? initData?.id} gradeOptions={可选高危等级} />
                 </Tabs.TabPane>
 
             </Tabs>

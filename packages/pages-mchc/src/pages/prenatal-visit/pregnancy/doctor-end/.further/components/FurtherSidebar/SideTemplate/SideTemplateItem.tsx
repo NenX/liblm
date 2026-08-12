@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { get, isEmpty, map, size } from 'lodash';
-import { Button, Collapse } from 'antd';
-import { Empty } from 'antd';
-import { EventEmitter_Old, IMultiTemplate_item, IMultiTemplate_remote, IMultiTemplate_type, IMultiTemplateProps, MyCheckbox, OkButton } from '@lm_fe/components_m';
-import { BF_Wrap2 } from '@lm_fe/pages';
-import { mchcEvent, mchcLogger } from '@lm_fe/env';
+import { IMultiTemplate_item, IMultiTemplate_remote, IMultiTemplate_type, IMultiTemplateProps, OkButton } from '@lm_fe/components_m';
+import { mchcEvent } from '@lm_fe/env';
 import { AnyObject, expect_array, request, set } from '@lm_fe/utils';
+import { Collapse, Empty, Space } from 'antd';
+import { get } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import styles from './index.module.less'
 interface Iprops {
   on_select(item?: IMultiTemplate_item): void,
   type?: IMultiTemplate_type,
@@ -54,8 +53,10 @@ export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
             header={
               <span>
                 {obj.title}
-                <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
-                <OkButton primary size='small' onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
+                <Space.Compact size='small' style={{ marginLeft: 6 }}>
+                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
+                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
+                </Space.Compact>
               </span>
             }>
             {
@@ -63,11 +64,13 @@ export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
                 const item_name = f.name!
                 const v = get(obj, item_name)
                 if (!v) return null
-                return <div style={{ marginBottom: 12 }}>
+                return <div className={styles['tool-box']} style={{ paddingBottom: 12 }}>
                   <span style={{ fontWeight: 'bold' }}>{f.label}：</span>
                   <span>{v}</span>
-                  <OkButton primary style={{ margin: '0 4px' }} size='small' onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
-                  <OkButton primary size='small' onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />
+                  <Space.Compact className={styles['tool']} size='small' style={{ marginLeft: 6 }}>
+                    <OkButton primary onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
+                    <OkButton primary onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />
+                  </Space.Compact>
                 </div>
               })
             }

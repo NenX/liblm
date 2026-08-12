@@ -18,8 +18,7 @@ import { mchcLogger } from '@lm_fe/env'
 
 const boundSymbol = ':'
 interface IProps {
-    headerInfo?: IMchc_Doctor_OutpatientHeaderInfo
-    initData?: IMchc_Doctor_OutpatientHeaderInfo
+    initData?: Partial<IMchc_Doctor_OutpatientHeaderInfo>
     assign_initData(v?: Partial<IMchc_Doctor_OutpatientHeaderInfo>): void
 }
 const KEY = 'highriskScreening'
@@ -27,7 +26,7 @@ const KEY = 'highriskScreening'
 export function HighriskSign_高危筛查(props: IProps) {
     const { config } = use_provoke('config')
 
-    const { headerInfo, initData, assign_initData } = props
+    const { initData, assign_initData } = props
     const highRiskTreeDataMapping = useRef<{ [x: string]: IMchc_TemplateTree_Item }>({})
 
     const [currentTreeData, set_currentTreeData] = useState<IMchc_TemplateTree_Item[]>([])
@@ -39,12 +38,12 @@ export function HighriskSign_高危筛查(props: IProps) {
     useEffect(() => {
         ; (async () => {
 
-            if (headerInfo) {
-                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 24 })
+            if (initData) {
+                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 21 })
                 // const highriskTreeData = await SMchc_Common.getHighriskTree()
 
                 highRiskTreeDataMapping.current = keyBy(highriskTreeData, 'id')
-                const data = get(headerInfo, KEY)
+                const data = get(initData, KEY)
 
                 const highriskNote_ = data?.split?.(',')?.filter((_) => _) ?? []
 
@@ -59,13 +58,12 @@ export function HighriskSign_高危筛查(props: IProps) {
                 })
                 set_selectTree(_selectTree)
                 set_expandedKeys(Object.keys(highRiskTreeDataMapping.current))
-                assign_initData(headerInfo)
                 set_currentTreeData(highriskTreeData)
             }
         })()
 
         return () => { }
-    }, [headerInfo])
+    }, [initData])
 
     function handle_select_change(_value: string) {
 

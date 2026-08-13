@@ -53,7 +53,7 @@ export function SideTemplate({ ...props }: Iprops) {
           : <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <MyCheckbox style={{ margin: 6 }} value={select_type?.label} onChange={(t: string) => set_select_type(all_types.find(_ => _.label === t))} marshal={0} options={all_types.map(_ => ({ label: _.label, value: _.label }))} />
-              <OkButton style={{ marginRight: 46 }} icon={<MyIcon value='SettingOutlined' />} onClick={open_setting} />
+              <OkButton type='text' style={{ marginRight: 46 }} icon={<MyIcon value='SettingOutlined' />} onClick={open_setting} />
             </div>
             <SideTemplateItem templates_props={templates_props} type={select_type} on_select={t => { }} />
           </>

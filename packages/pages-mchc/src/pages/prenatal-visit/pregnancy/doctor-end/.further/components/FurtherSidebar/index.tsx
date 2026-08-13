@@ -3,7 +3,7 @@ import { mchcConfig, mchcEnv, mchcUtils } from '@lm_fe/env';
 import { use_provoke } from '@lm_fe/provoke';
 import { IMchc_Doctor_Diagnoses, IMchc_Doctor_OutpatientHeaderInfo, IMchc_Doctor_RvisitInfoOfOutpatient, IMchc_Doctor_RvisitInfoOfOutpatient_Rvisit, TIdTypeCompatible } from '@lm_fe/service';
 import { request } from '@lm_fe/utils';
-import { Card, Collapse, Timeline } from 'antd';
+import { Button, Card, Collapse, Segmented, Space, Timeline } from 'antd';
 import classnames from 'classnames';
 import { get, isEmpty, join, map, size, slice } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -49,7 +49,7 @@ export default function FurtherSidebar(props: IProps) {
 
   const [isShowListModal, set_isShowListModal] = useState(false)
   const [isShowManageModal, set_isShowManageModal] = useState(false)
-  const [sidebarTab, set_sidebarTab] = useState(1)
+  const [sidebarTab, set_sidebarTab] = useState('诊断')
   const [prenatalTreeData, set_prenatalTreeData] = useState(null)
   const [templateData, set_templateData] = useState<{
     adviseTemplate: any[]
@@ -126,8 +126,11 @@ export default function FurtherSidebar(props: IProps) {
 
     return (
       <div className="sider-container">
+        {
+          render_tools()
+        }
         <div className="main-content">
-          {sidebarTab == 1 && (
+          {sidebarTab == '诊断' && (
             <div className="prenatal-visit-main_return-sidebar">
               <Collapse destroyOnHidden size='small' defaultActiveKey={['1', '2', '4', '5']} bordered={false}>
                 <Collapse.Panel
@@ -225,96 +228,45 @@ export default function FurtherSidebar(props: IProps) {
               </Collapse>
             </div>
           )}
-          {sidebarTab == 2 && (
+          {sidebarTab == '产检树' && (
             <div className="prenatal-tree-content">
-              <PrenatalTree id={getId()} treeData={prenatalTreeData}></PrenatalTree>
+              <PrenatalTree id={getId()} ></PrenatalTree>
             </div>
           )}
-          {sidebarTab == 3 && (
+          {sidebarTab == '历史' && (
 
             <FurtherHistory visitsData={visitsData} />
           )}
-          {sidebarTab == 4 && (
+          {sidebarTab == '模板' && (
 
             <SideTemplate />
           )}
         </div>
-        <div className="tab-content" style={{ background: sys_theme.bg_color }}>
-          <div
-            style={{ color: sidebarTab == 1 ? sys_theme.colorPrimary : '' }}
-            className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(null, 1)}
-          >
-            诊断
-          </div>
-          <div
-            style={{ color: sidebarTab == 2 ? sys_theme.colorPrimary : '' }}
 
-            className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(null, 2)}
-          >
-            产检树
-          </div>
-          <div
-            style={{ color: sidebarTab == 3 ? sys_theme.colorPrimary : '' }}
-
-            className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(null, 3)}
-          >
-            历史
-          </div>
-          <div
-            style={{ color: sidebarTab == 4 ? sys_theme.colorPrimary : '' }}
-
-            className={classnames('tab-item',)}
-            onClick={handleTabClick.bind(null, 4)}
-          >
-            模板
-          </div>
-
-        </div>
       </div>
     )
   };
+  function render_tools() {
+    return <Segmented size='small' value={sidebarTab} block onChange={set_sidebarTab} options={['诊断', '产检树', '历史', '模板']} />
+  }
   function handleTabClick(value: any) {
-    if (value == 2) {
-      initTreeData();
-    }
-    if (value == 3) {
-    }
+
     set_sidebarTab(value)
   }
 
-  async function initTreeData() {
-    if (prenatalTreeData) return;
-    let data: any = (await request.get('/api/doctor/getExamTree?id=' + getId())).data;
-    data = data.sort((a: any, b: any) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
-    set_prenatalTreeData(data)
 
-  }
-  function transferTemplateData(data: any, pid = 0) {
-    const treeData: any = [];
-    map(data, (item: any) => {
-      if (item.pid === pid) {
-        item.title = item.val;
-        item.key = String(item.id);
-        item.children = transferTemplateData(data, item.id);
-        if (isEmpty(item.children)) {
-          item.isLeaf = true;
-        } else {
-          item.isLeaf = false;
-        }
-        treeData.push(item);
-      }
-    });
-    return treeData;
-  };
+
 
 
 
 
   return (
-    <Card size='small' styles={{ body: { padding: 0 } }} style={{ width: 260, height: '100%', marginRight: 8, overflow: 'auto' }}>
+    <Card size='small' styles={{
+      body: {
+        padding: 0,
+        height: '100%'
+      }
+    }} style={{ width: 270, height: '100%', marginRight: 8, overflow: 'auto' }}>
 
       <MyLazyComponent size='middle'>
         {renderSiderBar()}

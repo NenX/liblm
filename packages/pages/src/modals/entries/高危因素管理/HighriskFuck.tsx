@@ -39,7 +39,7 @@ export function HighriskSign_高危筛查(props: IProps) {
         ; (async () => {
 
             if (initData) {
-                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 21 })
+                const highriskTreeData = await SMchc_TemplateTrees.getTemplateTree({ type: 24 })
                 // const highriskTreeData = await SMchc_Common.getHighriskTree()
 
                 highRiskTreeDataMapping.current = keyBy(highriskTreeData, 'id')

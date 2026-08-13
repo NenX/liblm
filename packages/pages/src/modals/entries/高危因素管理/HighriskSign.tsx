@@ -8,14 +8,14 @@ import {
 } from '@lm_fe/service'
 import { Button, Col, Input, Row, Space } from 'antd'
 import { DataNode } from 'antd/lib/tree'
-import { findIndex, get, includes, isEmpty, keyBy, keys, map, sortBy, split } from 'lodash'
+import { findIndex, includes, isEmpty, keyBy, keys, map, sortBy, split } from 'lodash'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 
 import { MySelect, Tree_L } from '@lm_fe/components'
 import { use_provoke } from '@lm_fe/provoke'
 import { ColorSpan, transfer_to_treeNode } from './utils'
-import { ROMAN_NUMERALS } from '@lm_fe/utils'
+import { ROMAN_NUMERALS, get } from '@lm_fe/utils'
 
 const boundSymbol = ':'
 interface IProps {
@@ -311,7 +311,7 @@ export function HighriskSign_高危因素管理(props: IProps) {
         }
     }
     function getTargetNote(v: IMchc_TemplateTree_Item) {
-        const p = get(highRiskTreeDataMapping.current, v.pid)
+        const p = get(highRiskTreeDataMapping.current, v.pid.toString())
         const addNote = `${p?.val}${boundSymbol}${v?.val}`
 
         return addNote

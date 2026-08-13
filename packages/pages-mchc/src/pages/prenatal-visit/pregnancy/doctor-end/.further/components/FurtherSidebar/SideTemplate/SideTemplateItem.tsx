@@ -54,8 +54,8 @@ export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
               <span>
                 {obj.title}
                 <Space.Compact size='small' style={{ marginLeft: 6 }}>
-                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆' />
-                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插' />
+                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('覆', obj) }} btn_text='覆盖' />
+                  <OkButton primary onClick={e => { e.stopPropagation(); run_one('插', obj) }} btn_text='插入' />
                 </Space.Compact>
               </span>
             }>
@@ -66,7 +66,7 @@ export function SideTemplateItem({ type, templates_props, on_select }: Iprops) {
                 if (!v) return null
                 return <div className={styles['tool-box']} style={{ paddingBottom: 12 }}>
                   <span style={{ fontWeight: 'bold' }}>{f.label}：</span>
-                  <span>{v}</span>
+                  <span className={styles['tool-text']}>{v}</span>
                   <Space.Compact className={styles['tool']} size='small' style={{ marginLeft: 6 }}>
                     <OkButton primary onClick={e => { run_one('覆', set({}, f.name!, v), [item_name]) }} btn_text='覆' />
                     <OkButton primary onClick={e => { run_one('插', set({}, f.name!, v), [item_name]) }} btn_text='插' />

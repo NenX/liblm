@@ -1,4 +1,5 @@
 import { MyIcon } from '@lm_fe/components';
+import { OkButton } from '@lm_fe/components_m';
 import { mchcEnv } from '@lm_fe/env';
 import { BF_Wrap2 } from '@lm_fe/pages';
 import { use_provoke } from '@lm_fe/provoke';
@@ -6,6 +7,7 @@ import { IMchc_Doctor_RvisitInfoOfOutpatient, IMchc_Doctor_RvisitInfoOfOutpatien
 import { cloneDeep, copyText, expect_array, get, isEmpty, isObject, isString } from '@lm_fe/utils';
 import { Divider, Empty } from 'antd';
 import React from 'react';
+import m_styles from './FurtherHistory.module.less'
 interface IProps {
 	visitsData?: IMchc_Doctor_RvisitInfoOfOutpatient,
 
@@ -54,30 +56,19 @@ export function FurtherHistory(props: IProps) {
 							return <></>
 						}
 						return (
-							<>
+							<span className={m_styles['copy-block']}>
 								<span style={{ fontWeight: 'bold', }}>{title}:</span>
-								<span style={{ marginRight: 12, color: '666' }}>
-									{text}
+								<span >
+									<span className={m_styles['copy-txt']}>{text}</span>
 									{
 										get(config, 'with_copy')
-											? <span ><MyIcon onClick={() => {
-												if (isString(text)) {
-													copyText(text)
-												} else if (isObject(text) && isString(get(text, 'children'))) {
-													copyText(get(text, 'children'))
-												} else {
-													mchcEnv.success('复制失败！请手动复制')
-													return
-												}
-
-												mchcEnv.success(title + '复制成功')
-											}} value='CopyOutlined' /></span>
+											? <OkButton type='text' title='复制' onClick={() => copy(text, title)} icon={<MyIcon value='CopyOutlined' />} />
 											: null
 									}
 
 								</span>
 
-							</>
+							</span>
 						)
 					})}
 				</div>
@@ -85,6 +76,21 @@ export function FurtherHistory(props: IProps) {
 		})
 		return contentArr
 	}
+
+	function copy(text: any, title: any) {
+		if (isString(text)) {
+			copyText(text)
+		} else if (isObject(text) && isString(get(text, 'children'))) {
+			copyText(get(text, 'children'))
+		} else {
+			mchcEnv.success('复制失败！请手动复制')
+			return
+		}
+
+		mchcEnv.success(title + '复制成功')
+	}
+
+
 	if (isEmpty(reverseRvisit))
 		return <Empty />
 	return (

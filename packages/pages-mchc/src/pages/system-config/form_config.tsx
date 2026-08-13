@@ -319,12 +319,7 @@ export default defineFormConfig(
                             inputProps: { options: switchOptions, marshal: 0 },
                             layout: '1/3',
                         },
-                        {
-                            label: '标签管理',
-                            name: '标签管理',
-                            inputType: 'MSW',
-                            layout: '1/3',
-                        },
+
 
                         {
                             label: '看诊审核限制',

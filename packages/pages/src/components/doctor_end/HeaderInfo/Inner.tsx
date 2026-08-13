@@ -34,7 +34,6 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
         量表拓展 = [],
         护士端_禁止编辑高危因素_传染病,
         highriskType,
-        标签管理,
     } = use_provoke((s) => s.config)
 
 
@@ -506,18 +505,18 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                             </Tooltip>
                             <FuckTags str_data={get(headerInfo, 'tags')} />
                             {/* 标签管理 */}
-                            {标签管理 && (
-                                <>
-                                    {map(headerInfo?.labels, (tag, i) => {
-                                        return (
-                                            <Tag key={tag.id} color={tag?.color}>
-                                                {tag.name}
-                                            </Tag>
-                                        )
-                                    })}
-                                </>
-                            )}
-                            {mchcEnv.isAdmin && (
+
+                            <>
+                                {map(headerInfo?.labels, (tag, i) => {
+                                    return (
+                                        <Tag key={tag.id} color={tag?.color}>
+                                            {tag.name}
+                                        </Tag>
+                                    )
+                                })}
+                            </>
+
+                            {headerInfo?.labelEnabled && (
                                 <Tag
                                     icon={<MyIcon value="PlusOutlined" />}
                                     style={{ cursor: 'pointer' }}

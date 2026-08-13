@@ -156,7 +156,7 @@ export default function FurtherTable(props: IProps) {
 
 				onRow={(record) => {
 					const is_target = record.id === formData?.id
-					const background = is_target ? sys_theme.colors?.light[3] : undefined
+					const background = is_target ? sys_theme.colors?.light[2] : undefined
 					const cursor = is_target ? undefined : 'pointer'
 					const color = is_target ? '#fff' : undefined
 					return {

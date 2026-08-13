@@ -99,7 +99,7 @@ const MixPanel: TCommonComponent<IProps, string[]> = (props) => {
                 mchcLogger.log('MixPanel act', k, act)
 
                 if (act === 'remove') {
-                    remove(k as string)
+                    confirm(`确定删除${k}吗`) && remove(k as string)
                 }
             }}
             hideAdd

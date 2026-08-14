@@ -56,7 +56,7 @@ export default function FurtherTable(props: IProps) {
 					cancelText="取消"
 					disabled={disabled_save}
 				>
-					<Button type="link" size="small" disabled={disabled_save} danger icon={<MyIcon value='DeleteOutlined' className="global-table-action-icon" />}>
+					<Button type="link" size="small" disabled={disabled_save} danger icon={<MyIcon value='DeleteOutlined' />}>
 						删除
 					</Button>
 				</Popconfirm>
@@ -93,7 +93,8 @@ export default function FurtherTable(props: IProps) {
 			<Modal
 				open={isModalOpen}
 				onCancel={() => setIsModalOpen(false)}
-				width={'93%'}
+				width={'90%'}
+				styles={{ body: { height: '80vh', overflowY: 'auto' } }}
 				footer={null}
 				centered
 			>
@@ -103,11 +104,11 @@ export default function FurtherTable(props: IProps) {
 	}
 	const renderTableMore = () => {
 		return (
-			<Tabs className={styles['further-table-modal']}>
+			<Tabs >
 				<Tabs.TabPane key={2} tab={<><MyIcon value='TableOutlined' />表格</>}>
 					{renderTable(true)}
 				</Tabs.TabPane>
-				<Tabs.TabPane key={1} tab={<><MyIcon value='FileTextOutlined' />文档</>}>
+				<Tabs.TabPane style={{}} key={1} tab={<><MyIcon value='FileTextOutlined' />文档</>}>
 					<FurtherHistory visitsData={visitsData} />
 				</Tabs.TabPane>
 

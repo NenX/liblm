@@ -134,6 +134,7 @@ function ActiveTemplates(props: { item: IMultiTemplate_type, parent_props: IExtr
                                     getContainer: () => el.current!,
                                     onClose: fetch_data,
                                     modal_data: { content: <MultiTemplateTemplateGroup maintain_mode {...parent_props} /> },
+                                    footer: null,
 
                                 })
                             }}

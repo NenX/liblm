@@ -170,8 +170,8 @@ export function HighriskSign_高危因素管理(props: IProps) {
 
     function handle_tree_select(ids: string[], e: any) {
         const custom_tags = get(initData, 'highriskNote', '')
-            .split(',')
-            .filter((_) => !_.includes(':'))
+            ?.split(',')
+            ?.filter((_) => !_.includes(':')) ?? []
         let tree_items: IMchc_TemplateTree_Item[] = []
 
         ids.forEach((k) => {

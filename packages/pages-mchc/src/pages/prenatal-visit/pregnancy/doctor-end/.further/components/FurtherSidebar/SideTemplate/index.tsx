@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
-import { IMultiTemplate_type, IMultiTemplateProps, MultiTemplateTemplateGroup, MyCheckbox, MyIcon, OkButton } from '@lm_fe/components_m';
+import { IMultiTemplate_type, IMultiTemplateProps, MultiTemplateTemplateGroup, MyCheckbox, MyIcon, MySelect, OkButton } from '@lm_fe/components_m';
 import { mchcLogger } from '@lm_fe/env';
 import { BF_Wrap2, mchcModal__ } from '@lm_fe/pages';
 import { expect_array } from '@lm_fe/utils';
@@ -40,6 +40,7 @@ export function SideTemplate({ ...props }: Iprops) {
       onClose(status) {
         set_select_type(old_type)
       },
+      footer: null,
       modal_data: {
         content: <MultiTemplateTemplateGroup on_select={() => { }} {...templates_props} maintain_mode />
       },
@@ -52,7 +53,7 @@ export function SideTemplate({ ...props }: Iprops) {
           ? '配置错误'
           : <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <MyCheckbox style={{ margin: 6 }} value={select_type?.label} onChange={(t: string) => set_select_type(all_types.find(_ => _.label === t))} marshal={0} options={all_types.map(_ => ({ label: _.label, value: _.label }))} />
+              <MySelect size='small' style={{ margin: 4 }} value={select_type?.label} onChange={(t: string) => set_select_type(all_types.find(_ => _.label === t))} marshal={0} options={all_types.map(_ => ({ label: _.label, value: _.label }))} />
               <OkButton type='text' style={{ marginRight: 46 }} icon={<MyIcon value='SettingOutlined' />} onClick={open_setting} />
             </div>
             <SideTemplateItem templates_props={templates_props} type={select_type} on_select={t => { }} />

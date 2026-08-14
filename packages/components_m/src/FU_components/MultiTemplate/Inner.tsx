@@ -35,7 +35,7 @@ export default function MultiTemplateInner(props: IMultiTemplateProps) {
             disabled={disabled}
             onClick={() => {
                 window.mchc_modal?.open('box', {
-                    width: 1400,
+                    width: '90vw',
                     title: '模板',
                     getContainer: () => el.current!,
                     // okText: '导入',

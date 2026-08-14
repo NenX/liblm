@@ -35,7 +35,7 @@ export function SideTemplate({ ...props }: Iprops) {
     const old_type = select_type
     set_select_type(undefined)
     mchcModal__.open('box', {
-      width: 1400,
+      width: '80vw',
       title: '模板',
       onClose(status) {
         set_select_type(old_type)

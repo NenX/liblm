@@ -53,7 +53,7 @@ export function SideTemplate({ ...props }: Iprops) {
           ? '配置错误'
           : <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <MySelect size='small' style={{ margin: 4 }} value={select_type?.label} onChange={(t: string) => set_select_type(all_types.find(_ => _.label === t))} marshal={0} options={all_types.map(_ => ({ label: _.label, value: _.label }))} />
+              <MySelect size='small' allowClear={false} style={{ margin: 4, width: 140 }} value={select_type?.label} onChange={(t: string) => set_select_type(all_types.find(_ => _.label === t))} marshal={0} options={all_types.map(_ => ({ label: _.label, value: _.label }))} />
               <OkButton type='text' style={{ marginRight: 46 }} icon={<MyIcon value='SettingOutlined' />} onClick={open_setting} />
             </div>
             <SideTemplateItem templates_props={templates_props} type={select_type} on_select={t => { }} />

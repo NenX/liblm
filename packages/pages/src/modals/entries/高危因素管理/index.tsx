@@ -6,7 +6,7 @@ import {
     SMchc_Doctor,
     TIdTypeCompatible
 } from '@lm_fe/service'
-import { get, request, ROMAN_NUMERALS } from '@lm_fe/utils'
+import { get, request, ROMAN_NUMERALS, set } from '@lm_fe/utils'
 import { message, Modal, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { 高危时间轴 } from '../高危时间轴/HighriskTimeline'
@@ -37,7 +37,13 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
     }
     useEffect(() => {
         if (data) {
-            assign_initData(data)
+            let _data = data
+            const level_value = get(data, 'highriskLable')
+            const fallback_value = get(data, 'hishRiskLable') || get(data, 'highriskGrade')
+            if (!level_value && fallback_value) {
+                _data = set(_data, 'highriskLable', fallback_value)
+            }
+            assign_initData(_data)
         } else {
             SMchc_Doctor.getOutpatientHeaderInfo(pregnancyId).then(assign_initData)
         }
@@ -67,8 +73,8 @@ export default function HighriskFactor(props: IGlobalModalProps<IProps>) {
         if (onFinish) {
             // 新建孕册
             onFinish({
+                ...initData as IMchc_Doctor_OutpatientHeaderInfo,
                 highriskGrade: initData.highriskLable,
-                ...initData as IMchc_Doctor_OutpatientHeaderInfo
             })
         } else {
             await updateRiskRecords()

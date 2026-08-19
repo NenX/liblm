@@ -52,7 +52,7 @@ const MixPanel: TCommonComponent<IProps, string[]> = (props) => {
             } else if (safe_value.length) {
                 const k = safe_value[0]?.toString()
                 set_activeKey(k)
-                onChange?.([k])
+                onChange?.(safe_value)
 
             }
         }

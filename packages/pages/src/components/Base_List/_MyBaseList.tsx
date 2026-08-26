@@ -198,8 +198,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
     mchcLogger.log('tablelist cache_key', cache_key)
 
 
-    useEffect(() => {
-
+    function relayout() {
         setTimeout(() => {
 
             const h = document.body.clientHeight
@@ -213,11 +212,8 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 setLongSearchForm(true)
             }
 
-        }, 600);
-
-        return () => { }
-
-    }, [])
+        }, 120);
+    }
     useEffect(() => {
 
         if (!inited.current) {
@@ -242,7 +238,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                             : undefined
                     )
                 if (myBaseListService.current) {
-                    init_or_click_search()
+                    init_or_click_search().then(relayout)
 
                     inited.current = true
                 }
@@ -696,7 +692,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
         const q = getSearchParams()
         defaultQuery.current = q
-        table_fetch(q)
+        return table_fetch(q)
 
     }
 

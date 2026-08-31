@@ -358,11 +358,11 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                             {get(headerInfo, `labourState`) ? (
                                 <>
                                     <div className={styles['small-item']}>
-                                        <span className={styles['label']}>产后：</span>
+                                        <span className={styles['label']}>产后:</span>
                                         <span className={styles['value']}>{getValue('daysAfterDelivery')}</span>
                                     </div>
                                     <div className={styles['small-item']}>
-                                        <span className={styles['label']}>分娩孕周：</span>
+                                        <span className={styles['label']}>分娩孕周:</span>
                                         <span className={styles['value']}>{getValue('labourWeek')}</span>
                                     </div>
                                 </>
@@ -370,27 +370,27 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
                                 <>
                                     {check_week_show(getValue('curgesweek')) && (
                                         <div className={styles['small-item']}>
-                                            <span className={styles['label']}>孕周：</span>
+                                            <span className={styles['label']}>孕周:</span>
                                             <span className={styles['value']}>{getValue('curgesweek')}</span>
                                         </div>
                                     )}
 
                                     <div className={styles['small-item']}>
-                                        <span className={styles['label']}>预产期：</span>
+                                        <span className={styles['label']}>预产期:</span>
                                         <span className={styles['value']}>{getValue('edd')}</span>
                                     </div>
                                 </>
                             )}
 
                             <div className={styles['small-item']}>
-                                <span className={styles['label']}>就诊卡号：</span>
+                                <span className={styles['label']}>就诊卡号:</span>
                                 {render_select()}
                             </div>
                             {info_addon.map((_) => {
                                 const txt = getValue(_.value)
                                 return (
                                     <div key={_.label} className={styles['small-item']} title={txt}>
-                                        <span className={styles['label']}>{_.label}：</span>
+                                        <span className={styles['label']}>{_.label}:</span>
                                         <span className={styles['value']}>{txt}</span>
                                     </div>
                                 )

@@ -199,23 +199,38 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
 
 
     function relayout() {
-        setTimeout(() => {
-
-            const h = document.body.clientHeight
-            const formHeight = formWrapper.current?.clientHeight ?? 0
-            const queryHeight = queryRef.current?.clientHeight ?? 0
-            const tableHeaderHeight = wrapRef.current?.querySelector('.ant-table-header')?.clientHeight ?? 0
-            const result = h - queryHeight - tableHeaderHeight - 120 - 86
-            setTableHeight(result)
-            mchcLogger.log(`tablelist tableHeight:${result} queryHeight:${queryHeight} tableHeaderHeight:${tableHeaderHeight}`)
-            if (formHeight > 40) {
-                setLongSearchForm(true)
-            }
-
-        }, 120);
+        const h = document.body.clientHeight
+        const formHeight = formWrapper.current?.clientHeight ?? 0
+        const queryHeight = queryRef.current?.clientHeight ?? 0
+        const tableHeaderHeight = wrapRef.current?.querySelector('.ant-table-header')?.clientHeight ?? 0
+        const result = h - queryHeight - tableHeaderHeight - 120 - 86
+        setTableHeight(result)
+        mchcLogger.log(`tablelist tableHeight:${result} queryHeight:${queryHeight} tableHeaderHeight:${tableHeaderHeight}`)
+        if (formHeight > 40) {
+            setLongSearchForm(true)
+        }
     }
     useEffect(() => {
+        init()
 
+
+
+        return () => { }
+
+    }, [name])
+
+
+
+    if (effect_ctx) {
+        useMyEffectSafe(effect_ctx)(() => {
+            if (inited.current) {
+                message.info('刷新成功！')
+                table_fetch()
+
+            }
+        }, [])
+    }
+    async function init() {
         if (!inited.current) {
 
             if (dbg_dataSource) {
@@ -238,32 +253,17 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                             : undefined
                     )
                 if (myBaseListService.current) {
-                    init_or_click_search().then(relayout)
-
+                    // 等初始化表单赋值
+                    await sleep(240)
+                    init_or_click_search()
+                    relayout()
                     inited.current = true
                 }
             }
 
         }
 
-
-
-        return () => { }
-
-    }, [name])
-
-
-
-    if (effect_ctx) {
-        useMyEffectSafe(effect_ctx)(() => {
-            if (inited.current) {
-                message.info('刷新成功！')
-                table_fetch()
-
-            }
-        }, [])
     }
-
     const actionCtx: IMyBaseList_ActionCtx<T> = {
         handleSearch: table_fetch,
         getSearchParams,

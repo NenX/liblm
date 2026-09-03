@@ -373,7 +373,7 @@ export class ModelService<T extends { id?: TIdTypeCompatible } = any> extends Ev
   }
   getUrl(url: string, action = '') {
     const _action = this.prePath ? action : '';
-    return `${this.preFix}${this.prePath}${_action}${url}`;
+    return `${this.preFix ?? ''}${this.prePath}${_action}${url}`;
   }
   async _get<T>(path: string, config: AxiosRequestConfig = {}) {
     const r = await this._request<T>({ method: 'GET', url: this.getUrl(path, '/get'), ...config });

@@ -413,7 +413,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
             modal_data: {
                 requestData: {
                     // url: name + rowPrintUrlSuffix,
-                    url: name + 'rowprint',
+                    url: name + '/rowprint',
                     id: rowData?.id,
                     ...getSearchParams()
                 }
@@ -803,7 +803,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                                             mchcModal__.open('print_modal', {
                                                 modal_data: {
                                                     requestData: {
-                                                        url: name + 'print',
+                                                        url: name + '/print',
                                                         ...getSearchParams(),
                                                         ...printDefaultConfig
                                                     }

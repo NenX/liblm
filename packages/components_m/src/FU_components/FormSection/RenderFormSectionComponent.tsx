@@ -146,6 +146,7 @@ import { getFormSectionComponent } from './FormSectionComponent';
 import { form_control } from './form_control';
 import { formatFormConfig, render_form_label } from './utils';
 import my_styles from './RenderFormSectionComponent.module.less'
+import { SizeType } from 'antd/es/config-provider/SizeContext';
 interface IProps {
     formDescription: IMchc_FormDescriptions_Field_Nullable,
     renderEditItem: (key: IMchc_FormDescriptions_Field_Nullable, ReactNode: React.ReactNode, others?: any) => any,
@@ -227,9 +228,11 @@ function RenderFormSectionComponent(props: IProps) {
                 const labelCol: any = straw_conf.formItemLayout?.labelCol ?? {}
                 const wrapperCol: any = straw_conf.formItemLayout?.wrapperCol ?? {}
                 const straw_props = straw_conf.inputProps ?? {}
+                const straw_size: SizeType = get(straw_props, 'size')
+
                 return <Row>
-                    <Col style={{ display: 'flex', justifyContent: 'flex-end', }} span={labelCol.span}>
-                        <span style={{ marginBottom: 4, display: 'flex', alignItems: 'center', }}>{render_form_label(straw_conf)}{straw_conf.label ? <span style={{ margin: '0 8px 0 2px' }}>:</span> : ''}</span>
+                    <Col style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4, }} span={labelCol.span}>
+                        <span style={{ marginBottom: 4, marginTop: straw_size === 'middle' ? 4 : (straw_size === 'large' ? 6 : 2), }}>{render_form_label(straw_conf)}{straw_conf.label ? <span style={{ margin: '0 8px 0 2px' }}>:</span> : ''}</span>
                     </Col>
                     <Col span={wrapperCol.span}>
                         <Space.Compact rootClassName={my_styles.compact} style={{ width: '100%', }}

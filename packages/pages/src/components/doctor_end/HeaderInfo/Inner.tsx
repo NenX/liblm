@@ -553,6 +553,7 @@ export default function HeaderInfoInner(props: IHeaderInfoProps) {
             <div style={{ flex: 1 }}>
                 <div style={{ ...wrap_style, marginBottom: 4 }}>
                     <OkButton {...common_props} icon={<MyIcon value="ThunderboltOutlined" />} onClick={onDobuleClick} />
+                    <OkButton {...common_props} icon={<MyIcon value='ReloadOutlined' />} onClick={fetchHeaderInfo} />
                     <QuestionnaireButton {...common_props} btn_text='' icon={<MyIcon value='SendOutlined' />} onOk={(qs) =>
                         request.post('/api/send/questionnaire', { type: 1, id: pregnancyId, questionnaire: qs })
                     } />

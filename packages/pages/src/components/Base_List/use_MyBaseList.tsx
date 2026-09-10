@@ -1,13 +1,13 @@
 import { mchcConfig, mchcEnv, mchcEvent, mchcLogger } from '@lm_fe/env';
 import { ModelService, TIdTypeCompatible } from '@lm_fe/service';
-import { Browser, cloneDeep, downloadFile, formatDateTime, safe_async_call, safeGetFromFuncOrData, sleep } from '@lm_fe/utils';
+import { Browser, cloneDeep, downloadFile, format_dataIndex, formatDateTime, safe_async_call, safeGetFromFuncOrData, sleep } from '@lm_fe/utils';
 import { Button, Divider, Form, message, Space, TablePaginationConfig } from 'antd';
 import { get, isFunction, isNil, isString, omit } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { MyBaseListRenderFormSection } from './Helper';
 import './index.module.less';
 import { IMyBaseList_ActionCtx, IMyBaseList_ColumnType, MyBaseListProps } from './types';
-import { formatProps, get_dataIndex, get_title, tranform_query_data, use_my_baselist } from './utils';
+import { formatProps, get_title, tranform_query_data, use_my_baselist } from './utils';
 
 import { MyIcon, Table_L, useMyEffectSafe } from '@lm_fe/components';
 import { getDefaultRequiredRules, InterceptDisplayFC, MyBaseListComponents, OkButton } from '@lm_fe/components_m';
@@ -579,7 +579,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 const isOperativeCell = isString(dataIndex) && ['__operation', 'operation'].includes(dataIndex)
                 const format_data = {
                     title: get_title(col!),
-                    dataIndex: get_dataIndex(col!)
+                    dataIndex: format_dataIndex(col!)
                 }
                 const a: IMyBaseList_ColumnType<T> = {
                     width: (width ?? 120),

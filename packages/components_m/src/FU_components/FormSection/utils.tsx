@@ -183,7 +183,6 @@ export function RenderEditItemStandalone(config: any, ReactNode: React.ReactNode
 export function render_form_label(config: IMchc_FormDescriptions_Field,) {
     const { inputProps, label, title } = config;
     const _label = label || title
-    let name_str = SMchc_FormDescriptions.get_form_item_name_str(config)
     const unit = get(config, 'unit') || get(inputProps, 'unit');
     const tip = get(config, 'tip') || get(inputProps, 'tip');
 

@@ -1,3 +1,4 @@
+import { AnyObject, isString } from "@noah-libjs/utils"
 
 
 
@@ -19,7 +20,13 @@ export function is_fuck_abnormal(conf?: { isNormal?: 'true' | 'false' | null }) 
 }
 
 
-
+export function format_dataIndex<T>(record?: AnyObject) {
+  const _dataIndex = record?.dataIndex ?? record?.name ?? record?.key
+  if (isString(_dataIndex) && _dataIndex.includes('.')) {
+    return _dataIndex.split('.')
+  }
+  return _dataIndex
+}
 
 
 

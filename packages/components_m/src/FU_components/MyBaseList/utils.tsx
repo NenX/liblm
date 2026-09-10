@@ -75,13 +75,7 @@ function calcKeyByType(k: string, v: any, type: string, filterType: string[] = [
   }
   return f1 ? { [`${k}.${f1}`]: v } : { [k]: v }
 }
-export function get_dataIndex<T>(record?: IMyBaseList_ColumnType) {
-  const _dataIndex = record?.dataIndex ?? record?.name ?? record?.key
-  if (isString(_dataIndex) && _dataIndex.includes('.')) {
-    return _dataIndex.split('.')
-  }
-  return _dataIndex
-}
+
 export function get_title<T>(record?: IMyBaseList_ColumnType) {
   const _title = record?.title ?? record?.label ?? record?.name
 

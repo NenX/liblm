@@ -47,7 +47,7 @@ function Diagnoses(props: IDiagnosesprops) {
   const del_diagnose_item = async (item: IMchc_Doctor_Diagnoses,) => {
     const newList = diagnosesList.filter(_ => _.id !== item.id)
 
-    await SMchc_Doctor.del_diagnosis(item);
+    await SMchc_Doctor.del_diagnosis({ ...item, visitNo: serialNo });
     mchcEnv.success('删除成功！');
     setDiagnosesList(newList);
     mchcEvent.emit('outpatient', { type: '刷新头部' })
@@ -65,7 +65,6 @@ function Diagnoses(props: IDiagnosesprops) {
 
 
   const add_diag = async (diagnosisObj: any) => {
-    mchcEnv.success('添加成功！' + pv_id_for_diagnose);
     if (pv_id_for_diagnose) {
       diagnosisObj.prenatalVisitId = pv_id_for_diagnose
     }
@@ -104,7 +103,7 @@ function Diagnoses(props: IDiagnosesprops) {
           <OkButton
             type='dashed'
             // className="diag-btn"
-            // icon={<BookOutlined />} 
+            // icon={<BookOutlined />}
             onClick={() => mchcModal__.open('诊断历史', {
               modal_data: {
                 pregnancyId: headerInfo?.id
@@ -116,6 +115,7 @@ function Diagnoses(props: IDiagnosesprops) {
             (mchcEnv.in(['建瓯'])) ?
               <OkButton
                 type='dashed'
+                disabled={!pv_id_for_diagnose}
                 onClick={() =>
                   request
                     .get<IMchc_Doctor_Diagnoses[]>('/api/syncDiagnosis', { params: { ...getSearchParamsAll(), id: headerInfo?.id }, successText: '同步成功' })
@@ -134,7 +134,7 @@ function Diagnoses(props: IDiagnosesprops) {
             type='dashed'
             title='请先保存产检信息'
             // className="diag-btn"
-            // icon={<SettingOutlined />} 
+            // icon={<SettingOutlined />}
             onClick={handleBtnClick}>
             管理
           </OkButton>
@@ -159,11 +159,11 @@ function Diagnoses(props: IDiagnosesprops) {
               return (
                 <DiagnosesItem
                   edit={false}
+                  operate={!!pv_id_for_diagnose}
                   index={index}
                   diagnose={item}
                   key={`${get(item, 'id')}-false`}
                   do_del_diagnose_item={del_diagnose_item}
-                  headerInfo={headerInfo}
                   diagnosesList={diagnosesList}
                   setDiagnosesList={setDiagnosesList}
                   isShowDiagnosesTemplate={false}

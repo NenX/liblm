@@ -8,7 +8,7 @@ import hysteroscopicSurgery from './HysteroscopicSurgery';
 import vulvarCystStoma from './VulvarCystStoma';
 import uterosalpingography from './Uterosalpingography';
 
-export const NurseTypesMapping = {
+export const 妇科专病_手术病历_mapping = {
   dilatationAndCurettage: {
     key: 'dilatationAndCurettage',
     name: '刮宫术',

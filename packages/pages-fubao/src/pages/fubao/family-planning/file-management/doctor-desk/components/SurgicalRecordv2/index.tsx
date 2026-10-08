@@ -2,7 +2,7 @@ import { DeleteOutlined, PlusCircleOutlined, EditOutlined } from '@ant-design/ic
 import { Button, Card, Col, Modal, Popconfirm, Row, message } from 'antd';
 import { get, isEmpty, map, cloneDeep, first } from 'lodash';
 import React, { Component } from 'react';
-import { NurseTypesMapping } from './config';
+import { 妇科专病_手术病历_mapping } from './config';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import styles from '../../../common.module.less'
 const DEFAULT_ACTIVE_TEMPLETE = 'dilatationAndCurettage';
@@ -27,12 +27,12 @@ export default class Nursing extends Component<any, any> {
 
   handleClickListItem = (item: any) => () => {
     let code = 'dilatationAndCurettage';
-    map(NurseTypesMapping, (value, index) => {
+    map(妇科专病_手术病历_mapping, (value, index) => {
       if (get(item, 'operationName') === get(value, 'name')) {
         code = index;
       }
     });
-    const activeTemplate = get(NurseTypesMapping, `${code}.key`);
+    const activeTemplate = get(妇科专病_手术病历_mapping, `${code}.key`);
     this.setState({
       activeItem: item,
       activeTemplate,
@@ -58,9 +58,9 @@ export default class Nursing extends Component<any, any> {
     if (surgicalRecordId) {
       map(newSiderPanels, (item, index) => {
         if (Number(surgicalRecordId) === get(item, 'id')) {
-          map(NurseTypesMapping, (value, valIndex) => {
+          map(妇科专病_手术病历_mapping, (value, valIndex) => {
             if (get(item, 'operationName') === get(value, 'name')) {
-              newActiveTemplate = get(NurseTypesMapping, `${valIndex}.key`);
+              newActiveTemplate = get(妇科专病_手术病历_mapping, `${valIndex}.key`);
             }
           });
           this.setState({
@@ -78,9 +78,9 @@ export default class Nursing extends Component<any, any> {
         newActiveItem = first(newSiderPanels);
         let operationName = get(newSiderPanels, '0.operationName');
 
-        map(NurseTypesMapping, (value, index) => {
+        map(妇科专病_手术病历_mapping, (value, index) => {
           if (operationName === get(value, 'name')) {
-            newActiveTemplate = get(NurseTypesMapping, `${index}.key`);
+            newActiveTemplate = get(妇科专病_手术病历_mapping, `${index}.key`);
           }
         });
       }
@@ -208,8 +208,8 @@ export default class Nursing extends Component<any, any> {
   renderContent = () => {
     const { activeTemplate, activeItem } = this.state;
     const { reload } = this.props as any;
-    if (NurseTypesMapping[activeTemplate]) {
-      const Component = NurseTypesMapping[activeTemplate]['component'];
+    if (妇科专病_手术病历_mapping[activeTemplate]) {
+      const Component = 妇科专病_手术病历_mapping[activeTemplate]['component'];
       return (
         <Component
           {...this.props}
@@ -224,7 +224,7 @@ export default class Nursing extends Component<any, any> {
         <div className={styles['gy-empty-page']}>
           <div>暂无病历，请选择模板内容</div>
           <div>
-            {map(NurseTypesMapping, (nurseType, key) => {
+            {map(妇科专病_手术病历_mapping, (nurseType, key) => {
               return (
                 <Button style={{ margin: 8 }} key={key} onClick={this.handleChooseTemplate(nurseType)}>
                   {nurseType.name}
@@ -251,7 +251,7 @@ export default class Nursing extends Component<any, any> {
             this.setState({ visible: false });
           }}
         >
-          {map(NurseTypesMapping, (nurseType, key) => {
+          {map(妇科专病_手术病历_mapping, (nurseType, key) => {
             return (
               <Button style={{ margin: 8 }} key={key} onClick={this.handleChooseTemplate(nurseType)}>
                 {nurseType.name}

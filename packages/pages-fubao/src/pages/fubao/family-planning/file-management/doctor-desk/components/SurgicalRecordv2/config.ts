@@ -14,8 +14,41 @@ export const 妇科专病_手术病历_mapping = {
     key: 'dilatationAndCurettage',
     name: '刮宫术',
     icon: '',
-    component: dilatationAndCurettage,
+    // component: dilatationAndCurettage,
     conf: conf_刮宫术
+  },
+
+  putInIntrauterineDevice: {
+    key: 'putInIntrauterineDevice',
+    name: '宫内避孕器放置术',
+    icon: '',
+    // component: putInIntrauterineDevice,
+    conf: conf_宫内避孕器放置术
+
+  },
+  takeOutIntrauterineDevice: {
+    key: 'takeOutIntrauterineDevice',
+    name: '宫内节育器取出术',
+    icon: '',
+    // component: takeOutIntrauterineDevice,
+    conf: conf_宫内节育器取出术
+
+  },
+  uterineFallopianTubeFluid: {
+    key: 'uterineFallopianTubeFluid',
+    name: '子宫输卵管通液术',
+    icon: '',
+    // component: uterineFallopianTubeFluid,
+    conf: conf_子宫输卵管通液术
+
+  },
+  inducedAbortion: {
+    key: 'inducedAbortion',
+    name: '人工流产',
+    icon: '',
+    // component: inducedAbortion,
+    conf: conf_人工流产
+
   },
   // Puberty: {
   //   key: 'Puberty',
@@ -24,38 +57,6 @@ export const 妇科专病_手术病历_mapping = {
   //   api: '/api/labour-records',
   //   component: Curettage,
   // },
-  putInIntrauterineDevice: {
-    key: 'putInIntrauterineDevice',
-    name: '宫内避孕器放置术',
-    icon: '',
-    component: putInIntrauterineDevice,
-    conf: conf_宫内避孕器放置术
-
-  },
-  takeOutIntrauterineDevice: {
-    key: 'takeOutIntrauterineDevice',
-    name: '宫内节育器取出术',
-    icon: '',
-    component: takeOutIntrauterineDevice,
-    conf: conf_宫内节育器取出术
-
-  },
-  uterineFallopianTubeFluid: {
-    key: 'uterineFallopianTubeFluid',
-    name: '子宫输卵管通液术',
-    icon: '',
-    component: uterineFallopianTubeFluid,
-    conf: conf_子宫输卵管通液术
-
-  },
-  inducedAbortion: {
-    key: 'inducedAbortion',
-    name: '人工流产',
-    icon: '',
-    component: inducedAbortion,
-    conf: conf_人工流产
-
-  },
   // vaginoscopy: {
   //   key: 'vaginoscopy',
   //   name: '阴道镜检查',

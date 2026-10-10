@@ -321,6 +321,7 @@ export default defineFormConfig(
                     layout: '1/3',
                     "inputType": "MS",
                     inputProps: {
+                        marshal: 0,
                         'options': [
                             { 'value': 1, 'label': '是', },
                             { 'value': 2, 'label': '否', }

@@ -2,22 +2,42 @@ import { BF_Wrap2, IBF_Default } from '@lm_fe/pages';
 import React, { useEffect } from 'react';
 import { IRenderContentProps, RenderContent } from './RenderContent';
 import { AnyObject } from '@lm_fe/utils';
+import { rt_ctx } from '@lm_fe/env';
+const ctx = rt_ctx
 interface IProps extends IRenderContentProps {
-    conf: IBF_Default
+    tableColumns: any
     familyPlanningId: any
-    modName: string
+    mod_name: string
+    active_title: string
 }
 
-// export interface IRenderContentProps {
-//     config?: IMchc_TableConfig
-//     activeItem?: AnyObject
-//     activeTemplate: string
-//     onRefresh: () => void
-// }
 export default function RenderContentWrap(props: IProps) {
-    const { activeTemplate, conf, familyPlanningId, modName } = props
+    const { active_key, tableColumns, familyPlanningId, mod_name: modName, active_title } = props
 
-    const { config, Wrap } = BF_Wrap2({ default_conf: { title: `妇科专病-${modName}-${activeTemplate}`, ...conf } }, { familyPlanningId })
+    const { config, Wrap } = BF_Wrap2({
+        default_conf: {
+            title: `妇科专病-${modName}-${active_key}`,
+            beforeSubmit(_data: AnyObject,) {
+                if (!ctx.utils.get(_data, 'familyPlanningId')) {
+                    _data.familyPlanningId = ctx.props.familyPlanningId
+                }
+                _data.progressStatus = 4
+                return _data
+            },
+            handleBeforePopup(_data: AnyObject) {
+                const data = _data || {}
+                const name = ctx.mchcEnv.user_data.firstName
+                if (!ctx.utils.get(data, 'operationName')) data['operationName'] = ctx.props.name
+                if (!ctx.utils.get(data, 'surgicalDate')) data['surgicalDate'] = ctx.utils.formatDate()
+                if (!ctx.utils.get(data, 'appointmentPeople')) data['appointmentPeople'] = name
+                if (!ctx.utils.get(data, 'surgicalDoctor')) data['surgicalDoctor'] = name
+                return data
+            },
+            tableColumns
+        }
+    },
+
+        { familyPlanningId, name: active_title })
 
 
 

@@ -498,7 +498,7 @@ export default defineFormConfig(
                 {
                     "key": "takeOutIntrauterineDeviceSituation",
                     "label": "取出节育器情况",
-                    "inputType": "checkbox_with_inputv2",
+                    "inputType": "MC",
                     "inputProps": {
                         "type": "multiple",
                         marshal: 0,

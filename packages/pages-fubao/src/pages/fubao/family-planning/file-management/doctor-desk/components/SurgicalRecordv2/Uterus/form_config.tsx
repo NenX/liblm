@@ -212,13 +212,8 @@ export default defineFormConfig(
                         },
                     ],
                 },
+
                 {
-                    "key": "operationTimeEnd",
-                    "label": "~",
-                    "inputType": "single_time_picker",
-                    "inputProps": { 'format': 'HH:mm', 'style': { 'marginLeft': -11 } },
-                    layout: '1/3',
-                }, {
                     "key": "disposableSurgicalKit",
                     "label": "一次性手术包",
                     "inputType": "MS",

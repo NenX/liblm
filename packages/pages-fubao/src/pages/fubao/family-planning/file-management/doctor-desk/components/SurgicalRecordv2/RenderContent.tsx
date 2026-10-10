@@ -9,11 +9,11 @@ import React, { useEffect, useState } from 'react';
 export interface IRenderContentProps {
     config?: IMchc_TableConfig
     activeItem?: AnyObject
-    activeTemplate: string
+    active_key: string
     onRefresh: () => void
 }
 export function RenderContent(props: IRenderContentProps) {
-    const { config, activeItem, activeTemplate, onRefresh } = props
+    const { config, activeItem, active_key, onRefresh } = props
     const [data_cache, set_data_cache] = useState<AnyObject>({})
 
 
@@ -71,7 +71,7 @@ export function RenderContent(props: IRenderContentProps) {
                 request,
                 requestData: {
                     url: '/api/family/planning/casePdfPreview',
-                    resource: activeTemplate,
+                    resource: active_key,
                     template: '',
                     version: '',
                     note: '',

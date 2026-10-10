@@ -524,7 +524,7 @@ export default defineFormConfig(
                 "inputType": "diagnosis_list_v2",
 
 
-                "inputProps": { 'isShow': true },
+                "inputProps": {  list_fuck_off: true },
 
                 "span": 16,
                 "offset": 0,

@@ -150,7 +150,7 @@ class Index extends React.Component<{ value: any, list_fuck_off?: boolean, is_fu
                     okText="确定"
                     cancelText="取消"
                   >
-                    <CustomIcon className={styles["delBtn"]} type="icon-cacncel" />
+                    <MyIcon value='DeleteOutlined' className={styles["delBtn"]} />
                   </Popconfirm>
                 </Col>
               )}

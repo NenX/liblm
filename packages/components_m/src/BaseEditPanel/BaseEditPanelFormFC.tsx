@@ -1,5 +1,5 @@
 import { mchcEvent } from '@lm_fe/env';
-import { Button, ButtonProps, Form, FormInstance, message, Space } from 'antd';
+import { ButtonProps, Form, FormInstance, message, Space } from 'antd';
 import classnames from 'classnames';
 import { debounce, get, isFunction, map } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { AnyObject } from '@lm_fe/utils';
 import React from 'react';
 import { MyFormSection } from 'src/FU_components/FormSection';
 import styles from './less/base-edit-panel-form.module.less';
+import { OkButton } from 'src/FU_components';
 export const formItemLayout = {
   // layout: 'horizontal',
   labelCol: {
@@ -126,15 +127,15 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
 
   const renderResetBtn = () => {
     return (
-      <Button size="large" htmlType="reset" icon={<MyIcon value='RedoOutlined' />} onClick={handleReset}>
+      <OkButton size="large" htmlType="reset" icon={<MyIcon value='RedoOutlined' />} onClick={handleReset}>
         重置
-      </Button>
+      </OkButton>
     );
   };
 
   const renderSubmitBtn = () => {
     return (
-      <Button
+      <OkButton
         size="large"
         type="primary"
         icon={<MyIcon value='SaveOutlined' />}
@@ -142,14 +143,14 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
         onClick={debounce(handleFinish)}
       >
         保存
-      </Button>
+      </OkButton>
     );
   };
 
   const renderPrintBtn = () => {
 
     return (
-      <Button
+      <OkButton
         {...print_btn_props}
         hidden={!onPrint}
         type="primary"
@@ -158,7 +159,7 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
         onClick={onPrint}
       >
         打印
-      </Button>
+      </OkButton>
     );
   };
 
@@ -171,7 +172,7 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
         {props.renderExtraBtns && props.renderExtraBtns(form)}
         {renderResetBtn()}
         {
-          onSync ? <Button
+          onSync ? <OkButton
             hidden={!onSync}
             type="primary"
             size="large"
@@ -179,7 +180,7 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
             onClick={onSync}
           >
             同步
-          </Button> : null
+          </OkButton> : null
         }
 
         {renderSubmitBtn()}
@@ -200,14 +201,14 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
   const renderImportBtn = () => {
     if (!onImport) return null
     return (
-      <Button
+      <OkButton
         type="primary"
         htmlType="button"
         icon={<MyIcon value='SolutionOutlined' />}
         onClick={onImport}
       >
         导入信息
-      </Button>
+      </OkButton>
     );
   };
 

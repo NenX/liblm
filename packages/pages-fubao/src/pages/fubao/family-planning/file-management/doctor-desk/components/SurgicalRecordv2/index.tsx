@@ -1,11 +1,11 @@
 import { DeleteOutlined, PlusCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Modal, Popconfirm, Row, message } from 'antd';
 import { get, isEmpty, map, cloneDeep, first } from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import { 妇科专病_手术病历_mapping } from './config';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import styles from '../../../common.module.less'
-const DEFAULT_ACTIVE_TEMPLETE = 'dilatationAndCurettage';
+const RenderContent = lazy(() => import('./RenderContentWrap'))
 export default class Nursing extends Component<any, any> {
   state = {
     activeTemplate: '',
@@ -208,8 +208,18 @@ export default class Nursing extends Component<any, any> {
   renderContent = () => {
     const { activeTemplate, activeItem } = this.state;
     const { reload } = this.props as any;
-    if (妇科专病_手术病历_mapping[activeTemplate]) {
-      const Component = 妇科专病_手术病历_mapping[activeTemplate]['component'];
+    const mod = 妇科专病_手术病历_mapping[activeTemplate as keyof typeof 妇科专病_手术病历_mapping]
+    if (mod) {
+      if (mod.conf)
+        return <RenderContent
+          familyPlanningId={this.props.id}
+          conf={mod.conf}
+          activeItem={activeItem}
+          activeTemplate={activeTemplate}
+          onRefresh={this.handleInit}
+          modName={'手术病历'}
+        />
+      const Component = mod['component'];
       return (
         <Component
           {...this.props}

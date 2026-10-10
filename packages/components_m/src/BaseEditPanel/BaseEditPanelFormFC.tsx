@@ -1,5 +1,5 @@
 import { mchcEvent } from '@lm_fe/env';
-import { Button, Form, FormInstance, message, Space } from 'antd';
+import { Button, ButtonProps, Form, FormInstance, message, Space } from 'antd';
 import classnames from 'classnames';
 import { debounce, get, isFunction, map } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -33,6 +33,7 @@ interface IProps {
   targetLabelCol?: number
   getEvents?(): any
   onPrint?(): void
+  print_btn_props?: ButtonProps
   onSync?(): void
   onImport?(): void
   onValuesChange?(changedValues: any, allValues: any): void;
@@ -42,7 +43,7 @@ interface IProps {
 }
 export default function BaseEditPanelFormFC<T = any>(props: IProps) {
   const bg_color = use_provoke(s => s.sys_theme.bg_color)
-  const { onFinish, onValuesChange, data, formDescriptions, formDescriptions_old, onPrint, onSync, onImport, getEvents, targetLabelCol } = props;
+  const { onFinish, print_btn_props, onValuesChange, data, formDescriptions, formDescriptions_old, onPrint, onSync, onImport, getEvents, targetLabelCol } = props;
 
   const [_form] = Form.useForm()
   const [loading, setLoading] = useState(false)
@@ -65,8 +66,12 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
     setLoading(true)
     const values = await validate_form(form)
     if (values) {
-      await onFinish?.(values);
-      message.success('操作成功！')
+      try {
+        await onFinish?.(values);
+        message.success('操作成功！')
+      } catch (error) {
+
+      }
     }
     setLoading(false)
 
@@ -145,6 +150,7 @@ export default function BaseEditPanelFormFC<T = any>(props: IProps) {
 
     return (
       <Button
+        {...print_btn_props}
         hidden={!onPrint}
         type="primary"
         size="large"

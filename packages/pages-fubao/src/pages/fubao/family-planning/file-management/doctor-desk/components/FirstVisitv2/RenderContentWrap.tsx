@@ -15,10 +15,13 @@ export default function RenderContentWrap(props: IProps) {
 
     const { config, Wrap } = BF_Wrap2({
         default_conf: {
-            title: `妇科专病-手术病历-${active_key}`,
+            title: `妇科专病-专科病历-${active_key}`,
             beforeSubmit(_data: AnyObject,) {
                 if (!ctx.utils.get(_data, 'familyPlanningId')) {
                     _data.familyPlanningId = ctx.props.familyPlanningId
+                }
+                if (!ctx.utils.get(_data, 'checkType')) {
+                    _data.checkType = ctx.props.name
                 }
                 _data.progressStatus = 4
                 return _data
@@ -26,10 +29,10 @@ export default function RenderContentWrap(props: IProps) {
             handleBeforePopup(_data: AnyObject) {
                 const data = _data || {}
                 const name = ctx.mchcEnv.user_data.firstName
-                if (!ctx.utils.get(data, 'operationName')) data['operationName'] = ctx.props.name
-                if (!ctx.utils.get(data, 'surgicalDate')) data['surgicalDate'] = ctx.utils.formatDate()
-                if (!ctx.utils.get(data, 'appointmentPeople')) data['appointmentPeople'] = name
-                if (!ctx.utils.get(data, 'surgicalDoctor')) data['surgicalDoctor'] = name
+                const treatment = ctx.utils.get(data, 'earlyPregnancyCheckDiagnosisAndTreatment') || {}
+                if (!ctx.utils.get(treatment, 'registrationDate')) treatment['registrationDate'] = ctx.utils.formatDate()
+                if (!ctx.utils.get(treatment, 'diagnoseDoctor')) treatment['diagnoseDoctor'] = name
+                data.earlyPregnancyCheckDiagnosisAndTreatment = treatment
                 return data
             },
             tableColumns

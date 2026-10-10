@@ -5,7 +5,7 @@ import React, { Component, lazy } from 'react';
 import { fubaoRequest as request } from '@lm_fe/utils';
 import styles from '../../../common.module.less'
 import { 妇科专病_手术病历_mapping } from './config';
-const RenderContent = lazy(() => import('./RenderContentWrap'))
+const RenderContentWrap = lazy(() => import('./RenderContentWrap'))
 const mapping = 妇科专病_手术病历_mapping
 
 export default class Nursing extends Component<any, any> {
@@ -213,25 +213,15 @@ export default class Nursing extends Component<any, any> {
     const mod = mapping[activeTemplate as keyof typeof mapping]
     if (mod) {
       if (mod.conf)
-        return <RenderContent
+        return <RenderContentWrap
           familyPlanningId={this.props.id}
           tableColumns={mod.conf}
           activeItem={activeItem}
           active_key={activeTemplate}
           active_title={mod.name}
           onRefresh={this.handleInit}
-          mod_name={'手术病历'}
         />
-      const Component = mod['component'];
-      return (
-        <Component
-          {...this.props}
-          activeItem={activeItem}
-          activeTemplate={activeTemplate}
-          onRefresh={this.handleInit}
-          reload={reload}
-        />
-      );
+
     } else {
       return (
         <div className={styles['gy-empty-page']}>

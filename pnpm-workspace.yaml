@@ -1,2 +1,7 @@
 packages:
   - "packages/*"
+allowBuilds:
+  canvas: true
+  core-js: true
+  ejs: true
+  nx: true

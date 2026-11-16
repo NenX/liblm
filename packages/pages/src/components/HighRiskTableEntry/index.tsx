@@ -61,7 +61,8 @@ function _HighRiskTableEntry(props: IHighRiskTableEntryProps) {
                             })
                         }}
                     >
-                        {ext.entityObjectName}{ext.sum ? `(${ext.sum})` : ''}
+                        {ext.entityObjectName}
+                        {/* {ext.entityObjectName}{ext.sum ? `(${ext.sum})` : ''} */}
 
                     </Tag>
                 })

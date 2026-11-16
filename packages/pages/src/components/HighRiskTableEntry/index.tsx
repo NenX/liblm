@@ -1,6 +1,6 @@
 import { MyIcon } from '@lm_fe/components';
 import { mchcEnv, mchcEvent } from '@lm_fe/env';
-import { Button, Divider, Space } from 'antd';
+import { Button, Divider, Space, Tag } from 'antd';
 import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.less';
@@ -41,13 +41,12 @@ function _HighRiskTableEntry(props: IHighRiskTableEntryProps) {
     const show_子痫 = isShowPopupRemind('子痫', headerInfo, data)
     const show_VTE = isShowPopupRemind('VTE', headerInfo, data)
     if (list) {
-        return <Space>
+        return <Space wrap >
             {
-                list.map(ext => {
-                    return <OkButton
-                        style={{ borderColor: ext.highRiskColor }}
-
-                        type="dashed"
+                list.map((ext, idx) => {
+                    return <Tag
+                        style={{ cursor: 'pointer' }}
+                        color={ext.highRiskColor}
                         icon={ext.isFilled ? <MyIcon value='CheckOutlined' /> : null}
                         onClick={() => {
                             mchcModal__.open('拓展量表', {
@@ -64,7 +63,7 @@ function _HighRiskTableEntry(props: IHighRiskTableEntryProps) {
                     >
                         {ext.entityObjectName}{ext.sum ? `(${ext.sum})` : ''}
 
-                    </OkButton>
+                    </Tag>
                 })
             }
         </Space>

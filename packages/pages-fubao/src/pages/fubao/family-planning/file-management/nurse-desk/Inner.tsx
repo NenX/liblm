@@ -44,7 +44,7 @@ function FamilyPlanning_FileManagement_NurseDesk_Inner(props: any) {
     }
 
     async function handleSubmit() {
-        const values = form.validateFields()
+        const values = await form.validateFields()
         // const values = form.getFieldsValue()
         let submit_values = { ...values }
 
@@ -55,7 +55,7 @@ function FamilyPlanning_FileManagement_NurseDesk_Inner(props: any) {
                 ...submit_values,
                 fileState: 1,
             }
-            await request.put('/api/family/planning/updateFamilyPlanningFile', submit_values)
+            return await request.put('/api/family/planning/updateFamilyPlanningFile', submit_values)
         }
         // 新建
         submit_values = {

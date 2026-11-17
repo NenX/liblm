@@ -53,7 +53,7 @@ export default function Right(props: { activeItem: Partial<IMchc_Admission_Docum
   }
 
   return (
-    <div style={{ height: '90%' }}>
+    <div style={{ height: '100%' }}>
       {loading ? <Spin className="spin" style={{ marginTop: 64 }} tip="资源加载中，请稍等..." /> : <PDFPreview_View file={pdfUrl} />}
       <div className="right-bottom-btns">
 
@@ -74,7 +74,7 @@ export default function Right(props: { activeItem: Partial<IMchc_Admission_Docum
             })
           }}
         >
-          打印.
+          打印
         </Button>
       </div>
     </div>

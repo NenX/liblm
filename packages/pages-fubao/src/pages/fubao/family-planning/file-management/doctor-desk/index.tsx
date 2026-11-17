@@ -8,6 +8,7 @@ import SurgicalRecord from './components/SurgicalRecordv2'
 import { HistoryOutlined } from '@ant-design/icons'
 import { PanelWithChildFC } from '@lm_fe/components_m'
 import { DoctorEnd_ImageReport, DoctorEnd_SurveyReport, DoctorEnd_CaseReport_Legancy } from '@lm_fe/pages-mchc'
+import { Page_DocRecord } from "@lm_fe/pages";
 import { SLocal_State } from '@lm_fe/service'
 import { getSearchParamsValue, fubaoRequest as request } from '@lm_fe/utils'
 import { get } from 'lodash'
@@ -103,6 +104,7 @@ export default function FamilyPlanning_FileManagement_DoctorDesk_FC(props: any) 
                         node: <DoctorEnd_SurveyReport fubao headerInfo={data} />,
                     },
                     { key: 'ImageReport', title: '影像报告', node: <DoctorEnd_ImageReport fubao headerInfo={data} /> },
+                    { key: 'DocRecord', title: '知情同意书', node: <Page_DocRecord id={id} /> },
                     // { key: 'wsgl', title: '文书管理', node: <InformedConsent id={id} /> },
                     // { key: 'xjsf', title: '宣教随访', node: <FollowUp /> },
                     {

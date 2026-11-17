@@ -40,7 +40,7 @@ function Vertical(props: VerticalProps) {
 
     const getLabExamReportList = async (param?: any) => {
         let _list = []
-        let list = await SMchc_Admission.listPatientLabExamReport({ params: { ...combinded, param }, ignore_usr: true })
+        let list = await SMchc_Admission.listPatientLabExamReport({ params: { ...combinded, ...param }, ignore_usr: true })
         forEach(list, (item: IMchc_listPatientLabExamReport_Item) => {
             const _examReport = map(item.examReport, (j) => ({ ...j, date: item.date, gesWeek: item.gesWeek }))
             _list = [..._list, ..._examReport]
@@ -54,7 +54,6 @@ function Vertical(props: VerticalProps) {
                 styles: { body: { padding: '6px 12px' } },
             }
         })
-        // console.log('-----7878787   888', _newList, _newList[0, 'key'], get(_newList, [0, "key"]));
         setReportList(_newList)
         setDefaultActiveKey([get(_newList, [0, "key"])])
     }
@@ -89,11 +88,11 @@ function Vertical(props: VerticalProps) {
             style={{ backgroundColor: '#fff', overflowY: 'auto', padding: '0 12px' }}
         >
             <Form form={form} layout="inline" style={{ padding: '6px 0' }}>
-                <Form.Item label="检查日期" name="date.start">
+                <Form.Item label="检查日期" name="reportDateStart">
                     <MyDatePicker valueType="YYYY-MM-DD" placeholder="请选择时间" />
                 </Form.Item>
                 <span style={{ paddingRight: 16 }}>~</span>
-                <Form.Item label="" name="date.end">
+                <Form.Item label="" name="reportDateEnd">
                     <MyDatePicker valueType="YYYY-MM-DD" placeholder="请选择时间" />
                 </Form.Item>
                 <Form.Item>

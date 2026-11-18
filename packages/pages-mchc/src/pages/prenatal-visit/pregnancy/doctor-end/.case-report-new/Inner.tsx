@@ -11,7 +11,7 @@ const RenderContentWrap = lazy(() => import('./RenderContentWrap'))
 
 
 export default function CaseNew(props: ICaseReport) {
-  const { modType, id } = props
+  const { relateType, id } = props
   const { config } = use_provoke('config')
   const [siderPanels, set_siderPanels] = useState<IDataItem[]>([])
 
@@ -24,7 +24,7 @@ export default function CaseNew(props: ICaseReport) {
     set_activeItem(item)
   }
 
-  const params = { pregnancyId: id, modType }
+  const params = { relateId: id, relateType }
 
   useEffect(() => {
 
@@ -80,8 +80,8 @@ export default function CaseNew(props: ICaseReport) {
       id: null,
       code: fuck_type.code,
       name: fuck_type.name,
-      modType,
-      pregnancyId: id
+      relateType,
+      relateId: id
     };
     newSiderPanels.push(newItem);
     set_visible(false)

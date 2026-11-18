@@ -26,7 +26,7 @@ export default function RenderContentWrap(props: IProps) {
                         params: { id: id }
                     }).then(res => res.data)
                 }
-                const data: IDataItem = ctx.utils.pick(activeItem, ['pregnancyId', 'admissionId', 'code', 'name', 'state', 'modType'])
+                const data: IDataItem = ctx.utils.pick(activeItem, ['relateId', 'admissionId', 'code', 'name', 'state', 'relateType'])
                 if (!activeItem.state) {
                     activeItem.state = 1
                 }

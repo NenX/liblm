@@ -9,11 +9,11 @@ interface IProps extends IRenderContentProps {
 }
 
 export default function RenderContentWrap(props: IProps) {
-    const { activeItem, activeItemCache } = props
+    const { activeItem, activeItemCache, relateType } = props
 
     const { config, Wrap } = BF_Wrap2({
         default_conf: {
-            title: `门诊-个案登记卡-${activeItem.code}`,
+            title: `个案登记卡-${activeItem.code}-${relateType}`,
             beforeSubmit(values: AnyObject,) {
                 return values
             },

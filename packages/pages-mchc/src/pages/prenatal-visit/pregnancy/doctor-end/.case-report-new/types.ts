@@ -8,6 +8,7 @@ export interface ICaseReport {
 export interface ICaseTpl { name: string, code: string }
 export interface IRenderContentProps {
   config?: IMchc_TableConfig
+  relateType?: 1 | 2 | 3 | 4
   activeItem: IDataItem
   activeItemCache: MutableRefObject<IDataItem | undefined>
 }

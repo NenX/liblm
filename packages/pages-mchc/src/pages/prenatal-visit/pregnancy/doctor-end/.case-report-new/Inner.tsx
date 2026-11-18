@@ -141,6 +141,7 @@ export default function CaseNew(props: ICaseReport) {
       return <Empty style={{ padding: 128 }} description={<MyButton primary btn_text='暂无数据，请选择模板内容' onClick={open_modal} />} />
     }
     return <RenderContentWrap
+      relateType={relateType}
       activeItemCache={activeItemCache}
       activeItem={activeItem}
     />

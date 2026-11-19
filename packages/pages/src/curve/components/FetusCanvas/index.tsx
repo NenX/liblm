@@ -22,6 +22,7 @@ export default function FetusCanvas(props: IProps) {
     imageRef,
     pointData,
     isShowPointModal,
+    set_pointData,
     set_isShowPointModal,
     getFetusData,
     formData
@@ -90,15 +91,13 @@ export default function FetusCanvas(props: IProps) {
                   line: point[2],
                   fetus: data[i].sort,
                   style: {
-                    position: 'fixed',
+                    position: 'fixed' as const,
                     top: e.pageY,
                     left: e.pageX,
                   },
                 };
-                that.setState({
-                  pointData: obj,
-                  isShowPointModal: true,
-                });
+                set_pointData(obj)
+                set_isShowPointModal(true)
               }
             },
             false,

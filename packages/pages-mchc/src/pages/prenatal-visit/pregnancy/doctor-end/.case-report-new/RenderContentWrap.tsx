@@ -9,11 +9,11 @@ interface IProps extends IRenderContentProps {
 }
 
 export default function RenderContentWrap(props: IProps) {
-    const { activeItem, activeItemCache } = props
+    const { activeItem, activeItemCache, relateType } = props
 
     const { config, Wrap } = BF_Wrap2({
         default_conf: {
-            title: `门诊-个案登记卡-${activeItem.code}`,
+            title: `个案登记卡-${activeItem.code}-${relateType}`,
             beforeSubmit(values: AnyObject,) {
                 return values
             },
@@ -26,7 +26,7 @@ export default function RenderContentWrap(props: IProps) {
                         params: { id: id }
                     }).then(res => res.data)
                 }
-                const data: IDataItem = ctx.utils.pick(activeItem, ['pregnancyId', 'admissionId', 'code', 'name', 'state', 'modType'])
+                const data: IDataItem = ctx.utils.pick(activeItem, ['relateId', 'admissionId', 'code', 'name', 'state', 'relateType'])
                 if (!activeItem.state) {
                     activeItem.state = 1
                 }

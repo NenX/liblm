@@ -1398,7 +1398,7 @@ export default defineFormConfig([
     ]
   },
   {
-    label: '可编辑Tabs',
+    label: '可编辑变异Tabs',
     children: [
       {
         inputType: 'MixPanel',

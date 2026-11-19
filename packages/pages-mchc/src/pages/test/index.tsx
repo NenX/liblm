@@ -43,7 +43,7 @@ export default function (props) {
             : null
         }
       </Col>
-      <Col span={12} style={{ height: '80vh' }}>
+      <Col span={12} style={{ height: '80vh', overflow: 'auto' }}>
         <ErrorBoundarySmall>
           <BaseEditPanelFormFC targetLabelCol={4} formDescriptions={fd} />
         </ErrorBoundarySmall>

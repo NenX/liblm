@@ -3,11 +3,12 @@ import { MutableRefObject } from "react";
 
 export interface ICaseReport {
   id?: any
-  modType?: 1 | 2 | 3 | 4
+  relateType?: 1 | 2 | 3 | 4
 }
 export interface ICaseTpl { name: string, code: string }
 export interface IRenderContentProps {
   config?: IMchc_TableConfig
+  relateType?: 1 | 2 | 3 | 4
   activeItem: IDataItem
   activeItemCache: MutableRefObject<IDataItem | undefined>
 }
@@ -21,9 +22,9 @@ export type IDataItem = Partial<{
   "fillerTitle": null,
   "filledDate": "2026-09-07",
   "admissionId": number,
-  "pregnancyId": number,
+  "relateId": number,
   "neonateOrder": 1
-  modType: 1 | 2 | 3 | 4
+  relateType: 1 | 2 | 3 | 4
 }>
 export type IDetailItem = Partial<{
   "id": 70,
@@ -37,7 +38,7 @@ export type IDetailItem = Partial<{
   "neonateOrder": 1,
   "patientNo": null,
   "admissionId": null,
-  "pregnancyId": null,
+  "relateId": null,
   "adIcBirthDefect": null,
   "adIcChildDeath": null,
   "adIcMaternalDeath": null,

@@ -7,7 +7,7 @@ export default defineFormConfig([
         "form_hidden": true
     },
     {
-        "key": "pregnancyId",
+        "key": "relateId",
         "form_hidden": true
     },
     {
@@ -53,7 +53,7 @@ export default defineFormConfig([
     {
         "title": "类型",
         "inputType": "MS",
-        "key": "modType",
+        "key": "relateType",
         "inputProps": {
             "marshal": 0,
             "options": "门诊,住院,妇保",
@@ -100,7 +100,7 @@ export default defineFormConfig([
 
                             ctx.request.get('/api/ic/getBaseInfo', {
                                 params: {
-                                    pregnancyId: ctx.utils.single_id(ctx.props),
+                                    relateId: ctx.utils.single_id(ctx.props),
                                     name: values.code
                                 }
                             }).then(function (e) { form.setFieldsValue({ icSyphilisPatient: e.data }) })

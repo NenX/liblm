@@ -110,7 +110,7 @@ export default function FamilyPlanning_FileManagement_DoctorDesk_FC(props: any) 
                     {
                         key: 'CaseReport',
                         title: '个案登记卡',
-                        node: <DoctorEnd_CaseReport_Legancy id={id} modType={3} caseType="outpatientNo" />,
+                        node: <DoctorEnd_CaseReport_Legancy id={id} relateType={3} caseType="outpatientNo" />,
                     },
                     {
                         key: 'BasicInfo',

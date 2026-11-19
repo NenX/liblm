@@ -4,7 +4,7 @@ import FirstVisit from './components/FirstVisitv2'
 import MedicalSummary from './components/MedicalSummary'
 import SurgicalRecord from './components/SurgicalRecordv2'
 // import FollowUp from './components/FollowUp';
-// import InformedConsent from '../../../premarital-care/.public-exam/InformedConsent';
+import InformedConsent from '../../../premarital-care/.public-exam/InformedConsent';
 import { HistoryOutlined } from '@ant-design/icons'
 import { PanelWithChildFC } from '@lm_fe/components_m'
 import { DoctorEnd_ImageReport, DoctorEnd_SurveyReport, DoctorEnd_CaseReport_Legancy } from '@lm_fe/pages-mchc'
@@ -104,8 +104,8 @@ export default function FamilyPlanning_FileManagement_DoctorDesk_FC(props: any) 
                         node: <DoctorEnd_SurveyReport fubao headerInfo={data} />,
                     },
                     { key: 'ImageReport', title: '影像报告', node: <DoctorEnd_ImageReport fubao headerInfo={data} /> },
-                    { key: 'DocRecord', title: '知情同意书', node: <Page_DocRecord id={id} /> },
-                    // { key: 'wsgl', title: '文书管理', node: <InformedConsent id={id} /> },
+                    // { key: 'DocRecord', title: '知情同意书', node: <Page_DocRecord id={id} /> },
+                    { key: 'wsgl', title: '文书管理', node: <InformedConsent id={id} /> },
                     // { key: 'xjsf', title: '宣教随访', node: <FollowUp /> },
                     {
                         key: 'CaseReport',

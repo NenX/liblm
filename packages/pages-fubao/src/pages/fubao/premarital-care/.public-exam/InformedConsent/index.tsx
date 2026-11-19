@@ -10,10 +10,11 @@ import { getInformedConsents, updateInformedConsent, createInformedConsent } fro
 import './index.less';
 import { CaseTempleteEdit, DataSelect, deleteResourcesByID } from '@lm_fe/components_m';
 import { getTemplateById } from '@lm_fe/components_m';
-import { getSearchParamsValue } from '@lm_fe/utils';
+import { getSearchParamsValue, formatDate } from '@lm_fe/utils';
 import { SLocal_Dictionary } from '@lm_fe/service';
 import { SelectTip } from '@lm_fe/pages';
 import { mchcEnv } from '@lm_fe/env';
+import { use_doctor_sign } from './use_doctor_sign'
 
 const signStates = [
   { label: '已签', value: '1' },
@@ -33,7 +34,7 @@ export class InformedConsent extends Component {
   };
 
   async componentDidMount() {
-    // const siderPanels = await this.initData();
+    const siderPanels = await this.initData();
     // let defaultActiveItem = last(first(values(siderPanels))) || {};
     // // defaultActiveItem = await this.addQRCode(defaultActiveItem);
     // this.setState({
@@ -74,7 +75,7 @@ export class InformedConsent extends Component {
       ...informedConsent,
       content,
       pregnancy: pregnancyData,
-      createDate: dayjs().utc().format(),
+      createDate: formatDate(),
       documentTemplate: get(informedConsent, 'documentTemplate'),
     };
     if (informedConsent.id) {
@@ -99,6 +100,7 @@ export class InformedConsent extends Component {
   handleClickListItem = (listItem: any) => async () => {
     const oldContent = get(listItem, 'content');
     const newContent = this.transferContent(oldContent);
+    console.log('----787878  12:', listItem);
     const newInformedConsent = await this.addQRCode({
       ...listItem,
       content: newContent,
@@ -238,12 +240,12 @@ export class InformedConsent extends Component {
                         className={classnames('patient-informed-consent-list__item', {
                           'patient-informed-consent-list__item_active': informedConsent.id === item.id,
                         })}
+                        onClick={this.handleClickListItem(item)}
                       >
                         <span
                           className="patient-informed-consent-list__item-title"
-                          onClick={this.handleClickListItem(item)}
                         >
-                          {get(item, 'documentTemplate.title')}
+                          {get(item, 'documentTemplate.title') || '未知标题'}
                         </span>
                         <Popconfirm
                           title="确定要删除这个文书吗?"
@@ -268,7 +270,7 @@ export class InformedConsent extends Component {
   render() {
     const { informedConsent, isNew, qrCodeData } = this.state;
     const {
-      containerProps = { height: document.getElementsByClassName('prenatal-visit-main')[0]?.clientHeight },
+      containerProps = { height: document.getElementsByClassName('patient-informed-consent')[0]?.clientHeight },
       isAllPregnancies,
     } = this.props;
 
@@ -313,12 +315,13 @@ export class InformedConsent extends Component {
               </Row>
               <CaseTempleteEdit
                 key={get(informedConsent, 'id') || Math.random()}
-                containerProps={{ ...containerProps, height: containerProps.height - 88 }}
+                containerProps={{ ...containerProps, height: containerProps.height - 48 }}
                 value={get(informedConsent, 'content')}
                 onChange={this.handleSave}
                 toolbars={false}
                 mode="STRICT"
                 hiddenButton={isAllPregnancies}
+                use_doctor_sign={use_doctor_sign}
               />
             </div>
           )}

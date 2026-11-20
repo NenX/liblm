@@ -114,7 +114,7 @@ const SelectTagWithOptions = lazy(() => import('../../selects/SelectTagWithOptio
 const SelectWithNoneOption = lazy(() => import('../../selects/SelectWithNoneOption'))
 // const SelectWithOptions = lazy(() => import('../../selects/SelectWithOptions'))
 const TriggerTypeSelect = lazy(() => import('../../selects/TriggerTypeSelect'))
-const DataPickWithCheck = lazy(() => import('../../GeneralComponents/datapick_with_check/datapick_with_check'))
+// const DataPickWithCheck = lazy(() => import('../../GeneralComponents/datapick_with_check/datapick_with_check'))
 const CusDataTimePicker = lazy(() => import('../../GeneralComponents/DataTimePick'))
 const HepatitsNewBabyCom = lazy(() => import('../../newly-component/hepatitis-new-baby'))
 
@@ -691,15 +691,15 @@ function RenderFormSectionComponent(props: IProps) {
             //             styles,
             //         }
             //     );
-            case 'data_picker_checkbox':
-                return renderEditItem(
-                    form_config,
-                    <DataPickWithCheck {...formItemOthers} {...inputProps} config={config} />,
-                    {
-                        ...formItemLayout,
-                        styles,
-                    },
-                )
+            // case 'data_picker_checkbox':
+            //     return renderEditItem(
+            //         form_config,
+            //         <DataPickWithCheck {...formItemOthers} {...inputProps} config={config} />,
+            //         {
+            //             ...formItemLayout,
+            //             styles,
+            //         },
+            //     )
             case 'range_date_picker':
                 return renderEditItem(form_config, <RangePicker {...formItemOthers} {...inputProps} />, {
                     ...formItemLayout,

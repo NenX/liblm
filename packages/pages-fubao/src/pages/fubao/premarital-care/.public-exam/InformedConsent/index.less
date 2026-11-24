@@ -34,7 +34,26 @@
     &__item {
       cursor: pointer;
 
+      &_active {
+        background-color: #f0f2f5;
+        color: #1890ff;
+      }
+    }
+  }
+  &-detail {
+    height: 100%;
+    padding-left: 16px;
 
+    &-block {
+      height: 100%;
+
+      .ant-row {
+        justify-content: center;
+
+        .ant-form-item {
+          margin: 8px;
+        }
+        }
     }
   }
   &-detail {

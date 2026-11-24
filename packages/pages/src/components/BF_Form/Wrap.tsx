@@ -53,7 +53,7 @@ export function BF_Wrap2(setting: IBF_props, props?: any) {
 
             return <div style={{
                 ...style,
-                // height: '100%',
+                height: '100%',
                 position: 'relative',
                 border: (isAdmin && !__DEV__) ? `1px dashed ${sys_theme.colorPrimary}` : 'none'
             }}>

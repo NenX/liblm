@@ -744,7 +744,7 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
     }
 
     const n = (
-        <div ref={wrapRef} style={{ background: sys_theme.bg_color, }}>
+        <div ref={wrapRef} style={{ background: sys_theme.bg_color }}>
             <Form
                 onSubmitCapture={e => {
                     message.info('onSubmitCapture')

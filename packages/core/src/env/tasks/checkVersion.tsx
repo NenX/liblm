@@ -4,6 +4,8 @@ import { SLocal_Version } from '@lm_fe/service';
 import React from 'react';
 
 export function checkVersion() {
+    if (__DEV__)
+        return
     checkVersion_Inner()
 }
 let failedCount = 0;

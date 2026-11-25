@@ -1,7 +1,7 @@
 import { generate } from "@ant-design/colors"
-import { ISystemConfig, mchcEnv, mchcLogger, selectOptionMap } from "@lm_fe/env"
-import { IMchc_Dictionaries, SMchc_Dictionaries } from "@lm_fe/service"
-import { AnyObject, clone, get, isInt, isNil, request, shake } from "@lm_fe/utils"
+import { ISystemConfig, mchcConstant, mchcEnv, mchcLogger, selectOptionMap, TLevelType } from "@lm_fe/env"
+import { IMchc_Dictionaries, IMchc_Dictionaries_Enumeration, IMchc_HighriskGradeConfig, SMchc_Dictionaries } from "@lm_fe/service"
+import { AnyObject, clone, get, identity, isArray, isInt, isNil, request, shake } from "@lm_fe/utils"
 import { SystemState } from "src/slices/system"
 import { DARK_COLOR, LIGHT_COLOR, MixState, THEME } from "../types"
 export const default_primary = '#91a400'
@@ -38,7 +38,14 @@ export function save_config(state: MixState, config?: ISystemConfig): Partial<Sy
 
     return { sys_theme: { ...state.sys_theme, ...theme }, config }
 }
-
+export function format_highriskGrade_enum(arr: IMchc_Dictionaries_Enumeration[], version: number): IMchc_HighriskGradeConfig[] {
+    if (!arr || !isArray(arr)) return []
+    return arr.map(_ => {
+        const note_arr = (_.note || '').split('@').filter(identity)
+        const color_t = note_arr[1] ? note_arr[1] : mchcConstant.get_level_color_text(version, _.label as TLevelType)
+        return { ..._, color: note_arr[0], levelText: _.label!, colorText: color_t }
+    })
+}
 export function write_preset_options_to_dics(all: AnyObject<IMchc_Dictionaries>) {
 
     let is_exist = all['uniqueKey.init']

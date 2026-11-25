@@ -5,9 +5,9 @@ import { getSameOptions, ICommonOption, ISystemConfig, mchcConstant, TLevelType 
 import { IMchc_Dictionaries, IMchc_Dictionaries_Enumeration, IMchc_HighriskGradeConfig, SMchc_Common } from '@lm_fe/service';
 import { uniqBy } from 'lodash';
 import { ReactNode } from 'react';
-import { calc_theme, default_primary, save_config, write_preset_options_to_dics } from 'src/utils';
+import { calc_theme, default_primary, format_highriskGrade_enum, save_config, write_preset_options_to_dics } from 'src/utils';
 import { MixState, THEME } from '../types';
-import { merge_dict, objectify } from '@lm_fe/utils';
+import { identity, merge_dict, objectify } from '@lm_fe/utils';
 
 
 
@@ -161,9 +161,7 @@ export const createTabsSlice: StateCreator<MixState, [], [], SystemState> = set 
                 if (version) {
                     const enums1 = hr_dics.find(_ => _.type === version && _.key === 'highriskGrade')?.enumerations ?? []
 
-                    _state.可选高危等级 = enums1.map(_ => {
-                        return { ..._, color: _.note!, levelText: _.label!, colorText: mchcConstant.get_level_color_text(version, _.label as TLevelType) }
-                    })
+                    _state.可选高危等级 = format_highriskGrade_enum(enums1, version)
 
                     const enums2 = hr_dics.find(_ => _.type === version && _.key === 'highriskContagion')?.enumerations?.[0]
 

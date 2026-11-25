@@ -36,6 +36,7 @@ export default function GeneralComponents_EditInTable_Inner(innerProps: IEditInT
   }
   const {
     sp,
+    default_page_size = 10,
     defaultInputData = {},
     type = 'modal',
     changeImmediate = true,
@@ -52,7 +53,7 @@ export default function GeneralComponents_EditInTable_Inner(innerProps: IEditInT
   const [isEditing, setIsEditing] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [dataSource, setDataSource] = useState<any[]>([])
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(default_page_size)
   const [pageIdx, setPageIdx] = useState(1)
   const [row_filter_data, setRow_filter_data] = useState<ICommonOption[]>([])
 

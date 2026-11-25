@@ -100,7 +100,7 @@ export function HighRiskGradeSelectPure(props: { value?: string, onChange?(v: st
         >
             {map(可选高危等级, (item) => (
                 <Select.Option value={item.label}>
-                    <HighriskGradeColorSpan color={item.note} />
+                    <HighriskGradeColorSpan color={item.color} />
                     {item.colorText}
                 </Select.Option>
             ))}

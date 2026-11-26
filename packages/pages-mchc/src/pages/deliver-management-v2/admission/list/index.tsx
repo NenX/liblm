@@ -6,7 +6,6 @@ import { rt_ctx } from '@lm_fe/env';
 
 const ctx = rt_ctx
 export default function newList(props: any) {
-  // const [config] = useTableConfig(props)
   const [conf] = useTableConfig(props)
   const conf_fn = () => import('./config/table')
   const { config, Wrap } = BF_Wrap2({

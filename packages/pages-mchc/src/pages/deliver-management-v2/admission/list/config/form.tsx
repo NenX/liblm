@@ -137,8 +137,8 @@ export const queryFormDescriptions_old = () => {
     // },
   ] as IMchc_FormDescriptions_Field_Nullable[]
 }
-export const queryFormDescriptions = () => {
-  return [
+
+const queryFormDescriptions = [
     {
       name: 'inpatientNO',
       label: '住院号',
@@ -173,7 +173,4 @@ export const queryFormDescriptions = () => {
       }
     }
   ] as IMchc_FormDescriptions_Field_Nullable[]
-};
-export default {
-  queryFormDescriptions,
-};
+export default queryFormDescriptions

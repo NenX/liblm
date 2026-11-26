@@ -629,10 +629,10 @@ export function _MyBaseList<T extends { [x: string]: any, id?: TIdTypeCompatible
                 const a: IMyBaseList_ColumnType<T> = {
                     width: (width ?? 120),
                     align: 'center' as const,
+                    // ellipsis: col?.ellipsis ?? { showTitle: true },
                     ...col,
                     ...format_data,
                     children: format_columns(col?.children),
-                    ellipsis: col?.ellipsis ?? { showTitle: true },
                     onCell: (rowData: T) => {
                         return {
                             ...col,

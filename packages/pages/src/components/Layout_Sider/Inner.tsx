@@ -76,7 +76,7 @@ export default function Layout_Sider_Inner(props: IProps) {
             theme="light"
             collapsed={collapsed}
             trigger={null}
-            // width={width}
+            width={width}
             collapsedWidth={1}
 
         >

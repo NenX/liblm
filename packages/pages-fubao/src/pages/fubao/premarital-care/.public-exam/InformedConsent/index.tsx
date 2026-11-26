@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Collapse, List, Card, Button, Form, Checkbox, message, Popconfirm } from 'antd';
-import { compact, find, first, get, isEmpty, keyBy, keys, last, map, replace, set, split, values } from 'lodash';
-import dayjs from 'dayjs';
+import { compact, find, first, get, isEmpty, keyBy, keys, last, map, replace, set, split } from 'lodash';
 import classnames from 'classnames';
 import { QRCode_L } from '@lm_fe/components';
 
@@ -14,7 +13,7 @@ import { getSearchParamsValue, formatDate } from '@lm_fe/utils';
 import { SLocal_Dictionary } from '@lm_fe/service';
 import { SelectTip } from '@lm_fe/pages';
 import { mchcEnv } from '@lm_fe/env';
-import { use_doctor_sign } from './use_doctor_sign'
+import { use_doctor_sign } from '@lm_fe/pages-mchc'
 
 const signStates = [
   { label: '已签', value: '1' },
@@ -35,8 +34,8 @@ export class InformedConsent extends Component {
 
   async componentDidMount() {
     const siderPanels = await this.initData();
-    // let defaultActiveItem = last(first(values(siderPanels))) || {};
-    // // defaultActiveItem = await this.addQRCode(defaultActiveItem);
+    // let defaultActiveItem = first(siderPanels) || {};
+    // // // defaultActiveItem = await this.addQRCode(defaultActiveItem);
     // this.setState({
     //   informedConsent: defaultActiveItem,
     // });
@@ -220,7 +219,7 @@ export class InformedConsent extends Component {
           </Button>
         }
       >
-        <Collapse defaultActiveKey={keys(siderPanels)}>
+        <Collapse size="small" defaultActiveKey={keys(siderPanels)}>
           {map(siderPanels, (siderPanel, key) => {
             return (
               <Collapse.Panel
@@ -321,7 +320,7 @@ export class InformedConsent extends Component {
                 toolbars={false}
                 mode="STRICT"
                 hiddenButton={isAllPregnancies}
-                use_doctor_sign={use_doctor_sign}
+                use_doctor_sign={()=>use_doctor_sign("caseTemplete")}
               />
             </div>
           )}

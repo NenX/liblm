@@ -7,7 +7,6 @@ import { IModel_EarlyPregnancySurgicalTemplate } from 'src/pages/fubao/.stupid_m
 export const fucking_valueToApi = (values: any, reservationNumObj: any, templates: IModel_EarlyPregnancySurgicalTemplate[]) => {
   let newValues = {};
   let reservationArr: any = [];
-  debugger
   const checkedValues = get(values, `checkedValues`) || [];
   const withInputValues = get(values, `withInputValues`);
 
@@ -41,7 +40,6 @@ export const fucking_valueToForm = (values: AnyObject, templates: IModel_EarlyPr
   const m = new Map();
 
   map(values, (item, itemIndex) => {
-    debugger
     if (templates.every(_ => _.schedulingField !== itemIndex)) return
     //0未开放，1开放,2未开放有预约，3已满
     if (

@@ -5,274 +5,289 @@
  * @modify date 2021-12-01 15:15:24
  * @desc [设置日期的modal]
  */
-import { DatePicker_L, LazyAntd } from '@lm_fe/components';
-import { mchcLogger } from '@lm_fe/env';
-import { fubaoRequest as request } from '@lm_fe/utils';
-import { Button, Form, message, Modal, Popconfirm } from 'antd';
-import { FormInstance } from 'antd/lib/form';
-import dayjs from 'dayjs';
-import { get, map } from 'lodash';
-import React from 'react';
-import { IModel_EarlyPregnancySurgicalTemplate, SModel_EarlyPregnancySurgicalTemplate } from 'src/pages/fubao/.stupid_model';
-import SingleCheckBox from '../SingleCheckBox/index';
-import { fucking_valueToApi, fucking_valueToForm } from './adapter';
-import './index.less';
+import { DatePicker_L, LazyAntd } from '@lm_fe/components'
+import { mchcLogger } from '@lm_fe/env'
+import { fubaoRequest as request } from '@lm_fe/utils'
+import { Button, Form, message, Modal, Popconfirm, Space } from 'antd'
+import { FormInstance } from 'antd/lib/form'
+import dayjs from 'dayjs'
+import { get, map } from 'lodash'
+import React from 'react'
+import {
+    IModel_EarlyPregnancySurgicalTemplate,
+    SModel_EarlyPregnancySurgicalTemplate,
+} from 'src/pages/fubao/.stupid_model'
+import SingleCheckBox from '../SingleCheckBox/index'
+import { fucking_valueToApi, fucking_valueToForm } from './adapter'
+import './index.less'
 const { Tree, TreeSelect, Select, Table, Dropdown, Pagination } = LazyAntd
-dayjs().locale('zh-cn');
-const Option = Select.Option;
-const GetSchedulingDetailsUrl = `/api/family/planning/getSchedulingInformation`;
-const UpdateSchedulingDetailUrl = `/api/family/planning/updateSchedulingDetails`;
+dayjs().locale('zh-cn')
+const Option = Select.Option
+const GetSchedulingDetailsUrl = `/api/family/planning/getSchedulingInformation`
+const UpdateSchedulingDetailUrl = `/api/family/planning/updateSchedulingDetails`
 export default class SettingModal extends React.Component<any, any> {
-  form: FormInstance | null = null;
-  state = {
-    isModalVisible: false,
-    createdDate: this.props.settingDate ? this.props.settingDate : dayjs(),
-    schedulingDetail: {},
-    surgeryOptions: [], //手术项目选项
-    disabled: false,
-    reservationNumObj: new Map(),
-    reservationWarningText: '',
-    popconfirmVisible: false,
-    submitData: {},
-    surgeryObj: {},
-    templates: [] as IModel_EarlyPregnancySurgicalTemplate[]
-  };
+    form: FormInstance | null = null
+    state = {
+        isModalVisible: false,
+        createdDate: this.props.settingDate ? this.props.settingDate : dayjs(),
+        schedulingDetail: {},
+        surgeryOptions: [], //手术项目选项
+        disabled: false,
+        reservationNumObj: new Map(),
+        reservationWarningText: '',
+        popconfirmVisible: false,
+        submitData: {},
+        surgeryObj: {},
+        templates: [] as IModel_EarlyPregnancySurgicalTemplate[],
+    }
 
-  async componentDidMount() {
-    let l = await SModel_EarlyPregnancySurgicalTemplate.getList()
-    this.setState({
-      templates: l,
-      surgeryOptions: l.map(_ => {
-        return {
-          label: _.operationName,
-          value: _.schedulingField,
-          withInput: true,
-          style: { width: 50, border: 'none', borderBottom: '1px solid #FE547B', fontSize: 12, background: '#f5f6fa' },
+    async componentDidMount() {
+        let l = await SModel_EarlyPregnancySurgicalTemplate.getList()
+        this.setState({
+            templates: l,
+            surgeryOptions: l.map((_) => {
+                return {
+                    label: _.operationName,
+                    value: _.schedulingField,
+                    withInput: true,
+                    style: {
+                        width: 68,
+                        border: 'none',
+                        borderBottom: '1px solid #FE547B',
+                        // fontSize: 12,
+                        background: '#f5f6fa',
+                    },
+                }
+            }),
+        })
+        this.getTreatmentByDate()
+    }
+
+    getTreatmentByDate = async () => {
+        const { createdDate } = this.state
+        let values = {}
+        const params = {
+            'schedulingDate.equals': createdDate.format('YYYY-MM-DD'),
         }
-      })
-    });
-    this.getTreatmentByDate();
-  }
+        const response = (await request.get(`${GetSchedulingDetailsUrl}`, { params: params })).data
+        mchcLogger.log('xxg response', response)
+        if (get(response, 'code') === 1) {
+            values = get(response, 'data.0')
+            let newValuesObj = fucking_valueToForm(values, this.state.templates)
 
-  getTreatmentByDate = async () => {
-    const { createdDate } = this.state;
-    let values = {};
-    const params = {
-      'schedulingDate.equals': createdDate.format('YYYY-MM-DD'),
-    };
-    const response = (await request.get(`${GetSchedulingDetailsUrl}`, { params: params })).data;
-    mchcLogger.log('xxg response', response)
-    if (get(response, 'code') === 1) {
-      values = get(response, 'data.0');
-      let newValuesObj = fucking_valueToForm(values, this.state.templates);
+            this.form?.setFieldsValue(newValuesObj.newValues)
 
-      this.form?.setFieldsValue(newValuesObj.newValues);
-
-      this.setState({ schedulingDetail: newValuesObj.newValues, reservationNumObj: newValuesObj.reservationNumObj });
-    }
-  };
-
-  handleSubmitData = (data: {}) => {
-    let count = 0;
-    let flag: Boolean = false;
-    map(data, (value, key) => {
-      if (key !== 'totalNumOfDay' && key.indexOf('Num') > -1) {
-        count += value;
-      }
-    });
-
-    if (count > 50) {
-      flag = true;
-    }
-    return flag;
-  };
-
-  isHaveReservation = (data: any) => {
-    //关闭有预约的项目提示
-    let reservationWarningText = '';
-    map(data, (key) => {
-      const item = this.state.templates.find(_ => _.schedulingField === key)
-      reservationWarningText += item?.operationName + ' ';
-    });
-    return reservationWarningText;
-  };
-
-  getReservation = (data: Map<any, any>) => {
-    //关闭有预约的项目提示(Map数据结构遍历)
-    mchcLogger.log('getReservation', data)
-    let reservationWarningText = '';
-    for (let key of Object.keys(data)) {
-      const item = this.state.templates.find(_ => _.schedulingField === key)
-
-      reservationWarningText += item?.operationName + ' ';
-    }
-    return reservationWarningText;
-  };
-
-  //确认关闭有预约的项目，提交
-  handleConfirm = async () => {
-    let { schedulingDetail, submitData, surgeryObj } = this.state;
-
-    submitData = {
-      id: get(schedulingDetail, 'id'),
-      ...schedulingDetail,
-      ...submitData,
-      ...get(surgeryObj, 'newValues'),
-    };
-
-    const res: any = (await request.put(`${UpdateSchedulingDetailUrl}`, submitData)).data;
-
-    if (get(res, 'code') === 1) {
-
-      this.props.setSettingModal(false);
-      this.props.getReservationPanel();
-      this.setState({ popconfirmVisible: false });
-    } else {
-
-    }
-  };
-
-  handleOk = async () => {
-    const { schedulingDetail, reservationNumObj } = this.state;
-    mchcLogger.log('getReservation ok', reservationNumObj)
-    let values = this.form?.getFieldsValue();
-    let surgeryObj = fucking_valueToApi(get(values, 'surgery'), reservationNumObj, this.state.templates); //开发手术项目
-
-    let reservationWarningText = this.isHaveReservation(get(surgeryObj, 'reservationArr'));
-
-    const oldAttendanceSet = get(schedulingDetail, 'attendanceSet');
-    const newAttendanceSet = get(values, 'attendanceSet');
-
-    //单天号源总数大于30不能提交
-    const flag = this.handleSubmitData(get(surgeryObj, 'newValues'));
-    if (flag) {
-      message.error(`总号源数>50，请调整设置，控制在50个号源以内`);
-      return;
+            this.setState({
+                schedulingDetail: newValuesObj.newValues,
+                reservationNumObj: newValuesObj.reservationNumObj,
+            })
+        }
     }
 
-    //有预约且上午改成下午时提示
-    if (reservationNumObj.size > 0 && oldAttendanceSet === 1 && newAttendanceSet === 2) {
-      reservationWarningText = this.getReservation(reservationNumObj);
-      this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true });
-      return;
+    handleSubmitData = (data: {}) => {
+        let count = 0
+        let flag: Boolean = false
+        map(data, (value, key) => {
+            if (key !== 'totalNumOfDay' && key.indexOf('Num') > -1) {
+                count += value
+            }
+        })
+
+        if (count > 200000) {
+            flag = true
+        }
+        return flag
     }
-    //有预约且下午改成上午时提示
-    if (reservationNumObj.size > 0 && oldAttendanceSet === 2 && newAttendanceSet === 1) {
-      reservationWarningText = this.getReservation(reservationNumObj);
-      this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true });
-      return;
+
+    isHaveReservation = (data: any) => {
+        //关闭有预约的项目提示
+        let reservationWarningText = ''
+        map(data, (key) => {
+            const item = this.state.templates.find((_) => _.schedulingField === key)
+            reservationWarningText += item?.operationName + ' '
+        })
+        return reservationWarningText
     }
 
-    if (reservationWarningText) {
-      //关闭有预约的项目弹出提示
-      this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true });
-    } else {
-      const submitData = {
-        id: get(schedulingDetail, 'id'),
-        ...schedulingDetail,
-        ...values,
-        ...get(surgeryObj, 'newValues'),
-      };
+    getReservation = (data: Map<any, any>) => {
+        //关闭有预约的项目提示(Map数据结构遍历)
+        mchcLogger.log('getReservation', data)
+        let reservationWarningText = ''
+        for (let key of Object.keys(data)) {
+            const item = this.state.templates.find((_) => _.schedulingField === key)
 
-      const res: any = (await request.put(`${UpdateSchedulingDetailUrl}`, submitData)).data;
-
-      if (get(res, 'code') === 1) {
-
-        this.props.setSettingModal(false);
-        this.props.getReservationPanel();
-      } else {
-
-      }
+            reservationWarningText += item?.operationName + ' '
+        }
+        return reservationWarningText
     }
-  };
 
-  handleItemChange = (changedValues: any, allValues: any) => {
-    if (get(allValues, 'attendanceSet') === 0) {
-      this.setState({ disabled: true });
-    } else {
-      this.setState({ disabled: false });
+    //确认关闭有预约的项目，提交
+    handleConfirm = async () => {
+        let { schedulingDetail, submitData, surgeryObj } = this.state
+
+        submitData = {
+            id: get(schedulingDetail, 'id'),
+            ...schedulingDetail,
+            ...submitData,
+            ...get(surgeryObj, 'newValues'),
+        }
+
+        const res: any = (await request.put(`${UpdateSchedulingDetailUrl}`, submitData)).data
+
+        if (get(res, 'code') === 1) {
+            this.props.setSettingModal(false)
+            this.props.getReservationPanel()
+            this.setState({ popconfirmVisible: false })
+        } else {
+        }
     }
-  };
 
-  onChange = (data: any) => { };
+    handleOk = async () => {
+        const { schedulingDetail, reservationNumObj } = this.state
+        mchcLogger.log('getReservation ok', reservationNumObj)
+        let values = this.form?.getFieldsValue()
+        let surgeryObj = fucking_valueToApi(get(values, 'surgery'), reservationNumObj, this.state.templates) //开发手术项目
 
-  render() {
-    const { createdDate, schedulingDetail, surgeryOptions, disabled, reservationWarningText, popconfirmVisible } =
-      this.state;
-    const { isModalVisible } = this.props;
-    return (
-      <Modal
-        title="设置"
-        visible={isModalVisible}
-        onCancel={() => this.props.setSettingModal(false)}
-        wrapClassName="setting-modal"
-        width={480}
-        onOk={() => this.handleOk()}
-        footer={[
-          <Button key="cancel" onClick={() => this.props.setSettingModal(false)}>
-            关闭设置
-          </Button>,
-          <Popconfirm
-            key="submit"
-            title={`${reservationWarningText}已有预约，是否修改设置!`}
-            visible={popconfirmVisible}
-            onCancel={() => {
-              this.setState({ popconfirmVisible: false });
-            }}
-            onConfirm={() => {
-              this.handleConfirm();
-            }}
-            okText="确定"
-            cancelText="取消"
-          >
-            <Button
-              key="submit"
-              type="primary"
-              onClick={() => {
-                this.handleOk();
-              }}
+        let reservationWarningText = this.isHaveReservation(get(surgeryObj, 'reservationArr'))
+
+        const oldAttendanceSet = get(schedulingDetail, 'attendanceSet')
+        const newAttendanceSet = get(values, 'attendanceSet')
+
+        //单天号源总数大于30不能提交
+        const flag = this.handleSubmitData(get(surgeryObj, 'newValues'))
+        if (flag) {
+            message.error(`总号源数>200000，请调整设置，控制在200个号源以内`)
+            return
+        }
+
+        //有预约且上午改成下午时提示
+        if (reservationNumObj.size > 0 && oldAttendanceSet === 1 && newAttendanceSet === 2) {
+            reservationWarningText = this.getReservation(reservationNumObj)
+            this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true })
+            return
+        }
+        //有预约且下午改成上午时提示
+        if (reservationNumObj.size > 0 && oldAttendanceSet === 2 && newAttendanceSet === 1) {
+            reservationWarningText = this.getReservation(reservationNumObj)
+            this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true })
+            return
+        }
+
+        if (reservationWarningText) {
+            //关闭有预约的项目弹出提示
+            this.setState({ submitData: values, surgeryObj, reservationWarningText, popconfirmVisible: true })
+        } else {
+            const submitData = {
+                id: get(schedulingDetail, 'id'),
+                ...schedulingDetail,
+                ...values,
+                ...get(surgeryObj, 'newValues'),
+            }
+
+            const res: any = (await request.put(`${UpdateSchedulingDetailUrl}`, submitData)).data
+
+            if (get(res, 'code') === 1) {
+                this.props.setSettingModal(false)
+                this.props.getReservationPanel()
+            } else {
+            }
+        }
+    }
+
+    handleItemChange = (changedValues: any, allValues: any) => {
+        if (get(allValues, 'attendanceSet') === 0) {
+            this.setState({ disabled: true })
+        } else {
+            this.setState({ disabled: false })
+        }
+    }
+
+    onChange = (data: any) => {}
+
+    render() {
+        const { createdDate, schedulingDetail, surgeryOptions, disabled, reservationWarningText, popconfirmVisible } =
+            this.state
+        const { isModalVisible } = this.props
+        return (
+            <Modal
+                title="设置"
+                visible={isModalVisible}
+                onCancel={() => this.props.setSettingModal(false)}
+                wrapClassName="setting-modal"
+                width={680}
+                onOk={() => this.handleOk()}
+                footer={[
+                    <Button key="cancel" onClick={() => this.props.setSettingModal(false)}>
+                        关闭设置
+                    </Button>,
+                    <Popconfirm
+                        key="submit"
+                        title={`${reservationWarningText}已有预约，是否修改设置!`}
+                        visible={popconfirmVisible}
+                        onCancel={() => {
+                            this.setState({ popconfirmVisible: false })
+                        }}
+                        onConfirm={() => {
+                            this.handleConfirm()
+                        }}
+                        okText="确定"
+                        cancelText="取消"
+                    >
+                        <Button
+                            key="submit"
+                            type="primary"
+                            onClick={() => {
+                                this.handleOk()
+                            }}
+                        >
+                            保存
+                        </Button>
+                    </Popconfirm>,
+                ]}
             >
-              保存
-            </Button>
-          </Popconfirm>,
-        ]}
-      >
-        <Form
-          ref={(formRef) => {
-            this.form = formRef;
-          }}
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
-          onValuesChange={(changedValues, allValues) => {
-            this.handleItemChange(changedValues, allValues);
-          }}
-        >
-          <div className="setting-top">
-            <Form.Item label="日期">
-              <DatePicker_L disabled value={createdDate} className="date-picker" />
-              <span className="week-day">{createdDate ? createdDate.format('dddd') : ''}</span>
-            </Form.Item>
-            <Form.Item label="手术状态" name="attendanceSet">
-              <Select style={{ width: 120 }}>
-                <Option value={0}>不可约</Option>
-                <Option value={1}>上午</Option>
-                <Option value={2}>下午</Option>
-                <Option value={3}>全天</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="开放手术项目" name="surgery">
-              <SingleCheckBox
-                type="multiple"
-                disabled={disabled}
-                options={surgeryOptions}
-                onChange={this.onChange}
-                selectValue={get(schedulingDetail, 'surgery')}
-              />
-            </Form.Item>
-          </div>
-        </Form>
-        {popconfirmVisible && <div className="masking"></div>}
-      </Modal>
-    );
-  }
+                <Form
+                    ref={(formRef) => {
+                        this.form = formRef
+                    }}
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 18 }}
+                    onValuesChange={(changedValues, allValues) => {
+                        this.handleItemChange(changedValues, allValues)
+                    }}
+                >
+                    <div className="setting-top">
+                        <Form.Item label="日期">
+                            <Space>
+                                <Form.Item>
+                                    <DatePicker_L disabled value={createdDate} className="date-picker" />
+                                </Form.Item>
+                                <Form.Item>
+                                    <span className="week-day">{createdDate ? createdDate.format('dddd') : ''}</span>
+                                </Form.Item>
+                            </Space>
+                        </Form.Item>
+
+                        <Form.Item label="手术状态" name="attendanceSet">
+                            <Select style={{ width: 120 }}>
+                                <Option value={0}>不可约</Option>
+                                <Option value={1}>上午</Option>
+                                <Option value={2}>下午</Option>
+                                <Option value={3}>全天</Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="开放手术项目" name="surgery">
+                            <SingleCheckBox
+                                type="multiple"
+                                disabled={disabled}
+                                options={surgeryOptions}
+                                onChange={this.onChange}
+                                selectValue={get(schedulingDetail, 'surgery')}
+                            />
+                        </Form.Item>
+                    </div>
+                </Form>
+                {popconfirmVisible && <div className="masking"></div>}
+            </Modal>
+        )
+    }
 }

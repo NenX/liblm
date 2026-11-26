@@ -110,7 +110,7 @@ export default class GlobalSettingModal extends React.Component<any, any> {
           count += value;
         }
       });
-      return count > 50;
+      return count > 200000;
     });
 
     if (notSubmitData.length > 0) {
@@ -154,7 +154,7 @@ export default class GlobalSettingModal extends React.Component<any, any> {
     //单天号源总数大于50不能提交
     const day = this.handleSubmitData(familyPlanningDefaultSettingDetails);
     if (day) {
-      message.error(`${day} 总号源数>50，请调整设置，控制在50个号源以内`);
+      message.error(`${day} 总号源数>200000，请调整设置，控制在200000个号源以内`);
       return;
     }
 
@@ -236,6 +236,7 @@ export default class GlobalSettingModal extends React.Component<any, any> {
 
     return (
       <Modal
+        centered
         title="手术排班全局设置"
         visible={isGlobalSettingModalVisible}
         onCancel={() => this.props.setGlobalSettingModal(false)}
@@ -284,7 +285,7 @@ export default class GlobalSettingModal extends React.Component<any, any> {
               常规排班
             </Col>
           </Row>
-          <Row>
+          <Row className="global-setting-content">
             <Col span={24} className="visit-settings">
               <table className="visit-settings-table">
                 <thead>
@@ -440,11 +441,11 @@ export default class GlobalSettingModal extends React.Component<any, any> {
               </Row> */}
             </Col>
           </Row>
-          <Row className="global-setting-row">
-            <Col span={4} className="setting-desc">
-              开放预约范围
-            </Col>
-            <Col span={20} className="flex-div">
+          <Row className="global-setting-row" style={{ marginTop: 12 }}>
+            <span className="setting-desc">
+              开放预约范围：
+            </span>
+            <div className="flex-div">
               <span style={{ fontSize: 14 }}>患者可预约当前时间 至</span>
               <Form.Item name="reservationTime" className="form-inline-item">
                 <Select placeholder="请选择">
@@ -457,13 +458,13 @@ export default class GlobalSettingModal extends React.Component<any, any> {
                 </Select>
               </Form.Item>
               <span style={{ fontSize: 14 }}>天内的号源。</span>
-            </Col>
+            </div>
           </Row>
           <Row className="global-setting-row">
-            <Col span={4} className="setting-desc cancel-setting">
-              取消预约设置
-            </Col>
-            <Col span={20} className="flex-div">
+            <span className="setting-desc cancel-setting">
+              取消预约设置：
+            </span>
+            <div className="flex-div">
               <span style={{ fontSize: 14 }}>患者在预约时间</span>
               <Form.Item name="cancelReservation" className="form-inline-item">
                 <Select placeholder="请选择">
@@ -476,7 +477,12 @@ export default class GlobalSettingModal extends React.Component<any, any> {
                 </Select>
               </Form.Item>
               <span style={{ fontSize: 14 }}>小时前可取消号源。</span>
-            </Col>
+            </div>
+          </Row>
+          <Row className="global-setting-row">
+            <span className="setting-desc cancel-setting">
+              预约时间段设置：
+            </span>
           </Row>
         </Form>
         {popconfirmVisible && <div className="masking"></div>}

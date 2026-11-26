@@ -127,7 +127,6 @@ const SelectWithNoneOption = lazy(() => import('../../selects/SelectWithNoneOpti
 // const SelectWithOptions = lazy(() => import('../../selects/SelectWithOptions'))
 const SelectWithOptionsOrInput = lazy(() => import('../../selects/SelectWithOptionsOrInput'))
 const TriggerTypeSelect = lazy(() => import('../../selects/TriggerTypeSelect'))
-const DataPickWithCheck = lazy(() => import('../../GeneralComponents/datapick_with_check/datapick_with_check'))
 const CusDataTimePicker = lazy(() => import('../../GeneralComponents/DataTimePick'))
 // const PostpartumCarerecordTable2 = lazy(() => import('../../ConfigComponents/PostpartumCarerecordTable2'))
 // const ObserMagnesiumsulphateTable = lazy(() => import('../../ConfigComponents/ObserMagnesiumsulphateTable2'))
@@ -283,7 +282,6 @@ export const FormSectionComponent = {
     // SelectWithOptions,
     SelectWithOptionsOrInput,
     TriggerTypeSelect,
-    DataPickWithCheck,
     CusDataTimePicker,
     // PostpartumCarerecordTable2,
     // ObserMagnesiumsulphateTable,

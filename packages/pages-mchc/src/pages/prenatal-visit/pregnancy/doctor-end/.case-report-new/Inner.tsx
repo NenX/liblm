@@ -66,7 +66,8 @@ export default function CaseNew(props: ICaseReport) {
   };
   async function init() {
 
-    const ttt = await request.get<AnyObject>('/api/caseRegister/getCaseRegisterType', { params })
+    const ttt = await request.get<AnyObject>('/api/ic/getModels', { params })
+    // const ttt = await request.get<AnyObject>('/api/caseRegister/getCaseRegisterType', { params })
     const options = isArray(ttt.data) ? ttt.data : Object.entries(ttt.data).map(arr => ({ code: arr[0], name: arr[1] }))
     set_surgeryTemplates(options)
     fetch_data()

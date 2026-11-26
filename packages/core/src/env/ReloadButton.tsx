@@ -33,7 +33,7 @@ export const ReloadButton: FC = (props) => {
         }
     }, [])
     if (!show) return null
-    return <div className={styles['wrap']}    >
+    return <div className={styles['wrap']} >
         <div className={styles['tools']} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Space.Compact>
                 {

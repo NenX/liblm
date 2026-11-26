@@ -29,6 +29,7 @@ export interface IEditInTable_InnerProps {
     disabled?: boolean
     onChange?(...v: any[]): any
     defaultInputData?: any
+    default_page_size?:number
     type?: 'modal' | 'inner'
     pagination?: TablePaginationConfig
     formInstance?: FormInstance

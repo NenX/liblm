@@ -1,6 +1,6 @@
 import { rt_ctx } from '@lm_fe/env';
 import { BF_Wrap2 } from '@lm_fe/pages';
-import { AnyObject } from '@lm_fe/utils';
+import { AnyObject, request } from '@lm_fe/utils';
 import React, { useEffect } from 'react';
 import { RenderContent } from './RenderContent';
 import { IDataItem, IRenderContentProps } from './types';

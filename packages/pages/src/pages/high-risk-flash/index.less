@@ -1,0 +1,86 @@
+.high-risk-container {
+    max-height: 600px;
+    overflow: auto;
+
+    .mian-content {
+        display: flex;
+        margin-bottom: 12px;
+        .col-name {
+            width: 130px;
+            color: #150f55;
+            font-size: 18px;
+            font-weight: 500;
+            position: relative;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .col-name::before {
+            width: 3px;
+            height: 12px;
+            position: absolute;
+            top: 14px;
+            transform: translateY(-50%);
+            left: 20px;
+            background-color: #150f55;
+            content: ' ';
+        }
+        .news-content {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            .item-content {
+                display: flex;
+                margin-right: 20px;
+                margin-bottom: 10px;
+                .item-title {
+                    color: #150f55;
+                    font-size: 14px;
+                    position: relative;
+                    // text-align: center;
+                    width: 116px;
+                    background: #ffffff;
+                    border-radius: 4px 0px 0px 4px;
+                    border: 1px solid #edeef5;
+                    display: flex;
+                    // justify-content: center;
+                    align-items: center;
+                    padding-left: 25px;
+                    &::before {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 8px;
+                        height: 8px;
+                        background-color: #d7dce7;
+                        border-radius: 50%;
+                        content: ' ';
+                        left: 10px;
+                    }
+                }
+                .data-content {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #fbeaea;
+                    width: 330px;
+                    border-radius: 0px 4px 4px 0px;
+                    justify-content: center;
+                    .item-event {
+                        display: flex;
+                        justify-content: space-between;
+                        line-height: 34px;
+                        padding: 0 10px;
+                        .event {
+                            color: #ff0061;
+                        }
+                        .date {
+                            color: #535881;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
